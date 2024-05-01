@@ -2,7 +2,7 @@
     import { page } from "$app/stores";
     import Accordion from "../accordions/AccordionMobileNav.svelte"
     import NavigationData from "$lib/data/navigation.json";
-    import AccordionMobileNav from "../accordions/AccordionMobileNav.svelte";
+    import MobileNavSideDrawerToggleButton from "$lib/components/navigation/MobileNavSideDrawerToggleButton.svelte";
 
     export let openMobileNav: boolean = false;
 
@@ -12,13 +12,19 @@
     class="{ (openMobileNav) ? 'side_drawer_open' : 'side_drawer_closed' }"
     aria-hidden="{ (openMobileNav) ? 'false' : 'true'}"
 >
+    <button
+        class="sidedrawer_toggle_button"
+        on:click={() => openMobileNav = !openMobileNav}
+        on:keyup={() => openMobileNav = !openMobileNav}
+    >
+        <MobileNavSideDrawerToggleButton open={openMobileNav} />
+    </button>
     <nav>
         <Accordion 
             mobileNavTabsData={NavigationData}
             bind:openState={openMobileNav}
         />
     </nav>
-    
 </aside>
 
 <style>
@@ -42,9 +48,15 @@
         transition: transform 0.3s ease-in-out;
     }
 
+    .sidedrawer_toggle_button {
+        padding: 1rem;
+        background: none;
+        border: none;
+    }
+
     nav {
         width: 100%;
-        padding: 4rem 2rem;
+        padding: 2rem 2rem;
 	}
     
     @media (min-width: 1000px) {
