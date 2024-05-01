@@ -1,0 +1,96 @@
+[
+    {
+        "id": 1,
+        "label": "case studies",
+        "expandable": false,
+        "slug": "/case-studies",
+        "content": null
+    },
+    {
+        "id": 2,
+        "label": "services",
+        "expandable": false,
+        "slug": "/services",
+        "content": null
+    },
+    {
+        "id": 3,
+        "label": "work with us",
+        "expandable": true,
+        "slug": "#",
+        "content": [
+            {
+                "id": 3.1,
+                "label": "request a consultation",
+                "expandable": false,
+                "slug": "/request-a-consultation",
+                "content": null
+            },
+            {
+                "id": 3.2,
+                "label": "request to start a project",
+                "expandable": false,
+                "slug": "/request-to-start-a-project",
+                "content": null
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "label": "about",
+        "expandable": true,
+        "slug": "#",
+        "content": [
+            {
+                "id": 4.1,
+                "label": "story",
+                "expandable": false,
+                "slug": "/story",
+                "content": null
+            },
+            {
+                "id": 4.2,
+                "label": "team",
+                "expandable": false,
+                "slug": "/team",
+                "content": null
+            },
+            {
+                "id": 4.3,
+                "label": "careers",
+                "expandable": false,
+                "slug": "/careers",
+                "content": null
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "label": "contact",
+        "expandable": false,
+        "slug": "/contact",
+        "content": null
+    },
+    {
+        "id": 6,
+        "label": "login",
+        "expandable": true,
+        "slug": "#",
+        "content": [
+            {
+                "id": 6.1,
+                "label": "client",
+                "expandable": false,
+                "slug": "/login-client",
+                "content": null
+            },
+            {
+                "id": 6.2,
+                "label": "administrator",
+                "expandable": false,
+                "slug": "/login-administrator",
+                "content": null
+            }
+        ]
+    }
+]
