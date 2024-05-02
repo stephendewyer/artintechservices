@@ -26,7 +26,9 @@
     <h2 class="heading_02">
         case studies
     </h2>
-    <SliderCaseStudies />
+    <div class="case_studies_carousel">
+        <SliderCaseStudies />
+    </div>
     <h2 class="heading_02">
         services we provide
     </h2>
@@ -73,6 +75,13 @@
     .heading_02 {
         text-align: center;
         padding: 1rem;
+    }
+
+    .case_studies_carousel {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     @media screen and (max-width: 1040px) {
