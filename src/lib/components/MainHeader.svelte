@@ -1,6 +1,6 @@
 <script lang="ts">
     import Logo from "$lib/components/navigation/Logo.svelte";
-    import NavColumn from "$lib/components/navigation/navColumn/NavColumn.svelte";
+    import NavColumn from "$lib/components/navigation/NavColumn.svelte";
     import MobileNavSideDrawerToggleButton from "$lib/components/navigation/MobileNavSideDrawerToggleButton.svelte";
     import { page } from '$app/stores';
     import NavigationData from "$lib/data/navigation.json";

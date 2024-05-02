@@ -72,7 +72,10 @@
                     </div>
                 {/if}
                 {mainNavTab.label}
-                <div class="arrow">
+                <div 
+                    class="arrow"
+                    style={panelHovered ? "transform: rotate(180deg);" : "transform: rotate(0);"}
+                >
                     {@html Arrow}
                 </div>            
             </li>
@@ -89,7 +92,10 @@
                 >
                     {#each mainNavTab.content as subTab, index}
                         <a href={subTab.slug}>
-                            <li class="nav_tab">
+                            <li 
+                                class="nav_tab"
+                                style={subTab.slug === $page.url.pathname ? "text-decoration: underline;" : "text-decoration: none;"}
+                            >
                                 {subTab.label}
                             </li>
                         </a>
@@ -177,12 +183,14 @@
         color: #B2A1A1;
     }
 
-    .nav_tab:hover > .arrow {
-        fill: #B2A1A1;
-        transform: rotate(180deg);
-        transition: transform 0.4s ease;
+    .arrow {
+        transition: transform 0.4s ease, fill 0.4s ease;
         display: flex;
         justify-content: center;
+    }
+
+    .nav_tab:hover > .arrow {
+        fill: #B2A1A1;
     }
 
     .nav_tab:hover > .login_icon {

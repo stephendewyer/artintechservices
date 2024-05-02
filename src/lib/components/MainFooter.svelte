@@ -51,6 +51,26 @@
     const today = new Date();
     const year = today.getFullYear();
 
+    let panelLeftHovered: boolean = false;
+
+    const hoverPanelLeftHandler = () => {
+        panelLeftHovered = true;
+    };
+
+    const exitPanelLeftHandler = () => {
+        panelLeftHovered = false;
+    };
+
+    let panelRightHovered: boolean = false;
+
+    const hoverPanelRightHandler = () => {
+        panelRightHovered = true;
+    };
+
+    const exitPanelRightHandler = () => {
+        panelLeftHovered = false;
+    };
+
 </script>
 
 <footer bind:clientHeight={footerHeight}>
@@ -78,11 +98,22 @@
                                 </li>   
                             </div>
                         {:else}
-                            <div class="nav_section_mobile">
+                            <div 
+                                role="tabpanel"
+                                tabindex={index}
+                                on:focus={() => hoverPanelLeftHandler()}
+                                on:mouseenter={() => hoverPanelLeftHandler()}
+                                on:mouseover={() => hoverPanelLeftHandler()}
+                                on:mouseleave={() => exitPanelLeftHandler()}
+                                on:mouseout={() => exitPanelLeftHandler()}
+                                on:blur={() => exitPanelLeftHandler()}
+                                class="nav_section_mobile"
+                            >
                                 <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                     <a 
                                         href={footerNavTab.slug} 
                                         class="footer_nav_heading"
+                                        style={panelLeftHovered ? "color: #CFF5F8;" : ""}
                                     >
                                         {footerNavTab.label}
                                     </a>
@@ -119,11 +150,22 @@
                                 </li>  
                             </div>
                         {:else}
-                            <div class="nav_section_mobile">
+                            <div 
+                                role="tabpanel"
+                                tabindex={index}
+                                on:focus={() => hoverPanelRightHandler()}
+                                on:mouseenter={() => hoverPanelRightHandler()}
+                                on:mouseover={() => hoverPanelRightHandler()}
+                                on:mouseleave={() => exitPanelRightHandler()}
+                                on:mouseout={() => exitPanelRightHandler()}
+                                on:blur={() => exitPanelRightHandler()}
+                                class="nav_section_mobile"
+                            >
                                 <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                     <a 
                                         href={footerNavTab.slug} 
                                         class="footer_nav_heading"
+                                        style={panelRightHovered ? "color: #CFF5F8;" : ""}
                                     >
                                         {footerNavTab.label}
                                     </a>
@@ -161,11 +203,20 @@
                 </li>   
             {:else}
                 <li>
-                    <ul class="nav_column">
+                    <ul 
+                        on:focus={() => hoverPanelLeftHandler()}
+                        on:mouseenter={() => hoverPanelLeftHandler()}
+                        on:mouseover={() => hoverPanelLeftHandler()}
+                        on:mouseleave={() => exitPanelLeftHandler()}
+                        on:mouseout={() => exitPanelLeftHandler()}
+                        on:blur={() => exitPanelLeftHandler()}
+                        class="nav_column"
+                    >
                         <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                             <a 
                                 href={footerNavTab.slug} 
                                 class="footer_nav_heading"
+                                style={panelLeftHovered ? "color: #CFF5F8;" : ""}
                             >
                                 {footerNavTab.label}
                             </a>
@@ -204,11 +255,20 @@
                 </li>   
             {:else}
                 <li>
-                    <ul class="nav_column">
+                    <ul 
+                        on:focus={() => hoverPanelRightHandler()}
+                        on:mouseenter={() => hoverPanelRightHandler()}
+                        on:mouseover={() => hoverPanelRightHandler()}
+                        on:mouseleave={() => exitPanelRightHandler()}
+                        on:mouseout={() => exitPanelRightHandler()}
+                        on:blur={() => exitPanelRightHandler()}
+                        class="nav_column"
+                    >
                         <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                             <a 
                                 href={footerNavTab.slug} 
                                 class="footer_nav_heading"
+                                style={panelRightHovered ? "color: #CFF5F8;" : ""}
                             >
                                 {footerNavTab.label}
                             </a> 

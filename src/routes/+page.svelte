@@ -72,6 +72,7 @@
 
     .heading_02 {
         text-align: center;
+        padding: 1rem;
     }
 
     @media screen and (max-width: 1040px) {
