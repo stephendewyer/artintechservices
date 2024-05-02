@@ -14,7 +14,9 @@
 
 <div>
     <div class="intro_banner">
-        <img src={MoonShot} alt="moonshot" />
+        <div class="banner_image_container">
+            <img src={MoonShot} alt="moonshot"/>
+        </div>
         <div class="intro_paragraph_container">
             <h1 class="intro_paragraph">
                 delivering state-of-the-art digital technology products since 2001
@@ -41,6 +43,13 @@
     .intro_banner {
         position: relative;
         width: 100%;
+    }
+
+    .banner_image_container {
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: flex;
     }
 
     .intro_paragraph_container {
@@ -75,6 +84,9 @@
         .intro_paragraph_container {
             position: relative;
             padding: 0;
+        }
+        .intro_paragraph {
+            width: 100%;
         }
     }
     
