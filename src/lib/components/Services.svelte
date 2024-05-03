@@ -7,12 +7,7 @@
     import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
     import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
-
-    interface Service {
-        image: string;
-        label: string;
-        pathname: string;
-    };
+  import ServiceButton from "./buttons/ServiceButton.svelte";
 
     const servicesData: Service[] = [
         {
@@ -56,19 +51,41 @@
             pathname: "/services?service=photography"
         }
     ];
+
+    const sortedServicesData: Service[] = servicesData.sort((a, b) => {
+        if (a.label < b.label) {
+            return -1;
+        };
+        if (a.label > b.label) {
+            return 1;
+        };
+        return 0;
+    });
+
+    let sortedServicesDataWithIDs: ServiceWithID[] = [];
+
+    sortedServicesData.map((service, i) => {
+        sortedServicesDataWithIDs = [...sortedServicesDataWithIDs,
+            {
+                id: i,
+                ...service
+            }
+        ];
+    });
+
 </script>
 <div class="services">
-    <ul>
-        {#each servicesData.slice(0, servicesData.length/2) as serviceData}
+    <ul class="services_column">
+        {#each sortedServicesDataWithIDs.slice(0, sortedServicesDataWithIDs.length/2) as serviceData, index}
             <li>
-                {serviceData.label}
+                <ServiceButton service={serviceData} />
             </li>
         {/each}
     </ul>
-    <ul>
-        {#each servicesData.slice(servicesData.length/2, servicesData.length) as serviceData}
+    <ul class="services_column">
+        {#each sortedServicesDataWithIDs.slice(sortedServicesDataWithIDs.length/2, sortedServicesDataWithIDs.length) as serviceData, index}
             <li>
-                {serviceData.label}
+                <ServiceButton service={serviceData} />
             </li>
         {/each}
     </ul> 
@@ -76,5 +93,29 @@
 <style>
     .services {
         display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        gap: 1rem;
+        width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+    }
+
+    .services_column {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        list-style: none;
+        padding: 0;
+    }
+
+    @media screen and (max-width: 720px) {
+        .services {
+            padding: 0 1rem;
+        }
+
+        .services_column {
+            align-items: center;
+        }
     }
 </style>

@@ -189,7 +189,8 @@
     }
 
     .arrow_button {
-        width: 3rem;
+        width: 2.5rem;
+        padding: 0;
         background: none;
         color: #D79679;
         fill: #D79679;
@@ -272,6 +273,12 @@
         background-color: #F4FEF2; 
     }
 
+    @media screen and (max-width: 1080px) {
+        .arrow_button {
+            width: 1.75rem;
+        }
+    }
+
     @media (max-width: 750px) {
 
         .slide_carousel_container {
@@ -290,7 +297,7 @@
         }
 
         .arrow_button {
-            width: 2rem;
+            width: 1.5rem;
             z-index: 2;
         }
 
