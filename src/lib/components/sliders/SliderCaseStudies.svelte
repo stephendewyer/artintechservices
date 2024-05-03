@@ -48,9 +48,12 @@
     let prevBtnEnabled: boolean = false;
     let nextBtnEnabled: boolean = false;
 
+    let scrollSnaps: number[] = [];
+
     function onInit(event: { detail: EmblaCarouselType }) {
         emblaApi = event.detail;
-        console.log(emblaApi.slideNodes()); // Access API
+        // console.log(emblaApi.slideNodes()); // Access API
+
         if (emblaApi.canScrollNext()) {
             nextBtnEnabled = true;
         } else {
@@ -61,6 +64,7 @@
         } else {
             prevBtnEnabled = false;
         };
+        scrollSnaps = emblaApi.scrollSnapList();
     };
 
     const onNavButtonClick = (emblaApi: EmblaCarouselType) => {
@@ -76,6 +80,13 @@
     const scrollNextClickHandler = () => {
         emblaApi.scrollNext();
         onNavButtonClick(emblaApi);
+    };
+
+    let selectedIndex: number;
+
+    const scrollTo = (index: number) => {
+        selectedIndex = emblaApi.selectedScrollSnap();
+        emblaApi.scrollTo(index);
     };
 
 </script>
@@ -99,7 +110,6 @@
         </button>
     </div>
     <div class="slide_container">
-            
         <div 
             use:EmblaCarouselSvelte="{{ options, plugins }}"
             on:emblaInit="{onInit}"
@@ -118,7 +128,15 @@
             </div>
         </div>
     </div>
-    
+    <div class="embla__dots">
+        {#each scrollSnaps as _, index}
+            <button
+              on:click={() => scrollTo(index)}
+              class={`embla__dot ${(index === selectedIndex) ? "" : ""}`}
+            >
+            </button>
+        {/each}
+    </div>
 </div>
 
 <style>
@@ -127,6 +145,7 @@
         max-width: 1440px;
         width: 100%;
         position: relative;
+        height: relative;
     }
 
     .slide_container {
@@ -137,7 +156,7 @@
         width: 100%;
         height: auto;
         overflow: hidden;
-        margin: 0 auto 2rem auto;
+        margin: 0 auto 0 auto;
     }
 
     .arrows {
@@ -146,12 +165,13 @@
         right: 0;
         top: 0;
         bottom: 0;
+        padding: 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        z-index: 2;
         padding: 20px 0;
         margin: 0 auto;
+        background: transparent;
     }
 
     .arrow_button {
@@ -183,14 +203,82 @@
         max-height: 1333px;
     }
 
-    .slide_image {
+    .embla__dots {
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
 
+    .embla__dot {
+        -webkit-tap-highlight-color: rgba(49, 49, 49, 0.5);
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: transparent;
+        touch-action: manipulation;
+        display: inline-flex;
+        text-decoration: none;
+        cursor: pointer;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        width: 2.6rem;
+        height: 2.6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    .embla__dot:after {
+        box-shadow: inset 0 0 0 0.2rem rgb(234, 234, 234);;
+        width: 1.4rem;
+        height: 1.4rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        content: '';
+    }
+    .embla__dot--selected:after {
+        box-shadow: inset 0 0 0 0.2rem rgb(54, 49, 61);
     }
 
     @media (max-width: 750px) {
 
+        .slide_carousel_container {
+            display: flex;
+            flex-direction: column-reverse
+        }
+
+        .slide_container {
+            padding: 0;
+        }
+
+        .arrows {
+            position: relative;
+            width: 100%;
+            padding:1rem;
+        }
+
+        .arrow_button {
+            width: 2rem;
+            z-index: 2;
+        }
+
+        .embla__dots {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
         .embla {
-            margin: 0 0 1rem 0;
+            margin: 0;
         }
 
         .embla__slide {
