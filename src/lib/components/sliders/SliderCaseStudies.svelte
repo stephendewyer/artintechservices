@@ -4,6 +4,7 @@
     import Autoplay from "embla-carousel-autoplay";
     import ArrowLeft from "$lib/images/arrows/arrow_left.svg?raw";
     import ArrowRight from "$lib/images/arrows/arrow_right.svg?raw";
+    import { onDestroy } from 'svelte';
     
     interface Image {
       index: number;
@@ -45,6 +46,15 @@
         delay: 3000
     })];
 
+    let selectedIndex: number = 0;
+
+    const onSelect = (emblaApi: EmblaCarouselType): void => {
+        if (!emblaApi) {
+            return;
+        };
+        selectedIndex = emblaApi.selectedScrollSnap();
+    };
+
     let prevBtnEnabled: boolean = false;
     let nextBtnEnabled: boolean = false;
 
@@ -53,7 +63,7 @@
     function onInit(event: { detail: EmblaCarouselType }) {
         emblaApi = event.detail;
         // console.log(emblaApi.slideNodes()); // Access API
-
+        emblaApi.on("select", onSelect);
         if (emblaApi.canScrollNext()) {
             nextBtnEnabled = true;
         } else {
@@ -65,7 +75,12 @@
             prevBtnEnabled = false;
         };
         scrollSnaps = emblaApi.scrollSnapList();
+        
     };
+
+    onDestroy(() => {
+        emblaApi?.destroy();
+    });
 
     const onNavButtonClick = (emblaApi: EmblaCarouselType) => {
         const autoplay: any = emblaApi?.plugins()?.autoplay;
@@ -82,11 +97,10 @@
         onNavButtonClick(emblaApi);
     };
 
-    let selectedIndex: number;
-
     const scrollTo = (index: number) => {
-        selectedIndex = emblaApi.selectedScrollSnap();
         emblaApi.scrollTo(index);
+        const autoplay: any = emblaApi?.plugins()?.autoplay;
+        autoplay.reset();
     };
 
 </script>
@@ -132,7 +146,7 @@
         {#each scrollSnaps as _, index}
             <button
               on:click={() => scrollTo(index)}
-              class={`embla__dot ${(index === selectedIndex) ? "" : ""}`}
+              class={`embla__dot ${(index === selectedIndex) ? "embla__dot--selected" : ""}`}
             >
             </button>
         {/each}
@@ -231,17 +245,31 @@
         justify-content: center;
         border-radius: 50%;
     }
-    .embla__dot:after {
-        box-shadow: inset 0 0 0 0.2rem rgb(234, 234, 234);;
+
+    .embla__dot::after {
+        box-shadow: inset 0 0 0 0.2rem #D79679;
         width: 1.4rem;
         height: 1.4rem;
         border-radius: 50%;
         display: flex;
         align-items: center;
         content: '';
+        transition: box-shadow 0.3s linear, background-color 0.3s linear;
     }
-    .embla__dot--selected:after {
-        box-shadow: inset 0 0 0 0.2rem rgb(54, 49, 61);
+
+    .embla__dot:hover::after {
+        box-shadow: inset 0 0 0 0.2rem #81D0D9;
+    }
+
+    .embla__dot--selected::after {
+        box-shadow: inset 0 0 0 0.2rem #F4FEF2;
+        background-color: #F4FEF2; 
+        transition: box-shadow 0.3s linear, background-color 0.3s linear;
+    }
+
+    .embla__dot--selected:hover::after {
+        box-shadow: inset 0 0 0 0.2rem #F4FEF2;
+        background-color: #F4FEF2; 
     }
 
     @media (max-width: 750px) {

@@ -2,6 +2,8 @@
     import MoonShot from "$lib/images/Art_in_Tech_Services_banner.png";
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import SliderCaseStudies from "$lib/components/sliders/SliderCaseStudies.svelte";
+    import Services from "$lib/components/Services.svelte";
+
 </script>
 
 <svelte:head>
@@ -32,6 +34,9 @@
     <h2 class="heading_02">
         services we provide
     </h2>
+    <div class="services">
+        <Services />
+    </div>
     <h2 class="heading_02">
         why choose us?
     </h2>
@@ -82,6 +87,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 0 1rem;
     }
 
     @media screen and (max-width: 1040px) {
@@ -91,6 +97,14 @@
     }
 
     @media screen and (max-width: 720px) {
+
+        .case_studies_carousel {
+            padding: 0;
+        }
+
+        .intro_banner {
+            padding: 3.5rem 0  0 0;
+        }
         .intro_paragraph_container {
             position: relative;
             padding: 0;
