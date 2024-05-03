@@ -194,7 +194,7 @@
 	@media screen and (max-width: 750px) {
         
         .nav_bar_hidden {
-            top: -5.5rem;
+            top: -8rem;
         }
 
     }

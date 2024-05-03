@@ -51,24 +51,24 @@
     const today = new Date();
     const year = today.getFullYear();
 
-    let panelLeftHovered: boolean = false;
+    let panelLeftHoveredIndex: number | null = null;
 
-    const hoverPanelLeftHandler = () => {
-        panelLeftHovered = true;
+    const hoverPanelLeftHandler = (index: number) => {
+        panelLeftHoveredIndex = index;
     };
 
-    const exitPanelLeftHandler = () => {
-        panelLeftHovered = false;
+    const exitPanelLeftHandler = (index: number) => {
+        panelLeftHoveredIndex = null;
     };
 
-    let panelRightHovered: boolean = false;
+    let panelRightHoveredIndex: number | null = null;
 
-    const hoverPanelRightHandler = () => {
-        panelRightHovered = true;
+    const hoverPanelRightHandler = (index: number) => {
+        panelRightHoveredIndex = index;
     };
 
-    const exitPanelRightHandler = () => {
-        panelLeftHovered = false;
+    const exitPanelRightHandler = (index: number) => {
+        panelRightHoveredIndex = null;
     };
 
 </script>
@@ -101,19 +101,19 @@
                             <div 
                                 role="tabpanel"
                                 tabindex={index}
-                                on:focus={() => hoverPanelLeftHandler()}
-                                on:mouseenter={() => hoverPanelLeftHandler()}
-                                on:mouseover={() => hoverPanelLeftHandler()}
-                                on:mouseleave={() => exitPanelLeftHandler()}
-                                on:mouseout={() => exitPanelLeftHandler()}
-                                on:blur={() => exitPanelLeftHandler()}
+                                on:focus={() => hoverPanelLeftHandler(index)}
+                                on:mouseenter={() => hoverPanelLeftHandler(index)}
+                                on:mouseover={() => hoverPanelLeftHandler(index)}
+                                on:mouseleave={() => exitPanelLeftHandler(index)}
+                                on:mouseout={() => exitPanelLeftHandler(index)}
+                                on:blur={() => exitPanelLeftHandler(index)}
                                 class="nav_section_mobile"
                             >
                                 <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                     <a 
                                         href={footerNavTab.slug} 
                                         class="footer_nav_heading"
-                                        style={panelLeftHovered ? "color: #CFF5F8;" : ""}
+                                        style={panelLeftHoveredIndex === index ? "color: #CFF5F8;" : ""}
                                     >
                                         {footerNavTab.label}
                                     </a>
@@ -153,19 +153,19 @@
                             <div 
                                 role="tabpanel"
                                 tabindex={index}
-                                on:focus={() => hoverPanelRightHandler()}
-                                on:mouseenter={() => hoverPanelRightHandler()}
-                                on:mouseover={() => hoverPanelRightHandler()}
-                                on:mouseleave={() => exitPanelRightHandler()}
-                                on:mouseout={() => exitPanelRightHandler()}
-                                on:blur={() => exitPanelRightHandler()}
+                                on:focus={() => hoverPanelRightHandler(index)}
+                                on:mouseenter={() => hoverPanelRightHandler(index)}
+                                on:mouseover={() => hoverPanelRightHandler(index)}
+                                on:mouseleave={() => exitPanelRightHandler(index)}
+                                on:mouseout={() => exitPanelRightHandler(index)}
+                                on:blur={() => exitPanelRightHandler(index)}
                                 class="nav_section_mobile"
                             >
                                 <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                     <a 
                                         href={footerNavTab.slug} 
                                         class="footer_nav_heading"
-                                        style={panelRightHovered ? "color: #CFF5F8;" : ""}
+                                        style={index === panelRightHoveredIndex ? "color: #CFF5F8;" : ""}
                                     >
                                         {footerNavTab.label}
                                     </a>
@@ -204,19 +204,19 @@
             {:else}
                 <li>
                     <ul 
-                        on:focus={() => hoverPanelLeftHandler()}
-                        on:mouseenter={() => hoverPanelLeftHandler()}
-                        on:mouseover={() => hoverPanelLeftHandler()}
-                        on:mouseleave={() => exitPanelLeftHandler()}
-                        on:mouseout={() => exitPanelLeftHandler()}
-                        on:blur={() => exitPanelLeftHandler()}
+                        on:focus={() => hoverPanelLeftHandler(index)}
+                        on:mouseenter={() => hoverPanelLeftHandler(index)}
+                        on:mouseover={() => hoverPanelLeftHandler(index)}
+                        on:mouseleave={() => exitPanelLeftHandler(index)}
+                        on:mouseout={() => exitPanelLeftHandler(index)}
+                        on:blur={() => exitPanelLeftHandler(index)}
                         class="nav_column"
                     >
                         <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                             <a 
                                 href={footerNavTab.slug} 
                                 class="footer_nav_heading"
-                                style={panelLeftHovered ? "color: #CFF5F8;" : ""}
+                                style={index === panelLeftHoveredIndex ? "color: #CFF5F8;" : ""}
                             >
                                 {footerNavTab.label}
                             </a>
@@ -256,19 +256,19 @@
             {:else}
                 <li>
                     <ul 
-                        on:focus={() => hoverPanelRightHandler()}
-                        on:mouseenter={() => hoverPanelRightHandler()}
-                        on:mouseover={() => hoverPanelRightHandler()}
-                        on:mouseleave={() => exitPanelRightHandler()}
-                        on:mouseout={() => exitPanelRightHandler()}
-                        on:blur={() => exitPanelRightHandler()}
+                        on:focus={() => hoverPanelRightHandler(index)}
+                        on:mouseenter={() => hoverPanelRightHandler(index)}
+                        on:mouseover={() => hoverPanelRightHandler(index)}
+                        on:mouseleave={() => exitPanelRightHandler(index)}
+                        on:mouseout={() => exitPanelRightHandler(index)}
+                        on:blur={() => exitPanelRightHandler(index)}
                         class="nav_column"
                     >
                         <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                             <a 
                                 href={footerNavTab.slug} 
                                 class="footer_nav_heading"
-                                style={panelRightHovered ? "color: #CFF5F8;" : ""}
+                                style={index === panelRightHoveredIndex ? "color: #CFF5F8;" : ""}
                             >
                                 {footerNavTab.label}
                             </a> 

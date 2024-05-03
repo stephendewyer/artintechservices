@@ -19,7 +19,7 @@
         </div>
         <div class="intro_paragraph_container">
             <h1 class="intro_paragraph">
-                delivering state-of-the-art digital technology products since 2001
+                delivering state-of-the-art digital technology products since 2021
             </h1>
         </div>
     </div>
