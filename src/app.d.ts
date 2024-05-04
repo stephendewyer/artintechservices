@@ -48,6 +48,25 @@ declare global {
         pathname: string;
     };
 
+	interface ServicePanel {
+		paragraph: string;
+		skills: string[] | any;
+		imageSrc: string;
+		imageAlt: string;
+		search: string;
+	};
+
+	interface TabPanel {
+        id: string;
+		index: number;
+        label: string;
+		tabImageSrc: string;
+		panel: typeof SvelteComponent<any>;
+		data: any[
+			ServicePanel
+		];
+    }
+
 }
 
 export {};

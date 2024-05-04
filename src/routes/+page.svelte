@@ -6,9 +6,9 @@
     import InvestInUS from "$lib/images/maps/source_locally_map.svg?raw";
     import ArtTechExpertise from "$lib/images/expertise.png";
     import ActionButton from "$lib/components/buttons/ActionButton.svelte";
-    import Consultation from "$lib/images/icons/consultation.svg?raw";
-    import StartProject from "$lib/images/icons/desk_call_bell.svg?raw";
-    import ManageAccount from "$lib/images/icons/manage_account.svg?raw"
+    import Consultation from "$lib/images/icons/actions/consultation_solid.svg?raw";
+    import StartProject from "$lib/images/icons/actions/desk_call_bell_solid.svg?raw";
+    import ManageAccount from "$lib/images/icons/actions/manage_account_solid.svg?raw"
 
     const actions: Action[] = [
         {
@@ -108,7 +108,6 @@
             <ActionButton action={action} />
         {/each}
     </div>
-
 </div>
 
 <style>
@@ -198,13 +197,19 @@
         width: 100%;
         margin: 0 auto;
         display: flex;
-        justify-content: space-evenly;
+        flex-direction: column;
+        align-items: center;
         padding: 1rem 1rem 2rem 1rem;
+        gap: 1rem;
     }
 
     @media screen and (max-width: 1040px) {
         .intro_paragraph {
             padding: 0.75rem;
+        }
+
+        .actions {
+            gap: 0.75rem;
         }
     }
 
@@ -215,7 +220,7 @@
         }
 
         .intro_banner {
-            padding: 3.5rem 0  0 0;
+            padding: 7.75rem 0  0 0;
         }
         .intro_paragraph_container {
             position: relative;
@@ -239,12 +244,12 @@
 
         #art_and_tech_expertise {
             flex-direction: column-reverse;
-
         }
 
         .actions {
             flex-direction: column;
             align-items: center;
+            gap: 0.5rem;
         }
     }
     

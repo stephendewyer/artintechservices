@@ -77,14 +77,14 @@
 <div class="services">
     <ul class="services_column">
         {#each sortedServicesDataWithIDs.slice(0, sortedServicesDataWithIDs.length/2) as serviceData, index}
-            <li>
+            <li class="service_button_container">
                 <ServiceButton service={serviceData} />
             </li>
         {/each}
     </ul>
     <ul class="services_column">
         {#each sortedServicesDataWithIDs.slice(sortedServicesDataWithIDs.length/2, sortedServicesDataWithIDs.length) as serviceData, index}
-            <li>
+            <li class="service_button_container">
                 <ServiceButton service={serviceData} />
             </li>
         {/each}
@@ -116,6 +116,14 @@
 
         .services_column {
             align-items: center;
+        }
+
+        .service_button_container {
+            height: 6rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
     }
 </style>

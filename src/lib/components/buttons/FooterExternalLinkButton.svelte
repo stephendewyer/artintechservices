@@ -56,6 +56,10 @@
             padding: 0.5rem 1rem;
             border: solid 1px #FAE6D8;
         }
+
+        .button_external_link:hover {
+            border: solid 1px #CFF5F8;
+        }
     }
 
     @media screen and (max-width: 750px) {

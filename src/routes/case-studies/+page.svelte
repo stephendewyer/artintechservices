@@ -52,6 +52,7 @@
                 <a 
                     class="case_study_heading_link"
                     href={caseStudy.url}
+                    target="_blank" rel="noopener noreferrer"
                 >
                     <h2 class="case_study_heading">
                         {caseStudy.label}

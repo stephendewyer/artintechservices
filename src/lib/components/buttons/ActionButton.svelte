@@ -27,11 +27,13 @@
         flex-direction: row;
         align-items: center;
         gap: 1rem;
-        background-color: transparent;
+        background-color: #171F29;
         border: none;
         cursor: pointer;
         margin: 0 1rem 0 0;
         transition: margin 0.3s ease-out;
+        border-radius: 3rem;
+        padding: 1rem 2rem;
     }
 
     .action_button:hover {
@@ -40,17 +42,20 @@
 
     .action_button:hover > .arrow_container {
         margin: 0 0 0 1rem;
-        fill: #d79679;
+        fill: #CCD9D3;
     }
 
     .action_button:hover > .action_image_and_label > .label_container {
-        color: #d79679;
+        color: #CCD9D3;
+    }
+
+    .action_button:hover > .action_image_and_label > .image_container {
+        fill: #CCD9D3;
     }
 
     .action_image_and_label {
-        width: 10rem;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 1rem;
         align-items: center;
     }
@@ -61,24 +66,47 @@
         align-items: center;
         justify-content: center;
         height: 10rem;
-        width: 100%;
+        width: 10rem;
         padding: 0.5rem;
-        color: #36261E;
-        fill: #36261E;
+        color: #D79679;
+        fill: #D79679;
     }
 
     .label_container {
-        width: 100%;
+        color: #D79679;
         transition: color 0.3s ease-out;
+        text-align: left;
+        width: 14rem;
     }
 
     .arrow_container {
         width: 1.5rem;
-        fill: #838b6a;
+        fill: #D79679;
         transition: margin 0.3s ease-out, fill 0.3s linear;
     }
 
+    @media screen and (max-width: 1440px) {
+
+        .image_container {
+            height: 9rem;
+            width: 9rem;
+        }
+
+        .label_container {
+            width: 10rem;
+        }
+    }
+
     @media screen and (max-width: 1080px) {
+
+        .image_container {
+            height: 8rem;
+            width: 8rem;
+        }
+
+        .label_container {
+            width: 8rem;
+        }
 
         .arrow_container {
             width: 1.25rem;
@@ -89,6 +117,7 @@
     @media screen and (max-width: 720px) {
 
         .action_button {
+            padding: 0.5rem 1rem;
             gap: 0.5rem;
         }
         .action_button:hover {
@@ -104,7 +133,12 @@
         }
 
         .label_container {
-            width: auto;
+            width: 6rem;
+        }
+
+        .image_container {
+            height: 7rem;
+            width: 7rem;
         }
 
         .arrow_container {
