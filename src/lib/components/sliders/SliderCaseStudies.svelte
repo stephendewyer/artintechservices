@@ -192,8 +192,8 @@
         width: 2.5rem;
         padding: 0;
         background: none;
-        color: #D79679;
-        fill: #D79679;
+        color: #838b6a;
+        fill: #838b6a;
         border: none;
         display: flex;
         flex-direction: column;
@@ -203,8 +203,8 @@
     }
 
     .arrow_button:hover {
-        color: #81D0D9;
-        fill: #81D0D9;
+        color: #d79679;
+        fill: #d79679;
     }
 
     .embla__container {
@@ -248,7 +248,7 @@
     }
 
     .embla__dot::after {
-        box-shadow: inset 0 0 0 0.2rem #D79679;
+        box-shadow: inset 0 0 0 0.2rem #838b6a;
         width: 1.4rem;
         height: 1.4rem;
         border-radius: 50%;
@@ -259,7 +259,7 @@
     }
 
     .embla__dot:hover::after {
-        box-shadow: inset 0 0 0 0.2rem #81D0D9;
+        box-shadow: inset 0 0 0 0.2rem #d79679;
     }
 
     .embla__dot--selected::after {

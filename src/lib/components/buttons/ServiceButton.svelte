@@ -46,12 +46,12 @@
     }
 
     .service_button:hover > .icon_and_label > .service_label {
-        color: #81D0D9;
+        color: #d79679;
     }
 
     .service_button:hover > .arrow_container {
         margin: 0 0 0 1rem;
-        fill: #81D0D9;
+        fill: #d79679;
     }
 
     .service_icon_container {
@@ -65,20 +65,20 @@
     }
 
     .service_label {
-        color: #D79679;
+        color: #838b6a;
         transition: color 0.3s linear;
     }
 
     .arrow_container {
-        width: 2.5rem;
-        fill: #D79679;
+        width: 1.5rem;
+        fill: #838b6a;
         transition: margin 0.3s ease-out, fill 0.3s linear;
     }
 
     @media screen and (max-width: 1080px) {
 
         .arrow_container {
-            width: 1.75rem;
+            width: 1.25rem;
         }
 
         .service_icon_container {
@@ -116,8 +116,8 @@
         }
 
         .arrow_container {
-            width: 1.25rem;
-            min-width: 1.25rem;
+            width: 1rem;
+            min-width: 0.8rem;
         }
 
     }

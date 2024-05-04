@@ -66,7 +66,14 @@ img {
 	width: 100%;
 }
 
-@media (max-width: 1440px) {
+.page {
+    margin: 12rem 0 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (max-width: 1440px) {
 
     body {
         font-size: 1.175rem;
@@ -100,10 +107,14 @@ img {
     input, textarea {
         font-size: 1.175rem;
     }
+
+    .page {
+        margin: 10rem 0 0 0;
+    }
     
 }
 
-@media (max-width: 1080px) {
+@media screen and (max-width: 1080px) {
 
     h1 {
         font-size: 1.5rem;
@@ -116,9 +127,13 @@ img {
     h3 {
         font-size: 1rem;
     }
+
+    .page {
+        margin: 8rem 0 0 0;
+    }
 }
 
-@media (max-width: 720px) {
+@media screen and (max-width: 720px) {
 
     body {
         font-size: 1rem;
@@ -151,5 +166,9 @@ img {
     
     input, textarea {
         font-size: 1rem;
+    }
+
+    .page {
+        margin: 8rem 0 0 0;
     }
 }

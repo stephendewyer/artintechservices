@@ -40,11 +40,11 @@
 
     .action_button:hover > .arrow_container {
         margin: 0 0 0 1rem;
-        fill: #81D0D9;
+        fill: #d79679;
     }
 
     .action_button:hover > .action_image_and_label > .label_container {
-        color: #81D0D9;
+        color: #d79679;
     }
 
     .action_image_and_label {
@@ -62,6 +62,7 @@
         justify-content: center;
         height: 10rem;
         width: 100%;
+        padding: 0.5rem;
         color: #36261E;
         fill: #36261E;
     }
@@ -72,15 +73,15 @@
     }
 
     .arrow_container {
-        width: 2.5rem;
-        fill: #D79679;
+        width: 1.5rem;
+        fill: #838b6a;
         transition: margin 0.3s ease-out, fill 0.3s linear;
     }
 
     @media screen and (max-width: 1080px) {
 
         .arrow_container {
-            width: 1.75rem;
+            width: 1.25rem;
         }
 
     }
@@ -107,8 +108,8 @@
         }
 
         .arrow_container {
-            width: 1.25rem;
-            min-width: 1.25rem;
+            width: 1rem;
+            min-width: 1rem;
         }
 
     }
