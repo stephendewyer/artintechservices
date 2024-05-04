@@ -29,6 +29,12 @@ declare global {
         content: AccordionTab[] | null;
     }
 
+	interface Action {
+		image: string;
+		label: string;
+		pathname: string;
+	}
+
 	interface Service {
         image: string;
         label: string;

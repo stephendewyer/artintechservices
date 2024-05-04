@@ -3,6 +3,30 @@
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import SliderCaseStudies from "$lib/components/sliders/SliderCaseStudies.svelte";
     import Services from "$lib/components/Services.svelte";
+    import InvestInUS from "$lib/images/maps/source_locally_map.svg?raw";
+    import ArtTechExpertise from "$lib/images/expertise.png";
+    import ActionButton from "$lib/components/buttons/ActionButton.svelte";
+    import Consultation from "$lib/images/icons/consultation.svg?raw";
+    import StartProject from "$lib/images/icons/desk_call_bell.svg?raw";
+    import ManageAccount from "$lib/images/icons/manage_account.svg?raw"
+
+    const actions: Action[] = [
+        {
+            image: Consultation,
+            pathname: "/request-a-consultation",
+            label: "request a consultation"
+        },
+        {
+            image: StartProject,
+            pathname: "/request-to-start-a-project",
+            label: "request to start a project"
+        },
+        {
+            image: ManageAccount,
+            pathname: "/login-client",
+            label: "manage account"
+        }
+    ];
 
 </script>
 
@@ -40,9 +64,50 @@
     <h2 class="heading_02">
         why choose us?
     </h2>
+    <div class="why_choose_us_item">
+        <div 
+            class="why_choose_us_image_and_paragraph"
+            id="investing_in_local_US_talent"
+        >
+            <div class="choose_us_image_container">
+                {@html InvestInUS}
+            </div>
+            <div class="why_choose_us_paragraph_container">
+                <h3 class="why_choose_us_heading">
+                investing in local, world-class talent in the U.S.
+                </h3>
+                <p class="why_choose_us_paragraph">
+                    We provide all of our services from our in-house team with talent cultivated in the United States. We are a U.S. company.  Working with us is an investment in the cultivation of talent in the United States.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="why_choose_us_item">
+        <div 
+            class="why_choose_us_image_and_paragraph"
+            id="art_and_tech_expertise"
+        >
+            <div class="why_choose_us_paragraph_container">
+                <h3 class="why_choose_us_heading">
+                    receive expertise on art and digital technology to create digital products optimized for human experiences
+                </h3>
+                <p class="why_choose_us_paragraph">
+                    We combine the vision and technical expertise to make groundbreaking digital products.
+                </p> 
+            </div>
+            <div class="choose_us_image_container">
+                <img src={ArtTechExpertise} alt="art and tech expertise dumbbell" />
+            </div>
+        </div>
+    </div>
     <h2 class="heading_02">
         work with us
     </h2>
+    <div class="actions">
+        {#each actions as action, index}
+            <ActionButton action={action} />
+        {/each}
+    </div>
 
 </div>
 
@@ -90,6 +155,53 @@
         padding: 0 1rem;
     }
 
+    .why_choose_us_item {
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .why_choose_us_heading {
+        width: 100%;
+        max-width: 40rem;
+        text-align: center;
+    }
+
+    .why_choose_us_image_and_paragraph {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .choose_us_image_container {
+        width: 50%;
+    }
+
+    .why_choose_us_paragraph_container {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .why_choose_us_paragraph {
+        width: 100%;
+        max-width: 40rem;
+    }
+
+    .actions {
+        max-width: 1440px;
+        width: 100%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-evenly;
+        padding: 1rem 1rem 2rem 1rem;
+    }
+
     @media screen and (max-width: 1040px) {
         .intro_paragraph {
             padding: 0.75rem;
@@ -111,6 +223,28 @@
         }
         .intro_paragraph {
             width: 100%;
+        }
+
+        .choose_us_image_container {
+            width: 100%;
+        }
+
+        .why_choose_us_paragraph_container {
+            width: 100%;
+        }
+
+        #investing_in_local_US_talent {
+            flex-direction: column;
+        }
+
+        #art_and_tech_expertise {
+            flex-direction: column-reverse;
+
+        }
+
+        .actions {
+            flex-direction: column;
+            align-items: center;
         }
     }
     

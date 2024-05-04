@@ -7,7 +7,7 @@
     import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
     import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
-  import ServiceButton from "./buttons/ServiceButton.svelte";
+    import ServiceButton from "./buttons/ServiceButton.svelte";
 
     const servicesData: Service[] = [
         {
