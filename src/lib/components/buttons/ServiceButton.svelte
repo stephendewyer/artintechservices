@@ -29,13 +29,13 @@
         background-color: transparent;
         border: none;
         gap: 1rem;
-        padding: 0 1rem 0 0;
-        transition: padding 0.3s ease-out;
+        margin: 0 1rem 0 0;
+        transition: margin 0.3s ease-out;
         cursor: pointer;
     }
 
     .service_button:hover {
-        padding: 0;
+        margin: 0;
     }
     
     .icon_and_label {
@@ -93,7 +93,7 @@
             gap: 0.5rem;
         }
         .service_button:hover {
-            padding: 0 0.5rem 0 0;
+            margin: 0 0.5rem 0 0;
         }
 
         .icon_and_label {

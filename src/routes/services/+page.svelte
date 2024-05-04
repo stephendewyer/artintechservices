@@ -203,7 +203,7 @@
             };
         });
     });
-    
+
 </script>
 <svelte:head>
     <title>Art in Tech Services - services</title>
@@ -236,6 +236,14 @@
         display: flex;
         flex-direction: row;
         width: 100%;
+        padding: 1rem;
+        max-width: 2000px;
+        gap: 1rem;
+    }
+    @media screen and (max-width: 720px) {
+        .tabpanel {
+            flex-direction: column;
+        }
     }
 
 </style>

@@ -70,6 +70,7 @@
         padding: 0.5rem;
         color: #D79679;
         fill: #D79679;
+        transition: fill 0.3s ease-out;
     }
 
     .label_container {

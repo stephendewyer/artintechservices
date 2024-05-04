@@ -24,4 +24,8 @@
 </div>
 <style>
 
+    .service_panel {
+        padding: 1rem;
+    }
+
 </style>
