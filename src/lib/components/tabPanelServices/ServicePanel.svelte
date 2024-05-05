@@ -15,7 +15,12 @@
     <div class="service_info">
         {#each panel_data as serviceData, index}
             <div class="image_container">
-                <img src={serviceData?.imageSrc} alt={serviceData?.imageAlt} />
+                <img 
+                    fetchpriority="high" 
+                    loading="eager"
+                    src={serviceData?.imageSrc} 
+                    alt={serviceData?.imageAlt} 
+                />
             </div>
             <p>
                 {serviceData?.paragraph}
