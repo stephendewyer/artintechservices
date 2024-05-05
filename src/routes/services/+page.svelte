@@ -12,6 +12,15 @@
     import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
     import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
+    import DeepNeuralNetwork from "$lib/images/services/example_of_a_deep_neural_network.png";
+    import SeamlessFingerprintBackground from "$lib/images/services/fingerprint_seamless_background.jpg";
+    import WindSockWindIndicator from "$lib/images/services/wind_socks_for_wind_indicator.jpg";
+    import TucsonPhotograph from "$lib/images/services/Tucson,_Arizona_19_April_2024.jpg";
+    import Code from "$lib/images/services/coding.jpg";
+    import DesignThinking from "$lib/images/services/UX_design.jpg";
+    import VideoCamera from "$lib/images/services/videography.jpg";
+    import OakTree from "$lib/images/services/Savannah,_Georgia.jpg";
+
     import { page } from "$app/stores";
 
     const servicesTabPanels: TabPanel[] = [
@@ -36,8 +45,8 @@
                         "dimensionality reduction",
                         "model selection and boosting including XGBoost"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: DeepNeuralNetwork,
+                    imageAlt: "example of a deep neural network",
                     search: "?service=artificial-intelligence"
                 }
             ]
@@ -56,8 +65,8 @@
                         "brand definition",
                         "logo design"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: SeamlessFingerprintBackground,
+                    imageAlt: "seamless fingerprint pattern",
                     search: "?service=brand-identity-design"
                 }
             ]
@@ -74,8 +83,8 @@
                     skills: [
                         "D3.js"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: WindSockWindIndicator,
+                    imageAlt: "wind sock wind indicator",
                     search: "?service=data-visualization"
                 }
             ]
@@ -93,8 +102,8 @@
                         "production",
                         "editing"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: TucsonPhotograph,
+                    imageAlt: "photo of painted rock in Tucson, Arizona",
                     search: "?service=photography"
                 }
             ]
@@ -120,8 +129,8 @@
                         "Section 508 and WCAG 2.1 compliance",
                         "custom content management development"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: Code,
+                    imageAlt: "code",
                     search: "?service=software-development"
                 }
             ]
@@ -148,8 +157,8 @@
                         "content strategy",
                         "copy writing and editing"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: DesignThinking,
+                    imageAlt: "UX design",
                     search: "?service=user-experience-design"
                 }
             ]
@@ -167,8 +176,8 @@
                         "production",
                         "editing"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: VideoCamera,
+                    imageAlt: "video camera",
                     search: "?service=videography"
                 }
             ]
@@ -186,8 +195,8 @@
                         "interface aesthetics",
                         "visual commmunication"
                     ],
-                    imageSrc: "test",
-                    imageAlt: "test",
+                    imageSrc: OakTree,
+                    imageAlt: "Oak tree",
                     search: "?service=visual-design"
                 }
             ]
@@ -240,6 +249,11 @@
         max-width: 2000px;
         gap: 1rem;
     }
+
+    .panel_container {
+        width: 100%;
+    }
+    
     @media screen and (max-width: 720px) {
         .tabpanel {
             flex-direction: column;
