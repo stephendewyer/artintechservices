@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onDestroy } from "svelte";
+    import Checkbox from "$lib/components/inputs/Checkbox.svelte";
+    import { onDestroy } from "svelte";
 
     export let panel_data: ServicePanel[] | [null];
 
@@ -9,7 +10,8 @@
 
     onDestroy(() => {
         panel_data = [null];
-    })
+    });
+
 </script>
 <div class="service_panel">
     <div class="service_info">
@@ -35,11 +37,12 @@
         {/each}
     </div>
     <div class="select">
-        <input 
-            type="checkbox" 
-            value={checkboxValue}
-            checked={checkboxChecked}
-        />
+        <Checkbox 
+            bind:checked={checkboxChecked} 
+            bind:value={checkboxValue}
+        >
+            add to my requested services
+        </Checkbox>
     </div>
 </div>
 <style>
@@ -55,7 +58,11 @@
     }
 
     .select {
+        padding: 1rem;
         width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .image_container {
