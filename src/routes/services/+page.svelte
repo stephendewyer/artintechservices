@@ -3,6 +3,7 @@
     import Tabs from "$lib/components/tabPanelServices/Tabs.svelte";
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { v4 as uuidv4 } from 'uuid';
+    import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
     import ServicePanel from "$lib/components/tabPanelServices/ServicePanel.svelte";
     import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
     import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
@@ -20,6 +21,8 @@
     import DesignThinking from "$lib/images/services/UX_design.jpg";
     import VideoCamera from "$lib/images/services/videography.jpg";
     import OakTree from "$lib/images/services/Savannah,_Georgia.jpg";
+    import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
+    import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
 
     import { page } from "$app/stores";
 
@@ -224,6 +227,40 @@
 
 <div class="page">
     <h1>services</h1>
+    <div class="shopping_container">
+        <h2 class="shopping_heading">
+                request for my project
+            </h2>
+        <div class="shopping_tab_container">
+            <div class="shopping_tab">
+                <div class="shopping_cart">
+                    {@html ShoppingCart}
+                </div>
+                <table class="shopping_items">
+                    <tbody>
+                        {#each $RequestedServicesStore as service, index}
+                            {#if (service.requested === true)}
+                                <tr>
+                                    <td>
+                                        <h4 class="service_heading">
+                                            {service.service}
+                                        </h4>
+                                    </td>
+                                </tr>
+                            {/if}
+                        {/each}
+                    </tbody>
+                </table>
+            </div>
+            <div class="action_tab_container">
+                <div class="action_tab">
+                    <CallToActionButton >
+                        continue to start project request
+                    </CallToActionButton>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="tabpanel">
         <div class="tabs_container">
             <Tabs 
@@ -241,6 +278,78 @@
 </div>
 
 <style>
+
+    .shopping_container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 1rem;
+        position: relative;
+    }
+    .shopping_tab_container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .shopping_tab {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        gap: 1rem;
+        margin-left: 33%;
+    }
+
+    .shopping_heading {
+        width: 100%;
+        text-align: center;
+        font-size: 1.5rem;
+        padding: 0 0 1rem 0;
+    }
+
+    .shopping_cart {
+        width: 8rem;
+        fill: #36261E;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    table {
+        border-spacing: 0;
+        width: 20rem;
+        table-layout: fixed;
+    }
+
+    tbody > tr {
+        height:auto;
+        padding: 0;
+    }
+
+    .service_heading {
+        padding: 0.5rem 1rem;
+        margin: 0;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: #CBC6C2;
+    }
+
+    .action_tab_container{
+        position: relative;
+        width: 33%;
+    }
+
+    .action_tab {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
     .tabpanel {
         display: flex;
         flex-direction: row;

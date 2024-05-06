@@ -6,19 +6,14 @@
     
     let checkboxID = uuidv4();
     
-    const handleChange = () => {
-        checked = !checked;
-    };
-
 </script>
 
 <div class="service_input_and_label">
     <input 
         type="checkbox" 
         id={checkboxID}
-        value={value}
-        checked={checked}
-        on:change={handleChange}
+        bind:value={value}
+        bind:checked={checked}
         class="cbx"
         style="display: none;"
     />
