@@ -225,8 +225,6 @@
         });
     };
 
-    // $: console.log($RequestedServicesStore);
-
 </script>
 <svelte:head>
     <title>Art in Tech Services - services</title>
@@ -272,9 +270,11 @@
             </div>
             <div class="action_tab_container">
                 <div class="action_tab">
-                    <CallToActionButton >
-                        continue to start project request
-                    </CallToActionButton>
+                    <a href="/request-to-start-a-project">
+                        <CallToActionButton >
+                            continue to start project request
+                        </CallToActionButton>
+                    </a>
                 </div>
             </div>
         </div>

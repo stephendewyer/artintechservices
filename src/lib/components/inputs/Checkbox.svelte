@@ -1,11 +1,16 @@
 <script lang="ts">
     import { v4 as uuidv4 } from 'uuid';
 
+    export let valueChanged: boolean = false;
     export let checked: boolean = false;
     export let value: string;
     
     let checkboxID = uuidv4();
-    
+
+    const handleChangeHandler = () => {
+        valueChanged = true;
+    };
+
 </script>
 
 <div class="service_input_and_label">
@@ -14,6 +19,7 @@
         id={checkboxID}
         bind:value={value}
         bind:checked={checked}
+        on:change={() => handleChangeHandler()}
         class="cbx"
         style="display: none;"
     />
