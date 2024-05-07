@@ -23,6 +23,7 @@
     import OakTree from "$lib/images/services/Savannah,_Georgia.jpg";
     import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
+    import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
 
     import { page } from "$app/stores";
 
@@ -216,6 +217,16 @@
         });
     });
 
+    const cancelServiceClickHandler = (serviceSelected: ServiceSelected) => {
+        $RequestedServicesStore.forEach((service, index) => {
+            if (serviceSelected.service === service.service) {
+                $RequestedServicesStore[index].requested = !$RequestedServicesStore[index].requested;
+            };
+        });
+    };
+
+    // $: console.log($RequestedServicesStore);
+
 </script>
 <svelte:head>
     <title>Art in Tech Services - services</title>
@@ -241,10 +252,17 @@
                         {#each $RequestedServicesStore as service, index}
                             {#if (service.requested === true)}
                                 <tr>
-                                    <td>
+                                    <td class="service_selected">
                                         <h4 class="service_heading">
                                             {service.service}
                                         </h4>
+                                        <button 
+                                            on:click={() => cancelServiceClickHandler(service)}
+                                            on:keyup={() => cancelServiceClickHandler(service)}
+                                            class="cancel_service_button"
+                                        >
+                                            {@html CloseIcon}
+                                        </button>
                                     </td>
                                 </tr>
                             {/if}
@@ -287,11 +305,13 @@
         padding: 1rem;
         position: relative;
     }
+
     .shopping_tab_container {
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: center;
+        gap: 1rem;
     }
 
     .shopping_tab {
@@ -326,7 +346,7 @@
     }
 
     tbody > tr {
-        height:auto;
+        height: auto;
         padding: 0;
     }
 
@@ -339,15 +359,44 @@
         background-color: #CBC6C2;
     }
 
-    .action_tab_container{
+    .action_tab_container {
+        display: flex;
         position: relative;
         width: 33%;
+
+    }
+
+    .service_selected {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .cancel_service_button {
+        cursor: pointer;
+        fill: #36261E;
+        width: 1.25rem;
+        min-width: 1.25rem;
+        margin: 0 0.5rem 0 0;
+        background-color: transparent;
+        border: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0;
     }
 
     .action_tab {
         position: absolute;
         left: 0;
         right: 0;
+        top: 0;
+        bottom: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
     }
 
     .tabpanel {
@@ -362,8 +411,67 @@
     .panel_container {
         width: 100%;
     }
+
+    @media screen and (max-width: 1440px) {
+
+    }
+
+    @media screen and (max-width: 1080px) {
+
+        .shopping_tab_container {
+            width: 100%;
+            justify-content: space-evenly;
+        }
+
+        .shopping_tab {
+            margin-left: 0;
+        }
+        
+    }
     
     @media screen and (max-width: 720px) {
+        .shopping_tab_container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .shopping_tab {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: start;
+            gap: 0.5rem;
+            margin-left: 0;
+        }
+
+        .shopping_heading {
+
+            font-size: 1.15rem;
+            padding: 0 0 1rem 0;
+        }
+
+        .shopping_cart {
+            width: 5rem;
+            min-width: 5rem;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        .action_tab_container {
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .action_tab {
+            position: relative;
+        }
+
         .tabpanel {
             flex-direction: column;
         }

@@ -67,6 +67,11 @@ declare global {
 		];
     }
 
+	interface ServiceSelected {
+        service: string;
+        requested: boolean;
+    };
+
 }
 
 export {};

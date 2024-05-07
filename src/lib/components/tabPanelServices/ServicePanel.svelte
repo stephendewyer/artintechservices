@@ -1,6 +1,6 @@
 <script lang="ts">
     import Checkbox from "$lib/components/inputs/Checkbox.svelte";
-    import { onDestroy } from "svelte";
+    import { afterUpdate, onDestroy } from "svelte";
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
 
     export let panel_data: ServicePanel[] | [null];
@@ -12,10 +12,13 @@
     // get the requested service value from store
 
     let requestedService: boolean = false;
+
+    let requestedServiceIndex: number;
     
     $RequestedServicesStore.forEach((service, index) => {
         const serviceSearchFormat = service.service.split(' ').join('-');
         if (search === serviceSearchFormat) {
+            requestedServiceIndex = index;
             requestedService = $RequestedServicesStore[index].requested;
         };
     });
@@ -23,20 +26,19 @@
     let checkboxChecked: boolean = requestedService;
 
     $: if (checkboxChecked) {
-        $RequestedServicesStore.forEach((service, index) => {
-            const serviceSearchFormat = service.service.split(' ').join('-');
-            if (search === serviceSearchFormat) {
-                $RequestedServicesStore[index].requested = true;
-            };
-        });
+        $RequestedServicesStore[requestedServiceIndex].requested = true;
     } else {
+        $RequestedServicesStore[requestedServiceIndex].requested = false;
+    };
+
+    afterUpdate(() => {
         $RequestedServicesStore.forEach((service, index) => {
             const serviceSearchFormat = service.service.split(' ').join('-');
             if (search === serviceSearchFormat) {
-                $RequestedServicesStore[index].requested = false;
+                checkboxChecked = $RequestedServicesStore[index].requested;
             };
         });
-    };
+    });
 
     onDestroy(() => {
         panel_data = [null];
