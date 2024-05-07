@@ -13,6 +13,12 @@ declare global {
 
 	}
 
+	interface ResponseObj {
+        success: string;
+        error: string;
+        status: number | null;
+    };
+
 	interface NavTab {
 		id: number;
 		label: string;

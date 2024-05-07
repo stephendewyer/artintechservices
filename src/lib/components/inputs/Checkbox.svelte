@@ -46,6 +46,7 @@
     .service_input_and_label {
         display: flex;
         flex-direction: row;
+        align-items: center;
         margin-bottom: 20px;
     }
 

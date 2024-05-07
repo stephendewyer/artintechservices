@@ -1,0 +1,66 @@
+<script lang="ts">
+    export let clicked = false;
+</script>
+<button 
+    on:click={() => clicked = true}
+    on:keyup={() => clicked = true}
+    class="call_to_action_button"
+>
+    <div class="label">
+        <slot />
+    </div>
+</button>
+
+<style>
+    .call_to_action_button {
+        border: none;
+        color: #FAE6D8;
+        background: #838B6A;
+        position: relative;
+        padding: 0.75rem 1.5rem;
+        border-radius: 2rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+        will-change: color, background-color;
+        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+        margin-left: 0;
+    }
+
+    .call_to_action_button:hover {
+        color: #DEDDD5;
+        background-color: #706362;
+    }
+
+    .label {
+        font-size: 1.5rem;
+        text-align: left;
+        font-weight: bold;
+        
+    }
+
+    @media screen and (max-width: 1440px) {
+        .label {
+            font-size: 1.35rem;
+            width: 100%;
+            max-width: 14rem;     
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        .label {
+            font-size: 1.2rem;    
+            max-width: 12rem;             
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .label {
+            font-size: 1.05rem;     
+            max-width: 10rem;            
+        }
+    }
+
+</style>
