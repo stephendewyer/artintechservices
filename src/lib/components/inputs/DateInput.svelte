@@ -4,7 +4,7 @@
     export let inputID: string;
     export let inputName: string;
     export let inputLabel: boolean;
-    export let dateInputValue: string;
+    export let dateInputValue: Date;
     export let isValid: boolean;
     export let dateInputErrorMessage: string;
     export let required: boolean;
@@ -16,10 +16,10 @@
     const dateInputValueChangedHandler = () => {
         if (required) {
             if (dateInputTouched) {
-                if (dateInputValue === "") {
+                if (!dateInputValue) {
                     isValid = false;
                     errorMessage = dateInputErrorMessage;
-                } else if (dateInputValue !== "") {
+                } else if (dateInputValue) {
                     isValid = true;
                 }
             } else if (!dateInputTouched) {
@@ -31,10 +31,10 @@
     const dateInputFocusChangedHandler = () => {
         if (required) {
             if (dateInputTouched) {
-                if (dateInputValue === "") {
+                if (!dateInputValue) {
                     isValid = false;
                     errorMessage = dateInputErrorMessage;
-                } else if (dateInputValue !== "") {
+                } else if (dateInputValue) {
                     isValid = true;
                 };
             } else if (!dateInputTouched) {
@@ -46,10 +46,10 @@
     const dateInputBlurChangedHandler = () => {
         if (required) {
             dateInputTouched = true;
-            if (dateInputValue === "") {
+            if (!dateInputValue) {
                 isValid = false;
                 errorMessage = dateInputErrorMessage;
-            } else if (dateInputValue !== "") {
+            } else if (dateInputValue) {
                 isValid = true;
             };
         };
@@ -107,7 +107,7 @@
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         border-width: 2px;
-        border-color: #EFF9F2;
+        border-color: #AEA89D;
         border-style: solid;
         transition: border-color 0.2s linear;
         outline: none;

@@ -1,10 +1,13 @@
 <script lang="ts">
     export let clicked = false;
+    export let disable: boolean = false;
 </script>
 <button 
     on:click={() => clicked = true}
     on:keyup={() => clicked = true}
     class="call_to_action_button"
+    type="submit"
+    disabled={disable}
 >
     <div class="label">
         <slot />
@@ -17,7 +20,7 @@
         color: #FAE6D8;
         background: #838B6A;
         position: relative;
-        padding: 0.75rem 1.5rem;
+        padding: 1rem 1.75rem;
         border-radius: 2rem;
         display: flex;
         flex-direction: row;

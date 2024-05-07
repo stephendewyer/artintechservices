@@ -9,6 +9,7 @@
     export let phoneInputValue: E164Number | null = '+36301234567';
     export let isValid: boolean = true;
     export let required: boolean;
+    export let phoneInputErrorMessage: string;
 
     let selectedCountry: CountryCode | null = 'US';
 
@@ -16,7 +17,6 @@
     let detailedValue: DetailedValue | null = null;
 
     let phoneInputTouched: boolean = false;
-    let phoneInputErrorMessage: string = "";
 
     const phoneInputValueChangedHandler = () => {
         if (required) {
@@ -113,7 +113,7 @@
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         border-width: 2px;
-        border-color: #EFF9F2;
+        border-color: #AEA89D;
         border-style: solid;
         transition: border-color 0.2s linear;
         outline: none;

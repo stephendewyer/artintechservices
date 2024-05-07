@@ -13,8 +13,18 @@
     import TextInput from "$lib/components/inputs/TextInput.svelte";
     import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
     import DocumentFileInput from "$lib/components/inputs/DocumentFileInput.svelte";
-    import DocumentIcon from "$lib/images/icons/document.svg?raw"
+    import DocumentIcon from "$lib/images/icons/document.svg?raw";
+    import EmailInput from "$lib/components/inputs/EmailInput.svelte";
+    import DateInput from "$lib/components/inputs/DateInput.svelte";
+    import TextArea from "$lib/components/inputs/TextArea.svelte";
+    import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import type { E164Number } from 'svelte-tel-input/types';
+    import PhoneInput from "$lib/components/inputs/PhoneInput.svelte";
+    import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
+    import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
+    import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
 
     interface Service {
         service: string;
@@ -85,34 +95,48 @@
     let nameLast: string = "";
     let email: string = "";
     let company: string = "";
+    let phone: E164Number | null = null;
     let URL: string = "";
     let aboutProject: string = "";
     let projectStartDate: Date = new Date(0);
-    let projectEndDate: Date | null = null;
-    let projectBudget: number | null = 0;
-
+    let projectEndDate: Date = new Date(0);
+    let projectBudget: number | null = null;
     let imageFileInputValue: string = "";
     let image: any;
-
     let documentFileInputValue: string = "";
-
     let documentFileName: string = "";
-
-    $: if (documentFileInputValue !== "") {
-        documentFileName = documentFileInputValue.split(`\\`)[2];
-    };
-
     let document: any;
 
-    let documentFileIsValid: boolean = true;
-
+    let nameFirstIsValid: boolean = true;
+    let nameLastIsValid: boolean = true;
+    let emailIsValid: boolean = true;
+    let companyIsValid: boolean = true;
+    let phoneIsValid: boolean = true;
+    let URLisValid: boolean = true;
+    let aboutProjectIsValid: boolean = true;
+    let projectStartDateIsValid: boolean = true;
+    let projectEndDateIsValid: boolean = true;
     let imageFileIsValid: boolean = true;
+    let documentFileIsValid: boolean = true;
+    let projectBudgetIsValid: boolean = true;
 
     let responseItem: ResponseObj = {
         success: "",
         error: "",
         status: null
     };
+
+    $: if (documentFileInputValue !== "") {
+        documentFileName = documentFileInputValue.split(`\\`)[2];
+    };
+
+    // after submit
+	let item: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
 
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
@@ -121,6 +145,10 @@
             status: null;
         }, 4000)
     };
+
+    const sendProjectRequestHandler = () => {
+
+    }
 
     let pending: boolean = false;
 
@@ -135,7 +163,7 @@
 	<meta property="og:image" content="{ArtInTechServicesBanner}" />
 </svelte:head>
 <div class="page">
-    <form class="form">
+    <form class="form" on:submit|preventDefault={sendProjectRequestHandler} >
         <p> 
             Have a digital project idea?<br />  
             Want help on an existing digital project?  <br/>
@@ -179,11 +207,11 @@
                     inputName="name_first"
                     inputLabel={true}
                     textInputValue={nameFirst}
-                    isValid={true}
+                    isValid={nameFirstIsValid}
                     textInputErrorMessage="first name required"
                     required={true}
                 >
-                    first name
+                    *first name
                 </TextInput>
             </div>
             <div class="input_column">
@@ -193,17 +221,133 @@
                     inputName="name_last"
                     inputLabel={true}
                     textInputValue={nameLast}
-                    isValid={true}
+                    isValid={nameLastIsValid}
                     textInputErrorMessage="last name required"
                     required={true}
                 >
-                    last name
+                    *last name
                 </TextInput>
             </div>        
+        </div>
+        <div class="inputs_row">
+            <div class="input_column">
+                <EmailInput
+                    placeholder="myname@mycompany.com"
+                    inputID="email"
+                    inputName="email"
+                    inputLabel={true}
+                    emailInputValue={email}
+                    isValid={emailIsValid}
+                    required={true}
+                >
+                *email
+                </EmailInput>
+            </div>
+            <div class="input_column">
+                <TextInput
+                    placeholder="myLastName"
+                    inputID="name_last"
+                    inputName="name_last"
+                    inputLabel={true}
+                    textInputValue={nameLast}
+                    isValid={companyIsValid}
+                    textInputErrorMessage="company required"
+                    required={false}
+                >
+                    company
+                </TextInput>
+            </div>
+        </div>
+        <div class="inputs_row">
+            <div class="input_column">
+                <PhoneInput
+                    inputID="phone_number"
+                    inputName="phone_number"
+                    inputLabel={true}
+                    phoneInputValue={phone}
+                    isValid={phoneIsValid}
+                    required={true}
+                    phoneInputErrorMessage="phone number required"
+                >
+                    *phone number
+                </PhoneInput>
+            </div>
+            <div class="input_column">
+                <TextInput
+                    placeholder="https://mydomain.com"
+                    inputID="URL"
+                    inputName="URL"
+                    inputLabel={true}
+                    textInputValue={URL}
+                    isValid={URLisValid}
+                    textInputErrorMessage="URL required"
+                    required={false}
+                >
+                    URL
+                </TextInput>
+            </div>
         </div>
         <h2>
             about your project
         </h2> 
+        <div class="inputs_row">
+            <TextArea
+                placeholder="I want a web application to ..."
+                inputID="about_project"
+                inputName="about_project"
+                inputLabel={true}
+                textareaInputValue={aboutProject}
+                isValid={aboutProjectIsValid}
+                textAreaInputErrorMessage="about project required"
+                required={true}
+            >
+                *what is your project?
+            </TextArea>
+        </div>
+        <div class="inputs_row">
+            <div class="input_column">
+                <DateInput
+                    inputID="project_start_date"
+                    inputName="project_start_date"
+                    inputLabel={true}
+                    dateInputValue={projectStartDate}
+                    isValid={projectStartDateIsValid}
+                    dateInputErrorMessage="project start date required"
+                    required={true}
+                >
+                    *project start date
+                </DateInput>
+            </div>
+            <div class="input_column">
+                <DateInput
+                    inputID="project_end_date"
+                    inputName="project_end_date"
+                    inputLabel={true}
+                    dateInputValue={projectEndDate}
+                    isValid={projectEndDateIsValid}
+                    dateInputErrorMessage="project end date required"
+                    required={true}
+                >
+                    *project end date
+                </DateInput>
+            </div>
+        </div>
+        <div class="inputs_row">
+            <div class="input_column">
+                <NumberInput
+                    placeholder="$60,000"
+                    inputID="project_end_date"
+                    inputName="project_end_date"
+                    inputLabel={true}
+                    numberInputValue={projectBudget}
+                    isValid={projectBudgetIsValid}
+                    numberInputErrorMessage="project budget required"
+                    required={true}
+                >
+                    *project budget
+                </NumberInput>
+            </div>
+        </div>
         <div class="inputs_row">
             <div class="input_column">
                 <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
@@ -255,9 +399,34 @@
                 {/if}
             </div>
         </div>
-        
+        <p>
+            After you start a project, a representative from Art in Tech Services will contact you within 48 hours to discuss next steps in your project.  Starting a project is not an agreement.
+        </p>
+        <div class="buttons_container">
+            <a href="/">
+                <CancelButton>
+                    cancel
+                </CancelButton>
+            </a>
+            
+            <SubmitButton disable={false}>
+                send request
+            </SubmitButton>
+        </div>
     </form>
-    
+    {#if (pending)}
+        <PendingFlashMessage >
+            please wait while we validate your data
+        </PendingFlashMessage>
+    {:else if (item.error)}
+        <ErrorFlashMessage >
+            {item.error}
+        </ErrorFlashMessage>
+    {:else if (item.success)}
+        <SuccessFlashMessage>
+            {item.success}
+        </SuccessFlashMessage>
+    {/if}
 </div>
 <style>
 
@@ -270,11 +439,13 @@
         align-items: center;
         gap: 1rem;
         padding: 0 1rem;
+        margin: 0 0 2rem 0;
     }
 
     .services {
         list-style: none;
         padding: 0;
+        margin: 0;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -335,10 +506,14 @@
 
     .document_icon {
         width: 4rem;
+        min-width: 4rem;
     }
 
-    .document_label {
-
+    .buttons_container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: row;
+        align-items: center;
     }
 
     @media screen and (max-width: 1440px) {
@@ -388,12 +563,14 @@
             flex-wrap: wrap;
             height: auto;
             gap: 0.5rem;
-            padding: 1rem;
         }
 
         .service {
             width: 100%;
             height: auto;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
         }
 
         .service_icon_and_label {
@@ -409,6 +586,21 @@
 
         .service_label {
             font-size: 0.9rem;
+        }
+
+        .inputs_row {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .input_column {
+            width: 100%;
+        }
+
+        .buttons_container {
+            flex-direction: column-reverse;
         }
     }
 

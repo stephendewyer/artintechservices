@@ -78,7 +78,7 @@
         border-radius: 1.5rem;
         color: #484B47;
         border-width: 2px;
-        border-color: #EFF9F2;
+        border-color: #AEA89D;
         border-style: solid;
         transition: border-color 0.2s linear;
     }

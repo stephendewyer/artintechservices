@@ -117,7 +117,7 @@
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         border-width: 2px;
-        border-color: #EFF9F2;
+        border-color: #AEA89D;
         border-style: solid;
         transition: border-color 0.2s linear;
         outline: none;
