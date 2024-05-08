@@ -161,17 +161,18 @@
 	<title>Art in Tech Services - request to start a project</title>
 	<meta name="description" content="request to start a project" />
 	<meta property="og:image" content="{ArtInTechServicesBanner}" />
+    <meta property="og:url" content="https://artintechservices.vercel.app/request-to-start-a-project" />
 </svelte:head>
 <div class="page">
     <form class="form" on:submit|preventDefault={sendProjectRequestHandler} >
+        <h1>
+            request to start a project
+        </h1>
         <p> 
             Have a digital project idea?<br />  
             Want help on an existing digital project?  <br/>
             Have a digital problem that could use our help?
         </p>
-        <h1>
-            request to start a project
-        </h1>
         <h2>*indicates required</h2>
         <h2>
             requested services
@@ -249,7 +250,7 @@
                     inputID="name_last"
                     inputName="name_last"
                     inputLabel={true}
-                    textInputValue={nameLast}
+                    textInputValue={company}
                     isValid={companyIsValid}
                     textInputErrorMessage="company required"
                     required={false}
@@ -430,21 +431,9 @@
 </div>
 <style>
 
-    .form {
-        margin: 0 auto;
-        max-width: 60rem;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-        padding: 0 1rem;
-        margin: 0 0 2rem 0;
-    }
-
     .services {
         list-style: none;
-        padding: 0;
+        padding: 1rem 0;
         margin: 0;
         display: flex;
         flex-direction: row;
@@ -474,17 +463,6 @@
 
     .service_label {
         font-size: 1rem;
-    }
-
-    .inputs_row {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        width: 100%;
-    }
-
-    .input_column {
-        width: 50%;
     }
 
     .constraints {
@@ -586,17 +564,6 @@
 
         .service_label {
             font-size: 0.9rem;
-        }
-
-        .inputs_row {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            width: 100%;
-        }
-
-        .input_column {
-            width: 100%;
         }
 
         .buttons_container {
