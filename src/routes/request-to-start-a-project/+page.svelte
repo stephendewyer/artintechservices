@@ -173,7 +173,7 @@
             Want help on an existing digital project?  <br/>
             Have a digital problem that could use our help?
         </p>
-        <h2>*indicates required</h2>
+        <h4>*indicates required</h4>
         <h2>
             requested services
         </h2>
@@ -246,9 +246,9 @@
             </div>
             <div class="input_column">
                 <TextInput
-                    placeholder="myLastName"
-                    inputID="name_last"
-                    inputName="name_last"
+                    placeholder="myCompany"
+                    inputID="company"
+                    inputName="company"
                     inputLabel={true}
                     textInputValue={company}
                     isValid={companyIsValid}

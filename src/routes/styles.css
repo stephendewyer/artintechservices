@@ -39,6 +39,11 @@ h3 {
     color: #2d3530;
 }
 
+h4 {
+    font-size: 1.75rem;
+    margin: 0;
+}
+
 p {
     font-size: 1.25rem;
 }
@@ -114,6 +119,11 @@ img {
         font-size: 1.25rem;
     }
 
+    h4 {
+        font-size: 1rem;
+        margin: 0;
+    }
+
     p {
         font-size: 1.175rem;
     }
@@ -151,6 +161,11 @@ img {
         font-size: 1rem;
     }
 
+    h4 {
+        font-size: 0.9rem;
+        margin: 0;
+    }
+
     p {
         font-size: 1rem;
     }
@@ -179,6 +194,10 @@ img {
     }
     
     h3 {
+        font-size: 1rem;
+    }
+
+    h4 {
         font-size: 1rem;
     }
 

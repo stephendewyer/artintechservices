@@ -8,7 +8,6 @@
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import DateInput from "$lib/components/inputs/DateInput.svelte";
     import TextArea from "$lib/components/inputs/TextArea.svelte";
-    import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import type { E164Number } from 'svelte-tel-input/types';
     import PhoneInput from "$lib/components/inputs/PhoneInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
@@ -118,6 +117,7 @@
                 </tbody>
             </table>
         </div>
+        <h4>*indicates required</h4>
         <div class="inputs_row">
             <div class="input_column">
                 <TextInput 
@@ -164,9 +164,9 @@
             </div>
             <div class="input_column">
                 <TextInput
-                    placeholder="myLastName"
-                    inputID="name_last"
-                    inputName="name_last"
+                    placeholder="mycompany"
+                    inputID="company"
+                    inputName="company"
                     inputLabel={true}
                     textInputValue={company}
                     isValid={companyIsValid}
