@@ -10,12 +10,14 @@
 <style>
 
     .checkmark_container {
-        border: 3px solid #7BC83F;
-        fill: #7BC83F;
-        background-color: #D8EAC5;
+        border: none;
+        fill: #FAE6D8;;
+        background-color: #838B6A;
         width: 3rem;
+        min-width: 3rem;
         height: 3rem;
-        border-radius: 1.5rem;
+        min-height: 3rem;
+        border-radius: 3rem;
         padding: 0.5rem;
         display: flex;
         flex-direction: column;
@@ -26,11 +28,12 @@
     @media (max-width: 1440px) {
 
         .checkmark_container {
-            border: 2px solid #7BC83F;
             width: 2.5rem;
+            min-width: 2.5rem;
             height: 2.5rem;
-            border-radius: 1.25rem;
-            padding: 0.4rem;
+            min-height: 2.5rem;
+            border-radius: 2.5rem;
+            padding: 0.5rem;
         }
 
     }
@@ -38,11 +41,12 @@
     @media (max-width: 720px) {
 
         .checkmark_container {
-            border: 2px solid #7BC83F;
             width: 2rem;
+            min-width: 2rem;
             height: 2rem;
-            border-radius: 1rem;
-            padding: 0.3rem;
+            min-height: 2rem;
+            border-radius: 2rem;
+            padding: 0.5rem;
         }
         
     }

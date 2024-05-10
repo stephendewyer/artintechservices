@@ -105,7 +105,7 @@
     .input {
         background-color: #EFF9F2;
         border-radius: 1rem;
-        color: #484B47;
+        color: #36261E;
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         border-width: 2px;
@@ -124,7 +124,7 @@
     }
 
     .input:focus {
-        border-color: #1C2226;
+        border-color: #626472;
         transition: border-color 0.2s linear;
     }
 
@@ -140,7 +140,7 @@
         outline: none;
         width: 100%;
         will-change: border-color;
-        border-color: #9F1D20;
+        border-color: #914732;
         cursor: pointer;
     }
 

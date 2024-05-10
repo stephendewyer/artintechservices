@@ -76,7 +76,7 @@
     .searchbar {
         background-color: #EFF9F2;
         border-radius: 1.5rem;
-        color: #484B47;
+        color: #36261E;
         border-width: 2px;
         border-color: #AEA89D;
         border-style: solid;
@@ -98,12 +98,10 @@
 
     div:has(input:hover) {
         border-color: #CB6D44;
-        transition: border-color 0.2s linear;
     }
 
     div:has(input:focus) {
-        border-color: #1C2226;
-        transition: border-color 0.2s linear;
+        border-color: #626472;
     }
 
     ::placeholder {

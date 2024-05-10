@@ -9,14 +9,16 @@
     export let required: boolean;
     export let passwordInputErrorMessage: string = "";
     export let passwordsMatch: boolean | null = null;
+    export let inputValueChanged = false;
 
     let passwordMatchValidation: boolean = true;
 
     let errorMessage: string = "";
 
-    let passwordInputTouched: boolean = false;
+    export let passwordInputTouched: boolean = false;
 
     const passwordInputValueChangedHandler = () => {
+        inputValueChanged = true;
         if (required) {
             if (passwordInputTouched) {
                 if (passwordInputValue === "") {
@@ -113,7 +115,7 @@
     .input {
         background-color: #EFF9F2;
         border-radius: 3rem;
-        color: #484B47;
+        color: #36261E;
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         border-width: 2px;
@@ -127,12 +129,10 @@
 
     .input:hover {
         border-color: #CB6D44;
-        transition: border-color 0.2s linear;
     }
 
     .input:focus {
-        border-color: #1C2226;
-        transition: border-color 0.2s linear;
+        border-color: #626472;
     }
 
     .invalid_input {
@@ -146,7 +146,7 @@
         transition: border-color 0.2s linear;
         outline: none;
         width: 100%;
-        border-color: #9F1D20;
+        border-color: #914732;
         will-change: border-color;
     }
 

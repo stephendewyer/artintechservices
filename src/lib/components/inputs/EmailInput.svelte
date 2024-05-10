@@ -108,44 +108,36 @@
         padding: 0 0 0.5rem 0;
     }
     
-    .input {
-        background-color: #EFF9F2;
+    input {
         border-radius: 3rem;
-        color: #484B47;
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         border-width: 2px;
-        border-color: #AEA89D;
         border-style: solid;
-        will-change: border-color;
-        transition: border-color 0.2s linear;
+        will-change: border-color, color, background-color;
+        transition: border-color 0.2s linear, color 0.2s linear, background-color 0.2s linear;
         outline: none;
         width: 100%;
     }
 
-    .input:hover {
-        border-color: #CB6D44;
-        transition: border-color 0.2s linear;
+    input:hover {
+        border-color: #D58E65;
     }
 
-    .input:focus {
-        border-color: #1C2226;
-        transition: border-color 0.2s linear;
+    input:focus {
+        border-color: #626472;
+    }
+
+    .input  {
+        background-color: #EFF9F2;
+        color: #36261E;
+        border-color: #AEA89D;
     }
 
     .invalid_input {
         background-color: #EFF9F2;
-        border-radius: 3rem;
         color: #484B47;
-        font-size: 1.4rem;
-        padding: 0.5rem 1rem;
-        border-width: 2px;
-        border-style: solid;
-        transition: border-color 0.2s linear;
-        outline: none;
-        width: 100%;
-        will-change: border-color;
-        border-color: #9F1D20;
+        border-color: #914732;
     }
 
     ::placeholder {
@@ -154,11 +146,8 @@
     }
 
     @media (max-width: 1440px) {
-        .input {
-            font-size: 1.2rem;
-        }
 
-        .invalid_input {
+        input {
             font-size: 1.2rem;
         }
 
@@ -172,11 +161,8 @@
     }
 
     @media (max-width: 720px) {
-        .input {
-            font-size: 1rem;
-        }
 
-        .invalid_input {
+        input {
             font-size: 1rem;
         }
 

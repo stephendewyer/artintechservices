@@ -56,6 +56,7 @@
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
     };
+    
 </script>
 
 <svelte:head>

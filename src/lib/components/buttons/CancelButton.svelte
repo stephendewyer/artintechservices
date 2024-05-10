@@ -16,15 +16,16 @@
         flex-direction: row;
         align-items: center;
         gap: 0.5rem;
-        padding: 0.75rem 1.5rem;
+        padding: 0.5rem 1rem;
         border-radius: 2rem;
-        border-radius:2em;
+        border-radius: 2rem;
         color:#7D7E8D;
         text-align: center;
+        font-weight: bold;
         transition: color 0.2s linear, background-color 0.2s linear, border-color 0.2s linear, margin-left 0.2s ease-out;
         cursor: pointer;
         font-size: 1.5rem;
-        border: 0.16em solid #7D7E8D;
+        border: 2px solid #7D7E8D;
         background-color: transparent;
         margin-left: 0.5rem;
     }

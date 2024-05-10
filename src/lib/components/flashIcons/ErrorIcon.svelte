@@ -11,13 +11,15 @@
 <style>
 
     .error_icon_container {
-        border: 3px solid #9F1D20;
-        color: #9F1D20;
+        border: none;
+        color: #FDDFD2;
         font-weight: 600;
-        background-color: #E4C5B9;
+        background-color: #914732;
+        min-height: 3rem;
+        min-width: 3rem;
         width: 3rem;
         height: 3rem;
-        border-radius: 1.5rem;
+        border-radius: 3rem;
         padding: 0.5;
         display: flex;
         flex-direction: column;
@@ -28,11 +30,12 @@
     @media (max-width: 1440px) {
 
         .error_icon_container {
-            border: 2px solid #9F1D20;
             width: 2.5rem;
+            min-width: 2.5rem;
             height: 2.5rem;
+            min-height: 2.5rem;
             border-radius: 1.25rem;
-            padding: 0.4rem;
+            padding: 0.5rem;
         }
         
     }
@@ -40,11 +43,12 @@
     @media (max-width: 720px) {
 
         .error_icon_container {
-            border: 2px solid #9F1D20;
+            min-width: 2rem;
             width: 2rem;
+            min-height: 2rem;
             height: 2rem;
             border-radius: 1rem;
-            padding: 0.3rem;
+            padding: 0.5rem;
         }
         
     }

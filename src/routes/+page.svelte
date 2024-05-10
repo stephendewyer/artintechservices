@@ -45,7 +45,7 @@
         </div>
         <div class="intro_paragraph_container">
             <h1 class="intro_paragraph">
-                delivering state-of-the-art digital technology products since 2021
+                bringing the vision and technical expertise to make groundbreaking digital products
             </h1>
         </div>
     </div>

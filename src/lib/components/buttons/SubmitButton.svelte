@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Arrow from "$lib/images/arrows/arrow_right.svg?raw";
     export let clicked = false;
     export let disable: boolean = false;
 </script>
@@ -11,6 +12,9 @@
 >
     <div class="label">
         <slot />
+    </div>
+    <div class="arrow">
+        {@html Arrow}
     </div>
 </button>
 
@@ -27,14 +31,15 @@
         align-items: center;
         gap: 0.75rem;
         cursor: pointer;
-        will-change: color, background-color;
-        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
-        margin-left: 0;
+        will-change: color, background-color, margin;
+        transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, margin-right 0.2s ease-in-out;
+        margin-right: 0.5rem;
     }
 
     .call_to_action_button:hover {
         color: #DEDDD5;
         background-color: #706362;
+        margin-right: 0;
     }
 
     .label {
@@ -42,6 +47,29 @@
         text-align: left;
         font-weight: bold;
         
+    }
+
+    .arrow {
+        margin-left: 0;
+        width: 0.75rem;
+        min-width: 0.75rem;
+        will-change: margin, fill;
+        transition: margin 0.2s ease-in-out, fill 0.2s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        fill: #FAE6D8;
+    }
+
+    .call_to_action_button:hover > .arrow {
+        margin-left: 0.5rem;
+        fill: #DEDDD5;
+    }
+
+    
+
+    button[disabled] {
+        display: none;
     }
 
     @media screen and (max-width: 1440px) {

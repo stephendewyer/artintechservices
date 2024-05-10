@@ -7,14 +7,21 @@
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import PasswordCompare from "$lib/components/inputs/PasswordCompare.svelte";
 
+    let nameFirstInputValue: string = "";
+    let nameLastInputValue: string = "";
     let emailInputValue: string = "";
-    let emailIsValid: boolean = true;
-
     let passwordInputValue: string = "";
-    let passwordIsValid: boolean = true;
+    let passwordReenteredInputValue: string = "";
 
-    let loginClientButtonDisabled: boolean = true;
+    let nameFirstIsValid: boolean = true;
+    let nameLastIsValid: boolean = true;
+    let emailIsValid: boolean = true;
+    let passwordIsValid: boolean = true;
+    let passwordReenteredIsValid: boolean = true;
+
+    let createClientAccountButtonDisabled: boolean = true;
 
     $: if (
         emailIsValid &&
@@ -22,9 +29,9 @@
         (passwordInputValue !== "") &&
         (emailInputValue !== "")
     ) {
-        loginClientButtonDisabled = false;
+        createClientAccountButtonDisabled = false;
     } else {
-        loginClientButtonDisabled = true;
+        createClientAccountButtonDisabled = true;
     };
 
     let passwordInputErrorMessage = "password required";
@@ -59,19 +66,19 @@
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
     };
-
 </script>
 
 <svelte:head>
-	<title>Art in Tech Services - login administrator</title>
-	<meta name="description" content="login administrator" />
+	<title>Art in Tech Services - create a client account</title>
+	<meta name="description" content="create a client account" />
 	<meta property="og:image" content="{ArtInTechServicesBanner}" />
-    <meta property="og:url" content="https://artintechservices.vercel.app/login-administrator" />
+    <meta property="og:url" content="https://artintechservices.vercel.app/create-a-client-account" />
 </svelte:head>
 
 <div class="page">
-    <form class="form" on:submit|preventDefault={loginAdministratorHandler}>
-        <h1>login administrator</h1>
+    <form class="form">
+        <h1>create a free client account</h1>
+        <h4>*indicates required</h4>
         <div class="input_row">
             <EmailInput
                 isValid={emailIsValid}
@@ -86,22 +93,11 @@
             </EmailInput>
         </div>
         <div class="input_row">
-            <PasswordInput
-                isValid={passwordIsValid}
-                placeholder="myPassword"
-                inputID="client_password"
-                inputName="client_password"
-                inputLabel={true}
-                bind:passwordInputValue={passwordInputValue}
-                required={true}
-                passwordInputErrorMessage="password required"
-            >
-                password:
-            </PasswordInput>
+            <PasswordCompare />
         </div>
         <div class="buttons_container">
             <SubmitButton 
-                disable={loginClientButtonDisabled}
+                disable={createClientAccountButtonDisabled}
             >
                 login
             </SubmitButton>
@@ -120,11 +116,6 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
-    <a href="/" class="cancel_button_container">
-        <CancelButton>
-            cancel
-        </CancelButton>
-    </a>
 </div>
 
 <style>

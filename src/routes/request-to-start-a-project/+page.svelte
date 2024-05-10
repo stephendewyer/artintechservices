@@ -487,13 +487,6 @@
         min-width: 4rem;
     }
 
-    .buttons_container {
-        display: flex;
-        gap: 1rem;
-        flex-direction: row;
-        align-items: center;
-    }
-
     @media screen and (max-width: 1440px) {
         .service {
             display: flex;
@@ -565,10 +558,7 @@
         .service_label {
             font-size: 0.9rem;
         }
-
-        .buttons_container {
-            flex-direction: column-reverse;
-        }
+        
     }
 
 </style>

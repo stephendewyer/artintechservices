@@ -79,6 +79,7 @@
 </div>
  
 <style>
+
     input[type="file"]::file-selector-button {
         display: none;
     }
@@ -100,16 +101,12 @@
     }
     
     input {
-        background-color: #EFF9F2;
         border-radius: 3rem;
-        fill: #484B47;
-        color: #484B47;
         font-size: 1.4rem;
         padding: 0.5rem 1rem 0.5rem 3rem;
         border-width: 2px;
-        border-color: #AEA89D;
         border-style: solid;
-        transition: border-color 0.2s linear;
+        transition: border-color 0.2s linear, background-color 0.2s linear, fill 0.2s linear, color 0.2s linear;
         outline: none;
         width: 100%;
         background-image: url('$lib/images/icons/folder_icon.svg');
@@ -118,14 +115,26 @@
         background-position: 10px center;          
     }
 
+    .input {
+        background-color: #EFF9F2;
+        fill: #484B47;
+        color: #36261E;
+        border-color: #AEA89D;
+    }
+    
+    .invalid_input {
+        background-color: #EFF9F2;
+        fill: #484B47;
+        color: #484B47;
+        border-color: #914732;   
+    }
+
     input:hover {
         border-color: #CB6D44;
-        transition: border-color 0.2s linear;
     }
 
     input:focus {
-        border-color: #1C2226;
-        transition: border-color 0.2s linear;
+        border-color: #626472;
     }
 
     ::placeholder {
@@ -135,11 +144,11 @@
 
     @media (max-width: 1440px) {
 
-    input {
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem 0.5rem 2.5rem;
-        background-size: 1.5rem;       
-    }
+        input {
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            background-size: 1.5rem;       
+        }
 
         label {
             font-size: 1.2rem;
@@ -151,6 +160,7 @@
     }
 
     @media (max-width: 720px) {
+
         input {
             font-size: 1rem;
         }

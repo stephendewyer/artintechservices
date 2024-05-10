@@ -101,6 +101,13 @@ img {
     width: 50%;
 }
 
+.buttons_container {
+    display: flex;
+    gap: 1rem;
+    flex-direction: row;
+    align-items: center;
+}
+
 @media screen and (max-width: 1440px) {
 
     body {
@@ -231,5 +238,9 @@ img {
 
     .input_column {
         width: 100%;
+    }
+
+    .buttons_container {
+        flex-direction: column-reverse;
     }
 }
