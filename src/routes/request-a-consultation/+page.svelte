@@ -15,7 +15,7 @@
     import TimeInput from "$lib/components/inputs/TimeInput.svelte";
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
-
+    import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
     // sort time zones by alphabetical order
 
     const TimeZonesSorted = TimeZones.sort((a, b) => {
@@ -34,7 +34,7 @@
     let phone: E164Number | null = null;
     let company: string = "";
     let URL: string = "";
-    let consultationDate: Date = new Date(0);
+    let consultationDate: string = "";
     let consultationTime: string = "";
     let consultationTimeZone: string = "";
     let consultationReason: string = "";
@@ -71,7 +71,7 @@
         phone: E164Number | null,
         company: string,
         URL: string,
-        consultationDate: Date,
+        consultationDate: string,
         consultationTime: string,
         consultationTimeZone: string,
         consultationReason: string
@@ -125,7 +125,7 @@
                 phone = null,
                 company = "",
                 URL = "",
-                consultationDate = new Date(0),
+                consultationDate = ConvertDateInputFormat(new Date(0)),
                 consultationTime = "",
                 consultationTimeZone = "",
                 consultationReason = ""
@@ -158,9 +158,9 @@
                     phoneIsValid = true;
                 };
 
-                if (consultationDate === new Date(0)) {
+                if (consultationDate === "") {
                     consultationDateIsValid = false;
-                } else if (consultationDate !== new Date(0)) {
+                } else if (consultationDate !== "") {
                     consultationDateIsValid = true;
                 };
 

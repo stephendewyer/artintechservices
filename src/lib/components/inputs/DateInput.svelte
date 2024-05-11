@@ -4,7 +4,7 @@
     export let inputID: string;
     export let inputName: string;
     export let inputLabel: boolean;
-    export let dateInputValue: Date;
+    export let dateInputValue: string;
     export let isValid: boolean;
     export let dateInputErrorMessage: string;
     export let required: boolean;
@@ -16,9 +16,9 @@
     const dateInputValueChangedHandler = () => {
         if (required) {
             if (dateInputTouched) {
-                if (dateInputValue === new Date(0)) {
+                if (dateInputValue === "") {
                     isValid = false;
-                } else if (!(dateInputValue === new Date(0))) {
+                } else if (!(dateInputValue === "")) {
                     isValid = true;
                 }
             } else if (!dateInputTouched) {
@@ -30,9 +30,9 @@
     const dateInputFocusChangedHandler = () => {
         if (required) {
             if (dateInputTouched) {
-                if (dateInputValue === new Date(0)) {
+                if (dateInputValue === "") {
                     isValid = false;
-                } else if (!(dateInputValue === new Date(0))) {
+                } else if (!(dateInputValue === "")) {
                     isValid = true;
                 };
             } else if (!dateInputTouched) {
@@ -44,9 +44,9 @@
     const dateInputBlurChangedHandler = () => {
         if (required) {
             dateInputTouched = true;
-            if (dateInputValue === new Date(0)) {
+            if (dateInputValue === "") {
                 isValid = false;
-            } else if (!(dateInputValue === new Date(0))) {
+            } else if (!(dateInputValue === "")) {
                 isValid = true;
             };
         };

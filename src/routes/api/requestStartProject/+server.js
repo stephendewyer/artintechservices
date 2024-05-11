@@ -49,24 +49,24 @@ export async function POST({request}) {
     const documentFileInputValue = data.documentFileInputValue;
     const documentFileName = data.documentFileName;
 
-    // if (
-    //     !nameFirst ||
-    //     !nameLast ||
-    //     !email ||
-    //     !phoneNumber ||
-    //     !aboutProject ||
-    //     !projectStartDate ||
-    //     !projectEndDate ||
-    //     !projectBudget
-    // ) {
-    //     return new Response(JSON.stringify({error: "missing form data"}), {status: 422});
-    // };
+    if (
+        !nameFirst ||
+        !nameLast ||
+        !email ||
+        !phoneNumber ||
+        !aboutProject ||
+        !projectStartDate ||
+        !projectEndDate ||
+        !projectBudget
+    ) {
+        return new Response(JSON.stringify({error: "missing form data"}), {status: 422});
+    };
 
-    // if (
-    //     !email.includes('@')
-    // ) {
-    //     return new Response(JSON.stringify({error: "missing an @ symbol in email address"}), {status: 422});
-    // };
+    if (
+        !email.includes('@')
+    ) {
+        return new Response(JSON.stringify({error: "missing an @ symbol in email address"}), {status: 422});
+    };
 
     // upload image to Cloudinary
 
@@ -82,12 +82,13 @@ export async function POST({request}) {
 
         if (imageFile.size >  2000000) {
             return new Response(JSON.stringify({error: "image file cannot exceed 2MB"}), {status: 422});
-        } else if ((imageFile) && (ImageFileExtensionTest(imageFile) === "false")) {
-            return new Response(JSON.stringify({error: "incorrect image file type"}), {status: 422});
         };
 
         try {
-            const uploadImageResponse = await cloudinary.uploader.upload(imageFile, {});
+            const uploadImageResponse = await cloudinary.uploader.upload(imageFile, {
+                folder: "projects",
+                resource_type: "image"
+            });
             uploadedImageURL = uploadImageResponse.secure_url;
             uploadedImagePublicID = uploadImageResponse.public_id;
 
@@ -100,8 +101,8 @@ export async function POST({request}) {
             image_URL,
             public_ID
         ) VALUES (
-            ${uploadedImageURL},
-            ${uploadedImagePublicID}
+            "${uploadedImageURL}",
+            "${uploadedImagePublicID}"
         )`;
     
         await res.query(insertImageStatement)
@@ -127,12 +128,13 @@ export async function POST({request}) {
 
         if (documentFile.size >  2000000) {
             return new Response(JSON.stringify({error: "document file cannot exceed 2MB"}), {status: 422});
-        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile) === "false")) {
-            return new Response(JSON.stringify({error: "incorrect document file type"}), {status: 422});
         };
 
         try {
-            const uploadDocumentResponse = await cloudinary.uploader.upload(documentFile, {});
+            const uploadDocumentResponse = await cloudinary.uploader.upload(documentFile, {
+                folder: "projects",
+                resource_type: "auto"
+            });
             uploadedDocumentURL = uploadDocumentResponse.secure_url;
             uploadedDocumentPublicID = uploadDocumentResponse.public_id;
         } catch (err) {
@@ -144,8 +146,8 @@ export async function POST({request}) {
             document_URL,
             public_ID
         ) VALUES (
-            ${uploadedDocumentURL},
-            ${uploadedDocumentPublicID}
+            "${uploadedDocumentURL}",
+            "${uploadedDocumentPublicID}"
         )`;
 
         await res.query(insertDocumentStatement)
@@ -216,86 +218,84 @@ export async function POST({request}) {
 
     // begin sending the message
 
-    // sgMail.setApiKey(SENDGRIDAPIKey);
+    sgMail.setApiKey(SENDGRIDAPIKey);
 
-    // const msg = [
-    //     {
-    //     to: 'sdewyer@artintechservices.com', // verified sender
-    //     from: 'sdewyer@artintechservices.com', // verified sender
-    //     subject: `a start project request was created for ${nameFirst} ${nameLast} at ${email}`,
-    //     text: 'sent via the start project request form',
-    //     html: `hi stephen,<br /><br />
-    //         A start project request was created on ${date} for ${nameFirst} ${nameLast} at ${email}.<br />
-    //         The following is a copy of the start projeect request:<br />
-    //         -  ${nameFirst},<br />
-    //         -  ${nameLast},<br />
-    //         -  ${email},<br />
-    //         -  ${company},<br />
-    //         -  ${phoneNumber},<br />
-    //         -  ${URL},<br />
-    //         -  ${aboutProject},<br />
-    //         -  ${projectStartDate},<br />
-    //         -  ${projectEndDate},<br />
-    //         -  ${projectBudget},<br />
-    //         -  ${artificialIntelligence},<br />
-    //         -  ${brandIdentityDesign},<br />
-    //         -  ${dataVisualization},<br />
-    //         -  ${photography},<br />
-    //         -  ${softwareDevelopment},<br />
-    //         -  ${userExperienceDesign},<br />
-    //         -  ${videography},<br />
-    //         -  ${visualDesign}<br />
-    //         <br />
-    //         Best,<br /><br />
-    //         stephen dewyer<br />
-    //         Founding Director, UX Designer and Full-stack Web Developer<br />
-    //         Art in Tech Services<br />
-    //         www.artintechservices.com</p>`
-    //     },
-    //     {
-    //     to: email,
-    //     from: 'sdewyer@artintechservices.com', // verified sender
-    //     subject: `start project request created for ${nameFirst} ${nameLast} at ${email}`,
-    //     text: 'sent via the start project request form',
-    //     html: `<p>hi ${nameFirst} ${nameLast},
-    //     <br /><br />
-    //     thank you for your start project request, which was created on ${date}.<br />
-    //     A representative from Art in Tech Services will contact you within 48 hours to discuss your start project request.<br />
-    //     The following is a copy of the start projeect request:<br />
-    //     -  ${nameFirst},<br />
-    //     -  ${nameLast},<br />
-    //     -  ${email},<br />
-    //     -  ${company},<br />
-    //     -  ${phoneNumber},<br />
-    //     -  ${URL},<br />
-    //     -  ${aboutProject},<br />
-    //     -  ${projectStartDate},<br />
-    //     -  ${projectEndDate},<br />
-    //     -  ${projectBudget},<br />
-    //     -  ${artificialIntelligence},<br />
-    //     -  ${brandIdentityDesign},<br />
-    //     -  ${dataVisualization},<br />
-    //     -  ${photography},<br />
-    //     -  ${softwareDevelopment},<br />
-    //     -  ${userExperienceDesign},<br />
-    //     -  ${videography},<br />
-    //     -  ${visualDesign}<br />
-    //     <br />
-    //     Best,<br /><br />
-    //     stephen dewyer<br />
-    //     Founding Director, UX Designer and Full-stack Web Developer<br />
-    //     Art in Tech Services<br />
-    //     www.artintechservices.com</p>`
-    //     },
-    // ];
+    const msg = [
+        {
+        to: 'sdewyer@artintechservices.com', // verified sender
+        from: 'sdewyer@artintechservices.com', // verified sender
+        subject: `a start project request was created for ${nameFirst} ${nameLast} at ${email}`,
+        text: 'sent via the start project request form',
+        html: `hi stephen,<br /><br />
+            A start project request was created on ${date} for ${nameFirst} ${nameLast} at ${email}.<br />
+            The following is a copy of the start projeect request:<br />
+            -  first name: ${nameFirst}<br />
+            -  last name: ${nameLast}<br />
+            -  email: ${email}<br />
+            -  company: ${company}<br />
+            -  phone number: ${phoneNumber}<br />
+            -  URL: ${website}<br />
+            -  about project: ${aboutProject}<br />
+            -  project start date: ${projectStartDate}<br />
+            -  project end date: ${projectEndDate}<br />
+            -  project budget: ${projectBudget}<br />
+            -  artificial intelligence: ${artificialIntelligence ? "yes" : "no"}<br />
+            -  brand identity design: ${brandIdentityDesign ? "yes" : "no"}<br />
+            -  data visualization: ${dataVisualization ? "yes" : "no"}<br />
+            -  photography: ${photography ? "yes" : "no"}<br />
+            -  software development: ${softwareDevelopment ? "yes" : "no"}<br />
+            -  user experience design: ${userExperienceDesign ? "yes" : "no"}<br />
+            -  videography: ${videography ? "yes" : "no"}<br />
+            -  visual design: ${visualDesign ? "yes" : "no"}<br />
+            <br />
+            Best,<br /><br />
+            stephen dewyer<br />
+            Founding Director, UX Designer and Full-stack Web Developer<br />
+            Art in Tech Services<br />
+            www.artintechservices.com</p>`
+        },
+        {
+        to: email,
+        from: 'sdewyer@artintechservices.com', // verified sender
+        subject: `start project request created for ${nameFirst} ${nameLast} at ${email}`,
+        text: 'sent via the start project request form',
+        html: `<p>hi ${nameFirst} ${nameLast},
+        <br /><br />
+        thank you for your start project request, which was created on ${date}.<br />
+        A representative from Art in Tech Services will contact you within 48 hours to discuss your start project request.<br />
+        The following is a copy of the start projeect request:<br />
+        -  first name: ${nameFirst}<br />
+        -  last name: ${nameLast}<br />
+        -  email: ${email}<br />
+        -  company: ${company}<br />
+        -  phone number: ${phoneNumber}<br />
+        -  URL: ${website}<br />
+        -  about project: ${aboutProject}<br />
+        -  project start date: ${projectStartDate}<br />
+        -  project end date: ${projectEndDate}<br />
+        -  project budget: ${projectBudget}<br />
+        -  artificial intelligence: ${artificialIntelligence ? "yes" : "no"}<br />
+        -  brand identity design: ${brandIdentityDesign ? "yes" : "no"}<br />
+        -  data visualization: ${dataVisualization ? "yes" : "no"}<br />
+        -  photography: ${photography ? "yes" : "no"}<br />
+        -  software development: ${softwareDevelopment ? "yes" : "no"}<br />
+        -  user experience design: ${userExperienceDesign ? "yes" : "no"}<br />
+        -  videography: ${videography ? "yes" : "no"}<br />
+        -  visual design: ${visualDesign ? "yes" : "no"}<br />
+        <br />
+        Best,<br /><br />
+        stephen dewyer<br />
+        Founding Director, UX Designer and Full-stack Web Developer<br />
+        Art in Tech Services<br />
+        www.artintechservices.com</p>`
+        },
+    ];
 
-    // try {
-    //     await sgMail.send(msg);
-    //     return new Response(JSON.stringify({success: `created project request for ${nameFirst} ${nameLast}`}), {status: 200});
-    // } catch (error) {
-    //     return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
-    // };
-
-    return new Response(JSON.stringify({success: "success!"}), {status: 200});
+    try {
+        await sgMail.send(msg);
+        return new Response(JSON.stringify({success: `created project request for ${nameFirst} ${nameLast}`}), {status: 200});
+    } catch (error) {
+        return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
+    };
     
 }

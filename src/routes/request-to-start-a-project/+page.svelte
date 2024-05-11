@@ -25,6 +25,7 @@
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
+    import { goto } from "$app/navigation";
 
     interface Service {
         service: string;
@@ -98,8 +99,8 @@
     let phone: E164Number | null = null;
     let URL: string = "";
     let aboutProject: string = "";
-    let projectStartDate: Date = new Date(0);
-    let projectEndDate: Date = new Date(0);
+    let projectStartDate: string = "";
+    let projectEndDate: string = "";
     let projectBudget: number | null = null;
     let imageFileInputValue: string = "";
     let image: any;
@@ -184,8 +185,8 @@
         phone: E164Number | null,
         URL: string,
         aboutProject: string,
-        projectStartDate: Date,
-        projectEndDate: Date,
+        projectStartDate: string,
+        projectEndDate: string,
         projectBudget: number | null,
         imageFileInputValue: string,
         image: any,
@@ -276,14 +277,15 @@
                 phone = null,
                 URL = "",
                 aboutProject = "",
-                projectStartDate = new Date(0),
-                projectEndDate = new Date(0),
-                projectBudget = 0,
+                projectStartDate = "",
+                projectEndDate = "",
+                projectBudget = null,
                 imageFileInputValue = "",
                 image = "",
                 documentFileInputValue = "",
                 documentFileName = "",
                 document = ""
+                goto("/");
             };
 
             if (responseItem.error) {
@@ -319,15 +321,15 @@
                     aboutProjectIsValid = true;
                 };
 
-                if (projectStartDate === new Date(0)) {
+                if (projectStartDate === "") {
                     projectStartDateIsValid = false;
-                } else if (projectStartDate !== new Date(0)) {
+                } else if (projectStartDate !== "") {
                     projectStartDateIsValid = true;
                 };
 
-                if (projectEndDate === new Date(0)) {
+                if (projectEndDate === "") {
                     projectEndDateIsValid = false;
-                } else if (projectEndDate !== new Date(0)) {
+                } else if (projectEndDate !== "") {
                     projectEndDateIsValid = true;
                 };
 
@@ -341,7 +343,7 @@
             console.log(error);
         };
 
-    }
+    };
 
     let pending: boolean = false;
 
