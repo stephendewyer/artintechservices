@@ -17,14 +17,14 @@
     let detailedValue: DetailedValue | null = null;
 
     let phoneInputTouched: boolean = false;
-
+    
     const phoneInputValueChangedHandler = () => {
         if (required) {
             if (phoneInputTouched) {
-                if (phoneInputValue === "") {
+                if (phoneInputValue === null) {
                     isValid = false;
                     phoneInputErrorMessage = "phone number required";
-                } else if (phoneInputValue !== "") {
+                } else if (phoneInputValue !== null) {
                     isValid = true;
                 }
             } else if (!phoneInputTouched) {
@@ -36,10 +36,10 @@
     const phoneInputFocusChangedHandler = () => {
         if (required) {
             if (phoneInputTouched) {
-                if (phoneInputValue === "") {
+                if (phoneInputValue === null) {
                     isValid = false;
                     phoneInputErrorMessage = "phone number required";
-                } else if (phoneInputValue !== "") {
+                } else if (phoneInputValue !== null) {
                     isValid = true;
                 };
             } else if (!phoneInputTouched) {
@@ -51,10 +51,10 @@
     const phoneInputBlurChangedHandler = () => {
         if (required) {
             phoneInputTouched = true;
-            if (phoneInputValue === "") {
+            if (phoneInputValue === null) {
                 isValid = false;
                 phoneInputErrorMessage = "phone number required";
-            } else if (phoneInputValue !== "") {
+            } else if (phoneInputValue !== null) {
                 isValid = true;
             };
         };

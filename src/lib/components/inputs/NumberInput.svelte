@@ -17,7 +17,6 @@
             if (numberInputTouched) {
                 if (numberInputValue === null) {
                     isValid = false;
-                    errorMessage = numberInputErrorMessage;
                 } else if (numberInputValue !== null) {
                     isValid = true;
                 }
@@ -32,7 +31,6 @@
             if (numberInputTouched) {
                 if (numberInputValue === null) {
                     isValid = false;
-                    errorMessage = numberInputErrorMessage;
                 } else if (numberInputValue !== null) {
                     isValid = true;
                 };
@@ -47,10 +45,15 @@
             numberInputTouched = true;
             if (numberInputValue === null) {
                 isValid = false;
-                errorMessage = numberInputErrorMessage;
             } else if (numberInputValue !== null) {
                 isValid = true;
             };
+        };
+    };
+
+    $: if (!isValid) {
+        if (numberInputValue === null) {
+            errorMessage = numberInputErrorMessage;
         };
     };
 </script>

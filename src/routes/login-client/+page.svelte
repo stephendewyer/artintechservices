@@ -76,7 +76,7 @@
         <h1>login client</h1>
         <div class="input_row">
             <EmailInput
-                isValid={emailIsValid}
+                bind:isValid={emailIsValid}
                 placeholder="myEmail@myDomain.com"
                 inputID="client_email"
                 inputName="client_email"
@@ -89,7 +89,7 @@
         </div>
         <div class="input_row">
             <PasswordInput
-                isValid={passwordIsValid}
+                bind:isValid={passwordIsValid}
                 placeholder="myPassword"
                 inputID="client_password"
                 inputName="client_password"
@@ -137,7 +137,6 @@
             <h4 class="login_helper_prompt">
                 forgot your password?
             </h4>
-            
             <a href="/reset-client-password">
                 <ActionButtonSecondary>
                     reset password
@@ -191,8 +190,14 @@
     }
 
     @media screen and (max-width: 1080px) {
+
+        .login_helpers_container {
+            flex-direction: column;
+        }
+
         .login_helpers_column {
             width: 100%;
+            gap: 0.5rem;
         }
     }
 </style>

@@ -63,6 +63,18 @@
             };
         };
     };
+
+    $: if (!isValid) {
+        if (emailInputValue === "") {
+                isValid = false;
+                emailInputErrorMessage = "a valid email required";
+            } else if (!emailInputValue.includes('@')) {
+                isValid = false;
+                emailInputErrorMessage = "email must have an @ symbol";
+            } else if (emailInputValue !== "") {
+                isValid = true;
+            };
+    }
   
 </script>
 

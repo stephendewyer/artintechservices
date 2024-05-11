@@ -12,12 +12,12 @@
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import Megaphone from "$lib/images/icons/contact_megaphone.svg?raw";
 
-    let nameFirst: string = "";
-    let nameLast: string = "";
-    let email: string = "";
-    let phone: E164Number | null = null;
-    let subject: string = "";
-    let message: string = "";
+    let nameFirstInputValue: string = "";
+    let nameLastInputValue: string = "";
+    let emailInputValue: string = "";
+    let phoneInputValue: E164Number | null = null;
+    let subjectInputValue: string = "";
+    let messageInputValue: string = "";
 
     let nameFirstIsValid: boolean = true;
     let nameLastIsValid: boolean = true;
@@ -26,32 +26,115 @@
     let subjectIsValid: boolean = true;
     let messageIsValid: boolean = true;
 
-    let responseItem: ResponseObj = {
+    // after submit
+	let responseItem: ResponseObj = {
         success: "",
         error: "",
         status: null
     };
 
-    // after submit
-	let item: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
+    let pending: boolean = false;
 
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
             responseItem.success = "";
             responseItem.error = "";
             status: null;
-        }, 4000)
+        }, 4000);
     };
 
-    const sendMessageHandler = () => {
+    async function createMessage(
+        email: string, 
+        phone: E164Number | null,
+        nameFirst: string, 
+        nameLast: string, 
+        subject: string, 
+        message: string
+    ) {	
+        const response = await fetch("/api/sendMail", {
+
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                phone,
+                nameFirst,
+                nameLast,
+                subject,
+                message
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        responseItem = await response.json();
+        console.log(responseItem);
+        return responseItem;
+    };
+
+    const sendMessageHandler = async () => {
+        pending = true;
+
+        try {
+
+            await createMessage(
+                emailInputValue,
+                phoneInputValue,
+                nameFirstInputValue,
+                nameLastInputValue,
+                subjectInputValue,
+                messageInputValue
+            );
+
+            if (responseItem.success) {
+
+                emailInputValue = "",
+                nameFirstInputValue = "",
+                nameLastInputValue = "",
+                phoneInputValue = null,
+                subjectInputValue = "",
+                messageInputValue = ""
+            };
+
+            if (responseItem.error) {
+                if (emailInputValue === "") {
+                    emailIsValid = false;
+                } else if (!emailInputValue.includes('@')) {
+                    emailIsValid = false;
+                } else if (emailInputValue !== "") {
+                    emailIsValid = true;
+                };
+
+                if (nameFirstInputValue === "") {
+                    nameFirstIsValid = false;
+                } else if (nameFirstInputValue !== "") {
+                    nameFirstIsValid = true;
+                };
+
+                if (nameLastInputValue === "") {
+                    nameLastIsValid = false;
+                } else if (nameLastInputValue !== "") {
+                    nameLastIsValid = true;
+                };
+
+                if (subjectInputValue === "") {
+                    subjectIsValid = false;
+                } else if (subjectInputValue !== "") {
+                    subjectIsValid = true;
+                };
+
+                if (messageInputValue === "") {
+                    messageIsValid = false;
+                } else if (messageInputValue !== "") {
+                    messageIsValid = true;
+                };
+            };
+        } catch (error) {
+            console.log(error);
+        };
 
     };
 
-    let pending: boolean = false;
+    $: console.log(responseItem);
 
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
@@ -81,8 +164,8 @@
                     inputID="name_first"
                     inputName="name_first"
                     inputLabel={true}
-                    textInputValue={nameFirst}
-                    isValid={nameFirstIsValid}
+                    bind:textInputValue={nameFirstInputValue}
+                    bind:isValid={nameFirstIsValid}
                     textInputErrorMessage="first name required"
                     required={true}
                 >
@@ -95,8 +178,8 @@
                     inputID="name_last"
                     inputName="name_last"
                     inputLabel={true}
-                    textInputValue={nameLast}
-                    isValid={nameLastIsValid}
+                    bind:textInputValue={nameLastInputValue}
+                    bind:isValid={nameLastIsValid}
                     textInputErrorMessage="last name required"
                     required={true}
                 >
@@ -111,8 +194,8 @@
                     inputID="email"
                     inputName="email"
                     inputLabel={true}
-                    emailInputValue={email}
-                    isValid={emailIsValid}
+                    bind:emailInputValue={emailInputValue}
+                    bind:isValid={emailIsValid}
                     required={true}
                 >
                 *email
@@ -123,9 +206,9 @@
                     inputID="phone_number"
                     inputName="phone_number"
                     inputLabel={true}
-                    phoneInputValue={phone}
-                    isValid={phoneIsValid}
-                    required={true}
+                    bind:phoneInputValue={phoneInputValue}
+                    bind:isValid={phoneIsValid}
+                    required={false}
                     phoneInputErrorMessage="phone number required"
                 >
                     phone number
@@ -139,8 +222,8 @@
                 inputID="subject"
                 inputName="subject"
                 inputLabel={true}
-                textInputValue={subject}
-                isValid={subjectIsValid}
+                bind:textInputValue={subjectInputValue}
+                bind:isValid={subjectIsValid}
                 textInputErrorMessage="message subject required"
                 required={true}
             >
@@ -153,8 +236,8 @@
                 inputID="message"
                 inputName="message"
                 inputLabel={true}
-                textareaInputValue={message}
-                isValid={messageIsValid}
+                bind:textareaInputValue={messageInputValue}
+                bind:isValid={messageIsValid}
                 textAreaInputErrorMessage="message required"
                 required={true}
             >
@@ -177,13 +260,13 @@
         <PendingFlashMessage >
             please wait while we validate your data
         </PendingFlashMessage>
-    {:else if (item.error)}
+    {:else if (responseItem.error)}
         <ErrorFlashMessage >
-            {item.error}
+            {responseItem.error}
         </ErrorFlashMessage>
-    {:else if (item.success)}
+    {:else if (responseItem.success)}
         <SuccessFlashMessage>
-            {item.success}
+            {responseItem.success}
         </SuccessFlashMessage>
     {/if}
 </div>

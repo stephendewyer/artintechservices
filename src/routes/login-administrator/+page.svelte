@@ -74,7 +74,7 @@
         <h1>login administrator</h1>
         <div class="input_row">
             <EmailInput
-                isValid={emailIsValid}
+                bind:isValid={emailIsValid}
                 placeholder="myEmail@myDomain.com"
                 inputID="client_email"
                 inputName="client_email"
@@ -87,7 +87,7 @@
         </div>
         <div class="input_row">
             <PasswordInput
-                isValid={passwordIsValid}
+                bind:isValid={passwordIsValid}
                 placeholder="myPassword"
                 inputID="client_password"
                 inputName="client_password"

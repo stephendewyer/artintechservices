@@ -23,7 +23,6 @@
             if (passwordInputTouched) {
                 if (passwordInputValue === "") {
                     isValid = false;
-                    errorMessage = passwordInputErrorMessage;
                 } else if (passwordInputValue !== "") {
                     isValid = true;
                 };
@@ -37,7 +36,6 @@
         if (passwordInputTouched) {
             if (passwordInputValue === "") {
                 isValid = false;
-                errorMessage = passwordInputErrorMessage;
             } else if (passwordInputValue !== "") {
                 isValid = true;
             };
@@ -52,7 +50,6 @@
 
         if (passwordInputValue === "") {
             isValid = false;
-            errorMessage = passwordInputErrorMessage;
         } else if (passwordInputValue !== "") {
             isValid = true;
         };
@@ -62,6 +59,12 @@
         passwordMatchValidation = false;
     } else {
         passwordMatchValidation = true;
+    };
+
+    $: if (!isValid) {
+        if (passwordInputValue === "") {
+            errorMessage = passwordInputErrorMessage;
+        };
     };
   
 </script>

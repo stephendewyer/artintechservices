@@ -11,7 +11,6 @@
     export let documentFileInputErrorMessage: string = "";
     export let required: boolean;
 
-    $: console.log(isValid)
     let documentFile: any;
 
     const documentFileChangedHandler = (event: any) => {
@@ -23,20 +22,11 @@
         if (required) {
             if (documentFileInputValue === "") {
                 isValid = false;
-                documentFileInputErrorMessage = "document required!";
             };
-        };
-
-        if (documentFile?.size >  2000000) {
+        } else if (documentFile?.size >  2000000) {
             isValid = false;
-            documentFileInputErrorMessage = "document cannot exceed 2MB in size!";
-            return;
-        };
-        
-        if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
+        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
             isValid = false;
-            documentFileInputErrorMessage = "invalid file type";
-            return;
         };
 
         const fileReader = new FileReader();
@@ -49,6 +39,20 @@
                 document = e.target?.result;
             };
             fileReader.readAsDataURL(documentFile);
+        };
+    };
+
+    $: if (!isValid) {
+        if (required) {
+            if (documentFileInputValue === "") {
+                documentFileInputErrorMessage = "document required!";
+            };
+        } else if (documentFile?.size >  2000000) {
+            documentFileInputErrorMessage = "document cannot exceed 2MB in size!";
+        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
+            documentFileInputErrorMessage = "invalid file type";
+        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
+            documentFileInputErrorMessage = "invalid file type";
         };
     };
 

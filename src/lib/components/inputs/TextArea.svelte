@@ -17,7 +17,6 @@
             if (textAreaInputTouched) {
                 if (textareaInputValue === "") {
                     isValid = false;
-                    errorMessage = textAreaInputErrorMessage;
                 } else if (textareaInputValue !== "") {
                     isValid = true;
                 };
@@ -32,7 +31,6 @@
             if (textAreaInputTouched) {
                 if (textareaInputValue === "") {
                     isValid = false;
-                    errorMessage = textAreaInputErrorMessage;
                 };
             } else if (!textAreaInputTouched) {
                 isValid = true;
@@ -47,10 +45,15 @@
 
             if (textareaInputValue === "") {
                 isValid = false;
-                errorMessage = textAreaInputErrorMessage;
             } else if (textareaInputValue !== "") {
                 isValid = true;
             };
+        };
+    };
+
+    $: if (!isValid) {
+        if (textareaInputValue === "") {
+            errorMessage = textAreaInputErrorMessage;
         };
     };
 

@@ -13,6 +13,20 @@
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import TimeInput from "$lib/components/inputs/TimeInput.svelte";
+    import SelectInput from "$lib/components/inputs/SelectInput.svelte";
+    import TimeZones from "$lib/data/timeZones.json";
+
+    // sort time zones by alphabetical order
+
+    const TimeZonesSorted = TimeZones.sort((a, b) => {
+        if (a.name < b.name) {
+            return -1;
+        }
+        if (a.name > b.name) {
+            return 1;
+        }
+        return 0;
+    });
 
     let nameFirst: string = "";
     let nameLast: string = "";
@@ -22,6 +36,7 @@
     let URL: string = "";
     let consultationDate: Date = new Date(0);
     let consultationTime: string = "";
+    let consultationTimeZone: string = "";
     let consultationReason: string = "";
 
     let nameFirstIsValid: boolean = true;
@@ -32,6 +47,7 @@
     let companyIsValid: boolean = true;
     let consultationDateIsValid: boolean = true;
     let consultationTimeIsValid: boolean = true;
+    let consultationTimeZoneIsValid: boolean = true;
     let consultationReasonIsValid: boolean = true;
 
     let responseItem: ResponseObj = {
@@ -125,8 +141,8 @@
                     inputID="name_first"
                     inputName="name_first"
                     inputLabel={true}
-                    textInputValue={nameFirst}
-                    isValid={nameFirstIsValid}
+                    bind:textInputValue={nameFirst}
+                    bind:isValid={nameFirstIsValid}
                     textInputErrorMessage="first name required"
                     required={true}
                 >
@@ -139,8 +155,8 @@
                     inputID="name_last"
                     inputName="name_last"
                     inputLabel={true}
-                    textInputValue={nameLast}
-                    isValid={nameLastIsValid}
+                    bind:textInputValue={nameLast}
+                    bind:isValid={nameLastIsValid}
                     textInputErrorMessage="last name required"
                     required={true}
                 >
@@ -155,8 +171,8 @@
                     inputID="email"
                     inputName="email"
                     inputLabel={true}
-                    emailInputValue={email}
-                    isValid={emailIsValid}
+                    bind:emailInputValue={email}
+                    bind:isValid={emailIsValid}
                     required={true}
                 >
                 *email
@@ -168,8 +184,8 @@
                     inputID="company"
                     inputName="company"
                     inputLabel={true}
-                    textInputValue={company}
-                    isValid={companyIsValid}
+                    bind:textInputValue={company}
+                    bind:isValid={companyIsValid}
                     textInputErrorMessage="company required"
                     required={false}
                 >
@@ -183,8 +199,8 @@
                     inputID="phone_number"
                     inputName="phone_number"
                     inputLabel={true}
-                    phoneInputValue={phone}
-                    isValid={phoneIsValid}
+                    bind:phoneInputValue={phone}
+                    bind:isValid={phoneIsValid}
                     required={true}
                     phoneInputErrorMessage="phone number required"
                 >
@@ -197,8 +213,8 @@
                     inputID="URL"
                     inputName="URL"
                     inputLabel={true}
-                    textInputValue={URL}
-                    isValid={URLisValid}
+                    bind:textInputValue={URL}
+                    bind:isValid={URLisValid}
                     textInputErrorMessage="URL required"
                     required={false}
                 >
@@ -212,8 +228,8 @@
                     inputID="consultation_date"
                     inputName="consultation_date"
                     inputLabel={true}
-                    dateInputValue={consultationDate}
-                    isValid={consultationDateIsValid}
+                    bind:dateInputValue={consultationDate}
+                    bind:isValid={consultationDateIsValid}
                     dateInputErrorMessage="consultation date required"
                     required={true}
                 >
@@ -225,13 +241,27 @@
                     inputID="consultation_time"
                     inputName="consultation_time"
                     inputLabel={true}
-                    timeInputValue={consultationTime}
-                    isValid={consultationTimeIsValid}
+                    bind:timeInputValue={consultationTime}
+                    bind:isValid={consultationTimeIsValid}
                     timeInputErrorMessage="consultation time required"
                     required={true}
                 >
                     *consultation time
                 </TimeInput>
+            </div>
+            <div class="input_column">
+                <SelectInput 
+                    inputID="time_zome"
+                    inputName="time_zone"
+                    inputLabel={true}
+                    bind:selectInputValue={consultationTimeZone}
+                    bind:isValid={consultationTimeZoneIsValid}
+                    selectInputErrorMessage="time zone required"
+                    options={TimeZonesSorted}
+                    required={true}
+                >
+                    *time zone
+                </SelectInput>
             </div>
         </div>
         <div class="inputs_row">
@@ -240,8 +270,8 @@
                 inputID="consultation_reason"
                 inputName="consultation_reason"
                 inputLabel={true}
-                textareaInputValue={consultationReason}
-                isValid={consultationReasonIsValid}
+                bind:textareaInputValue={consultationReason}
+                bind:isValid={consultationReasonIsValid}
                 textAreaInputErrorMessage="consultation reason required"
                 required={true}
             >
@@ -257,7 +287,6 @@
                     cancel
                 </CancelButton>
             </a>
-            
             <SubmitButton disable={false}>
                 send request
             </SubmitButton>

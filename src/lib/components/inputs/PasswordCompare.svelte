@@ -14,17 +14,20 @@
     export let missingPassword: boolean = false;
 
     let passwordReenteredInputValueLength: number = 0;
-
+    
     let parsedPassword: string = "";
-
-    let passwordInputValueChanged: boolean = false;
 
     $: parsedPassword = passwordInputValue.substring(0, passwordReenteredInputValueLength);
 
+    let parsedReenteredPassword: string = "";
+    
+    $: parsedReenteredPassword = passwordReenteredInputValue.substring(0, passwordInputValue.length);
+
     $: passwordReenteredInputValueLength = passwordReenteredInputValue.length;
 
-    $: if (passwordInputValueChanged) {
+    let passwordInputValueChanged: boolean = false;
 
+    $: if (passwordInputValueChanged) {
         
         if (
             !passwordReenteredInputTouched &&
@@ -49,6 +52,12 @@
             (passwordInputValue.length > passwordReenteredInputValueLength)
         ) {
             passwordsMatch = null;
+            missingPassword = false;
+        } else if (
+            (passwordInputValue.length < passwordReenteredInputValueLength) &&
+            (parsedReenteredPassword !== passwordInputValue)
+        ) {
+            passwordsMatch = false;
             missingPassword = false;
         } else if (
             (passwordReenteredInputValue === passwordInputValue) && 
@@ -79,6 +88,12 @@
             (parsedPassword === passwordReenteredInputValue)
         ) {
             passwordsMatch = null;
+            missingPassword = false;
+        } else if (
+            (passwordInputValue.length > passwordReenteredInputValueLength) && 
+            (parsedPassword !== passwordReenteredInputValue)
+        ) {
+            passwordsMatch = false;
             missingPassword = false;
         } else if (
             (passwordReenteredInputValue === passwordInputValue) && 
@@ -141,7 +156,6 @@
         </div>
     </div>
 </div>
-
 
 <style>
     .password_compare {

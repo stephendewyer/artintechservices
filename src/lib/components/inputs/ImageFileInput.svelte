@@ -22,21 +22,11 @@
         if (required) {
             if (imageFileInputValue === "") {
                 isValid = false;
-                imageFileInputErrorMessage = "image required!";
             };
-
-        };
-
-        if (imageFile?.size >  2000000) {
+        } else if (imageFile?.size >  2000000) {
             isValid = false;
-            imageFileInputErrorMessage = "images cannot exceed 2MB in size!";
-            return;
-        };
-        
-        if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
+        } else if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
             isValid = false;
-            imageFileInputErrorMessage = "invalid file type";
-            return;
         };
 
         const fileReader = new FileReader();
@@ -49,6 +39,18 @@
                 image = e.target?.result;
             };
             fileReader.readAsDataURL(imageFile);
+        };
+    };
+
+    $: if (!isValid) {
+        if (required) {
+            if (imageFileInputValue === "") {
+                imageFileInputErrorMessage = "image required!";
+            } else if (imageFile?.size >  2000000) {
+                imageFileInputErrorMessage = "images cannot exceed 2MB in size!";
+            } else if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
+                imageFileInputErrorMessage = "invalid file type";
+            };
         };
     };
 

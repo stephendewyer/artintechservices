@@ -2,6 +2,7 @@
     import Arrow from "$lib/images/arrows/arrow_right.svg?raw";
     export let clicked = false;
     export let disable: boolean = false;
+
 </script>
 <button 
     on:click={() => clicked = true}

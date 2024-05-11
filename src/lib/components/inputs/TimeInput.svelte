@@ -18,7 +18,6 @@
             if (timeInputTouched) {
                 if (timeInputValue === "") {
                     isValid = false;
-                    errorMessage = timeInputErrorMessage;
                 } else if (timeInputValue !== "") {
                     isValid = true;
                 }
@@ -33,7 +32,6 @@
             if (timeInputTouched) {
                 if (timeInputValue === "") {
                     isValid = false;
-                    errorMessage = timeInputErrorMessage;
                 } else if (timeInputValue !== "") {
                     isValid = true;
                 };
@@ -48,10 +46,15 @@
             timeInputTouched = true;
             if (timeInputValue === "") {
                 isValid = false;
-                errorMessage = timeInputErrorMessage;
             } else if (timeInputValue !== "") {
                 isValid = true;
             };
+        };
+    };
+
+    $: if (!isValid) {
+        if (timeInputValue === "") {
+            errorMessage = timeInputErrorMessage;
         };
     };
 

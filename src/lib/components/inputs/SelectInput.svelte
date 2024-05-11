@@ -17,7 +17,6 @@
             if (selectInputTouched) {
                 if (selectInputValue === "") {
                     isValid = false;
-                    errorMessage = selectInputErrorMessage;
                 } else if (selectInputValue !== "") {
                     isValid = true;
                 }
@@ -32,7 +31,6 @@
             if (selectInputTouched) {
                 if (selectInputValue === "") {
                     isValid = false;
-                    errorMessage = selectInputErrorMessage;
                 } else if (selectInputValue !== "") {
                     isValid = true;
                 };
@@ -47,10 +45,15 @@
             selectInputTouched = true;
             if (selectInputValue === "") {
                 isValid = false;
-                errorMessage = selectInputErrorMessage;
             } else if (selectInputValue !== "") {
                 isValid = true;
             };
+        };
+    };
+
+    $: if (!isValid) {
+        if (selectInputValue === "") {
+            errorMessage = selectInputErrorMessage;
         };
     };
   

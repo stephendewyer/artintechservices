@@ -21,7 +21,6 @@
             if (textInputTouched) {
                 if (textInputValue === "") {
                     isValid = false;
-                    errorMessage = textInputErrorMessage;
                 } else if (textInputValue !== "") {
                     isValid = true;
                 }
@@ -36,7 +35,6 @@
             if (textInputTouched) {
                 if (textInputValue === "") {
                     isValid = false;
-                    errorMessage = textInputErrorMessage;
                 } else if (textInputValue !== "") {
                     isValid = true;
                 };
@@ -52,10 +50,15 @@
             textInputTouched = true;
             if (textInputValue === "") {
                 isValid = false;
-                errorMessage = textInputErrorMessage;
             } else if (textInputValue !== "") {
                 isValid = true;
             };
+        };
+    };
+
+    $: if (!isValid) {
+        if (textInputValue === "") {
+            errorMessage = textInputErrorMessage;
         };
     };
 

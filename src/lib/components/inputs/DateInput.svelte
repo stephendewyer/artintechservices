@@ -16,10 +16,9 @@
     const dateInputValueChangedHandler = () => {
         if (required) {
             if (dateInputTouched) {
-                if (!dateInputValue) {
+                if (dateInputValue === new Date(0)) {
                     isValid = false;
-                    errorMessage = dateInputErrorMessage;
-                } else if (dateInputValue) {
+                } else if (!(dateInputValue === new Date(0))) {
                     isValid = true;
                 }
             } else if (!dateInputTouched) {
@@ -31,10 +30,9 @@
     const dateInputFocusChangedHandler = () => {
         if (required) {
             if (dateInputTouched) {
-                if (!dateInputValue) {
+                if (dateInputValue === new Date(0)) {
                     isValid = false;
-                    errorMessage = dateInputErrorMessage;
-                } else if (dateInputValue) {
+                } else if (!(dateInputValue === new Date(0))) {
                     isValid = true;
                 };
             } else if (!dateInputTouched) {
@@ -46,13 +44,16 @@
     const dateInputBlurChangedHandler = () => {
         if (required) {
             dateInputTouched = true;
-            if (!dateInputValue) {
+            if (dateInputValue === new Date(0)) {
                 isValid = false;
-                errorMessage = dateInputErrorMessage;
-            } else if (dateInputValue) {
+            } else if (!(dateInputValue === new Date(0))) {
                 isValid = true;
             };
         };
+    };
+
+    $: if (!isValid) {
+        errorMessage = dateInputErrorMessage;
     };
 
 </script>

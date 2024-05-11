@@ -207,8 +207,8 @@
                     inputID="name_first"
                     inputName="name_first"
                     inputLabel={true}
-                    textInputValue={nameFirst}
-                    isValid={nameFirstIsValid}
+                    bind:textInputValue={nameFirst}
+                    bind:isValid={nameFirstIsValid}
                     textInputErrorMessage="first name required"
                     required={true}
                 >
@@ -221,8 +221,8 @@
                     inputID="name_last"
                     inputName="name_last"
                     inputLabel={true}
-                    textInputValue={nameLast}
-                    isValid={nameLastIsValid}
+                    bind:textInputValue={nameLast}
+                    bind:isValid={nameLastIsValid}
                     textInputErrorMessage="last name required"
                     required={true}
                 >
@@ -237,8 +237,8 @@
                     inputID="email"
                     inputName="email"
                     inputLabel={true}
-                    emailInputValue={email}
-                    isValid={emailIsValid}
+                    bind:emailInputValue={email}
+                    bind:isValid={emailIsValid}
                     required={true}
                 >
                 *email
@@ -250,8 +250,8 @@
                     inputID="company"
                     inputName="company"
                     inputLabel={true}
-                    textInputValue={company}
-                    isValid={companyIsValid}
+                    bind:textInputValue={company}
+                    bind:isValid={companyIsValid}
                     textInputErrorMessage="company required"
                     required={false}
                 >
@@ -265,8 +265,8 @@
                     inputID="phone_number"
                     inputName="phone_number"
                     inputLabel={true}
-                    phoneInputValue={phone}
-                    isValid={phoneIsValid}
+                    bind:phoneInputValue={phone}
+                    bind:isValid={phoneIsValid}
                     required={true}
                     phoneInputErrorMessage="phone number required"
                 >
@@ -279,8 +279,8 @@
                     inputID="URL"
                     inputName="URL"
                     inputLabel={true}
-                    textInputValue={URL}
-                    isValid={URLisValid}
+                    bind:textInputValue={URL}
+                    bind:isValid={URLisValid}
                     textInputErrorMessage="URL required"
                     required={false}
                 >
@@ -297,8 +297,8 @@
                 inputID="about_project"
                 inputName="about_project"
                 inputLabel={true}
-                textareaInputValue={aboutProject}
-                isValid={aboutProjectIsValid}
+                bind:textareaInputValue={aboutProject}
+                bind:isValid={aboutProjectIsValid}
                 textAreaInputErrorMessage="about project required"
                 required={true}
             >
@@ -311,8 +311,8 @@
                     inputID="project_start_date"
                     inputName="project_start_date"
                     inputLabel={true}
-                    dateInputValue={projectStartDate}
-                    isValid={projectStartDateIsValid}
+                    bind:dateInputValue={projectStartDate}
+                    bind:isValid={projectStartDateIsValid}
                     dateInputErrorMessage="project start date required"
                     required={true}
                 >
@@ -324,8 +324,8 @@
                     inputID="project_end_date"
                     inputName="project_end_date"
                     inputLabel={true}
-                    dateInputValue={projectEndDate}
-                    isValid={projectEndDateIsValid}
+                    bind:dateInputValue={projectEndDate}
+                    bind:isValid={projectEndDateIsValid}
                     dateInputErrorMessage="project end date required"
                     required={true}
                 >
@@ -340,8 +340,8 @@
                     inputID="project_end_date"
                     inputName="project_end_date"
                     inputLabel={true}
-                    numberInputValue={projectBudget}
-                    isValid={projectBudgetIsValid}
+                    bind:numberInputValue={projectBudget}
+                    bind:isValid={projectBudgetIsValid}
                     numberInputErrorMessage="project budget required"
                     required={true}
                 >

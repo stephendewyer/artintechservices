@@ -4,10 +4,10 @@
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
-    import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import PasswordCompare from "$lib/components/inputs/PasswordCompare.svelte";
+    import TextInput from "$lib/components/inputs/TextInput.svelte";
 
     let nameFirstInputValue: string = "";
     let nameLastInputValue: string = "";
@@ -33,8 +33,6 @@
     } else {
         createClientAccountButtonDisabled = true;
     };
-
-    let passwordInputErrorMessage = "password required";
 
     let responseItem: ResponseObj = {
         success: "",
@@ -78,10 +76,36 @@
 <div class="page">
     <form class="form">
         <h1>create a free client account</h1>
-        <h4>*indicates required</h4>
+        <h3>*indicates required</h3>
+        <div class="input_row">
+            <TextInput
+                bind:isValid={nameFirstIsValid}
+                placeholder="myfirstname"
+                inputID="name_first"
+                inputName="name_first"
+                bind:textInputValue={nameFirstInputValue}
+                inputLabel={true}
+                required={true}
+            >
+            first name*
+            </TextInput>
+        </div>
+        <div class="input_row">
+            <TextInput
+                bind:isValid={nameLastIsValid}
+                placeholder="mylastname"
+                inputID="name_last"
+                inputName="name_last"
+                bind:textInputValue={nameLastInputValue}
+                inputLabel={true}
+                required={true}
+            >
+            last name*
+            </TextInput>
+        </div>
         <div class="input_row">
             <EmailInput
-                isValid={emailIsValid}
+                bind:isValid={emailIsValid}
                 placeholder="myEmail@myDomain.com"
                 inputID="client_email"
                 inputName="client_email"
@@ -89,11 +113,19 @@
                 inputLabel={true}
                 required={true}
             >
-                email:
+                email*
             </EmailInput>
         </div>
         <div class="input_row">
-            <PasswordCompare />
+            <PasswordCompare
+                bind:passwordInputValue
+                bind:passwordReenteredInputValue
+                bind:passwordIsValid
+                bind:passwordReenteredIsValid
+            >
+                <div slot="password_label">password*</div>
+                <div slot="re-entered_password_label">re-enter password*</div>
+            </PasswordCompare>
         </div>
         <div class="buttons_container">
             <SubmitButton 

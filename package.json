@@ -31,6 +31,7 @@
 		"bcrypt": "^5.1.1",
 		"embla-carousel-autoplay": "^8.0.2",
 		"embla-carousel-svelte": "^8.0.2",
+		"mysql2": "^3.9.7",
 		"svelte-tel-input": "^3.3.9",
 		"uuid": "^9.0.1"
 	}
