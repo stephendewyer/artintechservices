@@ -65,8 +65,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 10rem;
-        width: 10rem;
+        height: 5.5rem;
+        width: 5.5rem;
         padding: 0.5rem;
         color: #D79679;
         fill: #D79679;
@@ -89,8 +89,8 @@
     @media screen and (max-width: 1440px) {
 
         .image_container {
-            height: 9rem;
-            width: 9rem;
+            height: 5rem;
+            width: 5rem;
         }
 
         .label_container {
@@ -101,8 +101,8 @@
     @media screen and (max-width: 1080px) {
 
         .image_container {
-            height: 8rem;
-            width: 8rem;
+            height: 4.5rem;
+            width: 4.5rem;
         }
 
         .label_container {
@@ -138,8 +138,8 @@
         }
 
         .image_container {
-            height: 7rem;
-            width: 7rem;
+            height: 4rem;
+            width: 4rem;
         }
 
         .arrow_container {

@@ -41,6 +41,7 @@ export async function POST({request}) {
 
     let res = await mysqlConnection();
 
-    console.log(res);
+    res.end();
+
 
 }
