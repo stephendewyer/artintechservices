@@ -262,29 +262,29 @@
             );
 
             if (responseItem.success) {
-                artificialIntelligence = false,
-                brandIdentityDesign = false,
-                dataVisualization = false,
-                photography = false,
-                softwareDevelopment = false,
-                userExperienceDesign = false,
-                videography = false,
-                visualDesign = false,
-                nameFirst = "",
-                nameLast = "",
-                email = "",
-                company = "",
-                phone = null,
-                URL = "",
-                aboutProject = "",
-                projectStartDate = "",
-                projectEndDate = "",
-                projectBudget = null,
-                imageFileInputValue = "",
-                image = "",
-                documentFileInputValue = "",
-                documentFileName = "",
-                document = ""
+                artificialIntelligence = false;
+                brandIdentityDesign = false;
+                dataVisualization = false;
+                photography = false;
+                softwareDevelopment = false;
+                userExperienceDesign = false;
+                videography = false;
+                visualDesign = false;
+                nameFirst = "";
+                nameLast = "";
+                email = "";
+                company = "";
+                phone = null;
+                URL = "";
+                aboutProject = "";
+                projectStartDate = "";
+                projectEndDate = "";
+                projectBudget = null;
+                imageFileInputValue = "";
+                image = "";
+                documentFileInputValue = "";
+                documentFileName = "";
+                document = "";
                 goto("/");
             };
 

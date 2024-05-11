@@ -1,6 +1,4 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
-import { ImageFileExtensionTest } from "$lib/util/ImageFileExtensionTest.js";
-import { DocumentFileExtensionTest } from "$lib/util/DocumentFileExtensionTest";
 import { v2 as cloudinary } from 'cloudinary';
 import { CLOUDINARYCLOUDNAME } from "$env/static/private";
 import { CLOUDINARYSECRETKEY } from "$env/static/private";
@@ -228,7 +226,7 @@ export async function POST({request}) {
         text: 'sent via the start project request form',
         html: `hi stephen,<br /><br />
             A start project request was created on ${date} for ${nameFirst} ${nameLast} at ${email}.<br />
-            The following is a copy of the start projeect request:<br />
+            The following is a copy of the start project request:<br />
             -  first name: ${nameFirst}<br />
             -  last name: ${nameLast}<br />
             -  email: ${email}<br />
@@ -263,7 +261,7 @@ export async function POST({request}) {
         <br /><br />
         thank you for your start project request, which was created on ${date}.<br />
         A representative from Art in Tech Services will contact you within 48 hours to discuss your start project request.<br />
-        The following is a copy of the start projeect request:<br />
+        The following is a copy of the start project request:<br />
         -  first name: ${nameFirst}<br />
         -  last name: ${nameLast}<br />
         -  email: ${email}<br />

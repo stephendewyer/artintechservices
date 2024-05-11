@@ -15,7 +15,7 @@
     import TimeInput from "$lib/components/inputs/TimeInput.svelte";
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
-    import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
+    import { goto } from "$app/navigation";
     // sort time zones by alphabetical order
 
     const TimeZonesSorted = TimeZones.sort((a, b) => {
@@ -119,16 +119,17 @@
 
             if (responseItem.success) {
 
-                nameFirst = "", 
-                nameLast = "", 
-                email = "", 
-                phone = null,
-                company = "",
-                URL = "",
-                consultationDate = ConvertDateInputFormat(new Date(0)),
-                consultationTime = "",
-                consultationTimeZone = "",
-                consultationReason = ""
+                nameFirst = ""; 
+                nameLast = "";
+                email = "";
+                phone = null;
+                company = "";
+                URL = "";
+                consultationDate = "";
+                consultationTime = "";
+                consultationTimeZone = "";
+                consultationReason = "";
+                goto("/");
             };
 
             if (responseItem.error) {
