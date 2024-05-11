@@ -18,10 +18,8 @@
             if (emailInputTouched) {
                 if (emailInputValue === "") {
                     isValid = false;
-                    emailInputErrorMessage = "a valid email required";
                 } else if (!emailInputValue.includes('@')) {
                     isValid = false;
-                    emailInputErrorMessage = "email must have an @ symbol";
                 } else if (emailInputValue !== "") {
                     isValid = true;
                 }
@@ -36,10 +34,8 @@
             if (emailInputTouched) {
                 if (emailInputValue === "") {
                     isValid = false;
-                    emailInputErrorMessage = "a valid email required";
                 } else if (!emailInputValue.includes('@')) {
                     isValid = false;
-                    emailInputErrorMessage = "email must have an @ symbol";
                 } else if (emailInputValue !== "") {
                     isValid = true;
                 };
@@ -54,10 +50,8 @@
             emailInputTouched = true;
             if (emailInputValue === "") {
                 isValid = false;
-                emailInputErrorMessage = "a valid email required";
             } else if (!emailInputValue.includes('@')) {
                 isValid = false;
-                emailInputErrorMessage = "email must have an @ symbol";
             } else if (emailInputValue !== "") {
                 isValid = true;
             };
@@ -66,15 +60,15 @@
 
     $: if (!isValid) {
         if (emailInputValue === "") {
-                isValid = false;
-                emailInputErrorMessage = "a valid email required";
-            } else if (!emailInputValue.includes('@')) {
-                isValid = false;
-                emailInputErrorMessage = "email must have an @ symbol";
-            } else if (emailInputValue !== "") {
-                isValid = true;
-            };
-    }
+            isValid = false;
+            emailInputErrorMessage = "a valid email required";
+        } else if (!emailInputValue.includes('@')) {
+            isValid = false;
+            emailInputErrorMessage = "email must have an @ symbol";
+        } else if (emailInputValue !== "") {
+            isValid = true;
+        };
+    };
   
 </script>
 

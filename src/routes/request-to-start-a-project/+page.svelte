@@ -107,6 +107,36 @@
     let documentFileName: string = "";
     let document: any;
 
+    let artificialIntelligence: boolean = false;
+    let brandIdentityDesign: boolean = false;
+    let dataVisualization: boolean = false;
+    let photography: boolean = false;
+    let softwareDevelopment: boolean = false;
+    let userExperienceDesign: boolean = false;
+    let videography: boolean = false;
+    let visualDesign: boolean = false;
+
+    $: $RequestedServicesStore.forEach(requestedService => {
+        if (requestedService.service === "artifical intelligence") {
+            artificialIntelligence = requestedService.requested;
+        } else if (requestedService.service === "brand identity design") {
+            brandIdentityDesign = requestedService.requested;
+        } else if (requestedService.service === "data visualization") {
+            dataVisualization = requestedService.requested;
+        } else if (requestedService.service === "photography") {
+            photography = requestedService.requested;
+        } else if (requestedService.service === "software development") {
+            softwareDevelopment = requestedService.requested;
+        } else if (requestedService.service === "user experience design") {
+            userExperienceDesign = requestedService.requested;
+        } else if (requestedService.service === "videography") {
+            videography = requestedService.requested;
+        } else if (requestedService.service === "visual design") {
+            visualDesign = requestedService.requested;
+        };
+    });
+
+
     let nameFirstIsValid: boolean = true;
     let nameLastIsValid: boolean = true;
     let emailIsValid: boolean = true;
@@ -130,14 +160,6 @@
         documentFileName = documentFileInputValue.split(`\\`)[2];
     };
 
-    // after submit
-	let item: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
-
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
             responseItem.success = "";
@@ -146,7 +168,178 @@
         }, 4000)
     };
 
-    const sendProjectRequestHandler = () => {
+    async function createStartProjectRequest (
+        artificialIntelligence: boolean,
+        brandIdentityDesign: boolean,
+        dataVisualization: boolean,
+        photography: boolean,
+        softwareDevelopment: boolean,
+        userExperienceDesign: boolean,
+        videography: boolean,
+        visualDesign: boolean,
+        nameFirst: string,
+        nameLast: string,
+        email: string,
+        company: string,
+        phone: E164Number | null,
+        URL: string,
+        aboutProject: string,
+        projectStartDate: Date,
+        projectEndDate: Date,
+        projectBudget: number | null,
+        imageFileInputValue: string,
+        image: any,
+        documentFileInputValue: string,
+        documentFileName: string,
+        document: any
+    ) {	
+        const response = await fetch("/api/requestStartProject", {
+
+            method: 'POST',
+            body: JSON.stringify({
+                artificialIntelligence,
+                brandIdentityDesign,
+                dataVisualization,
+                photography,
+                softwareDevelopment,
+                userExperienceDesign,
+                videography,
+                visualDesign,
+                nameFirst,
+                nameLast,
+                email,
+                company,
+                phone,
+                URL,
+                aboutProject,
+                projectStartDate,
+                projectEndDate,
+                projectBudget,
+                imageFileInputValue,
+                image,
+                documentFileInputValue,
+                documentFileName,
+                document
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
+
+    const sendProjectRequestHandler = async () => {
+        pending = true;
+
+        try {
+
+            await createStartProjectRequest(
+                artificialIntelligence,
+                brandIdentityDesign,
+                dataVisualization,
+                photography,
+                softwareDevelopment,
+                userExperienceDesign,
+                videography,
+                visualDesign,
+                nameFirst,
+                nameLast,
+                email,
+                company,
+                phone,
+                URL,
+                aboutProject,
+                projectStartDate,
+                projectEndDate,
+                projectBudget,
+                imageFileInputValue,
+                image,
+                documentFileInputValue,
+                documentFileName,
+                document
+            );
+
+            if (responseItem.success) {
+                artificialIntelligence = false,
+                brandIdentityDesign = false,
+                dataVisualization = false,
+                photography = false,
+                softwareDevelopment = false,
+                userExperienceDesign = false,
+                videography = false,
+                visualDesign = false,
+                nameFirst = "",
+                nameLast = "",
+                email = "",
+                company = "",
+                phone = null,
+                URL = "",
+                aboutProject = "",
+                projectStartDate = new Date(0),
+                projectEndDate = new Date(0),
+                projectBudget = 0,
+                imageFileInputValue = "",
+                image = "",
+                documentFileInputValue = "",
+                documentFileName = "",
+                document = ""
+            };
+
+            if (responseItem.error) {
+                if (email === "") {
+                    emailIsValid = false;
+                } else if (!email.includes('@')) {
+                    emailIsValid = false;
+                } else if (email !== "") {
+                    emailIsValid = true;
+                };
+
+                if (nameFirst === "") {
+                    nameFirstIsValid = false;
+                } else if (nameFirst !== "") {
+                    nameFirstIsValid = true;
+                };
+
+                if (nameLast === "") {
+                    nameLastIsValid = false;
+                } else if (nameLast !== "") {
+                    nameLastIsValid = true;
+                };
+
+                if (phone === "" || phone === null) {
+                    phoneIsValid = false;
+                } else if (phone !== "" && phone !== null) {
+                    phoneIsValid = true;
+                };
+
+                if (aboutProject === "") {
+                    aboutProjectIsValid = false;
+                } else if (aboutProject !== "") {
+                    aboutProjectIsValid = true;
+                };
+
+                if (projectStartDate === new Date(0)) {
+                    projectStartDateIsValid = false;
+                } else if (projectStartDate !== new Date(0)) {
+                    projectStartDateIsValid = true;
+                };
+
+                if (projectEndDate === new Date(0)) {
+                    projectEndDateIsValid = false;
+                } else if (projectEndDate !== new Date(0)) {
+                    projectEndDateIsValid = true;
+                };
+
+                if (projectBudget === 0 || projectBudget === null) {
+                    projectBudgetIsValid = false;
+                } else if (projectBudget !== 0 && projectBudget !== null) {
+                    projectBudgetIsValid = true;
+                };
+            };
+        } catch (error) {
+            console.log(error);
+        };
 
     }
 
@@ -419,13 +612,13 @@
         <PendingFlashMessage >
             please wait while we validate your data
         </PendingFlashMessage>
-    {:else if (item.error)}
+    {:else if (responseItem.error)}
         <ErrorFlashMessage >
-            {item.error}
+            {responseItem.error}
         </ErrorFlashMessage>
-    {:else if (item.success)}
+    {:else if (responseItem.success)}
         <SuccessFlashMessage>
-            {item.success}
+            {responseItem.success}
         </SuccessFlashMessage>
     {/if}
 </div>

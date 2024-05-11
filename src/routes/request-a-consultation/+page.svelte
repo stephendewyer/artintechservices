@@ -56,13 +56,6 @@
         status: null
     };
 
-    // after submit
-	let item: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
             responseItem.success = "";
@@ -71,9 +64,129 @@
         }, 4000)
     };
 
-    const sendConsultationRequestHandler = () => {
+    async function createConsultationRequest (
+        nameFirst: string, 
+        nameLast: string, 
+        email: string, 
+        phone: E164Number | null,
+        company: string,
+        URL: string,
+        consultationDate: Date,
+        consultationTime: string,
+        consultationTimeZone: string,
+        consultationReason: string
+    ) {	
+        const response = await fetch("/api/requestConsultation", {
 
-    }
+            method: 'POST',
+            body: JSON.stringify({
+                nameFirst, 
+                nameLast, 
+                email, 
+                phone,
+                company,
+                URL,
+                consultationDate,
+                consultationTime,
+                consultationTimeZone,
+                consultationReason
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
+
+    const sendConsultationRequestHandler = async () => {
+        pending = true;
+
+        try {
+
+            await createConsultationRequest(
+                nameFirst, 
+                nameLast, 
+                email, 
+                phone,
+                company,
+                URL,
+                consultationDate,
+                consultationTime,
+                consultationTimeZone,
+                consultationReason
+            );
+
+            if (responseItem.success) {
+
+                nameFirst = "", 
+                nameLast = "", 
+                email = "", 
+                phone = null,
+                company = "",
+                URL = "",
+                consultationDate = new Date(0),
+                consultationTime = "",
+                consultationTimeZone = "",
+                consultationReason = ""
+            };
+
+            if (responseItem.error) {
+                if (email === "") {
+                    emailIsValid = false;
+                } else if (!email.includes('@')) {
+                    emailIsValid = false;
+                } else if (email !== "") {
+                    emailIsValid = true;
+                };
+
+                if (nameFirst === "") {
+                    nameFirstIsValid = false;
+                } else if (nameFirst !== "") {
+                    nameFirstIsValid = true;
+                };
+
+                if (nameLast === "") {
+                    nameLastIsValid = false;
+                } else if (nameLast !== "") {
+                    nameLastIsValid = true;
+                };
+
+                if (phone === "" || phone === null) {
+                    phoneIsValid = false;
+                } else if (phone !== "" && phone !== null) {
+                    phoneIsValid = true;
+                };
+
+                if (consultationDate === new Date(0)) {
+                    consultationDateIsValid = false;
+                } else if (consultationDate !== new Date(0)) {
+                    consultationDateIsValid = true;
+                };
+
+                if (consultationTime === "") {
+                    consultationTimeIsValid = false;
+                } else if (consultationTime !== "") {
+                    consultationTimeIsValid = true;
+                };
+
+                if (consultationTimeZone === "") {
+                    consultationTimeZoneIsValid = false;
+                } else if (consultationTimeZone !== "") {
+                    consultationTimeZoneIsValid = true;
+                };
+
+                if (consultationReason === "") {
+                    consultationReasonIsValid = false;
+                } else if (consultationReason !== "") {
+                    consultationReasonIsValid = true;
+                };
+            };
+        } catch (error) {
+            console.log(error);
+        };
+
+    };
 
     let pending: boolean = false;
 
@@ -296,13 +409,13 @@
         <PendingFlashMessage >
             please wait while we validate your data
         </PendingFlashMessage>
-    {:else if (item.error)}
+    {:else if (responseItem.error)}
         <ErrorFlashMessage >
-            {item.error}
+            {responseItem.error}
         </ErrorFlashMessage>
-    {:else if (item.success)}
+    {:else if (responseItem.success)}
         <SuccessFlashMessage>
-            {item.success}
+            {responseItem.success}
         </SuccessFlashMessage>
     {/if}
 </div>

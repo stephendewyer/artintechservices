@@ -5,11 +5,9 @@ export async function POST({request}) {
 
   if (request.method !== 'POST') {
     return new Response(JSON.stringify({error: "method is not POST"}), {status: 422});
-  }
+  };
 
   const data = await request.json();
-
-  console.log(data);
 
   const nameFirst = data.nameFirst;
   const nameLast = data.nameLast;
