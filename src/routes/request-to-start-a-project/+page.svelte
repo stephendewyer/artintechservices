@@ -285,6 +285,9 @@
                 documentFileInputValue = "";
                 documentFileName = "";
                 document = "";
+                $RequestedServicesStore.forEach((requestedService, index) => {
+                    $RequestedServicesStore[index].requested = false;
+                });
                 goto("/");
             };
 

@@ -20,14 +20,18 @@
     let emailIsValid: boolean = true;
     let passwordIsValid: boolean = true;
     let passwordReenteredIsValid: boolean = true;
+    let passwordsMatch: boolean | null = null;
 
     let createClientAccountButtonDisabled: boolean = true;
 
     $: if (
         emailIsValid &&
-        passwordIsValid &&
+        (passwordsMatch === true) &&
         (passwordInputValue !== "") &&
-        (emailInputValue !== "")
+        (emailInputValue !== "") &&
+        (passwordReenteredInputValue !== "") &&
+        (nameFirstInputValue !== "") &&
+        (nameLastInputValue !== "")
     ) {
         createClientAccountButtonDisabled = false;
     } else {
@@ -35,13 +39,6 @@
     };
 
     let responseItem: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
-    // after submit
-	let item: ResponseObj = {
         success: "",
         error: "",
         status: null
@@ -55,15 +52,93 @@
         }, 4000)
     };
 
-    const loginAdministratorHandler = () => {
+    const createClientAccount = async (
+        nameFirstInputValue: string,
+        nameLastInputValue: string,
+        emailInputValue: string,
+        passwordInputValue: string,
+        passwordReenteredInputValue: string
+    ) => {
+        const response = await fetch("/api/createAccountClient", {
+            method: 'POST',
+            body: JSON.stringify({
+                nameFirstInputValue, 
+                nameLastInputValue, 
+                emailInputValue, 
+                passwordInputValue,
+                passwordReenteredInputValue
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
 
-    }
+    const createClientAccountHandler = async () => {
+        pending = true;
+        try {
+            await createClientAccount(
+                nameFirstInputValue, 
+                nameLastInputValue, 
+                emailInputValue, 
+                passwordInputValue,
+                passwordReenteredInputValue
+            );
+
+            if (responseItem.success) {
+                nameFirstInputValue = "", 
+                nameLastInputValue = "", 
+                emailInputValue = "", 
+                passwordInputValue = "",
+                passwordReenteredInputValue = ""
+            };
+
+            if (responseItem.error) {
+                if (emailInputValue === "") {
+                    emailIsValid = false;
+                } else if (!emailInputValue.includes('@')) {
+                    emailIsValid = false;
+                } else if (emailInputValue !== "") {
+                    emailIsValid = true;
+                };
+
+                if (nameFirstInputValue === "") {
+                    nameFirstIsValid = false;
+                } else if (nameFirstInputValue !== "") {
+                    nameFirstIsValid = true;
+                };
+
+                if (nameLastInputValue === "") {
+                    nameLastIsValid = false;
+                } else if (nameLastInputValue !== "") {
+                    nameLastIsValid = true;
+                };
+
+                if (passwordInputValue === "") {
+                    passwordIsValid = false;
+                } else if (passwordInputValue !== "") {
+                    passwordIsValid = true;
+                };
+
+                if (passwordReenteredInputValue === "") {
+                    passwordReenteredIsValid = false;
+                } else if (passwordReenteredInputValue !== "") {
+                    passwordReenteredIsValid = true;
+                };
+            };
+        } catch (error) {
+            console.log(error);
+        };
+    };
 
     let pending: boolean = false;
 
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
     };
+
 </script>
 
 <svelte:head>
@@ -74,7 +149,7 @@
 </svelte:head>
 
 <div class="page">
-    <form class="form">
+    <form class="form" on:submit|preventDefault={createClientAccountHandler}>
         <h1>create a free client account</h1>
         <h3>*indicates required</h3>
         <div class="input_row">
@@ -122,16 +197,22 @@
                 bind:passwordReenteredInputValue
                 bind:passwordIsValid
                 bind:passwordReenteredIsValid
+                bind:passwordsMatch
             >
                 <div slot="password_label">password*</div>
                 <div slot="re-entered_password_label">re-enter password*</div>
             </PasswordCompare>
         </div>
         <div class="buttons_container">
+            <a href="/">
+                <CancelButton>
+                    cancel
+                </CancelButton>
+            </a>
             <SubmitButton 
                 disable={createClientAccountButtonDisabled}
             >
-                login
+                create account
             </SubmitButton>
         </div>
     </form>
