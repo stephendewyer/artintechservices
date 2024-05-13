@@ -78,6 +78,14 @@ declare global {
         requested: boolean;
     };
 
+	interface Credentials {
+		providerId: string;
+		email: string;
+		password: string;
+		redirect: string;
+		csrfToken: string;
+		callbackUrl: string;
+	};
 }
 
 export {};

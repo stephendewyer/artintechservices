@@ -133,8 +133,6 @@
 
     };
 
-    $: console.log(responseItem);
-
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
     };

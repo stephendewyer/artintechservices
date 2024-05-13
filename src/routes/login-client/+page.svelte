@@ -3,12 +3,13 @@
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
-    import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
+    import { goto } from '$app/navigation';
+    import { signIn } from "@auth/sveltekit/client";
 
     let emailInputValue: string = "";
     let emailIsValid: boolean = true;
@@ -29,16 +30,7 @@
         loginClientButtonDisabled = true;
     };
 
-    let passwordInputErrorMessage = "password required";
-
     let responseItem: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
-    // after submit
-	let item: ResponseObj = {
         success: "",
         error: "",
         status: null
@@ -52,9 +44,30 @@
         }, 4000)
     };
 
-    const loginClientHandler = () => {
+    const loginClientHandler = async () => {
+        pending = true;
+        try {
+            const response = await signIn("credentials", {
+                providerId: "client-login",
+                email: emailInputValue,
+                password: passwordInputValue,
+                redirect: false,
+            });
 
-    }
+            console.log(response)
+
+            if (!response) {
+                responseItem.error = "invalid email and/or password";
+            } else if (response) {
+                responseItem.success = "valid email and password";
+                emailInputValue = "";
+                passwordInputValue = "";
+                goto(`/authenticated-client/client`)
+            }; 
+        } catch (error) {
+            console.log(error);
+        };
+    };
 
     let pending: boolean = false;
 
