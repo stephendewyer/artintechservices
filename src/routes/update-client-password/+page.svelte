@@ -4,6 +4,7 @@
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import { goto } from "$app/navigation";
 
     export let data;
@@ -123,11 +124,19 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
+    <a href="/reset-client-password" class="cancel_button_container">
+        <CancelButton>
+            cancel
+        </CancelButton>
+    </a>
 </div>
 
 <style>
     .input_row {
         width: 100%;
         max-width: 28rem;
+    }
+    .cancel_button_container {
+        padding: 2rem 1rem 1rem 1rem;
     }
 </style>
