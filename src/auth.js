@@ -23,11 +23,10 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
         })
     ],
     secret: AUTH_SECRET,
-    debug: false,
+    debug: true,
     session: {
         // maxAge: 1800, // 30 mins
         strategy: "jwt"
-        
     },
     trustHost: true
 });

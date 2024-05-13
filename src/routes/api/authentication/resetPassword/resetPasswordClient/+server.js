@@ -15,7 +15,7 @@ export async function POST({request}) {
     const email = data.email;
 
     if (!email) {
-        return new Response(JSON.stringify({error: "missing form data!"}), {status: 422});
+        return new Response(JSON.stringify({error: "missing email!"}), {status: 422});
     } else if (!email.includes('@')) {
         return new Response(JSON.stringify({error: "missing an @ symbol in email address!"}), {status: 422});
     };
@@ -80,7 +80,7 @@ export async function POST({request}) {
         html: `
             <p>Hi ${email},</p>
             <p>You requested a password reset.</p>
-            <p>Click <a href="${DOMAIN}/update-client-password?token=${token}" >this link to set a new password.</a></p>
+            <p>Click <a href="${DOMAIN}/update-client-password?token=${token}&email=${email}" >this link to set a new password.</a></p>
             <p>Kind regards,</p>
             <p>Art in Tech Services</p>
             <a href="https://artintechservices.com">https://artintechservices.com</a>

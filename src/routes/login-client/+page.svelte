@@ -10,6 +10,9 @@
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { goto } from '$app/navigation';
     import { signIn } from "@auth/sveltekit/client";
+    import { page } from "$app/stores";
+
+    // receive form data from server
 
     let emailInputValue: string = "";
     let emailIsValid: boolean = true;
@@ -51,23 +54,20 @@
                 providerId: "client-login",
                 email: emailInputValue,
                 password: passwordInputValue,
-                redirect: false,
+                redirect: false
             });
-
-            console.log(response)
-
-            if (!response) {
-                responseItem.error = "invalid email and/or password";
-            } else if (response) {
+            if (response) {
                 responseItem.success = "valid email and password";
                 emailInputValue = "";
                 passwordInputValue = "";
                 goto(`/authenticated-client/client`)
-            }; 
+            };
         } catch (error) {
             console.log(error);
         };
     };
+
+    // $: console.log($page.data.session?.user?.email)
 
     let pending: boolean = false;
 
@@ -122,19 +122,6 @@
             </SubmitButton>
         </div>
     </form>
-    {#if (pending)}
-        <PendingFlashMessage >
-            please wait while we validate your data
-        </PendingFlashMessage>
-    {:else if (responseItem.error)}
-        <ErrorFlashMessage >
-            {responseItem.error}
-        </ErrorFlashMessage>
-    {:else if (responseItem.success)}
-        <SuccessFlashMessage>
-            {responseItem.success}
-        </SuccessFlashMessage>
-    {/if}
     <div class="login_helpers_container">
         <div class="login_helpers_column">
             <h4 class="login_helper_prompt">
