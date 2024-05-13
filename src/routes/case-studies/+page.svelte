@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import SuzanneContiQuiltsCaseStudy from "$lib/images/case_studies/Suzanne_Conti_Quilts_desktop_and_mobile.jpg";
     import JoyfoodlyCaseStudy from "$lib/images/case_studies/Joyfoodly_desktop_and_mobile.jpg";
     import ExternalLinkIcon from "$lib/images/icons/external_link_icon.svg?raw";
@@ -36,9 +39,8 @@
 <svelte:head>
     <title>Art in Tech Services - case studies</title>
     <meta name="description" content="case studies" />
-    <meta property="og:image" content={SuzanneContiQuiltsCaseStudy} />
-    <meta property="og:url" content="https://artintechservices.vercel.app/case-studies" />
-    <meta name="robots" content="index, follow" />
+    <meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
 <div class="page">

@@ -8,7 +8,9 @@
     import ActionButton from "$lib/components/buttons/ActionButton.svelte";
     import Consultation from "$lib/images/icons/actions/consultation_solid.svg?raw";
     import StartProject from "$lib/images/icons/actions/desk_call_bell_solid.svg?raw";
-    import ManageAccount from "$lib/images/icons/actions/manage_account_solid.svg?raw"
+    import ManageAccount from "$lib/images/icons/actions/manage_account_solid.svg?raw";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import { page } from "$app/stores";
 
     const actions: Action[] = [
         {
@@ -34,7 +36,7 @@
     <title>Art in Tech Services - delivering state-of-the-art digital products since 2021</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
-    <meta property="og:url" content="https://artintechservices.vercel.app/" />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
     <meta name="robots" content="index, follow" />
 </svelte:head>
 

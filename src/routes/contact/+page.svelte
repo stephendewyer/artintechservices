@@ -1,5 +1,7 @@
 <script lang="ts">
-    import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
@@ -142,8 +144,8 @@
 <svelte:head>
 	<title>Art in Tech Services - contact</title>
 	<meta name="description" content="contact" />
-	<meta property="og:image" content="{ArtInTechServicesBanner}" />
-    <meta property="og:url" content="https://artintechservices.vercel.app/contact" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
 <div class="page">

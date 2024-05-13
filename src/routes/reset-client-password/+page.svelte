@@ -1,11 +1,14 @@
 <script lang="ts">
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
-    import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     
     let emailIsValid: boolean = true;
     let emailInputValue: string = "";
@@ -84,8 +87,8 @@
 <svelte:head>
 	<title>Art in Tech Services - reset client password</title>
 	<meta name="description" content="reset client password" />
-	<meta property="og:image" content="{ArtInTechServicesBanner}" />
-    <meta property="og:url" content="https://artintechservices.vercel.app/reset-client-password" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
 <div class="page">
@@ -130,6 +133,16 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
+    <div class="login_helpers_column">
+        <h4 class="login_helper_prompt">
+            don't have an account?
+        </h4>
+        <a href="/create-a-client-account">
+            <ActionButtonSecondary>
+                create a free account
+            </ActionButtonSecondary>
+        </a>
+    </div>
     <a href="/login-client" class="cancel_button_container">
         <CancelButton>
             cancel
@@ -143,8 +156,32 @@
         width: 100%;
         max-width: 28rem;
     }
+
     .cancel_button_container {
         padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .login_helpers_column {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .login_helper_prompt {
+        text-align: center;
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    @media screen and (max-width: 1080px) {
+
+        .login_helpers_column {
+            width: 100%;
+            gap: 0.5rem;
+        }
     }
 
 </style>

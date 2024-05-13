@@ -1,8 +1,10 @@
 <script lang="ts">
-    import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
-    import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
-    import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
-    import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
+    // import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
+    // import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
+    // import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
@@ -10,7 +12,6 @@
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { goto } from '$app/navigation';
     import { signIn } from "@auth/sveltekit/client";
-    import { page } from "$app/stores";
 
     // receive form data from server
 
@@ -80,8 +81,8 @@
 <svelte:head>
 	<title>Art in Tech Services - login client</title>
 	<meta name="description" content="login client" />
-	<meta property="og:image" content="{ArtInTechServicesBanner}" />
-    <meta property="og:url" content="https://artintechservices.vercel.app/login-client" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
 <div class="page">

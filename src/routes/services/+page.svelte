@@ -1,7 +1,9 @@
 <script lang="ts">
     import Panel from "$lib/components/tabPanelServices/Panel.svelte";
     import Tabs from "$lib/components/tabPanelServices/Tabs.svelte";
-    import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import { v4 as uuidv4 } from 'uuid';
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
     import ServicePanel from "$lib/components/tabPanelServices/ServicePanel.svelte";
@@ -24,8 +26,6 @@
     import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
-
-    import { page } from "$app/stores";
 
     const servicesTabPanels: TabPanel[] = [
         {
@@ -228,10 +228,9 @@
 </script>
 <svelte:head>
     <title>Art in Tech Services - services</title>
-    <meta name="description" content="case studies" />
-    <meta property="og:image" content={ArtInTechServicesBanner} />
-    <meta property="og:url" content="https://artintechservices.vercel.app/services" />
-    <meta name="robots" content="index, follow" />
+    <meta name="description" content="services" />
+    <meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
 <div class="page">

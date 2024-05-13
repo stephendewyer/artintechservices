@@ -1,5 +1,7 @@
 <script lang="ts">
-    import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import Checkbox from "$lib/components/inputs/Checkbox.svelte";
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
     import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
@@ -358,8 +360,8 @@
 <svelte:head>
 	<title>Art in Tech Services - request to start a project</title>
 	<meta name="description" content="request to start a project" />
-	<meta property="og:image" content="{ArtInTechServicesBanner}" />
-    <meta property="og:url" content="https://artintechservices.vercel.app/request-to-start-a-project" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
     <form class="form" on:submit|preventDefault={sendProjectRequestHandler} >

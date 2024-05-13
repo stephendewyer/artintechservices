@@ -5,7 +5,10 @@
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { goto } from "$app/navigation";
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import { page } from "$app/stores";
 
     export let data;
 
@@ -92,6 +95,12 @@
     };
 
 </script>
+<svelte:head>
+    <title>Art in Tech Services - update client password</title>
+    <meta name="description" content="update client password" />
+    <meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
 <div class="page">
     <form class="form" on:submit|preventDefault={updatePasswordHandler}>
         <h1>update client password</h1>
