@@ -4,8 +4,8 @@
     import { page } from "$app/stores";
 </script>
 <svelte:head>
-    <title>Art in Tech Services - case studies</title>
-    <meta name="description" content="case studies" />
+    <title>Art in Tech Services - careers</title>
+    <meta name="description" content="careers" />
     <meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
