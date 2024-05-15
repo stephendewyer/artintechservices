@@ -11,6 +11,10 @@
     import Ideation from "$lib/images/icons/process/process_02.svg?raw";
     import Build from "$lib/images/icons/process/process_03.svg?raw";
     import Deliver from "$lib/images/icons/process/process_04.svg?raw";
+    import Prototype from "$lib/images/icons/process/prototype.svg?raw";
+    import Test from "$lib/images/icons/process/test.svg?raw";
+    import Define from "$lib/images/icons/process/define.svg?raw";
+    import Research from "$lib/images/icons/process/research.svg?raw";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
 
     let activeTab: number = 0;
@@ -41,8 +45,8 @@
                 {
                     paragraph: "We research to find the problems that need solving",
                     button: null,
-                    imageSrc: null,
-                    imageAlt: null
+                    imageSrc: Research,
+                    imageAlt: "magnifying glass with eye"
                 }
             ]
         },
@@ -56,8 +60,8 @@
                 {
                     paragraph: "We define the problem to solve.",
                     button: null,
-                    imageSrc: null,
-                    imageAlt: null
+                    imageSrc: Define,
+                    imageAlt: "target"
                 }
             ]
         },
@@ -86,8 +90,8 @@
                 {
                     paragraph: "We create prototypes to test using a mutually agreeable design.",
                     button: null,
-                    imageSrc: null,
-                    imageAlt: null
+                    imageSrc: Prototype,
+                    imageAlt: "prototype cube"
                 }
             ]
         },
@@ -101,8 +105,8 @@
                 {
                     paragraph: "We test the prototypes.",
                     button: null,
-                    imageSrc: null,
-                    imageAlt: null
+                    imageSrc: Test,
+                    imageAlt: "checkmark"
                 }
             ]
         },
