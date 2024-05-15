@@ -62,6 +62,13 @@ declare global {
 		search: string;
 	};
 
+	interface ProcessPanel {
+		paragraph: string;
+		imageSrc: string;
+		imageAlt: string;
+		button: typeof SvelteComponent<any>;
+	};
+
 	interface TabPanel {
         id: string;
 		index: number;
@@ -69,7 +76,7 @@ declare global {
 		tabImageSrc: string;
 		panel: typeof SvelteComponent<any>;
 		data: any[
-			ServicePanel
+			ServicePanel | ProcessPanel
 		];
     }
 

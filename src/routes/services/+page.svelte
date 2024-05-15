@@ -226,6 +226,7 @@
     };
 
 </script>
+
 <svelte:head>
     <title>Art in Tech Services - services</title>
     <meta name="description" content="services" />

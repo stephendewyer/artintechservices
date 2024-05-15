@@ -112,20 +112,33 @@
                 people
             </h2>
             <p class="paragraph">
-                our staff are some of the best in the fields of art and digital technology
+                Our staff are some of the best in the fields of art and digital technology.
             </p>
             <a href="/team">
                 <ActionButtonSecondary >
-                    meet our staff
+                    our staff
                 </ActionButtonSecondary>
             </a>            
+        </div>
+        <div class="story_section">
+            <h2>
+                how we work
+            </h2>
+            <p class="paragraph">
+                Our process has been tried and tested to produce the best results.
+            </p>
+            <a href="/process">
+                <ActionButtonSecondary >
+                    our process
+                </ActionButtonSecondary>
+            </a>       
         </div>
         <div class="story_section">
             <h2>
                 values
             </h2>
             <p class="paragraph">
-                values that guide our operations and define our business
+                Values that guide our operations and define our business:
             </p>
             <ul class="values">
                 {#each values as value, index}
@@ -200,6 +213,7 @@
     .paragraph {
         margin: 0;
         padding: 0;
+        width: 100%;
     }
 
     .left_column {
@@ -217,12 +231,10 @@
     .values {
         display: flex;
         flex-direction: column;
-        margin: 0;
-        padding: 0;
     }
 
     .values > li {
-        width: 100%;
+        width: auto;
     }
 
     @media screen and (max-width: 1440px) {
