@@ -252,6 +252,8 @@
 
     table td:nth-child(odd) {
         font-weight: bold;
+        overflow-wrap: break-word;
+        hyphens: auto;
     }
 
     @media screen and (max-width: 1440px) {

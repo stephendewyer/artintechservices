@@ -12,19 +12,29 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
-    <h1>
-        team
-    </h1>
-    <h2>
-        experts in art and digital technology
-    </h2>
-    <div class="team_members">
-        <a href="/team/stephen_dewyer">
-            <TeamMemberCard />
-        </a>
+    <div class="team_info">
+        <h1>
+            team
+        </h1>
+        <h2>
+            experts in art and digital technology
+        </h2>
+        <div class="team_members">
+            <a href="/team/stephen_dewyer">
+                <TeamMemberCard />
+            </a>
+        </div>    
     </div>
 </div>
 <style>
+
+    .team_info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 4rem;
+    }
     .team_members {
         padding: 1rem;
         display: flex;
