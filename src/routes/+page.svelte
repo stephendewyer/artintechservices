@@ -36,8 +36,7 @@
     <title>Art in Tech Services - delivering state-of-the-art digital products since 2021</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
-    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
-    <meta name="robots" content="index, follow" />
+    <meta property="og:url" content={PUBLIC_DOMAIN}/>
 </svelte:head>
 
 <div>
