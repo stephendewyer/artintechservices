@@ -169,4 +169,8 @@
 </div>
 <style>
 
+    .tabpanel {
+        width: 100%;
+    }
+
 </style>

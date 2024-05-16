@@ -66,6 +66,32 @@
         overflow: visible;
     }
 
+    .tab > .label_and_icon > .label {
+        font-weight: normal;
+        transition: color 0.2s linear;
+    }
+
+    .tab > .label_and_icon > .arrow_container {
+        transition: fill 0.2s linear;
+    }
+
+    .tab:hover > .label_and_icon > .label {
+        font-weight: normal;
+        color: #d79679;
+    }
+
+    .tab:hover > .label_and_icon > .arrow_container {
+        fill: #d79679;
+    }
+
+    .active_tab > .label_and_icon > .label {
+        color: #838B6A;
+    }
+
+    .active_tab > .label_and_icon > .arrow_container {
+        fill: #838B6A;
+    }
+
     .active_tab::after {
         --size: 6px;
         content: '';
@@ -98,22 +124,51 @@
     }
 
     @media screen and (max-width: 1440px) {
-        
+
+        .tabs_container {
+            gap: 0.75rem;
+        }
+
+        .label_and_icon {
+            gap: 0.75rem;
+        }
+
+        li {
+            gap: 0.75rem;
+        }
+
+        .arrow_container {
+            width: 0.75rem;
+        }
 
     }
 
     @media screen and (max-width: 1080px) {
 
-    }
+        .arrow_container {
+            width: 0.5rem;
+        }
 
-    @media screen and (max-width: 720px) {
+        .label_and_icon {
+            gap: 0.5rem;
+        }
+
+        li {
+            gap: 0.5rem;
+        }
 
         .tabs_container {
+            padding: 0.5rem;
+            gap: 0.5rem;
+            width: 100%;
+            justify-content: flex-start;
             flex-direction: row;
             overflow-x: auto;
             overflow-y: hidden;
-            width: 100%;
         }
+    }
+
+    @media screen and (max-width: 720px) {
 
     }
 
