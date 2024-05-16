@@ -49,6 +49,14 @@ p {
     font-size: 1.25rem;
 }
 
+table > tr > td {
+    font-size: 1.25rem;
+}
+
+table > tbody > tr > td {
+    font-size: 1.25rem;
+}
+
 a {
     font-size: 1.25rem;
     text-decoration: none;
@@ -136,6 +144,14 @@ img {
         font-size: 1.175rem;
     }
 
+    table > tr > td {
+        font-size: 1.175rem;
+    }
+
+    table > tbody > tr > td {
+        font-size: 1.175rem;
+    }
+
     a {
         font-size: 1.175rem;
         text-decoration: none;
@@ -178,6 +194,14 @@ img {
         font-size: 1rem;
     }
 
+    table > tr > td {
+        font-size: 1rem;
+    }
+
+    table > tbody > tr > td {
+        font-size: 1rem;
+    }
+
     a {
         font-size: 1rem;
     }
@@ -210,6 +234,10 @@ img {
     }
 
     p {
+        font-size: 1rem;
+    }
+
+    table > tr > td {
         font-size: 1rem;
     }
 

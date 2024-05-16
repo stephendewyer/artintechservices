@@ -10,8 +10,15 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
-
+    <h1>careers</h1>
+    <h2>building careers for art workers in tech</h2>
+    <p class="paragraph">
+        Interested in becoming a part of the Art in Tech Services team?   Send the position you are applying to fill, your resume and cover letter to sdewyer@artintechservices.com.
+    </p>
 </div>
 <style>
-
+    .paragraph {
+        width: 100%;
+        max-width: 40rem;
+    }
 </style>
