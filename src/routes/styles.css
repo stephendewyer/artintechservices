@@ -51,10 +51,12 @@ p {
 
 table > tr > td {
     font-size: 1.25rem;
+    padding: 1rem;
 }
 
 table > tbody > tr > td {
     font-size: 1.25rem;
+    padding: 1rem;
 }
 
 a {
@@ -146,10 +148,12 @@ img {
 
     table > tr > td {
         font-size: 1.175rem;
+        padding: 0.75rem;
     }
 
     table > tbody > tr > td {
         font-size: 1.175rem;
+        padding: 0.75rem;
     }
 
     a {
@@ -196,10 +200,12 @@ img {
 
     table > tr > td {
         font-size: 1rem;
+        padding: 0.5rem;
     }
 
     table > tbody > tr > td {
         font-size: 1rem;
+        padding: 0.5rem;
     }
 
     a {
@@ -237,8 +243,14 @@ img {
         font-size: 1rem;
     }
 
+    table > tbody > tr > td {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
     table > tr > td {
         font-size: 1rem;
+        padding: 0.5rem;
     }
 
     a {
