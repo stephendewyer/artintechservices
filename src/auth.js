@@ -1,21 +1,31 @@
 import { SvelteKitAuth, CredentialsSignin } from "@auth/sveltekit";
 import Credentials from "@auth/core/providers/credentials";
 import { AUTH_SECRET } from '$env/static/private';
-import { clientAuthentication } from "$lib/server/authentication/client-authentication.js";
+import { clientAuthentication } from "$lib/server/authentication/client-authentication";
+import { administratorAuthentication } from "$lib/server/authentication/administrator-authentication";
 
-// class InvalidLoginError extends CredentialsSignin {
-//     code = "invalid email and/or password"
-// };
+class InvalidLoginError extends CredentialsSignin {
+    code = "invalid email and/or password"
+};
 
 export const { handle, signIn, signOut } = SvelteKitAuth({
     providers: [
         Credentials({
-            async authorize(credentials) {
+            authorize: async (credentials, request) => {
                 if (credentials.providerId === "client-login") {
                     // @ts-ignore
                     const response = await clientAuthentication(credentials);
                     if (response === null) {
-                        return null;
+                        throw new InvalidLoginError();
+                    } else if (response) {
+                        const responseItem = await response;
+                        return responseItem ?? null;
+                    };
+                } else if (credentials.providerId === "administrator-login") {
+                    // @ts-ignore
+                    const response = await administratorAuthentication(credentials);
+                    if (response === null) {
+                        throw new InvalidLoginError();
                     } else if (response) {
                         const responseItem = await response;
                         return responseItem ?? null;

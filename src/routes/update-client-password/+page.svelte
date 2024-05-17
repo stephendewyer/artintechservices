@@ -9,7 +9,8 @@
     import { goto } from "$app/navigation";
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import { page } from "$app/stores";
-
+    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
+    
     export let data;
 
     let email = data.email;
@@ -133,6 +134,16 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
+    <div class="login_helpers_column">
+        <h4 class="login_helper_prompt">
+            did not receive update password link?
+        </h4>
+        <a href="/reset-client-password">
+            <ActionButtonSecondary>
+                resend update password link
+            </ActionButtonSecondary>
+        </a>
+    </div>
     <a href="/reset-client-password" class="cancel_button_container">
         <CancelButton>
             cancel
@@ -147,5 +158,28 @@
     }
     .cancel_button_container {
         padding: 2rem 1rem 1rem 1rem;
+    }
+
+    .login_helpers_column {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .login_helper_prompt {
+        text-align: center;
+        width: 100%;
+        padding: 0 0.5rem;
+    }
+
+    @media screen and (max-width: 1080px) {
+
+        .login_helpers_column {
+            width: 100%;
+            gap: 0.5rem;
+        }
     }
 </style>

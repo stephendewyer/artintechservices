@@ -79,7 +79,7 @@ export async function POST({request}) {
         subject: 'password reset',
         html: `
             <p>Hi ${email},</p>
-            <p>You requested a password reset.</p>
+            <p>You requested a password reset for your client account.</p>
             <p>Click <a href="${DOMAIN}/update-client-password?token=${token}&email=${email}" >this link to set a new password.</a></p>
             <p>Kind regards,</p>
             <p>Art in Tech Services</p>

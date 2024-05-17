@@ -69,8 +69,6 @@
         };
     };
 
-    // $: console.log($page.data.session?.user?.email)
-
     let pending: boolean = false;
 
     $: if((responseItem.success) || (responseItem.error)) {
@@ -142,6 +140,16 @@
             <a href="/reset-client-password">
                 <ActionButtonSecondary>
                     reset password
+                </ActionButtonSecondary>
+            </a>
+        </div>
+        <div class="login_helpers_column">
+            <h4 class="login_helper_prompt">
+                login as an administrator?
+            </h4>
+            <a href="/login-administrator">
+                <ActionButtonSecondary>
+                    administrator login
                 </ActionButtonSecondary>
             </a>
         </div>

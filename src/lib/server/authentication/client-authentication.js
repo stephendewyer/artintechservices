@@ -9,11 +9,9 @@ export const clientAuthentication = async (/** @type {Credentials} */ credential
         return null;
     };
 
-    // search voters for voter account with email that matches the user
+    // search clients for client account with email that matches the user
 
     let res = await mysqlConnection();
-
-    // load query to check if row with same voter first name and voter last name exists
 
     /**
      * @type {string | any[]}
