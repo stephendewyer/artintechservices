@@ -4,12 +4,43 @@
     import { page } from "$app/stores";
     import { afterNavigate } from "$app/navigation";
     import NavigationData from "$lib/data/navigation.json";
+    import NavigationDataClient from "$lib/data/navigationClient.json";
+    import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
+    import type { User } from "@auth/sveltekit";
+    import LogoutButtonFooter from "./buttons/LogoutButtonFooter.svelte";
 
     export let footerHeight;
 
-    const footerNavTabsLeft: NavTab[] = NavigationData.slice(0, (NavigationData.length/2));
+    let sessionClient: User | undefined;
+    
+    $: sessionClient = $page.data.streamed.user;
 
-    const footerNavTabsRight: NavTab[] = NavigationData.slice((NavigationData.length/2), NavigationData.length);
+    let nav_data: NavTab[] = [];
+
+    let callbackURL: string = "";
+    let logoURL: string = "";
+
+    $: if (sessionClient?.name === "client") {
+        nav_data = [...NavigationDataClient];
+        callbackURL = "/login-client";
+        logoURL = "/authenticated-client/client";
+    } else if (sessionClient?.name === "administrator") {
+        nav_data = [...NavigationDataAdministrator];
+        callbackURL = "/login-administrator";
+        logoURL = "/authenticated-administrator/administrator";
+    } else if (!sessionClient) {
+        nav_data = [...NavigationData];
+        callbackURL = "/";
+        logoURL = "/";
+    };
+
+    let footerNavTabsLeft: NavTab[] = [];
+    
+    $: footerNavTabsLeft = nav_data.slice(0, (nav_data.length/2));
+
+    let footerNavTabsRight: NavTab[] = [];
+    
+    $: footerNavTabsRight = nav_data.slice((nav_data.length/2), nav_data.length);
 
     const currentPageHandler = (navTab: NavTab) => {
         if (navTab.content === null) {
@@ -70,13 +101,17 @@
     const exitPanelRightHandler = (index: number) => {
         panelRightHoveredIndex = null;
     };
-
+    
 </script>
 
 <footer bind:clientHeight={footerHeight}>
     <ul class="footer_nav_top_mobile">
-        <li aria-current={$page.url.pathname === "/" ? "page" : undefined}>
-            <a href="/" class="logo">
+        <li aria-current={(
+            $page.url.pathname === "/" || 
+            $page.url.pathname === "/authenticated-administrator/administrator" || 
+            $page.url.pathname === "/authenticated-client/client"
+        ) ? "page" : undefined}>
+            <a href={logoURL} class="logo">
                 {@html Logo}
             </a>
         </li>
@@ -235,7 +270,11 @@
                 </li>
             {/if}
         {/each}
-        <li aria-current={$page.url.pathname === "/" ? "page" : undefined}>
+        <li aria-current={(
+            $page.url.pathname === "/" || 
+            $page.url.pathname === "/authenticated-administrator/administrator" || 
+            $page.url.pathname === "/authenticated-client/client"
+        ) ? "page" : undefined}>
             <a href="/" class="logo">
                 {@html Logo}
             </a>
@@ -288,6 +327,11 @@
             {/if}
         {/each}
     </ul>
+    {#if (sessionClient)}
+        <LogoutButtonFooter callbackUrl={callbackURL}>
+            logout
+        </LogoutButtonFooter>
+    {/if}
     <div class="social_media_links">
         <a 
             href="https://twitter.com/artintechservi3" 

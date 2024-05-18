@@ -42,6 +42,7 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
+    <h1 style="padding-bottom: 1rem;">story</h1>
     <div class="video_container">
         <video 
             class="video-js"
@@ -56,6 +57,7 @@
         </video>
     </div>
     <div class="story_sections">
+        
         <div class="story_section">
             <h2>vision</h2>
             <p class="paragraph">

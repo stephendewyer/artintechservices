@@ -8,7 +8,6 @@
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
-    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     
     let emailIsValid: boolean = true;
     let emailInputValue: string = "";
@@ -133,16 +132,6 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
-    <div class="login_helpers_column">
-        <h4 class="login_helper_prompt">
-            reset password as a client?
-        </h4>
-        <a href="/reset-client-password">
-            <ActionButtonSecondary>
-                reset client password
-            </ActionButtonSecondary>
-        </a>
-    </div>
     <a href="/login-client" class="cancel_button_container">
         <CancelButton>
             cancel

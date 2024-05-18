@@ -1,7 +1,19 @@
 <script lang="ts">
     import Arrow from "$lib/images/arrows/arrow_left.svg?raw";
+
+    export let cancelClicked: boolean = false;
+
+    const cancelClickedHandler = () => {
+        cancelClicked = !cancelClicked;
+    };
+    
 </script>
-<button class="cancel_button" type="button">
+<button 
+    class="cancel_button" 
+    type="button"
+    on:click={cancelClickedHandler}
+    on:keyup={cancelClickedHandler}
+>
     <div class="arrow">
         {@html Arrow}
     </div>

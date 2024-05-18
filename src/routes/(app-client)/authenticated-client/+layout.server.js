@@ -1,4 +1,8 @@
-export const load = async () => {
-
-
-}
+export const load = async (event) => {
+    const session = await event.locals.auth();
+    return {
+      streamed: {
+        user: session?.user
+      }
+    };
+  };

@@ -1,10 +1,37 @@
 <script lang="ts">
     import { page } from "$app/stores";
-    import Accordion from "../accordions/AccordionMobileNav.svelte"
-    import NavigationData from "$lib/data/navigation.json";
+    import NavAccordion from "../accordions/AccordionMobileNav.svelte"
     import MobileNavSideDrawerToggleButton from "$lib/components/navigation/MobileNavSideDrawerToggleButton.svelte";
+    import NavigationData from "$lib/data/navigation.json";
+    import NavigationDataClient from "$lib/data/navigationClient.json";
+    import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
+    import type { User } from "@auth/sveltekit";
+    import LogoutButtonMobile from "../buttons/LogoutButtonMobile.svelte";
 
     export let openMobileNav: boolean = false;
+
+    let sessionClient: User | undefined;
+    
+    $: sessionClient = $page.data.streamed.user;
+
+    let nav_data: NavTab[] = [];
+
+    let callbackURL: string = "";
+    let logoURL: string = "";
+
+    $: if (sessionClient?.name === "client") {
+        nav_data = [...NavigationDataClient];
+        callbackURL = "/login-client";
+        logoURL = "/authenticated-client/client";
+    } else if (sessionClient?.name === "administrator") {
+        nav_data = [...NavigationDataAdministrator];
+        callbackURL = "/login-administrator";
+        logoURL = "/authenticated-administrator/administrator";
+    } else if (!sessionClient) {
+        nav_data = [...NavigationData];
+        callbackURL = "/";
+        logoURL = "/";
+    };
 
 </script>
 
@@ -20,10 +47,15 @@
         <MobileNavSideDrawerToggleButton open={openMobileNav} />
     </button>
     <nav>
-        <Accordion 
-            mobileNavTabsData={NavigationData}
+        <NavAccordion 
+            mobileNavTabsData={nav_data}
             bind:openState={openMobileNav}
         />
+        <div class="logout_button_container">
+            <LogoutButtonMobile callbackUrl={callbackURL}>
+                logout
+            </LogoutButtonMobile>
+        </div>
     </nav>
 </aside>
 
@@ -58,6 +90,10 @@
         width: 100%;
         padding: 2rem 2rem;
 	}
+
+    .logout_button_container {
+        padding: 1rem 0;
+    }
     
     @media (min-width: 1000px) {
 

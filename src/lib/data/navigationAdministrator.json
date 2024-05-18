@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "label": "messages",
+        "expandable": false,
+        "slug": "/authenticated-administrator/administrator/messages",
+        "content": null
+    },
+    {
+        "id": 2,
+        "label": "client consultations",
+        "expandable": false,
+        "slug": "/authenticated-administrator/administrator/client-consultations",
+        "content": null
+    },
+    {
+        "id": 3,
+        "label": "client projects",
+        "expandable": false,
+        "slug": "/authenticated-administrator/administrator/client-projects",
+        "content": null
+    },
+    {
+        "id": 4,
+        "label": "client billing",
+        "expandable": false,
+        "slug": "/authenticated-administrator/administrator/client-billing",
+        "content": null
+    }
+]

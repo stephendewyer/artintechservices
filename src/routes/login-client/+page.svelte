@@ -87,6 +87,20 @@
 <div class="page">
     <form class="form" on:submit|preventDefault={loginClientHandler}>
         <h1>login client</h1>
+        <ul>
+            <li>
+                start and keep track of your projects
+            </li>
+            <li>
+                schedule your consultations
+            </li>
+            <li>
+                make payments
+            </li>
+            <li>
+                send and receive messages and documents
+            </li>
+        </ul>
         <div class="input_row">
             <EmailInput
                 bind:isValid={emailIsValid}
@@ -140,16 +154,6 @@
             <a href="/reset-client-password">
                 <ActionButtonSecondary>
                     reset password
-                </ActionButtonSecondary>
-            </a>
-        </div>
-        <div class="login_helpers_column">
-            <h4 class="login_helper_prompt">
-                login as an administrator?
-            </h4>
-            <a href="/login-administrator">
-                <ActionButtonSecondary>
-                    administrator login
                 </ActionButtonSecondary>
             </a>
         </div>

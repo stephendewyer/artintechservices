@@ -83,7 +83,6 @@
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
-
 <div class="page">
     <form class="form" on:submit|preventDefault={loginAdministratorHandler}>
         <h1>login administrator</h1>
@@ -130,16 +129,6 @@
             <a href="/reset-administrator-password">
                 <ActionButtonSecondary>
                     reset password
-                </ActionButtonSecondary>
-            </a>
-        </div>
-        <div class="login_helpers_column">
-            <h4 class="login_helper_prompt">
-                login as a client?
-            </h4>
-            <a href="/login-client">
-                <ActionButtonSecondary>
-                    client login
                 </ActionButtonSecondary>
             </a>
         </div>

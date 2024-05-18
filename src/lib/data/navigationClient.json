@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "label": "messages",
+        "expandable": false,
+        "slug": "/authenticated-client/client/messages",
+        "content": null
+    },
+    {
+        "id": 2,
+        "label": "request a consultation",
+        "expandable": false,
+        "slug": "/authenticated-client/client/request-a-consultation",
+        "content": null
+    },
+    {
+        "id": 3,
+        "label": "request to start a project",
+        "expandable": false,
+        "slug": "/authenticated-client/client/request-to-start-a-project",
+        "content": null
+    },
+    {
+        "id": 4,
+        "label": "make a payment",
+        "expandable": false,
+        "slug": "/authenticated-client/client/make-a-payment",
+        "content": null
+    }
+]

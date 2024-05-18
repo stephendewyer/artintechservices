@@ -4,12 +4,39 @@
     import MobileNavSideDrawerToggleButton from "$lib/components/navigation/MobileNavSideDrawerToggleButton.svelte";
     import { page } from '$app/stores';
     import NavigationData from "$lib/data/navigation.json";
+    import NavigationDataClient from "$lib/data/navigationClient.json";
+    import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
+    import type { User } from "@auth/sveltekit";
+    import LogoutButton from "$lib/components/buttons/LogoutButton.svelte";
 
     export let sideDrawer: boolean = false;
 
     let prevScrollPos: number = 0;
 
     let showNav: boolean = true; // boolean to show or hid nav bar
+
+    let sessionClient: User | undefined;
+    
+    $: sessionClient = $page.data.streamed.user;
+
+    let nav_data: NavTab[] = [];
+
+    let callbackURL: string = "";
+    let logoURL: string = "";
+
+    $: if (sessionClient?.name === "client") {
+        nav_data = [...NavigationDataClient];
+        callbackURL = "/login-client";
+        logoURL = "/authenticated-client/client";
+    } else if (sessionClient?.name === "administrator") {
+        nav_data = [...NavigationDataAdministrator];
+        callbackURL = "/login-administrator";
+        logoURL = "/authenticated-administrator/administrator";
+    } else if (!sessionClient) {
+        nav_data = [...NavigationData];
+        callbackURL = "/";
+        logoURL = "/";
+    };
 
 </script>
 
@@ -31,14 +58,18 @@
 
 <header class={showNav ? "nav_bar_visible" : "nav_bar_hidden"}>
     <ul class="main_nav_tabs" >
-        <li aria-current={$page.url.pathname === "/"? "page" : undefined} >
-            <a href="/">
+        <li aria-current={(
+                $page.url.pathname === "/" || 
+                $page.url.pathname === "/authenticated-administrator/administrator" || 
+                $page.url.pathname === "/authenticated-client/client"
+            ) ? "page" : undefined} >
+            <a href={logoURL}>
                 <Logo />
             </a>
         </li>
     </ul>
     <ul class="navigation_center_panel_desktop">
-        {#each NavigationData as mainNavTab, index}
+        {#each nav_data as mainNavTab, index}
             {#if (mainNavTab.label !== "login")}
                 <NavColumn
                     mainNavTab={mainNavTab}
@@ -46,17 +77,25 @@
             {/if}
         {/each}
     </ul>
-    <ul class="login_nav_desktop">
-        {#each NavigationData as mainLoginTab, index}
-            {#if (mainLoginTab.label === "login")}
-                <li>
-                    <NavColumn
-                        mainNavTab={mainLoginTab}
-                    />
-                </li>
-            {/if}
-        {/each}
-    </ul>
+    {#if (!sessionClient)}
+        <ul class="login_nav_desktop">
+            {#each nav_data as mainLoginTab, index}
+                {#if (mainLoginTab.label === "login")}
+                    <li>
+                        <NavColumn
+                            mainNavTab={mainLoginTab}
+                        />
+                    </li>
+                {/if}
+            {/each}
+        </ul>
+    {:else if (sessionClient)}
+        <div class="login_nav_desktop">
+            <LogoutButton callbackUrl={callbackURL}>
+                logout
+            </LogoutButton>
+        </div>
+    {/if}
     <ul id="nav_right_mobile">
         <li class="mobile_nav_menu_toggle_button_container">
             <MobileNavSideDrawerToggleButton bind:open={sideDrawer}/>			
@@ -130,7 +169,7 @@
     }
 
     .login_nav_desktop {
-        display: block;
+        display: flex;
         list-style: none;
         padding: 0;
         margin: 0;
@@ -140,6 +179,7 @@
         position: relative;
         display: flex;
         flex-direction: row;
+        justify-content: center;
         padding: 0;
         margin: 0;
         list-style: none;
