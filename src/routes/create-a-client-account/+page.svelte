@@ -153,7 +153,7 @@
 <div class="page">
     <form class="form" on:submit|preventDefault={createClientAccountHandler}>
         <h1>create a free client account</h1>
-        <h2>
+        <h2 style="text-align: center;">
             create a free client account to help streamline your projects
         </h2>
         <h3>*indicates required</h3>
