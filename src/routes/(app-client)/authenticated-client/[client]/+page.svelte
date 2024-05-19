@@ -102,6 +102,7 @@
 
     $: if (contactValuesSaved) {
         getClientContactInformation();
+        editContactDetailsClicked = false
         contactValuesSaved = false;
     };
 
@@ -135,14 +136,27 @@
         zip_code: zipCodeInputValue
     };
 
-    let addContactDetails: boolean;
+    let addContactDetails: boolean = false;
+
+    let editContactDetailsClicked: boolean = false;
 
     let cancelClicked: boolean = false;
 
-    $: if (cancelClicked) {
+    $: if (cancelClicked && addContactDetails) {
         addContactDetails = false;
         cancelClicked = false;
+    } else if (cancelClicked && editContactDetailsClicked) {
+        editContactDetailsClicked = false;
+        cancelClicked = false;
     };
+
+    $: if (contactValuesSaved) {
+        console.log("contact values saved: ", contactValuesSaved)
+        editContactDetailsClicked = false;
+        contactValuesSaved = false;
+    };
+
+    $: console.log(contactValuesSaved)
 
 </script>
 
@@ -153,44 +167,182 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
-<div class="page" style="gap: 1rem;">
-    {#if (pendingClientData)}
-        <LoadingSpinner />
-    {:else if (!pendingClientData)}
-        <h1>welcome, {nameFirstInputValue} {nameLastInputValue}</h1>
-        <h2>joined on {dateCreated}</h2>
-        <h3>contact details</h3>
-        {#if (!clientContactData && !addContactDetails)}
-            <AddItemButton
-                bind:addItemClicked={addContactDetails}
-            >
-                contact details
-            </AddItemButton>
-        {:else if (addContactDetails && !clientContactData)}
-            {#if (pendingClientContactInformation)}
-                <LoadingSpinner />
-            {:else if (!pendingClientContactInformation)}
-                <ClientContactInfoForm 
-                    values={contactInfoInputValues} 
-                    clientEmail={clientEmail}
-                    bind:contactValuesSaved={contactValuesSaved}
-                    bind:cancelClicked={cancelClicked}
-                />
+<div class="page">
+    <div class="client_dashboard">
+        {#if (pendingClientData)}
+            <LoadingSpinner />
+        {:else if (!pendingClientData)}
+            <p class="joined_date">joined on {dateCreated}</p>
+            <h1>welcome, {nameFirstInputValue} {nameLastInputValue}</h1>
+            <h3>contact details</h3>
+            {#if (!clientContactData && !addContactDetails && !editContactDetailsClicked)}
+                <AddItemButton
+                    bind:addItemClicked={addContactDetails}
+                >
+                    contact details
+                </AddItemButton>
+            {:else if (addContactDetails && !clientContactData && !editContactDetailsClicked)}
+                {#if (pendingClientContactInformation)}
+                    <LoadingSpinner />
+                {:else if (!pendingClientContactInformation)}
+                    <ClientContactInfoForm 
+                        values={contactInfoInputValues} 
+                        clientEmail={clientEmail}
+                        bind:contactValuesSaved={contactValuesSaved}
+                        bind:cancelClicked={cancelClicked}
+                    />
+                {/if}
+            {:else if (clientContactData && !addContactDetails)}
+                {#if (pendingClientContactInformation)}
+                    <LoadingSpinner />
+                {:else if (!pendingClientContactInformation && editContactDetailsClicked && !addContactDetails)}
+                    <ClientContactInfoForm 
+                        values={contactInfoInputValues} 
+                        clientEmail={clientEmail}
+                        bind:contactValuesSaved={contactValuesSaved}
+                        bind:cancelClicked={cancelClicked}
+                    />
+                {:else if (!pendingClientContactInformation && !editContactDetailsClicked && !addContactDetails)}
+                    <table>
+                        <colgroup>
+                            <col style="width: 50%;" />
+                            <col style="width: 50%;" /> 
+                        </colgroup>
+                        <tr>
+                            <td>
+                                {nameFirstInputValue} {nameLastInputValue}
+                            </td>
+                            <td>
+                                {streetAddressInputValue}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {emailInputValue}
+                            </td>
+                            <td>
+                                {streetAddress02InputValue}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {companyInputValue}
+                            </td>
+                            <td>
+                                {cityInputValue}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {phoneInputValue}
+                            </td>
+                            <td>    
+                                {stateInputValue}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {companyInputValue}
+                            </td>
+                            <td>
+                                {zipCodeInputValue}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {URLInputValue}
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    </table>
+                    <EditButton bind:editClicked={editContactDetailsClicked}>
+                        edit
+                    </EditButton>
+                {/if}
             {/if}
-        {:else if (clientContactData)}
-            {#if (pendingClientContactInformation)}
-                <LoadingSpinner />
-            {:else if (!pendingClientContactInformation)}
-                <ClientContactInfoForm 
-                    values={contactInfoInputValues} 
-                    clientEmail={clientEmail}
-                    bind:contactValuesSaved={contactValuesSaved}
-                />
-            {/if}
+            
+            
         {/if}
-        
-        <EditButton>
-            edit
-        </EditButton>
-    {/if}
+    </div>
+    
 </div>
+
+<style>
+
+    .client_dashboard {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1rem;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .joined_date {
+        position: absolute;
+        left: auto;
+        right: 0;
+        padding: 0.5rem 1rem;
+        margin: 0;
+    }
+
+    table {
+        border-spacing: 0;
+        table-layout: fixed;
+        width: 100%;
+        max-width: 60rem;
+    }
+
+    table > tr {
+        height: auto;
+        padding: 0;
+    }
+
+    table > tr > td {
+        font-size: 1.25rem;
+        padding: 0.25rem 1rem;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+
+    table tr:nth-child(odd) {
+        background-color: #CBC6C2;
+    }
+
+    @media screen and (max-width: 1440px) {
+        table > tr > td {
+            font-size: 1.175rem;
+            padding: 1rem;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+
+        .joined_date {
+            position: absolute;
+            left: auto;
+            right: 0;
+            padding: 0.5rem 1rem;
+            margin: 0;
+            width: 15rem;
+        }
+
+        table > tr > td {
+            font-size: 1rem;
+            padding: 0.5rem;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .joined_date {
+            position: relative;
+            left: auto;
+            right: auto;
+            padding: 0.25rem 0.5rem;
+            width: auto;
+        }
+    }
+</style>

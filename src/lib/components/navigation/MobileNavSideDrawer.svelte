@@ -51,11 +51,13 @@
             mobileNavTabsData={nav_data}
             bind:openState={openMobileNav}
         />
-        <div class="logout_button_container">
-            <LogoutButtonMobile callbackUrl={callbackURL}>
-                logout
-            </LogoutButtonMobile>
-        </div>
+        {#if sessionClient}
+            <div class="logout_button_container">
+                <LogoutButtonMobile callbackUrl={callbackURL}>
+                    logout
+                </LogoutButtonMobile>
+            </div>
+        {/if}
     </nav>
 </aside>
 

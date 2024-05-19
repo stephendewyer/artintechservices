@@ -53,8 +53,8 @@
                 </h3>
                 <table class="column_section">
                     <colgroup>
-                        <col style="width: 25%;">
-                        <col style="width: 75%;">
+                        <col class="left_table_column">
+                        <col class="right_table_column">
                     </colgroup>
                     <tr>
                         <td>
@@ -256,6 +256,14 @@
         hyphens: auto;
     }
 
+    .left_table_column {
+        width: 25%;
+    }
+
+    .right_table_column {
+        width: 75%;
+    }
+
     @media screen and (max-width: 1440px) {
         table > tr > td {
             font-size: 1.175rem;
@@ -286,6 +294,14 @@
         .right_column {
             width: 100%;
             gap: 1rem;
+        }
+
+        .left_table_column {
+            width: 40%;
+        }
+
+        .right_table_column {
+            width: 60%;
         }
     }
 </style>

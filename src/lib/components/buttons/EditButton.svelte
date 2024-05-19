@@ -1,11 +1,19 @@
 <script lang="ts">
     import EditIcon from "$lib/images/icons/edit_icon.svg?raw";
 
+    export let editClicked: boolean = false;
+
+    const editClickedHandler = () => {
+        editClicked = !editClicked;
+    };
+
 </script>
 
 <button 
     type="button"
     class="box_button"
+    on:click={editClickedHandler}
+    on:keyup={editClickedHandler}
 >
     <slot />
     <div 
