@@ -6,7 +6,10 @@
 
 <ul class="tabs_container">
     {#each tabPanels as tab, index}
-        <a href={`/services${tab.data[0].search}`}>
+        <a 
+            href={`/services${tab.data[0].search}`}
+            data-sveltekit-noscroll
+        >
             <li
                 class={activeTab === tab.index ? "active_tab" : "tab"}
                 on:click={() => activeTab = tab.index} 
