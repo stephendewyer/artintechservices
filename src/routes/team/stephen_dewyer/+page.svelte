@@ -247,7 +247,7 @@
     }
 
     table tr:nth-child(odd) {
-        background-color: #CBC6C2;
+        background-color: #F2F9F2;
     }
 
     table td:nth-child(odd) {

@@ -2,6 +2,11 @@ import { mysqlConnection } from "$lib/server/db/mysql";
 import sgMail from "@sendgrid/mail";
 import { SENDGRIDAPIKey } from '$env/static/private';
 import { hashPassword } from "$lib/authentication/PasswordAuth.js";
+import Stripe from "stripe";
+import { STRIPE_SECRET_KEY } from "$env/static/private";
+
+// initialize Stripe
+const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 export async function POST({request}) {
 
@@ -74,6 +79,41 @@ export async function POST({request}) {
         return new Response(JSON.stringify({error: "a client account with the same first and last name already exists!"}), {status: 422});
     };
 
+    
+    // check if stripe customer already exists with email
+
+    const searched_stripe_customer = await stripe.customers.search({
+        query: `email: '${email}'`,
+    });
+
+    // if no Stripe customer exists, create a new Stripe customer
+
+    let stripe_customerID;
+
+    if (searched_stripe_customer.data.length === 0) {
+
+        // create a new Stripe customer
+
+        const stripe_customer = await stripe.customers.create({
+            email: email,
+        });
+
+        // log the new Stripe customer with customer ID in the console
+  
+        if (stripe_customer) {
+            console.log(`Stripe customer created: ${stripe_customer.id}`);
+        };
+
+        // return the new Stripe customer object in a variable
+
+        stripe_customerID = stripe_customer.id;
+
+        // insert the Stripe customer ID into the client_information row
+
+    } else if (searched_stripe_customer.data.length > 0) {
+        return new Response(JSON.stringify({error: `a Stipe account already exists for a customer with ${email}`}), {status: 422});
+    };
+
     const insertClientStatement = `INSERT INTO clients 
     (
         name_first,
@@ -97,11 +137,13 @@ export async function POST({request}) {
     .catch(error => {
         throw error;
     });
-
+    
     const insertClientInformationStatement = `INSERT INTO client_information (
-        client_ID
+        client_ID,
+        Stripe_customer_ID
     ) VALUES (
-        "${clientID}"
+        "${clientID}",
+        "${stripe_customerID}"
     )`;
     
     await res.query(insertClientInformationStatement)

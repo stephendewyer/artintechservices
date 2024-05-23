@@ -1,4 +1,9 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
+import Stripe from "stripe";
+import { STRIPE_SECRET_KEY } from "$env/static/private";
+
+// initialize Stripe
+const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 export const POST = async ({request}) => {
 
@@ -81,6 +86,15 @@ export const POST = async ({request}) => {
     .catch(error => {
         throw error;
     });
+
+    // get the Stripe balance and invoices
+
+    const searched_stripe_customer = await stripe.customers.search({
+        // @ts-ignore
+        query: `email: '${clientEmail}'`,
+    });
+
+    console.log(searched_stripe_customer);
 
     // @ts-ignore
     const clientDetails = {

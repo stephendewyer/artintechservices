@@ -108,6 +108,7 @@
             );
 
             if (responseItem.success) {
+                console.log("contact values saved")
                 contactValuesSaved = true;
             };
 

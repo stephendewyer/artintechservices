@@ -19,7 +19,7 @@
 
     let dateCreated: string;
 
-    let clientContactData: any;
+    let contactInfoAdded: boolean = false;
 
     const getClientData = async () => {
         pendingClientData = true;
@@ -36,19 +36,23 @@
         clientData = await response.json();
 
         if (response.ok) {
-            clientContactData = clientData.contact_information;
+            if (clientData.contact_information?.street_address) {
+                contactInfoAdded = true;
+            } else if (!clientData.contact_information?.street_address) {
+                contactInfoAdded = false;
+            };
             dateCreated = new Date(clientData.client?.date_created).toUTCString();
-            nameFirstInputValue = clientData.client?.name_first !== "undefined" ? clientData.client?.name_first : "";
-            nameLastInputValue = clientData.client?.name_last !== "undefined" ? clientData.client?.name_last : "";
-            emailInputValue = clientData.client?.email !== "undefined" ? clientData.client?.email : "";
-            companyInputValue = clientData.contact_information?.company !== "undefined" ? clientData.contact_information?.company : "";
-            phoneInputValue = clientData.contact_information?.phone_number !== "undefined" ? clientData.contact_information?.phone_number : "";
-            URLInputValue = clientData.contact_information?.URL !== "undefined" ? clientData.contact_information?.URL : "";
-            streetAddressInputValue = clientData.contact_information?.street_address !== "undefined" ? clientData.contact_information?.street_address : "";
-            streetAddress02InputValue = clientData.contact_information?.street_address_02 !== "undefined" ? clientData.contact_information?.street_address_02 : "";
-            cityInputValue = clientData.contact_information?.city !== "undefined" ? clientData.contact_information?.city : "";
-            stateInputValue = clientData.contact_information?.state !== "undefined" ? clientData.contact_information?.state : "";
-            zipCodeInputValue = clientData.contact_information?.zip_code !== 0 || clientData.contact_information?.zip_code !== null ? clientData.contact_information?.zip_code : null;
+            nameFirstInputValue = clientData.client?.name_first ? clientData.client?.name_first : "";
+            nameLastInputValue = clientData.client?.name_last ? clientData.client?.name_last : "";
+            emailInputValue = clientData.client?.email ? clientData.client?.email : "";
+            companyInputValue = clientData.contact_information?.company ? clientData.contact_information?.company : "";
+            phoneInputValue = clientData.contact_information?.phone_number ? clientData.contact_information?.phone_number : "";
+            URLInputValue = clientData.contact_information?.URL ? clientData.contact_information?.URL : "";
+            streetAddressInputValue = clientData.contact_information?.street_address ? clientData.contact_information?.street_address : "";
+            streetAddress02InputValue = clientData.contact_information?.street_address_02 ? clientData.contact_information?.street_address_02 : "";
+            cityInputValue = clientData.contact_information?.city ? clientData.contact_information?.city : "";
+            stateInputValue = clientData.contact_information?.state ? clientData.contact_information?.state : "";
+            zipCodeInputValue = clientData.contact_information?.zip_code ? clientData.contact_information?.zip_code : "";
             pendingClientData = false;
             getClientDataSuccess = true;
         } else if (!response.ok) {
@@ -78,32 +82,29 @@
         clientContactInformation = await response.json();
 
         if (response.ok) {
+            if (clientContactInformation.contact_information?.street_address) {
+                contactInfoAdded = true;
+            } else if (!clientContactInformation.contact_information?.street_address) {
+                contactInfoAdded = false;
+            };
             dateCreated = new Date(clientContactInformation.client?.date_created).toUTCString();
-            nameFirstInputValue = clientContactInformation.client?.name_first !== "undefined" ? clientContactInformation.client?.name_first : "";
-            nameLastInputValue = clientContactInformation.client?.name_last !== "undefined" ? clientContactInformation.client?.name_last : "";
-            emailInputValue = clientContactInformation.client?.email !== "undefined" ? clientContactInformation.client?.email : "";
-            companyInputValue = clientContactInformation.contact_information?.company !== "undefined" ? clientContactInformation.contact_information?.company : "";
-            phoneInputValue = clientContactInformation.contact_information?.phone_number !== "undefined" ? clientContactInformation.contact_information?.phone_number : "";
-            URLInputValue = clientContactInformation.contact_information?.URL !== "undefined" ? clientContactInformation.contact_information?.URL : "";
-            streetAddressInputValue = clientContactInformation.contact_information?.street_address !== "undefined" ? clientContactInformation.contact_information?.street_address : "";
-            streetAddress02InputValue = clientContactInformation.contact_information?.street_address_02 !== "undefined" ? clientContactInformation.contact_information?.street_address_02 : "";
-            cityInputValue = clientContactInformation.contact_information?.city !== "undefined" ? clientContactInformation.contact_information?.city : "";
-            stateInputValue = clientContactInformation.contact_information?.state !== "undefined" ? clientContactInformation.contact_information?.state : "";
-            zipCodeInputValue = clientContactInformation.contact_information?.zip_code !== 0 || clientContactInformation.contact_information?.zip_code !== null ? clientContactInformation.contact_information?.zip_code : null;
+            nameFirstInputValue = clientContactInformation.client?.name_first ? clientContactInformation.client?.name_first : "";
+            nameLastInputValue = clientContactInformation.client?.name_last ? clientContactInformation.client?.name_last : "";
+            emailInputValue = clientContactInformation.client?.email ? clientContactInformation.client?.email : "";
+            companyInputValue = clientContactInformation.contact_information?.company ? clientContactInformation.contact_information?.company : "";
+            phoneInputValue = clientContactInformation.contact_information?.phone_number ? clientContactInformation.contact_information?.phone_number : "";
+            URLInputValue = clientContactInformation.contact_information?.URL ? clientContactInformation.contact_information?.URL : "";
+            streetAddressInputValue = clientContactInformation.contact_information?.street_address ? clientContactInformation.contact_information?.street_address : "";
+            streetAddress02InputValue = clientContactInformation.contact_information?.street_address_02 ? clientContactInformation.contact_information?.street_address_02 : "";
+            cityInputValue = clientContactInformation.contact_information?.city ? clientContactInformation.contact_information?.city : "";
+            stateInputValue = clientContactInformation.contact_information?.state ? clientContactInformation.contact_information?.state : "";
+            zipCodeInputValue = clientContactInformation.contact_information?.zip_code ? clientContactInformation.contact_information?.zip_code : "";
             pendingClientContactInformation = false;
             getClientContactInformationSuccess = true;
         } else if (!response.ok) {
             pendingClientContactInformation = false;
             getClientContactInformationSuccess = false;
         };
-    };
-
-    let contactValuesSaved: boolean = false;
-
-    $: if (contactValuesSaved) {
-        getClientContactInformation();
-        editContactDetailsClicked = false
-        contactValuesSaved = false;
     };
 
     onMount(() => {
@@ -150,13 +151,14 @@
         cancelClicked = false;
     };
 
+    let contactValuesSaved: boolean = false;
+
     $: if (contactValuesSaved) {
-        console.log("contact values saved: ", contactValuesSaved)
+        getClientContactInformation();
+        addContactDetails = false;
         editContactDetailsClicked = false;
         contactValuesSaved = false;
     };
-
-    $: console.log(contactValuesSaved)
 
 </script>
 
@@ -174,14 +176,14 @@
         {:else if (!pendingClientData)}
             <p class="joined_date">joined on {dateCreated}</p>
             <h1>welcome, {nameFirstInputValue} {nameLastInputValue}</h1>
-            <h3>contact details</h3>
-            {#if (!clientContactData && !addContactDetails && !editContactDetailsClicked)}
+            <h2>contact details</h2>
+            {#if (!contactInfoAdded && !addContactDetails && !editContactDetailsClicked)}
                 <AddItemButton
                     bind:addItemClicked={addContactDetails}
                 >
                     contact details
                 </AddItemButton>
-            {:else if (addContactDetails && !clientContactData && !editContactDetailsClicked)}
+            {:else if (addContactDetails && !contactInfoAdded && !editContactDetailsClicked)}
                 {#if (pendingClientContactInformation)}
                     <LoadingSpinner />
                 {:else if (!pendingClientContactInformation)}
@@ -192,7 +194,7 @@
                         bind:cancelClicked={cancelClicked}
                     />
                 {/if}
-            {:else if (clientContactData && !addContactDetails)}
+            {:else if (contactInfoAdded && !addContactDetails)}
                 {#if (pendingClientContactInformation)}
                     <LoadingSpinner />
                 {:else if (!pendingClientContactInformation && editContactDetailsClicked && !addContactDetails)}
@@ -262,9 +264,16 @@
                     </EditButton>
                 {/if}
             {/if}
-            
-            
         {/if}
+        <h2>
+            consultations
+        </h2>
+        <h2>
+            projects
+        </h2>
+        <h2>
+            billing
+        </h2>
     </div>
     
 </div>
@@ -309,13 +318,13 @@
     }
 
     table tr:nth-child(odd) {
-        background-color: #CBC6C2;
+        background-color: #F2F9F2;
     }
 
     @media screen and (max-width: 1440px) {
         table > tr > td {
             font-size: 1.175rem;
-            padding: 1rem;
+            padding: 0.25rem 0.5rem;
         }
     }
 
@@ -332,7 +341,7 @@
 
         table > tr > td {
             font-size: 1rem;
-            padding: 0.5rem;
+            padding: 0.25rem 0.5rem;
         }
     }
 

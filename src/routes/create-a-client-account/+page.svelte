@@ -10,6 +10,7 @@
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import PasswordCompare from "$lib/components/inputs/PasswordCompare.svelte";
     import TextInput from "$lib/components/inputs/TextInput.svelte";
+    import { goto } from "$app/navigation";
 
     let nameFirstInputValue: string = "";
     let nameLastInputValue: string = "";
@@ -90,6 +91,7 @@
             );
 
             if (responseItem.success) {
+                goto("/login-client");
                 nameFirstInputValue = "", 
                 nameLastInputValue = "", 
                 emailInputValue = "", 
