@@ -108,8 +108,6 @@ export async function POST({request}) {
 
         stripe_customerID = stripe_customer.id;
 
-        // insert the Stripe customer ID into the client_information row
-
     } else if (searched_stripe_customer.data.length > 0) {
         return new Response(JSON.stringify({error: `a Stipe account already exists for a customer with ${email}`}), {status: 422});
     };

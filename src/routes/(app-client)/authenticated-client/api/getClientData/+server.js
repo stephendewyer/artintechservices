@@ -43,9 +43,12 @@ export const POST = async ({request}) => {
 
     let clientInformationRow;
 
+    let Stripe_customer_ID;
+
     await res.query(selectClientInformationRowStatement)
     .then(([rows]) => {
         clientInformationRow = JSON.parse(JSON.stringify(rows))[0];
+        Stripe_customer_ID = clientInformationRow.Stripe_customer_ID;
     })
     .catch(error => {
         throw error;
@@ -94,14 +97,13 @@ export const POST = async ({request}) => {
         query: `email: '${clientEmail}'`,
     });
 
-    console.log(searched_stripe_customer);
-
     // @ts-ignore
     const clientDetails = {
         client: client,
         contact_information: clientInformationRow,
         consultations: consultations,
-        projects: projects
+        projects: projects,
+        billing: searched_stripe_customer
     };
 
     return new Response(
