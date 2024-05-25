@@ -1,5 +1,6 @@
 <script lang="ts">
     import { page } from "$app/stores";
+    import { ModalOpenStore } from '$lib/stores/ModalOpenStore';
 
     let URLPathName = $page.url.pathname;
 
@@ -7,6 +8,16 @@
 
     const backdropClickedHandler = () => {
         openMobileNav = false;
+        $ModalOpenStore = false;
+    };
+
+    let open: boolean = false;
+
+    $: if (
+        openMobileNav ||
+        $ModalOpenStore
+    ) {
+        open = !open;
     };
     
 </script>

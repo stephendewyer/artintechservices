@@ -15,7 +15,7 @@ declare global {
 
 	interface ResponseObj {
         success: string;
-        error: string;
+        error: string | undefined;
         status: number | null;
     };
 
@@ -92,6 +92,11 @@ declare global {
 		redirect: string;
 		csrfToken: string;
 		callbackUrl: string;
+	};
+
+	interface PaymentMethodDeleteItem {
+		message: string;
+		data: string;
 	};
 }
 

@@ -6,11 +6,17 @@
 	import Backdrop from '$lib/components/navigation/Backdrop.svelte';
 	import { page } from '$app/stores';
 	import BannerImage from "$lib/images/Art_in_Tech_Services_banner_03.jpg";
+	import DeleteConfirmationModal from '$lib/components/modals/DeleteConfirmationModal.svelte';
+  	import { ModalOpenStore } from '$lib/stores/ModalOpenStore';
+
 	let backdrop: boolean = false;
     let openMobileNav: boolean = false;
     let footerElHeight: number = 0;
 
-	$: if (openMobileNav) {
+	$: if (
+		openMobileNav || 
+		$ModalOpenStore
+	) {
 		backdrop = true;
 	} else {
 		backdrop = false;
@@ -40,6 +46,7 @@
 		/>
 	{/if}
 	<SideDrawer bind:openMobileNav />
+	<DeleteConfirmationModal />
 </div>
 
 <style>

@@ -14,10 +14,18 @@
     import Billing from "$lib/images/icons/billing.svg?raw";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { PUBLIC_STRIPEPUBLISHABLEKey } from '$env/static/public';
-    import { loadStripe, type Stripe, type StripeElements, type StripeError } from '@stripe/stripe-js';
+    import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
     import { Elements, LinkAuthenticationElement, PaymentElement, Address } from 'svelte-stripe';
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
     import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
+    import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
+    import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
+    import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
+    import EditIcton from "$lib/images/icons/edit_icon.svg?raw";
+    import DeleteIcon from "$lib/images/icons/delete_icon.svg?raw";
+    import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
+    import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
+    import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
 
     let clientEmail = $page.data.streamed.user?.email;
 
@@ -34,6 +42,25 @@
     let contactInfoAdded: boolean = false;
 
     let balance: number | null = null;
+
+    let paymentMethods: PaymentMethodData;
+
+    const getPaymentMethods = async () => {
+
+        const response = await fetch("/authenticated-client/api/getPaymentMethods", {
+            method: "POST",
+            body: JSON.stringify({
+                clientEmail,
+                stripeCustomerID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        paymentMethods = await response.json();
+
+    };
 
     const getClientData = async () => {
         pendingClientData = true;
@@ -75,6 +102,9 @@
             pendingClientData = false;
             getClientDataSuccess = false;
         };
+
+        // get payment methods if any
+        getPaymentMethods();
     };
 
     let pendingClientContactInformation: boolean = false;
@@ -122,6 +152,7 @@
             pendingClientContactInformation = false;
             getClientContactInformationSuccess = false;
         };
+
     };
 
     let stripe: Stripe | null = null;
@@ -226,36 +257,66 @@
 
     let elements: StripeElements | any = null;
 
-    let processingPaymentMethod: null | boolean = null;
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
 
-    let paymentMethodSavedErrorMessage: StripeError;
-    let paymentMethodSavedSuccessMessage: string = "";
+    $: if((responseItem.success) || (responseItem.error)) {
+        setTimeout(() => {
+            responseItem.success = "";
+            responseItem.error = "";
+            status: null;
+        }, 4000);
+    };
+
+    let pendingSubmitPaymentHandler: null | boolean = null;
 
     const submitPaymentMethodHandler = async () => {
+
         // avoid processing duplicates
-        if (processingPaymentMethod) {
+        if (pendingSubmitPaymentHandler) {
             return;
         };
 
-        processingPaymentMethod = true;
+        pendingSubmitPaymentHandler = true;
 
-        const responseItem = await stripe?.confirmSetup({
+        const response = await stripe?.confirmSetup({
             elements,
             redirect: "if_required"
         });
 
-        console.log(responseItem);
-
-        if (responseItem?.error) {
+        if (response?.error) {
             // payment failed, notify the user
-            processingPaymentMethod = false;
-            paymentMethodSavedErrorMessage = responseItem?.error;
+            responseItem.error = response?.error.message;
             
-        } else {
-            // payment succeeded, notify user and close payment method element
-            processingPaymentMethod = false;
-            paymentMethodSavedSuccessMessage = "success saving payment method!";
         };
+
+        stripe?.retrieveSetupIntent(stripeClientSecret)
+        .then(({setupIntent}) => {
+            switch (setupIntent?.status) {
+                case "succeeded":
+                    console.log("setup intent retrieved successfully!")
+                    responseItem.success = "success saving payment method!";
+                    elements = null;
+                    addPaymentMethod = false;
+                    // get payment methods if any
+                    getPaymentMethods();
+                    break;
+                case "processing":
+                    pendingSubmitPaymentHandler = true;
+                    break;
+                case "requires_payment_method":
+                    // payment again
+                    responseItem.error = "failed to process payment method.  Please try another payment method."
+                    break;
+            };
+        });
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        pendingSubmitPaymentHandler = false;
     };
 
     let cancelPaymentMethodClicked: boolean = false;
@@ -265,8 +326,51 @@
         addPaymentMethod = false;
         cancelPaymentMethodClicked = false;
     };
-    $: console.log("add payment method: ", addPaymentMethod)
-    $: console.log("processingPaymentMethod: ", processingPaymentMethod)
+
+    const detachPaymentMethodHandler = async (paymentMethodID: string) => {
+
+        $ModalOpenStore = true;
+
+        const paymentMethodData: PaymentMethodDeleteItem | any = {
+            message: "payment method",
+            data: paymentMethodID
+        };
+
+        $DeleteConfirmationStore = paymentMethodData;
+
+    };
+
+    const ConfirmedDeletePaymentMethod = async () => {
+
+        const paymentMethodID = paymentMethods?.data[0].id;
+
+        const response = await fetch("/authenticated-client/api/detachPaymentMethod", {
+            method: "POST",
+            body: JSON.stringify({
+                paymentMethodID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        
+        let paymentMethod;
+        paymentMethod = await response.json();
+
+        console.log(paymentMethod);
+
+        getPaymentMethods();
+
+    };
+
+    $: if ($DeleteConfirmedStore === true) {
+
+        ConfirmedDeletePaymentMethod();
+
+        $DeleteConfirmedStore = false;
+
+    };
+    
 </script>
 
 <svelte:head>
@@ -356,20 +460,12 @@
                         </tr>
                         <tr>
                             <td>
-                                {companyInputValue}
-                            </td>
-                            <td>
-                                {zipCodeInputValue}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
                                 <a href={URLInputValue} target="_blank">
                                     {URLInputValue}
                                 </a>
                             </td>
                             <td>
-
+                                {zipCodeInputValue}
                             </td>
                         </tr>
                     </table>
@@ -417,7 +513,36 @@
             billing information
         </h3>
 
-        {#if !addPaymentMethod}
+        {#if (paymentMethods?.data?.length > 0)}
+            <table>
+                <tr>
+                    <td>
+                        {paymentMethods?.data[0].type}
+                    </td>
+                    {#if (paymentMethods?.data[0].type === "card")}
+                        <td>
+                            {paymentMethods?.data[0].card.brand}
+                        </td>
+                    {/if}
+                    <td>
+                        <button class="button_table">
+                            edit 
+                            <div class="edit_icon">{@html EditIcton}</div>
+                        </button>
+                    </td>
+                    <td>
+                        <button 
+                            class="button_table"
+                            on:click={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
+                            on:keyup={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
+                        >
+                            delete 
+                            <div class="delete_icon">{@html DeleteIcon}</div>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        {:else if !addPaymentMethod && (paymentMethods?.data?.length === 0)}
             <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
                 Add payment method
             </AddItemButton>
@@ -447,14 +572,23 @@
                                 cancel
                             </CancelSubmitButton>
                             <SubmitButton02>
-                                {#if processingPaymentMethod}
-                                    processing...
-                                {:else}
-                                    save
-                                {/if}
+                                save
                             </SubmitButton02>
                         </div>
                     </form>
+                    {#if (pendingSubmitPaymentHandler)}
+                        <PendingFlashMessage >
+                            please wait while we validate your data
+                        </PendingFlashMessage>
+                    {:else if (responseItem.error)}
+                        <ErrorFlashMessage >
+                            {responseItem.error}
+                        </ErrorFlashMessage>
+                    {:else if (responseItem.success)}
+                        <SuccessFlashMessage>
+                            {responseItem.success}
+                        </SuccessFlashMessage>
+                    {/if}
                 </Elements>
             </div>
         {/if}
@@ -469,7 +603,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0 1rem;
+        padding: 0 1rem 1rem 1rem;
         gap: 1rem;
         width: 100%;
     }
@@ -530,11 +664,34 @@
         width: 100%;
         max-width: 60rem;
     }
+    .button_table {
+        border: none;
+        background: none;
+        display: flex;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
+
+    .edit_icon {
+        width: 1.5rem;
+    }
+    .delete_icon {
+        width: 1.25rem;
+    }
 
     @media screen and (max-width: 1440px) {
         table > tr > td {
             font-size: 1.175rem;
             padding: 0.25rem 0.5rem;
+        }
+
+        .button_table {
+            font-size: 1.175rem;
         }
     }
 
@@ -552,6 +709,10 @@
         table > tr > td {
             font-size: 1rem;
             padding: 0.25rem 0.5rem;
+        }
+
+        .button_table {
+            font-size: 1rem;
         }
     }
 

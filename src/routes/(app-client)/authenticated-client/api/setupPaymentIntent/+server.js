@@ -13,7 +13,7 @@ export const POST = async ({request}) => {
     const setupIntent = await stripe.setupIntents.create({
         customer: stripeCustomerID,
         automatic_payment_methods: {
-            enabled: true,
+            enabled: true
         },
     });
 
