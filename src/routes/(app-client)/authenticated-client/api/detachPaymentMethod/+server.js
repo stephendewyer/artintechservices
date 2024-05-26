@@ -6,6 +6,10 @@ const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 export const POST = async ({request}) => {
 
+    if (request.method !== "POST") {
+        return new Response(JSON.stringify({error: "method is not POST"}), {status: 422});
+    };
+
     const data = await request.json();
 
     const { paymentMethodID } = data;

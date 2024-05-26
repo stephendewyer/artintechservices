@@ -26,6 +26,12 @@
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
     import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
+    import Tabs from "$lib/components/tabPanelClient/Tabs.svelte";
+    import Panel from "$lib/components/tabPanelClient/Panel.svelte";
+    import PanelProjects from "$lib/components/tabPanelClient/ProjectsPanel.svelte";
+    import PanelConsultations from "$lib/components/tabPanelClient/ConsultationsPanel.svelte";
+    
+    import { v4 as uuidv4 } from 'uuid';
 
     let clientEmail = $page.data.streamed.user?.email;
 
@@ -370,6 +376,63 @@
         $DeleteConfirmedStore = false;
 
     };
+
+    let activeTabConsultations: number = 0;
+    let activeTabProjects: number = 0;
+
+    const tabPanelsConsultations: TabPanel[] = [
+        {
+            id: uuidv4(),
+            index: 0,
+            label: "consultation requests",
+            tabImageSrc: "",
+            panel: PanelConsultations,
+            data: [ ]
+        },
+        {
+            id: uuidv4(),
+            index: 1,
+            label: "upcoming consultations",
+            tabImageSrc: "",
+            panel: PanelConsultations,
+            data: [ ]
+        },
+        {
+            id: uuidv4(),
+            index: 2,
+            label: "past consultations",
+            tabImageSrc: "",
+            panel: PanelConsultations,
+            data: [ ]
+        },
+    ];
+
+    const tabPanelsProjects: TabPanel[] = [
+        {
+            id: uuidv4(),
+            index: 0,
+            label: "project requests",
+            tabImageSrc: "",
+            panel: PanelProjects,
+            data: [ ]
+        },
+        {
+            id: uuidv4(),
+            index: 1,
+            label: "started projects",
+            tabImageSrc: "",
+            panel: PanelProjects,
+            data: [ ]
+        },
+        {
+            id: uuidv4(),
+            index: 2,
+            label: "completed projects",
+            tabImageSrc: "",
+            panel: PanelProjects,
+            data: [ ]
+        },
+    ]
     
 </script>
 
@@ -481,6 +544,16 @@
                 {@html Calendar}
             </div>
         </h2>
+        <div class="consultations">
+            <Tabs 
+                tabPanels={tabPanelsConsultations} 
+                bind:activeTab={activeTabConsultations}
+            />
+            <Panel 
+                tabPanels={tabPanelsConsultations} 
+                bind:activeTab={activeTabConsultations}
+            />
+        </div>
         <a href="/authenticated-client/client/request-a-consultation">
             <ActionButtonSecondary>
                 request a consultation
@@ -492,6 +565,16 @@
                 {@html Project}
             </div>
         </h2>
+        <div class="projects">
+            <Tabs 
+                tabPanels={tabPanelsProjects} 
+                bind:activeTab={activeTabProjects}
+            />
+            <Panel 
+                tabPanels={tabPanelsProjects} 
+                bind:activeTab={activeTabProjects}
+            />
+        </div>
         <a href="/authenticated-client/client/request-to-start-a-project">
             <ActionButtonSecondary>
                 request to start a project
@@ -509,6 +592,48 @@
                 make a payment
             </ActionButtonSecondary>
         </a>
+        <table>
+            <tr>
+                <th>
+                    invoice ID
+                </th>
+                <th>
+                    subject
+                </th>
+                <th>
+                    date
+                </th>
+                <th>
+                    amount
+                </th>
+                <th>
+                    status
+                </th>
+                <th>
+                    details
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    ID
+                </td>
+                <td>
+                    subject
+                </td>
+                <td>
+                    date
+                </td>
+                <td>
+                    amount
+                </td>
+                <td>
+                    status
+                </td>
+                <td>
+                    details
+                </td>
+            </tr>
+        </table>
         <h3>
             billing information
         </h3>
