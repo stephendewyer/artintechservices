@@ -41,9 +41,7 @@
 
 <div>
     <div class="intro_banner">
-        <div class="banner_image_container">
-            <img src={MoonShot} alt="moonshot"/>
-        </div>
+        <img class="banner_image" src={MoonShot} alt="moonshot"/>
         <div class="intro_paragraph_container">
             <h1 class="intro_paragraph">
                 bringing the vision and technical expertise to make groundbreaking digital products
@@ -117,10 +115,11 @@
         width: 100%;
     }
 
-    .banner_image_container {
+    .banner_image {
         position: relative;
         width: 100%;
-        height: auto;
+        object-fit: cover;
+        height: 60rem;
         display: flex;
     }
 
@@ -138,8 +137,8 @@
     }
 
     .intro_paragraph {
-        background-color: #F4FEF2; 
-        padding: 1rem;
+        background-color: rgba(244,254,242,1); 
+        padding: 1rem 2rem;
     }
 
     .heading_02 {
@@ -204,9 +203,19 @@
         gap: 1rem;
     }
 
-    @media screen and (max-width: 1040px) {
+    @media screen and (max-width: 1440px) {
+        .banner_image {
+            height: 42rem;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+
+        .banner_image {
+            height: 34rem;
+        }
         .intro_paragraph {
-            padding: 0.75rem;
+            padding: 0.375rem 0.75rem;
         }
 
         .actions {
@@ -221,13 +230,16 @@
         }
 
         .intro_banner {
-            padding: 7.75rem 0  0 0;
-        }
-        .intro_paragraph_container {
-            position: relative;
             padding: 0;
         }
+
+        .banner_image {
+            height: 24rem;
+            object-fit: cover;
+        }
+
         .intro_paragraph {
+            padding: 0.25rem 0.5rem;
             width: 100%;
         }
 
