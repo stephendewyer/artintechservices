@@ -16,8 +16,7 @@
     };
 
 </script>
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div 
+<a 
     class="consultation"
     on:mouseover={cardHoveredHandler}
     on:mouseenter={cardHoveredHandler}
@@ -25,6 +24,7 @@
     on:mouseout={cardExitedHandler}
     on:mouseleave={cardExitedHandler}
     on:blur={cardExitedHandler}
+    href={`/authenticated-client/client/consultation?id=${consultation.request_ID}`}
 >
     <div class="meatballs_container">
         <div 
@@ -37,7 +37,7 @@
     <h4 style="margin: 0;">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
     <h5 style="margin: 0;">{consultation.consultation_time} {consultation.time_zone}</h5>
     <p style="margin: 0;">{reasonShortened}...</p>
-</div>
+</a>
 <style>
     .consultation {
         width: 32%;

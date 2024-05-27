@@ -30,7 +30,6 @@
             <ProjectCard project={project} />
         {/each}
     {/if}
-    
 </div>
 <Pagination 
         bind:currentPage={projectsCurrentPage}

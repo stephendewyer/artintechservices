@@ -476,6 +476,7 @@
         width: 100%;
         text-align: center;
         margin: 0;
+        color: #FAE6D8;
     }
 
     @media screen and (max-width: 1440px) {

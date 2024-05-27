@@ -3,6 +3,7 @@
     export let project: Project;
     const projectInfoArray = project.project_info.split(" ");
     const projectInfoShortened = projectInfoArray.slice(0, 5).join(" ");
+    import DefaultProjectImage from "$lib/images/projects/default_project_image.jpg";
 
     let cardHovered: boolean = false;
 
@@ -15,8 +16,7 @@
     };
 
 </script>
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<div 
+<a 
     class="project_card"
     on:mouseover={cardHoveredHandler}
     on:mouseenter={cardHoveredHandler}
@@ -24,11 +24,12 @@
     on:mouseout={cardExitedHandler}
     on:mouseleave={cardExitedHandler}
     on:blur={cardExitedHandler}
+    href={`/authenticated-client/client/project?id=${project.project_ID}`}
 >
     <img 
         class="background_image" 
-        src={project.image_URL} 
-        alt={project.image_alt_text} 
+        src={(project.image_URL) ? project.image_URL : DefaultProjectImage} 
+        alt={(project.image_alt_text) ? project.image_alt_text : "phases of the moon"} 
     />
     <div class="overlay" />
     <div class="project_info">
@@ -41,11 +42,11 @@
             </div>
         </div>
         <div class="project_text">
-            <h4 style="margin: 0;">{projectInfoShortened}</h4>
+            <h4 style="margin: 0;">{projectInfoShortened}...</h4>
             <p style="margin: 0;">request sent {new Date(project.date_created).toUTCString().slice(0, 16)}</p>
         </div>
     </div>
-</div>
+</a>
 <style>
 
 
