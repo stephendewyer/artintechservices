@@ -79,15 +79,15 @@ export const POST = async ({request}) => {
             start_project_requests_client.*,
             image_collection.image_ID,
             image_collection.image_URL,
-            image_collection.alt_text as image_alt_text,
-            image_collection.timestamp as image_timestamp,
-            image_collection.public_ID as image_public_ID,
+            image_collection.alt_text AS image_alt_text,
+            image_collection.timestamp AS image_timestamp,
+            image_collection.public_ID AS image_public_ID,
             documents_collection.document_ID,
-            documents_collection.timestamp as document_timestamp,
-            documents_collection.public_ID as document_public_ID
+            documents_collection.timestamp AS document_timestamp,
+            documents_collection.public_ID AS document_public_ID
         FROM start_project_requests_client
-            INNER JOIN image_collection ON image_collection.client_ID = ${clientID}
-            INNER JOIN documents_collection ON documents_collection.client_ID = ${clientID}
+            LEFT JOIN image_collection ON start_project_requests_client.image_ID = image_collection.image_ID
+            LEFT JOIN documents_collection ON start_project_requests_client.document_ID = documents_collection.document_ID
         WHERE start_project_requests_client.client_ID = ${clientID};
     `;
 

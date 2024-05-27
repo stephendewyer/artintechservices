@@ -4,8 +4,27 @@
     const projectInfoArray = project.project_info.split(" ");
     const projectInfoShortened = projectInfoArray.slice(0, 5).join(" ");
 
+    let cardHovered: boolean = false;
+
+    const cardHoveredHandler = () => {
+        cardHovered = true;
+    };
+
+    const cardExitedHandler = () => {
+        cardHovered = false;
+    };
+
 </script>
-<div class="project_card">
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div 
+    class="project_card"
+    on:mouseover={cardHoveredHandler}
+    on:mouseenter={cardHoveredHandler}
+    on:focus={cardHoveredHandler}
+    on:mouseout={cardExitedHandler}
+    on:mouseleave={cardExitedHandler}
+    on:blur={cardExitedHandler}
+>
     <img 
         class="background_image" 
         src={project.image_URL} 
@@ -14,17 +33,25 @@
     <div class="overlay" />
     <div class="project_info">
         <div class="meatballs_container">
-            <div class="meatballs">
+            <div 
+                class="meatballs"
+                style={cardHovered ? "fill: #d79679;": "fill: #36261E;"}
+            >
                 {@html Meatballs}
             </div>
+        </div>
+        <div class="project_text">
+            <h4 style="margin: 0;">{projectInfoShortened}</h4>
+            <p style="margin: 0;">request sent {new Date(project.date_created).toUTCString().slice(0, 16)}</p>
         </div>
     </div>
 </div>
 <style>
 
+
     .project_card {
         position: relative;
-        width: 20rem;
+        width: 32%;
         height: 20rem;
         transition: box-shadow 0.2s linear;
         cursor: pointer;
@@ -60,9 +87,15 @@
         padding: 1rem;
         width: 100%;
         height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
     }
 
     .meatballs_container {
+        position: absolute;
+        padding: 0 1rem;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -71,7 +104,31 @@
 
     .meatballs {
         width: 1.5rem;
+        transition: fill 0.2s linear;
     }
     
+    .project_text {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: 1440px) {
+
+    }
+
+    @media screen and (max-width: 1080px) {
+        .project_card {
+            width: 48%;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .project_card {
+            width: 100%;
+        }
+    }
 
 </style>

@@ -5,10 +5,32 @@
     const reasonArray = consultation.consultation_reason.split(" ");
     const reasonShortened = reasonArray.slice(0, 5).join(" ");
 
+    let cardHovered: boolean = false;
+
+    const cardHoveredHandler = () => {
+        cardHovered = true;
+    };
+
+    const cardExitedHandler = () => {
+        cardHovered = false;
+    };
+
 </script>
-<div class="consultation">
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<div 
+    class="consultation"
+    on:mouseover={cardHoveredHandler}
+    on:mouseenter={cardHoveredHandler}
+    on:focus={cardHoveredHandler}
+    on:mouseout={cardExitedHandler}
+    on:mouseleave={cardExitedHandler}
+    on:blur={cardExitedHandler}
+>
     <div class="meatballs_container">
-        <div class="meatballs">
+        <div 
+            class="meatballs"
+            style={cardHovered ? "fill: #d79679;": "fill: #36261E;"}
+        >
             {@html Meatballs}
         </div>
     </div>
@@ -18,7 +40,7 @@
 </div>
 <style>
     .consultation {
-        width: 14rem;
+        width: 32%;
         padding: 1rem;
         display: flex;
         flex-direction: column;
@@ -38,6 +60,7 @@
 
     .meatballs {
         width: 1.5rem;
+        transition: fill 0.2s linear;
     }
 
     .consultation:hover {
@@ -48,5 +71,20 @@
             0 8px 8px hsl(0deg 0% 0% / 0.075),
             0 16px 16px hsl(0deg 0% 0% / 0.075)
         ;
+    }
+    @media screen and (max-width: 1440px) {
+
+    }
+
+    @media screen and (max-width: 1080px) {
+        .consultation {
+            width: 48%;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .consultation {
+            width: 100%;
+        }
     }
 </style>

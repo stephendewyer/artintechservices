@@ -624,7 +624,7 @@
                         {@html Billing}
                     </div>
                 </h2>
-                <h3>amount due: {balance}</h3>
+                <h3><span style="font-weight: 400;">amount due: </span>{balance}</h3>
                 <a href="/authenticated-client/client/make-a-payment">
                     <ActionButtonSecondary>
                         make a payment
