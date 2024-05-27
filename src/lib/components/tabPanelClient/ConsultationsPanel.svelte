@@ -1,15 +1,30 @@
 <script lang="ts">
-    export let panel_data: TabPanel[];
+    import { onDestroy } from "svelte";
+    import ConsultationCard from "$lib/components/cards/ConsultationCard.svelte";
+
+    export let panel_data: Consultation[];
+
+    console.log(panel_data)
+
+    onDestroy(() => {
+        panel_data = []
+    });
 
 </script>
-<div class="process_panel">
-    <div class="process_info">
+<div class="consultations">
+    {#if panel_data.length > 0}
         {#each panel_data as consultation, index}
-
+            <ConsultationCard consultation={consultation} />
         {/each}
-    </div>
+    {/if}
 </div>
 
 <style>
-    
+    .consultations {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 </style>

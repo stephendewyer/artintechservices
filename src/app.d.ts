@@ -98,6 +98,44 @@ declare global {
 		message: string;
 		data: string;
 	};
+
+	interface Project {
+		project_ID: number;
+		client_ID: number;
+		image_ID: number;
+		document_ID: number;
+		project_info: string;
+		project_start_date: Date;
+		project_end_date: Date;
+		project_budget: number;
+		artificial_intelligence: number;
+		brand_identity_design: number;
+		data_visualization: number;
+		photography: number;
+		software_development: number;
+		user_experience_design: number;
+		videography: number;
+		visual_design: number;
+		date_created: Date;
+		status: string;
+		image_URL: string;
+		image_alt_text: string;
+		image_timestamp: Date;
+		image_public_ID: string;
+		document_timestamp: Date;
+		document_public_ID: string;
+	}
+
+	interface Consultation {
+		request_ID: number;
+		client_ID: number;
+		consultation_date: Date;
+		consultation_time: string;
+		consultation_reason: string;
+		time_zone: string;
+		date_created: Date;
+		status: string;
+	}
 }
 
 export {};

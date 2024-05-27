@@ -51,6 +51,18 @@
 
     let paymentMethods: PaymentMethodData;
 
+    let consultationRequests: Consultation[] = []; 
+
+    let upcomingConsultations: Consultation[] = [];
+
+    let pastConsultations: Consultation[] = [];
+
+    let projectRequests: Project[] = [];
+
+    let startedProjects: Project[] = [];
+
+    let completedProjects: Project[] = [];
+
     const getPaymentMethods = async () => {
 
         const response = await fetch("/authenticated-client/api/getPaymentMethods", {
@@ -102,6 +114,24 @@
             zipCodeInputValue = clientData.contact_information?.zip_code ? clientData.contact_information?.zip_code : "";
             balance = clientData.billing.data[0].balance;
             stripeCustomerID = clientData.contact_information?.Stripe_customer_ID;
+            clientData.consultations?.forEach((consultation: Consultation) => {
+                if (consultation.status === "requested") {
+                    consultationRequests = [...consultationRequests, consultation];
+                } else if (consultation.status === "upcoming") {
+                    upcomingConsultations = [...upcomingConsultations, consultation];
+                } else if (consultation.status === "past") {
+                    pastConsultations = [...pastConsultations, consultation];
+                };
+            });
+            clientData.projects?.forEach((project: Project) => {
+                if (project.status === "requested") {
+                    projectRequests = [...projectRequests, project];
+                } else if (project.status === "started") {
+                    startedProjects = [...startedProjects, project];
+                } else if (project.status === "completed") {
+                    completedProjects = [...completedProjects, project];
+                };
+            });
             pendingClientData = false;
             getClientDataSuccess = true;
         } else if (!response.ok) {
@@ -296,7 +326,6 @@
         if (response?.error) {
             // payment failed, notify the user
             responseItem.error = response?.error.message;
-            
         };
 
         stripe?.retrieveSetupIntent(stripeClientSecret)
@@ -363,31 +392,28 @@
         let paymentMethod;
         paymentMethod = await response.json();
 
-        console.log(paymentMethod);
-
         getPaymentMethods();
 
     };
 
     $: if ($DeleteConfirmedStore === true) {
-
         ConfirmedDeletePaymentMethod();
-
         $DeleteConfirmedStore = false;
-
     };
 
     let activeTabConsultations: number = 0;
     let activeTabProjects: number = 0;
 
-    const tabPanelsConsultations: TabPanel[] = [
+    let tabPanelsConsultations: TabPanel[];
+
+    $: tabPanelsConsultations = [
         {
             id: uuidv4(),
             index: 0,
             label: "consultation requests",
             tabImageSrc: "",
             panel: PanelConsultations,
-            data: [ ]
+            data: [...consultationRequests]
         },
         {
             id: uuidv4(),
@@ -395,7 +421,7 @@
             label: "upcoming consultations",
             tabImageSrc: "",
             panel: PanelConsultations,
-            data: [ ]
+            data: [...upcomingConsultations]
         },
         {
             id: uuidv4(),
@@ -403,18 +429,20 @@
             label: "past consultations",
             tabImageSrc: "",
             panel: PanelConsultations,
-            data: [ ]
+            data: [...pastConsultations]
         },
     ];
 
-    const tabPanelsProjects: TabPanel[] = [
+    let tabPanelsProjects: TabPanel[];
+
+    $: tabPanelsProjects = [
         {
             id: uuidv4(),
             index: 0,
             label: "project requests",
             tabImageSrc: "",
             panel: PanelProjects,
-            data: [ ]
+            data: [...projectRequests]
         },
         {
             id: uuidv4(),
@@ -422,7 +450,7 @@
             label: "started projects",
             tabImageSrc: "",
             panel: PanelProjects,
-            data: [ ]
+            data: [...startedProjects]
         },
         {
             id: uuidv4(),
@@ -430,9 +458,9 @@
             label: "completed projects",
             tabImageSrc: "",
             panel: PanelProjects,
-            data: [ ]
+            data: [...completedProjects]
         },
-    ]
+    ];
     
 </script>
 
@@ -448,274 +476,293 @@
         {#if (pendingClientData)}
             <LoadingSpinner />
         {:else if (!pendingClientData)}
-            <p class="joined_date">joined on {dateCreated}</p>
-            <h1>welcome, {nameFirstInputValue} {nameLastInputValue}</h1>
-            <h2 class="section_header">
-                contact details 
-                <div class="mailbox_container">
-                    {@html Mailbox}
-                </div>
-            </h2>
-            {#if (!contactInfoAdded && !addContactDetails && !editContactDetailsClicked)}
-                <AddItemButton
-                    bind:addItemClicked={addContactDetails}
-                >
-                    contact details
-                </AddItemButton>
-            {:else if (addContactDetails && !contactInfoAdded && !editContactDetailsClicked)}
-                {#if (pendingClientContactInformation)}
-                    <LoadingSpinner />
-                {:else if (!pendingClientContactInformation)}
-                    <ClientContactInfoForm 
-                        values={contactInfoInputValues} 
-                        clientEmail={clientEmail}
-                        bind:contactValuesSaved={contactValuesSaved}
-                        bind:cancelClicked={cancelClicked}
-                    />
+            <p class="joined_date">
+                joined on {dateCreated}
+            </p>
+            <h1>
+                welcome, {nameFirstInputValue} {nameLastInputValue}
+            </h1>
+            <section class="section_odd">
+                <h2 class="section_header">
+                    contact details 
+                    <div class="mailbox_container">
+                        {@html Mailbox}
+                    </div>
+                </h2>
+                {#if (!contactInfoAdded && !addContactDetails && !editContactDetailsClicked)}
+                    <AddItemButton
+                        bind:addItemClicked={addContactDetails}
+                    >
+                        contact details
+                    </AddItemButton>
+                {:else if (addContactDetails && !contactInfoAdded && !editContactDetailsClicked)}
+                    {#if (pendingClientContactInformation)}
+                        <LoadingSpinner />
+                    {:else if (!pendingClientContactInformation)}
+                        <ClientContactInfoForm 
+                            values={contactInfoInputValues} 
+                            clientEmail={clientEmail}
+                            bind:contactValuesSaved={contactValuesSaved}
+                            bind:cancelClicked={cancelClicked}
+                        />
+                    {/if}
+                {:else if (contactInfoAdded && !addContactDetails)}
+                    {#if (pendingClientContactInformation)}
+                        <LoadingSpinner />
+                    {:else if (!pendingClientContactInformation && editContactDetailsClicked && !addContactDetails)}
+                        <ClientContactInfoForm 
+                            values={contactInfoInputValues} 
+                            clientEmail={clientEmail}
+                            bind:contactValuesSaved={contactValuesSaved}
+                            bind:cancelClicked={cancelClicked}
+                        />
+                    {:else if (!pendingClientContactInformation && !editContactDetailsClicked && !addContactDetails)}
+                        <table>
+                            <colgroup>
+                                <col style="width: 50%;" />
+                                <col style="width: 50%;" /> 
+                            </colgroup>
+                            <tr>
+                                <td>
+                                    {nameFirstInputValue} {nameLastInputValue}
+                                </td>
+                                <td>
+                                    {streetAddressInputValue}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {emailInputValue}
+                                </td>
+                                <td>
+                                    {streetAddress02InputValue}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {companyInputValue}
+                                </td>
+                                <td>
+                                    {cityInputValue}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {phoneInputValue}
+                                </td>
+                                <td>    
+                                    {stateInputValue}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a href={URLInputValue} target="_blank">
+                                        {URLInputValue}
+                                    </a>
+                                </td>
+                                <td>
+                                    {zipCodeInputValue}
+                                </td>
+                            </tr>
+                        </table>
+                        <EditButton bind:editClicked={editContactDetailsClicked}>
+                            edit
+                        </EditButton>
+                    {/if}
                 {/if}
-            {:else if (contactInfoAdded && !addContactDetails)}
-                {#if (pendingClientContactInformation)}
-                    <LoadingSpinner />
-                {:else if (!pendingClientContactInformation && editContactDetailsClicked && !addContactDetails)}
-                    <ClientContactInfoForm 
-                        values={contactInfoInputValues} 
-                        clientEmail={clientEmail}
-                        bind:contactValuesSaved={contactValuesSaved}
-                        bind:cancelClicked={cancelClicked}
+            </section>
+            <section class="section_even">
+                <h2 class="section_header">
+                    consultations
+                    <div class="heading_icon_container">
+                        {@html Calendar}
+                    </div>
+                </h2>
+                <div class="consultations">
+                    <Tabs 
+                        tabPanels={tabPanelsConsultations} 
+                        bind:activeTab={activeTabConsultations}
                     />
-                {:else if (!pendingClientContactInformation && !editContactDetailsClicked && !addContactDetails)}
+                    <Panel 
+                        tabPanels={tabPanelsConsultations} 
+                        bind:activeTab={activeTabConsultations}
+                    />
+                </div>
+                <a href="/authenticated-client/client/request-a-consultation">
+                    <ActionButtonSecondary>
+                        request a consultation
+                    </ActionButtonSecondary>
+                </a>
+            </section>
+            <section class="section_odd">
+                <h2 class="section_header">
+                    projects
+                    <div class="heading_icon_container">
+                        {@html Project}
+                    </div>
+                </h2>
+                <div class="projects">
+                    <Tabs 
+                        tabPanels={tabPanelsProjects} 
+                        bind:activeTab={activeTabProjects}
+                    />
+                    <Panel 
+                        tabPanels={tabPanelsProjects} 
+                        bind:activeTab={activeTabProjects}
+                    />
+                </div>
+                <a href="/authenticated-client/client/request-to-start-a-project">
+                    <ActionButtonSecondary>
+                        request to start a project
+                    </ActionButtonSecondary>
+                </a>
+            </section>
+            <section class="section_even">
+                <h2 class="section_header">
+                    billing
+                    <div class="heading_icon_container">
+                        {@html Billing}
+                    </div>
+                </h2>
+                <h3>amount due: {balance}</h3>
+                <a href="/authenticated-client/client/make-a-payment">
+                    <ActionButtonSecondary>
+                        make a payment
+                    </ActionButtonSecondary>
+                </a>
+                <table>
+                    <tr>
+                        <th>
+                            invoice ID
+                        </th>
+                        <th>
+                            subject
+                        </th>
+                        <th>
+                            date
+                        </th>
+                        <th>
+                            amount
+                        </th>
+                        <th>
+                            status
+                        </th>
+                        <th>
+                            details
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            ID
+                        </td>
+                        <td>
+                            subject
+                        </td>
+                        <td>
+                            date
+                        </td>
+                        <td>
+                            amount
+                        </td>
+                        <td>
+                            status
+                        </td>
+                        <td>
+                            details
+                        </td>
+                    </tr>
+                </table>
+                <section class="section_even">
+
+
+                </section>
+                <h3>
+                    billing information
+                </h3>
+
+                {#if (paymentMethods?.data?.length > 0)}
                     <table>
-                        <colgroup>
-                            <col style="width: 50%;" />
-                            <col style="width: 50%;" /> 
-                        </colgroup>
                         <tr>
                             <td>
-                                {nameFirstInputValue} {nameLastInputValue}
+                                {paymentMethods?.data[0].type}
+                            </td>
+                            {#if (paymentMethods?.data[0].type === "card")}
+                                <td>
+                                    {paymentMethods?.data[0].card.brand}
+                                </td>
+                            {/if}
+                            <td>
+                                <button class="button_table">
+                                    edit 
+                                    <div class="edit_icon">{@html EditIcton}</div>
+                                </button>
                             </td>
                             <td>
-                                {streetAddressInputValue}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {emailInputValue}
-                            </td>
-                            <td>
-                                {streetAddress02InputValue}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {companyInputValue}
-                            </td>
-                            <td>
-                                {cityInputValue}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {phoneInputValue}
-                            </td>
-                            <td>    
-                                {stateInputValue}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <a href={URLInputValue} target="_blank">
-                                    {URLInputValue}
-                                </a>
-                            </td>
-                            <td>
-                                {zipCodeInputValue}
+                                <button 
+                                    class="button_table"
+                                    on:click={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
+                                    on:keyup={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
+                                >
+                                    delete 
+                                    <div class="delete_icon">{@html DeleteIcon}</div>
+                                </button>
                             </td>
                         </tr>
                     </table>
-                    <EditButton bind:editClicked={editContactDetailsClicked}>
-                        edit
-                    </EditButton>
-                {/if}
-            {/if}
-        {/if}
-        <h2 class="section_header">
-            consultations
-            <div class="heading_icon_container">
-                {@html Calendar}
-            </div>
-        </h2>
-        <div class="consultations">
-            <Tabs 
-                tabPanels={tabPanelsConsultations} 
-                bind:activeTab={activeTabConsultations}
-            />
-            <Panel 
-                tabPanels={tabPanelsConsultations} 
-                bind:activeTab={activeTabConsultations}
-            />
-        </div>
-        <a href="/authenticated-client/client/request-a-consultation">
-            <ActionButtonSecondary>
-                request a consultation
-            </ActionButtonSecondary>
-        </a>
-        <h2 class="section_header">
-            projects
-            <div class="heading_icon_container">
-                {@html Project}
-            </div>
-        </h2>
-        <div class="projects">
-            <Tabs 
-                tabPanels={tabPanelsProjects} 
-                bind:activeTab={activeTabProjects}
-            />
-            <Panel 
-                tabPanels={tabPanelsProjects} 
-                bind:activeTab={activeTabProjects}
-            />
-        </div>
-        <a href="/authenticated-client/client/request-to-start-a-project">
-            <ActionButtonSecondary>
-                request to start a project
-            </ActionButtonSecondary>
-        </a>
-        <h2 class="section_header">
-            billing
-            <div class="heading_icon_container">
-                {@html Billing}
-            </div>
-        </h2>
-        <h3>amount due: {balance}</h3>
-        <a href="/authenticated-client/client/make-a-payment">
-            <ActionButtonSecondary>
-                make a payment
-            </ActionButtonSecondary>
-        </a>
-        <table>
-            <tr>
-                <th>
-                    invoice ID
-                </th>
-                <th>
-                    subject
-                </th>
-                <th>
-                    date
-                </th>
-                <th>
-                    amount
-                </th>
-                <th>
-                    status
-                </th>
-                <th>
-                    details
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    ID
-                </td>
-                <td>
-                    subject
-                </td>
-                <td>
-                    date
-                </td>
-                <td>
-                    amount
-                </td>
-                <td>
-                    status
-                </td>
-                <td>
-                    details
-                </td>
-            </tr>
-        </table>
-        <h3>
-            billing information
-        </h3>
-
-        {#if (paymentMethods?.data?.length > 0)}
-            <table>
-                <tr>
-                    <td>
-                        {paymentMethods?.data[0].type}
-                    </td>
-                    {#if (paymentMethods?.data[0].type === "card")}
-                        <td>
-                            {paymentMethods?.data[0].card.brand}
-                        </td>
-                    {/if}
-                    <td>
-                        <button class="button_table">
-                            edit 
-                            <div class="edit_icon">{@html EditIcton}</div>
-                        </button>
-                    </td>
-                    <td>
-                        <button 
-                            class="button_table"
-                            on:click={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
-                            on:keyup={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
+                {:else if !addPaymentMethod && (paymentMethods?.data?.length === 0)}
+                    <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
+                        Add payment method
+                    </AddItemButton>
+                {:else if addPaymentMethod && (!stripeClientSecret || !stripe)}
+                    <LoadingSpinner />
+                {:else if addPaymentMethod && stripeClientSecret && stripe}
+                    <div class="stripe_save_payment_method">
+                        <Elements
+                            stripe={stripe}
+                            clientSecret={stripeClientSecret}
+                            theme="flat"
+                            variables={{ 
+                                colorPrimary: '#838B6A',
+                                colorBackground: '#EFF9F2',
+                                colorText: '#36261E',
+                                colorDanger: '#914732',
+                            }}
+                            rules={{ '.Input': { border: 'solid 2px #AEA89D' } }}
+                            bind:elements
                         >
-                            delete 
-                            <div class="delete_icon">{@html DeleteIcon}</div>
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        {:else if !addPaymentMethod && (paymentMethods?.data?.length === 0)}
-            <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
-                Add payment method
-            </AddItemButton>
-        {:else if addPaymentMethod && (!stripeClientSecret || !stripe)}
-            <LoadingSpinner />
-        {:else if addPaymentMethod && stripeClientSecret && stripe}
-            <div class="stripe_save_payment_method">
-                <Elements
-                    stripe={stripe}
-                    clientSecret={stripeClientSecret}
-                    theme="flat"
-                    variables={{ 
-                        colorPrimary: '#838B6A',
-                        colorBackground: '#EFF9F2',
-                        colorText: '#36261E',
-                        colorDanger: '#914732',
-                    }}
-                    rules={{ '.Input': { border: 'solid 2px #AEA89D' } }}
-                    bind:elements
-                >
-                    <form on:submit|preventDefault={submitPaymentMethodHandler} >
-                        <LinkAuthenticationElement />
-                        <PaymentElement />
-                        <Address mode="billing" />
-                        <div class="buttons_container">
-                            <CancelSubmitButton bind:cancelClicked={cancelPaymentMethodClicked}>
-                                cancel
-                            </CancelSubmitButton>
-                            <SubmitButton02>
-                                save
-                            </SubmitButton02>
-                        </div>
-                    </form>
-                    {#if (pendingSubmitPaymentHandler)}
-                        <PendingFlashMessage >
-                            please wait while we validate your data
-                        </PendingFlashMessage>
-                    {:else if (responseItem.error)}
-                        <ErrorFlashMessage >
-                            {responseItem.error}
-                        </ErrorFlashMessage>
-                    {:else if (responseItem.success)}
-                        <SuccessFlashMessage>
-                            {responseItem.success}
-                        </SuccessFlashMessage>
-                    {/if}
-                </Elements>
-            </div>
+                            <form on:submit|preventDefault={submitPaymentMethodHandler} >
+                                <LinkAuthenticationElement />
+                                <PaymentElement />
+                                <Address mode="billing" />
+                                <div class="buttons_container">
+                                    <CancelSubmitButton bind:cancelClicked={cancelPaymentMethodClicked}>
+                                        cancel
+                                    </CancelSubmitButton>
+                                    <SubmitButton02>
+                                        save
+                                    </SubmitButton02>
+                                </div>
+                            </form>
+                            {#if (pendingSubmitPaymentHandler)}
+                                <PendingFlashMessage >
+                                    please wait while we validate your data
+                                </PendingFlashMessage>
+                            {:else if (responseItem.error)}
+                                <ErrorFlashMessage >
+                                    {responseItem.error}
+                                </ErrorFlashMessage>
+                            {:else if (responseItem.success)}
+                                <SuccessFlashMessage>
+                                    {responseItem.success}
+                                </SuccessFlashMessage>
+                            {/if}
+                        </Elements>
+                    </div>
+                {/if}
+            </section>
+        
+        
+
         {/if}
     </div>
     
@@ -728,9 +775,46 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0 1rem 1rem 1rem;
+        padding: 0;
         gap: 1rem;
         width: 100%;
+    }
+
+    .section_odd {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .section_even {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+        gap: 1rem;
+        width: 100%;
+        background-color: #E0E0DD;
+    }
+
+    .consultations {
+        width: 100%;
+        max-width: 60rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .projects {
+        width: 100%;
+        max-width: 60rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .joined_date {
@@ -757,10 +841,18 @@
 
     .heading_icon_container {
         width: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     .mailbox_container {
         width: 1.75rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 
     table > tr {

@@ -64,13 +64,15 @@ export const POST = async ({request}) => {
         consultation_date,
         consultation_time,
         consultation_reason,
-        time_zone
+        time_zone,
+        status
     ) VALUES (
         ${clientID},
         "${consultationDate}",
         "${consultationTime}",
         "${consultationReason}",
-        "${consultationTimeZone}"
+        "${consultationTimeZone}",
+        "requested"
     )`;
 
     await res.query(insertConsultationRequestStatement)

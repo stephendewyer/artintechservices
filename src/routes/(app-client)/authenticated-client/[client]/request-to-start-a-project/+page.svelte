@@ -78,6 +78,8 @@
         }
     ];
 
+    $: services;
+
     $: services.forEach(requestedService => {
         if (requestedService.service === "artifical intelligence") {
             artificialIntelligence = requestedService.requested;

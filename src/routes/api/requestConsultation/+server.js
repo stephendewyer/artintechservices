@@ -55,7 +55,8 @@ export async function POST({request}) {
         consultation_date,
         consultation_time,
         consultation_reason,
-        time_zone
+        time_zone,
+        status
     ) VALUES (
         "${nameFirst}",
         "${nameLast}",
@@ -66,7 +67,8 @@ export async function POST({request}) {
         "${consultationDate}",
         "${consultationTime}",
         "${consultationReason}",
-        "${consultationTimeZone}"
+        "${consultationTimeZone}",
+        "requested"
     )`;
 
     await res.query(insertConsultationRequestStatement)

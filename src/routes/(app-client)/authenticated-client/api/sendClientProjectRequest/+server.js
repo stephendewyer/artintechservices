@@ -109,9 +109,11 @@ export async function POST({request}) {
         };
 
         const insertImageStatement = `INSERT INTO image_collection (
+            client_ID,
             image_URL,
             public_ID
         ) VALUES (
+            ${clientID},
             "${uploadedImageURL}",
             "${uploadedImagePublicID}"
         )`;
@@ -154,9 +156,11 @@ export async function POST({request}) {
         };
 
         const insertDocumentStatement = `INSERT INTO documents_collection (
+            client_ID,
             document_URL,
             public_ID
         ) VALUES (
+            ${clientID},
             "${uploadedDocumentURL}",
             "${uploadedDocumentPublicID}"
         )`;
@@ -187,7 +191,8 @@ export async function POST({request}) {
         software_development,
         user_experience_design,
         videography,
-        visual_design
+        visual_design,
+        status
     ) VALUES (
         ${clientID},
         ${imageID},
@@ -203,7 +208,8 @@ export async function POST({request}) {
         "${softwareDevelopment}",
         "${userExperienceDesign}",
         "${videography}",
-        "${visualDesign}"
+        "${visualDesign}",
+        "requested"
     )`;
 
     await res.query(insertProjectStatement)

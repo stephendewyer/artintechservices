@@ -179,7 +179,8 @@ export async function POST({request}) {
         software_development,
         user_experience_design,
         videography,
-        visual_design
+        visual_design,
+        status
     ) VALUES (
         ${imageID},
         ${documentID},
@@ -200,7 +201,8 @@ export async function POST({request}) {
         "${softwareDevelopment}",
         "${userExperienceDesign}",
         "${videography}",
-        "${visualDesign}"
+        "${visualDesign}",
+        "requested"
     )`;
 
     await res.query(insertProjectStatement)

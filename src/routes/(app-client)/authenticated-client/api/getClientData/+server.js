@@ -75,10 +75,19 @@ export const POST = async ({request}) => {
 
     let projects;
 
-    const selectClientProjectsStatement = `SELECT * 
+    const selectClientProjectsStatement = `SELECT 
+            start_project_requests_client.*,
+            image_collection.image_ID,
+            image_collection.image_URL,
+            image_collection.alt_text as image_alt_text,
+            image_collection.timestamp as image_timestamp,
+            image_collection.public_ID as image_public_ID,
+            documents_collection.document_ID,
+            documents_collection.timestamp as document_timestamp,
+            documents_collection.public_ID as document_public_ID
         FROM start_project_requests_client
-        INNER JOIN image_collection 
-        ON image_collection.client_ID = ${clientID}
+            INNER JOIN image_collection ON image_collection.client_ID = ${clientID}
+            INNER JOIN documents_collection ON documents_collection.client_ID = ${clientID}
         WHERE start_project_requests_client.client_ID = ${clientID};
     `;
 

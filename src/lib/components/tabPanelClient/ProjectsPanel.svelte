@@ -1,15 +1,27 @@
 <script lang="ts">
-    export let panel_data: TabPanel[];
+    import { onDestroy } from "svelte";
+    import ProjectCard from "$lib/components/cards/ProjectCard.svelte";
+    export let panel_data: Project[];
+
+    onDestroy(() => {
+        panel_data = []
+    });
 
 </script>
-<div class="process_panel">
-    <div class="process_info">
+<div class="projects">
+    {#if panel_data.length > 0}
         {#each panel_data as project, index}
-
+            <ProjectCard project={project} />
         {/each}
-    </div>
+    {/if}
 </div>
 
 <style>
-    
+    .projects {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
 </style>

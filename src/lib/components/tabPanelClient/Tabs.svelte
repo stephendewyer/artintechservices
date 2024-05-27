@@ -16,9 +16,9 @@
             aria-controls={`${tab.label}_tabpanel`}
             tabindex={-index}
         >
-            <h2 class="label">
+            <h4 class="label">
                 {tab.label}
-            </h2>
+            </h4>
         </li>
     {/each}
 </ul>
