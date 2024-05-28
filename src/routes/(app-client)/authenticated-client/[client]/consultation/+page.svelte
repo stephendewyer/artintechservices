@@ -3,8 +3,13 @@
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { page } from "$app/stores";
     import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
-  import EditButton from "$lib/components/buttons/EditButton.svelte";
-  import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
+    import EditButton from "$lib/components/buttons/EditButton.svelte";
+    import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore.js";
+    import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore.js";
+    import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";
+    import { goto } from "$app/navigation";
 
     export let data;
 
@@ -21,10 +26,57 @@
         consultationDate = new Date(consultation?.consultation_date).toUTCString().slice(0, 16);
     };
 
-    let deleteButtonClickedHandler: boolean = false;
+    interface DeleteItem {
+        message: string;
+        data: number;
+    }
 
-    $: if (deleteButtonClickedHandler) {
-        // handle delete consultation clicked
+    const deleteConsultationHandler = async (consultation: Consultation | undefined) => {
+
+        $ModalOpenStore = true;
+
+        const consultationData: DeleteItem | any = {
+            message: "consultation request",
+            data: consultation?.request_ID
+        };
+
+        $DeleteConfirmationStore = consultationData;
+
+    };
+
+    const confirmedDeleteConsultation = async (consultation: Consultation | undefined) => {
+
+        const response = await fetch("/authenticated-client/api/deleteConsultation", {
+            method: "DELETE",
+            body: JSON.stringify({
+                consultation
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        let deleteResponse;
+        deleteResponse = await response.json();
+
+        if (deleteResponse.success) {
+            goto("/authenticated-client/client");
+        } else if (deleteResponse.error) {
+            console.log("consultation failed to delete");
+        };
+    };
+
+    $: if ($DeleteConfirmedStore === true) {
+        confirmedDeleteConsultation(consultation);
+        $DeleteConfirmedStore = false;
+    };
+
+    let deleteButtonClickHandler: boolean = false;
+
+    $: if (deleteButtonClickHandler) {
+        // handle delete button clicked
+        deleteConsultationHandler(consultation);
+        deleteButtonClickHandler = false;
     };
 
     let editButtonClickedHandler: boolean = false;
@@ -32,7 +84,7 @@
     $: if (editButtonClickedHandler) {
         // handle edit button clicked
     };
-    
+
 </script>
 
 <svelte:head>
@@ -98,11 +150,16 @@
                 <EditButton bind:editClicked={editButtonClickedHandler}>
                     edit consultation
                 </EditButton>
-                <DeleteButton bind:clicked={deleteButtonClickedHandler}>
+                <DeleteButton bind:clicked={deleteButtonClickHandler}>
                     cancel consultation request
                 </DeleteButton>
             </div>
         {/if}
+        <a href="/authenticated-client/client">
+            <CancelButton>
+                dashboard
+            </CancelButton>
+        </a>
     </div>
 </div>
 <style>

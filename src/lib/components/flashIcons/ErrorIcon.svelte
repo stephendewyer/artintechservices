@@ -4,7 +4,7 @@
 
 <div class="error_icon_container">
 
-    <p>!</p>
+    <p style="color: #FDDFD2;">!</p>
 
 </div>
 

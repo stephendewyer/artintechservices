@@ -3,8 +3,14 @@
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { page } from "$app/stores";
     import DefaultProjectImage from "$lib/images/projects/default_project_image.jpg";
-  import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
-  import EditButton from "$lib/components/buttons/EditButton.svelte";
+    import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
+    import EditButton from "$lib/components/buttons/EditButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore.js";
+    import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore.js";
+    import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";
+    import { goto } from "$app/navigation";
+  import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
 
     export let data;
 
@@ -78,10 +84,57 @@
         endDate = new Date(project?.project_end_date).toUTCString().slice(0, 16);
     };
 
+    interface DeleteItem {
+        message: string;
+        data: number;
+    }
+
+    const deleteProjectHandler = async (project: Project | undefined) => {
+
+        $ModalOpenStore = true;
+
+        const projectData: DeleteItem | any = {
+            message: "project",
+            data: project?.project_ID
+        };
+
+        $DeleteConfirmationStore = projectData;
+
+    };
+
+    const ConfirmedDeleteProject = async (project: Project | undefined) => {
+
+        const response = await fetch("/authenticated-client/api/deleteProject", {
+            method: "DELETE",
+            body: JSON.stringify({
+                project
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        let deleteResponse;
+        deleteResponse = await response.json();
+
+        if (deleteResponse.success) {
+            goto("/authenticated-client/client");
+        } else if (deleteResponse.error) {
+            console.log("project failed to delete");
+        };
+    };
+
+    $: if ($DeleteConfirmedStore === true) {
+        ConfirmedDeleteProject(project);
+        $DeleteConfirmedStore = false;
+    };
+
     let deleteButtonClickHandler: boolean = false;
 
     $: if (deleteButtonClickHandler) {
         // handle delete button clicked
+        deleteProjectHandler(project);
+        deleteButtonClickHandler = false;
     };
 
     let editButtonClickHandler: boolean = false;
@@ -107,78 +160,91 @@
     />
     <div class="project">
         <h1>project</h1>
-        <table>
-            <colgroup>
-                <col class="left_table_column" />
-                <col class="right_table_column" />
-            </colgroup>
-            <tr>
-                <td>
-                    services:
-                </td>
-                <td>
-                    {servicesInProject.join(", ")}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    about:
-                </td>
-                <td>
-                    {project?.project_info}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    start date:
-                </td>
-                <td>
-                    {startDate}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    end date:
-                </td>
-                <td>
-                    {endDate}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    budget:
-                </td>
-                <td>
-                    ${project?.project_budget}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    status:
-                </td>
-                <td>
-                    {project?.status}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    date created:
-                </td>
-                <td>
-                    {dateCreated}
-                </td>
-            </tr>
-        </table>
-        {#if (project?.status === "requested")}
-            <div class="buttons_container">
-                <EditButton bind:editClicked={editButtonClickHandler}>
-                    edit project request
-                </EditButton>
-                <DeleteButton bind:clicked={deleteButtonClickHandler}>
-                    delete project request
-                </DeleteButton>
-            </div>
+        {#if !editButtonClickHandler}
+            <table>
+                <colgroup>
+                    <col class="left_table_column" />
+                    <col class="right_table_column" />
+                </colgroup>
+                <tr>
+                    <td>
+                        services:
+                    </td>
+                    <td>
+                        {servicesInProject.join(", ")}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        about:
+                    </td>
+                    <td>
+                        {project?.project_info}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        start date:
+                    </td>
+                    <td>
+                        {startDate}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        end date:
+                    </td>
+                    <td>
+                        {endDate}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        budget:
+                    </td>
+                    <td>
+                        ${project?.project_budget}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        status:
+                    </td>
+                    <td>
+                        {project?.status}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        date created:
+                    </td>
+                    <td>
+                        {dateCreated}
+                    </td>
+                </tr>
+            </table>
+            {#if (project?.status === "requested")}
+                <div class="buttons_container">
+                    <EditButton bind:editClicked={editButtonClickHandler}>
+                        edit project request
+                    </EditButton>
+                    <DeleteButton bind:clicked={deleteButtonClickHandler}>
+                        delete project request
+                    </DeleteButton>
+                </div>
+            {/if}
+        {:else if (editButtonClickHandler)}
+            <ProjectForm 
+                project={project} 
+                data={data}
+            />
         {/if}
+        
+        <a href="/authenticated-client/client">
+            <CancelButton>
+                dashboard
+            </CancelButton>
+        </a>
     </div>
 </div>
 <style>

@@ -42,7 +42,7 @@ export const load = async ({url}) => {
     });
 
     if (!projectRow) {
-        return new Response(JSON.stringify({error: `no project with ID of ${projectIDSearchValue} in database`}), {status: 422})
+        throw redirect(303, "/authenticated-client/client");
     };
     res.end();
 

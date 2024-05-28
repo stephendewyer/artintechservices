@@ -20,15 +20,15 @@ export const load = async ({url}) => {
     let consultationRow;
 
     await res.query(consultationQuery)
-    .then(([rows]) => {
+    .then((/** @type {any} */[rows]) => {
         consultationRow = JSON.parse(JSON.stringify(rows))[0];
     })
-    .catch(error => {
+    .catch((/** @type {any} */ error) => {
         throw error;
     });
 
     if (!consultationRow) {
-        return new Response(JSON.stringify({error: `no consultation with ID of ${consultationIDSearchValue} in database`}), {status: 422})
+        throw redirect(303, "/authenticated-client/client");
     };
     res.end();
 
