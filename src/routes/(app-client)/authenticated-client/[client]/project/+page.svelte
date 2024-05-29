@@ -10,7 +10,7 @@
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore.js";
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";
     import { goto } from "$app/navigation";
-  import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
+    import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
 
     export let data;
 
@@ -137,11 +137,11 @@
         deleteButtonClickHandler = false;
     };
 
-    let editButtonClickHandler: boolean = false;
+    let editProject: boolean = false;
 
-    $: if (editButtonClickHandler) {
-        // handle edit button clicked
-    }
+    // $: if (editButtonClickHandler) {
+    //     // handle edit button clicked
+    // }
 
 </script>
 
@@ -160,7 +160,7 @@
     />
     <div class="project">
         <h1>project</h1>
-        {#if !editButtonClickHandler}
+        {#if !editProject}
             <table>
                 <colgroup>
                     <col class="left_table_column" />
@@ -225,7 +225,7 @@
             </table>
             {#if (project?.status === "requested")}
                 <div class="buttons_container">
-                    <EditButton bind:editClicked={editButtonClickHandler}>
+                    <EditButton bind:editClicked={editProject}>
                         edit project request
                     </EditButton>
                     <DeleteButton bind:clicked={deleteButtonClickHandler}>
@@ -233,10 +233,11 @@
                     </DeleteButton>
                 </div>
             {/if}
-        {:else if (editButtonClickHandler)}
+        {:else if (editProject)}
             <ProjectForm 
                 project={project} 
                 data={data}
+                bind:cancelEditProject={editProject}
             />
         {/if}
         

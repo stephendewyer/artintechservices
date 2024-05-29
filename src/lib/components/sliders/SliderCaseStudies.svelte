@@ -293,17 +293,17 @@
         .arrows {
             position: relative;
             width: 100%;
-            padding:1rem;
+            padding: 1rem;
         }
 
         .arrow_button {
             width: 1.5rem;
-            z-index: 2;
         }
 
         .embla__dots {
             position: absolute;
             bottom: 0.5rem;
+            margin: 0 4rem 0 4rem;
             left: 0;
             right: 0;
             display: flex;

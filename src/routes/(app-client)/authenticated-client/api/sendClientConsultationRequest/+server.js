@@ -146,5 +146,4 @@ export const POST = async ({request}) => {
         return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
     };
 
-
 }

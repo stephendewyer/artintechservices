@@ -17,63 +17,91 @@
     import DateInput from "$lib/components/inputs/DateInput.svelte";
     import TextArea from "$lib/components/inputs/TextArea.svelte";
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
-    import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
+    import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import { goto } from "$app/navigation";
+    import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
 
     export let data;
 
     export let project: Project;
 
+    export let cancelEditProject: boolean = false;
+
     const userEmail: string | undefined | null = data.streamed.user?.email;
+
+    let aboutProject: string = (project.project_info) ? project.project_info : "";
+    let projectStartDate: string = (project.project_start_date) ? ConvertDateInputFormat(new Date(project.project_start_date)) : "";
+    let projectEndDate: string = (project.project_end_date) ? ConvertDateInputFormat(new Date(project.project_end_date)) : "";
+    let projectBudget: number | null = (project.project_budget) ? project.project_budget : null;
+    let imageFileInputValue: string = (project.image_URL) ? "/" : "";
+    let image: any = (project.image_URL) ? project.image_URL : "";
+    let documentFileInputValue: string = "";
+    let documentFileName: string = "";
+    let document: any = (project.document_public_ID) ? project.document_public_ID : "";
+
+    let artificialIntelligence: boolean = false;
+    let brandIdentityDesign: boolean = false;
+    let dataVisualization: boolean = false;
+    let photography: boolean = false;
+    let softwareDevelopment: boolean = false;
+    let userExperienceDesign: boolean = false;
+    let videography: boolean = false;
+    let visualDesign: boolean = false;
+
+    let aboutProjectIsValid: boolean = true;
+    let projectStartDateIsValid: boolean = true;
+    let projectEndDateIsValid: boolean = true;
+    let imageFileIsValid: boolean = true;
+    let documentFileIsValid: boolean = true;
+    let projectBudgetIsValid: boolean = true;
 
     interface Service {
         service: string;
         image: string;
         requested: boolean;
-
     };
 
     const services: Service[] = [
         {
             service: "artificial intelligence",
             image: ArtificialIntelligence,
-            requested: false
+            requested: project.artificial_intelligence === 1 ? true : false
         },
         {
             service: "brand identity design",
             image: BrandIdentityDesign,
-            requested: false
+            requested: project.brand_identity_design === 1 ? true : false
         },
         {
             service: "data visualization",
             image: DataVisualization,
-            requested: false
+            requested: project.data_visualization === 1 ? true : false
         },
         {
             service: "photography",
             image: Photography,
-            requested: false
+            requested: project.photography === 1 ? true : false
         },
         {
             service: "software development",
             image: SoftwareDevelopment,
-            requested: false
+            requested: project.software_development === 1 ? true : false
         },
         {
             service: "user experience design",
             image: UserExperienceDesign,
-            requested: false
+            requested: project.user_experience_design === 1 ? true : false
         },
         {
             service: "videography",
             image: Videography,
-            requested: false
+            requested: project.videography === 1 ? true : false
         },
         {
             service: "visual design",
             image: VisualDesign,
-            requested: false
+            requested: project.visual_design === 1 ? true : false
         }
     ];
 
@@ -98,32 +126,6 @@
             visualDesign = requestedService.requested;
         };
     });
-
-    let aboutProject: string = "";
-    let projectStartDate: string = "";
-    let projectEndDate: string = "";
-    let projectBudget: number | null = null;
-    let imageFileInputValue: string = "";
-    let image: any;
-    let documentFileInputValue: string = "";
-    let documentFileName: string = "";
-    let document: any;
-
-    let artificialIntelligence: boolean = false;
-    let brandIdentityDesign: boolean = false;
-    let dataVisualization: boolean = false;
-    let photography: boolean = false;
-    let softwareDevelopment: boolean = false;
-    let userExperienceDesign: boolean = false;
-    let videography: boolean = false;
-    let visualDesign: boolean = false;
-
-    let aboutProjectIsValid: boolean = true;
-    let projectStartDateIsValid: boolean = true;
-    let projectEndDateIsValid: boolean = true;
-    let imageFileIsValid: boolean = true;
-    let documentFileIsValid: boolean = true;
-    let projectBudgetIsValid: boolean = true;
 
     let responseItem: ResponseObj = {
         success: "",
@@ -281,7 +283,7 @@
         pending = false;
     };
 </script>
-<div class="page">
+<div class="project_form">
     <form class="form" on:submit|preventDefault={sendClientProjectRequestHandler} >
         <h4>*indicates required</h4>
         <h2>
@@ -423,15 +425,12 @@
             After you start a project, a representative from Art in Tech Services will contact you within 48 hours to discuss next steps in your project.  Starting a project is not an agreement.
         </p>
         <div class="buttons_container">
-            <a href="/authenticated-client/client">
-                <CancelButton>
-                    cancel
-                </CancelButton>
-            </a>
-            
-            <SubmitButton disable={false}>
+            <CancelSubmitButton bind:cancelClicked={cancelEditProject}>
+                cancel
+            </CancelSubmitButton>
+            <SubmitButton02 disable={false}>
                 send request
-            </SubmitButton>
+            </SubmitButton02>
         </div>
     </form>
     {#if (pending)}

@@ -1,21 +1,24 @@
 <script lang="ts">
-    import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import DateInput from "$lib/components/inputs/DateInput.svelte";
     import TextArea from "$lib/components/inputs/TextArea.svelte";
-    import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import TimeInput from "$lib/components/inputs/TimeInput.svelte";
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
-    import { goto } from "$app/navigation";
-    // sort time zones by alphabetical order
-
+    import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
+    import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
+    import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
+    
+    export let consultation: Consultation | undefined;
+    export let cancelEditConsultation: boolean = false;
     export let data;
+    export let consultationRequestUpdated: boolean = false;
 
     const userEmail: string | undefined | null = data.streamed.user?.email;
+
+    let consultationRequestID: number | undefined = consultation?.request_ID;
 
     const TimeZonesSorted = TimeZones.sort((a, b) => {
         if (a.name < b.name) {
@@ -27,10 +30,10 @@
         return 0;
     });
 
-    let consultationDate: string = "";
-    let consultationTime: string = "";
-    let consultationTimeZone: string = "";
-    let consultationReason: string = "";
+    let consultationDate: string = consultation?.consultation_date ? ConvertDateInputFormat(new Date(consultation?.consultation_date)) : "";
+    let consultationTime: string = consultation?.consultation_time ? consultation?.consultation_time : "";
+    let consultationTimeZone: string = consultation?.time_zone ? consultation?.time_zone : "";
+    let consultationReason: string = consultation?.consultation_reason ? consultation?.consultation_reason : "";
 
     let consultationDateIsValid: boolean = true;
     let consultationTimeIsValid: boolean = true;
@@ -51,17 +54,19 @@
         }, 4000)
     };
 
-    async function createConsultationRequest (
+    async function updateConsultationRequest (
+        consultationRequestID: number | undefined,
         userEmail: string | undefined | null,
         consultationDate: string,
         consultationTime: string,
         consultationTimeZone: string,
         consultationReason: string
     ) {	
-        const response = await fetch("/authenticated-client/api/sendClientConsultationRequest", {
+        const response = await fetch("/authenticated-client/api/updateClientConsultationRequest", {
 
-            method: 'POST',
+            method: 'PATCH',
             body: JSON.stringify({
+                consultationRequestID,
                 userEmail,
                 consultationDate,
                 consultationTime,
@@ -76,12 +81,13 @@
         return responseItem;
     };
 
-    const sendClientConsultationRequestHandler = async () => {
+    const updateClientConsultationRequestHandler = async () => {
         pending = true;
 
         try {
 
-            await createConsultationRequest(
+            await updateConsultationRequest(
+                consultationRequestID,
                 userEmail,
                 consultationDate,
                 consultationTime,
@@ -90,15 +96,11 @@
             );
 
             if (responseItem.success) {
-                consultationDate = "";
-                consultationTime = "";
-                consultationTimeZone = "";
-                consultationReason = "";
-                goto("/authenticated-client/client");
+                consultationRequestUpdated = true;
+                cancelEditConsultation = true;
             };
 
             if (responseItem.error) {
-
                 if (consultationDate === "") {
                     consultationDateIsValid = false;
                 } else if (consultationDate !== "") {
@@ -136,49 +138,8 @@
     };
 </script>
 
-<div class="page">
-    <form class="form" on:submit|preventDefault={sendClientConsultationRequestHandler}>
-        <h1>
-            request a consultation 
-        </h1>
-        <div class="consultation_info">
-            <div class="consultation_icon">
-                {@html ConsultationIcon}
-            </div>
-            <p>We recommend scheduling a consultation before starting a project.  During a consultation, we help you plan your project for success.</p>
-            <table>
-                <colgroup>
-                    <col style="width:30%">
-                    <col style="width:70%">
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td class="table_heading">
-                            hours:
-                        </td>
-                        <td>
-                            9 a.m. and 4 p.m. U.S. Central Standard Time Monday through Friday except for holidays.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table_heading">
-                            fee:
-                        </td>
-                        <td>
-                            $65 per hour
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table_heading">
-                            location:
-                        </td>
-                        <td>
-                            Remote and in-person.  Travel expenses are added for in-person.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+<div class="consultation_form">
+    <form class="form" on:submit|preventDefault={updateClientConsultationRequestHandler}>
         <h4>*indicates required</h4>
         <div class="inputs_row">
             <div class="input_column">
@@ -240,14 +201,12 @@
             After you request a consultation, a representative from Art in Tech Services will contact you within 48 hours to schedule your consultation.
         </p>
         <div class="buttons_container">
-            <a href="/authenticated-client/client">
-                <CancelButton>
-                    cancel
-                </CancelButton>
-            </a>
-            <SubmitButton disable={false}>
+            <CancelSubmitButton bind:cancelClicked={cancelEditConsultation}>
+                cancel
+            </CancelSubmitButton>
+            <SubmitButton02 disable={false}>
                 send request
-            </SubmitButton>
+            </SubmitButton02>
         </div>
     </form>
     {#if (pending)}
@@ -265,42 +224,6 @@
     {/if}
 </div>
 <style>
-
-    .consultation_info {
-        width: 100%;
-        max-width: 50rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .consultation_icon {
-        width: 12rem;
-        height: 12rem;
-    }
-
-    table {
-        border-spacing: 0;
-        table-layout: fixed;
-    }
-
-    tbody > tr {
-        height: auto;
-        padding: 0;
-    }
-
-    tbody > tr > td {
-        padding: 0.5rem 1rem;
-        margin: 0;
-    }
-
-    .table_heading {
-        font-weight: bold;
-    }
-
-    tbody tr:nth-child(odd) {
-        background-color: #F2F9F2;
-    }
 
     .buttons_container {
         display: flex;

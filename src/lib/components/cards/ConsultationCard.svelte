@@ -1,5 +1,6 @@
 <script lang="ts">
     import Meatballs from "$lib/images/icons/meaballs.svg?raw";
+    import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
     export let consultation: Consultation;
 
     const reasonArray = consultation.consultation_reason.split(" ");
@@ -35,7 +36,7 @@
         </div>
     </div>
     <h4 style="margin: 0;">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
-    <h5 style="margin: 0;">{consultation.consultation_time} {consultation.time_zone}</h5>
+    <h5 style="margin: 0;">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
     <p style="margin: 0;">{reasonShortened}...</p>
 </a>
 <style>

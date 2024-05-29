@@ -10,10 +10,15 @@
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore.js";
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";
     import { goto } from "$app/navigation";
+    import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
+    import ConsultationForm from "$lib/components/forms/ConsultationForm.svelte";
+  import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
     export let data;
 
-    const consultation: Consultation | undefined = data.consultationRow;
+    let editConsultationRequest: boolean = false;
+
+    let consultation: Consultation | undefined = data.consultationRow;
 
     let consultationRequestCreatedDate: string = "";
 
@@ -31,13 +36,15 @@
         data: number;
     }
 
+    const consultationRequestID: number | undefined = consultation?.request_ID;
+
     const deleteConsultationHandler = async (consultation: Consultation | undefined) => {
 
         $ModalOpenStore = true;
 
         const consultationData: DeleteItem | any = {
             message: "consultation request",
-            data: consultation?.request_ID
+            data: consultationRequestID
         };
 
         $DeleteConfirmationStore = consultationData;
@@ -85,6 +92,35 @@
         // handle edit button clicked
     };
 
+    let pendingConsultationRequestUpdate: boolean = false;
+
+    const getConsultationRequestData = async (consultationRequestID: number) => {
+        pendingConsultationRequestUpdate = true;
+        const response = await fetch("/authenticated-client/api/getConsultationRequest", {
+            method: "POST",
+            body: JSON.stringify({
+                consultationRequestID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        if (response.ok) {
+            consultation = await response.json();
+            pendingConsultationRequestUpdate = false;
+        } else if (!response.ok) {
+            console.log("failed to refresh consultation request after update");
+            pendingConsultationRequestUpdate = false;
+        };
+    };
+
+    let consultationRequestUpdated: boolean = false;
+
+    $: if (consultationRequestUpdated) {
+        getConsultationRequestData(consultationRequestID);
+        consultationRequestUpdated = false;
+    };
+
 </script>
 
 <svelte:head>
@@ -98,62 +134,75 @@
         <div class="consultation_banner">
             {@html ConsultationIcon}
         </div>
-        <h1>consultation request</h1> 
-        <table>
-            <colgroup>
-                <col class="left_table_column"/>
-                <col class="right_table_column"/>
-            </colgroup>
-            <tr>
-                <td>
-                    date:
-                </td>
-                <td>
-                    {consultationDate}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    time:
-                </td>
-                <td>
-                    {consultation?.consultation_time} {consultation?.time_zone}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    status:
-                </td>
-                <td>
-                    {consultation?.status}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    reason:
-                </td>
-                <td>
-                    {consultation?.consultation_reason}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    creation date:
-                </td>
-                <td>
-                    {consultationRequestCreatedDate}
-                </td>
-            </tr>
-        </table>
-        {#if (consultation?.status === "requested")}
-            <div class="buttons_container">
-                <EditButton bind:editClicked={editButtonClickedHandler}>
-                    edit consultation
-                </EditButton>
-                <DeleteButton bind:clicked={deleteButtonClickHandler}>
-                    cancel consultation request
-                </DeleteButton>
-            </div>
+        {#if pendingConsultationRequestUpdate}
+            <LoadingSpinner />
+        {:else if (!pendingConsultationRequestUpdate)}
+            <h1>consultation request</h1> 
+            {#if !editConsultationRequest}
+                <table>
+                    <colgroup>
+                        <col class="left_table_column"/>
+                        <col class="right_table_column"/>
+                    </colgroup>
+                    <tr>
+                        <td>
+                            date:
+                        </td>
+                        <td>
+                            {consultationDate}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            time:
+                        </td>
+                        <td>
+                            {ConvertTimeToStandard(consultation?.consultation_time)} {consultation?.time_zone}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            status:
+                        </td>
+                        <td>
+                            {consultation?.status}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            reason:
+                        </td>
+                        <td>
+                            {consultation?.consultation_reason}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            creation date:
+                        </td>
+                        <td>
+                            {consultationRequestCreatedDate}
+                        </td>
+                    </tr>
+                </table>
+                {#if (consultation?.status === "requested")}
+                    <div class="buttons_container">
+                        <EditButton bind:editClicked={editConsultationRequest}>
+                            edit consultation
+                        </EditButton>
+                        <DeleteButton bind:clicked={deleteButtonClickHandler}>
+                            cancel consultation request
+                        </DeleteButton>
+                    </div>
+                {/if}
+            {:else if editConsultationRequest}
+                <ConsultationForm 
+                    data={data}
+                    consultation={consultation}
+                    bind:cancelEditConsultation={editConsultationRequest}
+                    bind:consultationRequestUpdated={consultationRequestUpdated}
+                />
+            {/if}
         {/if}
         <a href="/authenticated-client/client">
             <CancelButton>
