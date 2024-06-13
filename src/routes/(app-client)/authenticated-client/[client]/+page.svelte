@@ -80,6 +80,8 @@
 
     };
 
+    let invoices: any[] = [];
+
     const getClientData = async () => {
         pendingClientData = true;
         const response = await fetch("/authenticated-client/api/getClientData", {
@@ -114,6 +116,7 @@
             zipCodeInputValue = clientData.contact_information?.zip_code ? clientData.contact_information?.zip_code : "";
             balance = clientData.billing.data[0].balance;
             stripeCustomerID = clientData.contact_information?.Stripe_customer_ID;
+            invoices = clientData.invoices.data;
             clientData.consultations?.forEach((consultation: Consultation) => {
                 if (consultation.status === "requested") {
                     consultationRequests = [...consultationRequests, consultation];
@@ -624,62 +627,70 @@
                         {@html Billing}
                     </div>
                 </h2>
-                <h3><span style="font-weight: 400;">amount due: </span>{balance}</h3>
-                <a href="/authenticated-client/client/make-a-payment">
-                    <ActionButtonSecondary>
-                        make a payment
-                    </ActionButtonSecondary>
-                </a>
-                <table>
-                    <tr>
-                        <th>
-                            invoice ID
-                        </th>
-                        <th>
-                            subject
-                        </th>
-                        <th>
-                            date
-                        </th>
-                        <th>
-                            amount
-                        </th>
-                        <th>
-                            status
-                        </th>
-                        <th>
-                            details
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            ID
-                        </td>
-                        <td>
-                            subject
-                        </td>
-                        <td>
-                            date
-                        </td>
-                        <td>
-                            amount
-                        </td>
-                        <td>
-                            status
-                        </td>
-                        <td>
-                            details
-                        </td>
-                    </tr>
-                </table>
+                <h3><span style="font-weight: 400;">balance: </span>${balance}</h3>
+                <div class="table_container">
+                    <table class="invoices_table">
+                        <tr>
+                            <th>
+                                invoice
+                            </th>
+                            <th>
+                                date created
+                            </th>
+                            <th>
+                                due date
+                            </th>
+                            <th>
+                                amount due
+                            </th>
+                            <th>
+                                status
+                            </th>
+                            <th>
+                                details
+                            </th>
+                            <th>
+                                action
+                            </th>
+                        </tr>
+                        {#each invoices as invoice, index}
+                            <tr>
+                                <td>
+                                    {++index}
+                                </td>
+                                <td>
+                                    {new Date(invoice.created * 1000).toUTCString().slice(0, 16)}
+                                </td>
+                                <td>
+                                    {new Date(invoice.due_date * 1000).toUTCString().slice(0, 16)}
+                                </td>
+                                <td>
+                                    ${invoice.amount_due * 0.01}
+                                </td>
+                                <td>
+                                    {invoice.status}
+                                </td>
+                                <td>
+                                    {#each invoice.lines.data as invoiceLineItem, index}
+                                        {invoiceLineItem.description}
+                                    {/each}
+                                </td>
+                                <td>
+                                    {#if !invoice.paid}
+                                        <a href={`/authenticated-client/client/make-a-payment?invoice-ID=${invoice.id}&client-email=${clientEmail}`}>
+                                            make payment
+                                        </a>
+                                    {/if}
+                                </td>
+                            </tr>
+                        {/each}
+                    </table>
+                </div>
                 <section class="section_even">
-
-
                 </section>
                 <h3>
                     billing information
                 </h3>
-
                 {#if (paymentMethods?.data?.length > 0)}
                     <table>
                         <tr>
@@ -760,12 +771,8 @@
                     </div>
                 {/if}
             </section>
-        
-        
-
         {/if}
     </div>
-    
 </div>
 
 <style>
@@ -853,6 +860,19 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+
+    .table_container {
+        width: 100%;
+        overflow-x: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .invoices_table {
+        min-width: 40rem;
+        margin: 0 auto;
     }
 
     table > tr {

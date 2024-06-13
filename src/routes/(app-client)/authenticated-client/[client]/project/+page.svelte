@@ -11,17 +11,18 @@
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";
     import { goto } from "$app/navigation";
     import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
+    import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
     export let data;
 
-    const project: Project | undefined = data.projectRow;
+    let project: Project | undefined = data.projectRow;
 
-    console.log(project);
+    const projectID: number | undefined = data.projectRow.project_ID;
 
     interface Service {
         service: string;
         requested: boolean
-    }
+    };
 
     const services: Service[] = [
         {
@@ -139,9 +140,36 @@
 
     let editProject: boolean = false;
 
-    // $: if (editButtonClickHandler) {
-    //     // handle edit button clicked
-    // }
+    let projectUpdated: boolean = false;
+
+    let pendingProjectUpdate: boolean = false;
+
+    const refreshStartProjectRequest = async (projectID: number | undefined) => {
+        pendingProjectUpdate = true;
+        const response = await fetch("/authenticated-client/api/getStartProjectRequest", {
+            method: "POST",
+            body: JSON.stringify({
+                projectID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        if (response.ok) {
+            project = await response.json();
+            pendingProjectUpdate = false;
+        } else if (!response.ok) {
+            console.log("failed to refresh consultation request after update");
+            pendingProjectUpdate = false;
+        };
+    };
+
+    $: if (projectUpdated) {
+        // refresh the project data
+        editProject = false;
+        refreshStartProjectRequest(projectID);
+        projectUpdated = false;
+    };
 
 </script>
 
@@ -160,87 +188,90 @@
     />
     <div class="project">
         <h1>project</h1>
-        {#if !editProject}
-            <table>
-                <colgroup>
-                    <col class="left_table_column" />
-                    <col class="right_table_column" />
-                </colgroup>
-                <tr>
-                    <td>
-                        services:
-                    </td>
-                    <td>
-                        {servicesInProject.join(", ")}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        about:
-                    </td>
-                    <td>
-                        {project?.project_info}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        start date:
-                    </td>
-                    <td>
-                        {startDate}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        end date:
-                    </td>
-                    <td>
-                        {endDate}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        budget:
-                    </td>
-                    <td>
-                        ${project?.project_budget}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        status:
-                    </td>
-                    <td>
-                        {project?.status}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        date created:
-                    </td>
-                    <td>
-                        {dateCreated}
-                    </td>
-                </tr>
-            </table>
-            {#if (project?.status === "requested")}
-                <div class="buttons_container">
-                    <EditButton bind:editClicked={editProject}>
-                        edit project request
-                    </EditButton>
-                    <DeleteButton bind:clicked={deleteButtonClickHandler}>
-                        delete project request
-                    </DeleteButton>
-                </div>
+        {#if pendingProjectUpdate}
+            <LoadingSpinner />
+        {:else if !pendingProjectUpdate}
+            {#if !editProject}
+                <table>
+                    <colgroup>
+                        <col class="left_table_column" />
+                        <col class="right_table_column" />
+                    </colgroup>
+                    <tr>
+                        <td>
+                            services:
+                        </td>
+                        <td>
+                            {servicesInProject.join(", ")}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            about:
+                        </td>
+                        <td>
+                            {project?.project_info}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            start date:
+                        </td>
+                        <td>
+                            {startDate}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            end date:
+                        </td>
+                        <td>
+                            {endDate}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            budget:
+                        </td>
+                        <td>
+                            ${project?.project_budget}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            status:
+                        </td>
+                        <td>
+                            {project?.status}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            date created:
+                        </td>
+                        <td>
+                            {dateCreated}
+                        </td>
+                    </tr>
+                </table>
+                {#if (project?.status === "requested")}
+                    <div class="buttons_container">
+                        <EditButton bind:editClicked={editProject}>
+                            edit project request
+                        </EditButton>
+                        <DeleteButton bind:clicked={deleteButtonClickHandler}>
+                            delete project request
+                        </DeleteButton>
+                    </div>
+                {/if}
+            {:else if (editProject)}
+                <ProjectForm 
+                    project={project} 
+                    data={data}
+                    bind:cancelEditProject={editProject}
+                />
             {/if}
-        {:else if (editProject)}
-            <ProjectForm 
-                project={project} 
-                data={data}
-                bind:cancelEditProject={editProject}
-            />
         {/if}
-        
         <a href="/authenticated-client/client">
             <CancelButton>
                 dashboard
@@ -261,6 +292,7 @@
     }
 
     .project_banner {
+        max-width: 1920px;
         width: 100%;
         object-fit: cover;
         height: 48rem;;

@@ -19,26 +19,27 @@
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
     import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
-    import { goto } from "$app/navigation";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
 
     export let data;
 
-    export let project: Project;
+    export let project: Project | undefined;
+
+    export let projectUpdated: boolean = false;
 
     export let cancelEditProject: boolean = false;
 
     const userEmail: string | undefined | null = data.streamed.user?.email;
 
-    let aboutProject: string = (project.project_info) ? project.project_info : "";
-    let projectStartDate: string = (project.project_start_date) ? ConvertDateInputFormat(new Date(project.project_start_date)) : "";
-    let projectEndDate: string = (project.project_end_date) ? ConvertDateInputFormat(new Date(project.project_end_date)) : "";
-    let projectBudget: number | null = (project.project_budget) ? project.project_budget : null;
-    let imageFileInputValue: string = (project.image_URL) ? "/" : "";
-    let image: any = (project.image_URL) ? project.image_URL : "";
+    let aboutProject: string = (project?.project_info) ? project.project_info : "";
+    let projectStartDate: string = (project?.project_start_date) ? ConvertDateInputFormat(new Date(project.project_start_date)) : "";
+    let projectEndDate: string = (project?.project_end_date) ? ConvertDateInputFormat(new Date(project.project_end_date)) : "";
+    let projectBudget: number | null = (project?.project_budget) ? project.project_budget : null;
+    let imageFileInputValue: string = (project?.image_URL) ? "/" : "";
+    let image: any = (project?.image_URL) ? project.image_URL : "";
     let documentFileInputValue: string = "";
     let documentFileName: string = "";
-    let document: any = (project.document_public_ID) ? project.document_public_ID : "";
+    let document: any = (project?.document_public_ID) ? project.document_public_ID : "";
 
     let artificialIntelligence: boolean = false;
     let brandIdentityDesign: boolean = false;
@@ -66,42 +67,42 @@
         {
             service: "artificial intelligence",
             image: ArtificialIntelligence,
-            requested: project.artificial_intelligence === 1 ? true : false
+            requested: project?.artificial_intelligence === 1 ? true : false
         },
         {
             service: "brand identity design",
             image: BrandIdentityDesign,
-            requested: project.brand_identity_design === 1 ? true : false
+            requested: project?.brand_identity_design === 1 ? true : false
         },
         {
             service: "data visualization",
             image: DataVisualization,
-            requested: project.data_visualization === 1 ? true : false
+            requested: project?.data_visualization === 1 ? true : false
         },
         {
             service: "photography",
             image: Photography,
-            requested: project.photography === 1 ? true : false
+            requested: project?.photography === 1 ? true : false
         },
         {
             service: "software development",
             image: SoftwareDevelopment,
-            requested: project.software_development === 1 ? true : false
+            requested: project?.software_development === 1 ? true : false
         },
         {
             service: "user experience design",
             image: UserExperienceDesign,
-            requested: project.user_experience_design === 1 ? true : false
+            requested: project?.user_experience_design === 1 ? true : false
         },
         {
             service: "videography",
             image: Videography,
-            requested: project.videography === 1 ? true : false
+            requested: project?.videography === 1 ? true : false
         },
         {
             service: "visual design",
             image: VisualDesign,
-            requested: project.visual_design === 1 ? true : false
+            requested: project?.visual_design === 1 ? true : false
         }
     ];
 
@@ -147,7 +148,7 @@
         }, 4000)
     };
 
-    const createStartProjectRequest = async (
+    const updateStartProjectRequest = async (
         userEmail: string | null | undefined,
         artificialIntelligence: boolean,
         brandIdentityDesign: boolean,
@@ -167,8 +168,7 @@
         documentFileName: string,
         document: any
     ) => {	
-        const response = await fetch("/authenticated-client/api/sendClientProjectRequest", {
-
+        const response = await fetch("/authenticated-client/api/updateClientProjectRequest", {
             method: 'POST',
             body: JSON.stringify({
                 userEmail,
@@ -198,12 +198,12 @@
         return responseItem;
     };
 
-    const sendClientProjectRequestHandler = async () => {
+    const updateClientProjectRequestHandler = async () => {
         pending = true;
 
         try {
 
-            await createStartProjectRequest(
+            await updateStartProjectRequest(
                 userEmail,
                 artificialIntelligence,
                 brandIdentityDesign,
@@ -225,24 +225,7 @@
             );
 
             if (responseItem.success) {
-                artificialIntelligence = false;
-                brandIdentityDesign = false;
-                dataVisualization = false;
-                photography = false;
-                softwareDevelopment = false;
-                userExperienceDesign = false;
-                videography = false;
-                visualDesign = false;
-                aboutProject = "";
-                projectStartDate = "";
-                projectEndDate = "";
-                projectBudget = null;
-                imageFileInputValue = "";
-                image = "";
-                documentFileInputValue = "";
-                documentFileName = "";
-                document = "";
-                goto("/authenticated-client/client");
+                projectUpdated = true;
             };
 
             if (responseItem.error) {
@@ -284,7 +267,7 @@
     };
 </script>
 <div class="project_form">
-    <form class="form" on:submit|preventDefault={sendClientProjectRequestHandler} >
+    <form class="form" on:submit|preventDefault={updateClientProjectRequestHandler} >
         <h4>*indicates required</h4>
         <h2>
             requested services

@@ -19,12 +19,5 @@
         "expandable": false,
         "slug": "/authenticated-client/client/request-to-start-a-project",
         "content": null
-    },
-    {
-        "id": 4,
-        "label": "make a payment",
-        "expandable": false,
-        "slug": "/authenticated-client/client/make-a-payment",
-        "content": null
     }
 ]

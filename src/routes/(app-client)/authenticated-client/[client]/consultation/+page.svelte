@@ -12,7 +12,7 @@
     import { goto } from "$app/navigation";
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
     import ConsultationForm from "$lib/components/forms/ConsultationForm.svelte";
-  import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
+    import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
     export let data;
 
@@ -86,12 +86,6 @@
         deleteButtonClickHandler = false;
     };
 
-    let editButtonClickedHandler: boolean = false;
-
-    $: if (editButtonClickedHandler) {
-        // handle edit button clicked
-    };
-
     let pendingConsultationRequestUpdate: boolean = false;
 
     const getConsultationRequestData = async (consultationRequestID: number) => {
@@ -117,6 +111,7 @@
     let consultationRequestUpdated: boolean = false;
 
     $: if (consultationRequestUpdated) {
+        editConsultationRequest = false;
         getConsultationRequestData(consultationRequestID);
         consultationRequestUpdated = false;
     };

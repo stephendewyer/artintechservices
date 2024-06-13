@@ -99,11 +99,17 @@ export const POST = async ({request}) => {
         throw error;
     });
 
-    // get the Stripe balance and invoices
+    // get the Stripe balance
 
     const searched_stripe_customer = await stripe.customers.search({
         // @ts-ignore
         query: `email: '${clientEmail}'`,
+    });
+
+    // get the Stripe invoices to the client
+
+    const customer_invoices = await stripe.invoices.search({
+        query: `customer: '${Stripe_customer_ID}'`,
     });
 
     // @ts-ignore
@@ -112,7 +118,8 @@ export const POST = async ({request}) => {
         contact_information: clientInformationRow,
         consultations: consultations,
         projects: projects,
-        billing: searched_stripe_customer
+        billing: searched_stripe_customer,
+        invoices: customer_invoices
     };
 
     return new Response(

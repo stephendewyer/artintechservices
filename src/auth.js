@@ -12,13 +12,14 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
     providers: [
         Credentials({
             authorize: async (credentials, request) => {
+                let responseItem = null;
                 if (credentials.providerId === "client-login") {
                     // @ts-ignore
                     const response = await clientAuthentication(credentials);
                     if (response === null) {
                         throw new InvalidLoginError();
                     } else if (response) {
-                        const responseItem = await response;
+                        responseItem = await response;
                         return responseItem ?? null;
                     };
                 } else if (credentials.providerId === "administrator-login") {
@@ -27,7 +28,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
                     if (response === null) {
                         throw new InvalidLoginError();
                     } else if (response) {
-                        const responseItem = await response;
+                        responseItem = await response;
                         return responseItem ?? null;
                     };
                 } else {

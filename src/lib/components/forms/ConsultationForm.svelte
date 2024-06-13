@@ -101,6 +101,7 @@
             };
 
             if (responseItem.error) {
+                consultationRequestUpdated = false;
                 if (consultationDate === "") {
                     consultationDateIsValid = false;
                 } else if (consultationDate !== "") {
