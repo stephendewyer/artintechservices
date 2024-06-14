@@ -3,13 +3,16 @@
     import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
     import { Elements, LinkAuthenticationElement, PaymentElement, Address } from 'svelte-stripe';
     import { onMount } from 'svelte';
-  import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
+    import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
+  import PaymentMethodCard from '$lib/components/cards/PaymentMethodCard.svelte';
 
     export let data;
 
-    const customer = data.customer;
+    const customer: any = data.customer.data;
     const invoice: any = data.invoice;
+    const paymentMethods: any = data.paymentMethods.data;
 
+    console.log(paymentMethods)
     let stripe: Stripe | null = null;
 
     const loadStripeHandler = async () => {
@@ -73,8 +76,15 @@
             </td>
     </table>
     <h2>
-        select payment method
+        payment method
     </h2>
+    <ul class="payment_method_cards_container">
+        {#if (paymentMethods.length > 0)}
+            {#each paymentMethods as paymentMethod, index}
+                <PaymentMethodCard paymentMethod={paymentMethod}/>
+            {/each}
+        {/if}
+    </ul>
     <SubmitButton>
         pay invoice
     </SubmitButton>
@@ -110,6 +120,13 @@
         font-weight: bold;
         overflow-wrap: break-word;
         hyphens: auto;
+    }
+
+    .payment_method_cards_container {
+        width: 100%;
+        max-width: 60rem;
+        padding: 1rem;
+        margin: 0;
     }
 
     @media screen and (max-width: 1440px) {

@@ -32,6 +32,7 @@
     import PanelConsultations from "$lib/components/tabPanelClient/ConsultationsPanel.svelte";
     
     import { v4 as uuidv4 } from 'uuid';
+  import PaymentMethodCard from "$lib/components/cards/PaymentMethodCard.svelte";
 
     let clientEmail = $page.data.streamed.user?.email;
 
@@ -692,34 +693,9 @@
                     billing information
                 </h3>
                 {#if (paymentMethods?.data?.length > 0)}
-                    <table>
-                        <tr>
-                            <td>
-                                {paymentMethods?.data[0].type}
-                            </td>
-                            {#if (paymentMethods?.data[0].type === "card")}
-                                <td>
-                                    {paymentMethods?.data[0].card.brand}
-                                </td>
-                            {/if}
-                            <td>
-                                <button class="button_table">
-                                    edit 
-                                    <div class="edit_icon">{@html EditIcton}</div>
-                                </button>
-                            </td>
-                            <td>
-                                <button 
-                                    class="button_table"
-                                    on:click={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
-                                    on:keyup={() => detachPaymentMethodHandler(paymentMethods?.data[0].id)}
-                                >
-                                    delete 
-                                    <div class="delete_icon">{@html DeleteIcon}</div>
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
+                    {#each paymentMethods.data as paymentMethod, index}
+                        <PaymentMethodCard paymentMethod={paymentMethod} />
+                    {/each}
                 {:else if !addPaymentMethod && (paymentMethods?.data?.length === 0)}
                     <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
                         Add payment method
@@ -901,22 +877,7 @@
         width: 100%;
         max-width: 60rem;
     }
-    .button_table {
-        border: none;
-        background: none;
-        display: flex;
-        margin: 0;
-        padding: 0;
-        align-items: center;
-        gap: 0.5rem;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 1.25rem;
-    }
-
-    .edit_icon {
-        width: 1.5rem;
-    }
+    
     .delete_icon {
         width: 1.25rem;
     }

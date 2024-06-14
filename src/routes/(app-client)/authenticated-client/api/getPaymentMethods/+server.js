@@ -12,8 +12,6 @@ export const POST = async ({request}) => {
 
     const data = await request.json();
 
-    console.log(data)
-
     const { clientEmail, stripeCustomerID } = data;
 
     const paymentMethods = await stripe.customers.listPaymentMethods(
@@ -22,8 +20,6 @@ export const POST = async ({request}) => {
             limit: 3,
         }
     );
-
-    console.log(paymentMethods);
 
     if (paymentMethods) {
         return new Response(JSON.stringify({...paymentMethods}), {status: 200});

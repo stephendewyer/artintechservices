@@ -223,53 +223,56 @@
         </div>
     </ul>
     <ul class="footer_nav_top_desktop">
-        {#each footerNavTabsLeft as footerNavTab, index}
-            {#if footerNavTab.content === null}
-                <li 
-                    aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}
-                    class="nav_column"
-                >
-                    <a 
-                        href={footerNavTab.slug}
-                        class="footer_nav_heading"
-                    >
-                        {footerNavTab.label}
-                    </a>
-                </li>   
-            {:else}
-                <li>
-                    <ul 
-                        on:focus={() => hoverPanelLeftHandler(index)}
-                        on:mouseenter={() => hoverPanelLeftHandler(index)}
-                        on:mouseover={() => hoverPanelLeftHandler(index)}
-                        on:mouseleave={() => exitPanelLeftHandler(index)}
-                        on:mouseout={() => exitPanelLeftHandler(index)}
-                        on:blur={() => exitPanelLeftHandler(index)}
+        <div class="nav_row">
+            {#each footerNavTabsLeft as footerNavTab, index}
+                {#if footerNavTab.content === null}
+                    <li 
+                        aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}
                         class="nav_column"
                     >
-                        <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
-                            <a 
-                                href={footerNavTab.slug} 
-                                class="footer_nav_heading"
-                                style={index === panelLeftHoveredIndex ? "color: #CFF5F8;" : ""}
-                            >
-                                {footerNavTab.label}
-                            </a>
-                        </li>
-                        {#each footerNavTab.content as footerNavTabSub, index}
-                            <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                        <a 
+                            href={footerNavTab.slug}
+                            class="footer_nav_heading"
+                        >
+                            {footerNavTab.label}
+                        </a>
+                    </li>   
+                {:else}
+                    <li>
+                        <ul 
+                            on:focus={() => hoverPanelLeftHandler(index)}
+                            on:mouseenter={() => hoverPanelLeftHandler(index)}
+                            on:mouseover={() => hoverPanelLeftHandler(index)}
+                            on:mouseleave={() => exitPanelLeftHandler(index)}
+                            on:mouseout={() => exitPanelLeftHandler(index)}
+                            on:blur={() => exitPanelLeftHandler(index)}
+                            class="nav_column"
+                        >
+                            <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                 <a 
-                                    href={footerNavTabSub.slug} 
-                                    class="nav_link"
+                                    href={footerNavTab.slug} 
+                                    class="footer_nav_heading"
+                                    style={index === panelLeftHoveredIndex ? "color: #CFF5F8;" : ""}
                                 >
-                                    {footerNavTabSub.label}
+                                    {footerNavTab.label}
                                 </a>
                             </li>
-                        {/each}
-                    </ul>
-                </li>
-            {/if}
-        {/each}
+                            {#each footerNavTab.content as footerNavTabSub, index}
+                                <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                                    <a 
+                                        href={footerNavTabSub.slug} 
+                                        class="nav_link"
+                                    >
+                                        {footerNavTabSub.label}
+                                    </a>
+                                </li>
+                            {/each}
+                        </ul>
+                    </li>
+                {/if}
+            {/each}
+        </div>
+        
         <li aria-current={(
             $page.url.pathname === "/" || 
             $page.url.pathname === "/authenticated-administrator/administrator" || 
@@ -279,53 +282,56 @@
                 {@html Logo}
             </a>
         </li>
-        {#each footerNavTabsRight as footerNavTab, index}
-            {#if footerNavTab.content === null}
-                <li 
-                    aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}
-                    class="nav_column"
-                >
-                    <a 
-                        href={footerNavTab.slug}
-                        class="footer_nav_heading"
-                    >
-                        {footerNavTab.label}
-                    </a>
-                </li>   
-            {:else}
-                <li>
-                    <ul 
-                        on:focus={() => hoverPanelRightHandler(index)}
-                        on:mouseenter={() => hoverPanelRightHandler(index)}
-                        on:mouseover={() => hoverPanelRightHandler(index)}
-                        on:mouseleave={() => exitPanelRightHandler(index)}
-                        on:mouseout={() => exitPanelRightHandler(index)}
-                        on:blur={() => exitPanelRightHandler(index)}
+        <div class="nav_row">
+            {#each footerNavTabsRight as footerNavTab, index}
+                {#if footerNavTab.content === null}
+                    <li 
+                        aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}
                         class="nav_column"
                     >
-                        <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
-                            <a 
-                                href={footerNavTab.slug} 
-                                class="footer_nav_heading"
-                                style={index === panelRightHoveredIndex ? "color: #CFF5F8;" : ""}
-                            >
-                                {footerNavTab.label}
-                            </a> 
-                        </li>
-                        {#each footerNavTab.content as footerNavTabSub, index}
-                            <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                        <a 
+                            href={footerNavTab.slug}
+                            class="footer_nav_heading"
+                        >
+                            {footerNavTab.label}
+                        </a>
+                    </li>   
+                {:else}
+                    <li>
+                        <ul 
+                            on:focus={() => hoverPanelRightHandler(index)}
+                            on:mouseenter={() => hoverPanelRightHandler(index)}
+                            on:mouseover={() => hoverPanelRightHandler(index)}
+                            on:mouseleave={() => exitPanelRightHandler(index)}
+                            on:mouseout={() => exitPanelRightHandler(index)}
+                            on:blur={() => exitPanelRightHandler(index)}
+                            class="nav_column"
+                        >
+                            <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                 <a 
-                                    href={footerNavTabSub.slug} 
-                                    class="nav_link"
+                                    href={footerNavTab.slug} 
+                                    class="footer_nav_heading"
+                                    style={index === panelRightHoveredIndex ? "color: #CFF5F8;" : ""}
                                 >
-                                    {footerNavTabSub.label}
-                                </a>
+                                    {footerNavTab.label}
+                                </a> 
                             </li>
-                        {/each}
-                    </ul>
-                </li>
-            {/if}
-        {/each}
+                            {#each footerNavTab.content as footerNavTabSub, index}
+                                <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                                    <a 
+                                        href={footerNavTabSub.slug} 
+                                        class="nav_link"
+                                    >
+                                        {footerNavTabSub.label}
+                                    </a>
+                                </li>
+                            {/each}
+                        </ul>
+                    </li>
+                {/if}
+            {/each}
+        </div>
+        
     </ul>
     {#if (sessionClient)}
         <LogoutButtonFooter callbackUrl={callbackURL}>
@@ -416,6 +422,12 @@
         will-change: color, fill;
         transition: fill 0.2s ease-in-out, color 0.2s ease-in-out;
 	}
+    .nav_row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 50%;
+    }
 
     .nav_column {
         display: flex;

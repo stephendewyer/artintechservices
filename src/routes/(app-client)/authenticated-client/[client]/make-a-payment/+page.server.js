@@ -24,12 +24,12 @@ export const load = async ({url}) => {
         query: `email: '${clientEmail}'`,
     });
 
+    const stripeCustomerID = customer.data[0].id;
+
     // get the Stripe invoices to the client
     const customer_invoices = await stripe.invoices.search({
-        query: `customer: '${customer.data[0].id}'`,
+        query: `customer: '${stripeCustomerID}'`,
     });
-
-    console.log(customer_invoices)
 
     let invoice;
 
@@ -39,8 +39,16 @@ export const load = async ({url}) => {
         };
     });
 
+    const paymentMethods = await stripe.customers.listPaymentMethods(
+        stripeCustomerID,
+        {
+            limit: 3,
+        }
+    );
+
     return {
-        customer, 
-        invoice
+        customer: customer, 
+        invoice: invoice,
+        paymentMethods: paymentMethods
     };
 }

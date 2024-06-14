@@ -26,6 +26,7 @@
         cursor: pointer;
         color: #424635;
         transition: color 0.2s linear;
+        font-weight: bold;
     }
 
     .delete_button:hover {
