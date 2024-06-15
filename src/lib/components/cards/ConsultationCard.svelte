@@ -1,6 +1,7 @@
 <script lang="ts">
     import Meatballs from "$lib/images/icons/meaballs.svg?raw";
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
+    import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
     export let consultation: Consultation;
 
     const reasonArray = consultation.consultation_reason.split(" ");
@@ -18,7 +19,6 @@
 
 </script>
 <a 
-    class="consultation"
     on:mouseover={cardHoveredHandler}
     on:mouseenter={cardHoveredHandler}
     on:focus={cardHoveredHandler}
@@ -26,6 +26,7 @@
     on:mouseleave={cardExitedHandler}
     on:blur={cardExitedHandler}
     href={`/authenticated-client/client/consultation?id=${consultation.request_ID}`}
+    class="consultation_card_container"
 >
     <div class="meatballs_container">
         <div 
@@ -35,21 +36,29 @@
             {@html Meatballs}
         </div>
     </div>
-    <h4 style="margin: 0;">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
-    <h5 style="margin: 0;">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
-    <p style="margin: 0;">{reasonShortened}...</p>
+    <div class="consultation_card_content">
+        <div class="consultation_icon">
+            {@html ConsultationIcon}
+        </div>
+        <div class="consultation_info">
+            <h4 style="margin: 0;">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
+            <h5 style="margin: 0;">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
+            <p style="margin: 0;">{reasonShortened}...</p>
+        </div>
+    </div>
 </a>
 <style>
-    .consultation {
+    .consultation_card_container {
         width: 32%;
         padding: 1rem;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        gap: 1rem;
+        gap: 0.5rem;
         cursor: pointer;
         border-radius: 1rem;
         transition: box-shadow 0.2s linear;
+        
     }
 
     .meatballs_container {
@@ -64,7 +73,27 @@
         transition: fill 0.2s linear;
     }
 
-    .consultation:hover {
+    .consultation_card_content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .consultation_info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .consultation_icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 16rem;
+    }
+
+    .consultation_card_container:hover {
         box-shadow:
             0 1px 1px hsl(0deg 0% 0% / 0.075),
             0 2px 2px hsl(0deg 0% 0% / 0.075),
@@ -74,18 +103,39 @@
         ;
     }
     @media screen and (max-width: 1440px) {
-
+        .consultation_icon {
+            height: 16rem;
+        }
     }
 
     @media screen and (max-width: 1080px) {
-        .consultation {
+        .consultation_card_container {
             width: 48%;
+        }
+        .consultation_card_content {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            width: 100%;
+        }
+
+        .consultation_info {
+            width: 50%;
+        }
+
+        .consultation_icon {
+            height: 15rem;
+            width: 50%;
         }
     }
 
     @media screen and (max-width: 720px) {
-        .consultation {
+        .consultation_card_container {
             width: 100%;
+        }
+
+        .consultation_icon {
+            height: 14rem;
         }
     }
 </style>

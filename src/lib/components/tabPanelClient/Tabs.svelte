@@ -92,10 +92,6 @@
 
     @media screen and (max-width: 1440px) {
 
-        .tabs_container {
-            gap: 0.75rem;
-        }
-
         li {
             gap: 0.75rem;
         }

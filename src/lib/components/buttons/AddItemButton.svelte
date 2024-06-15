@@ -66,6 +66,7 @@
 	@media (max-width: 720px) {
         .add_button {
             font-size: 0.8rem;
+            border-width: 2px;
         }
 
         .plus_sign {

@@ -54,6 +54,10 @@ export const POST = async ({request}) => {
         throw error;
     });
 
+    if (!Stripe_customer_ID) {
+        return new Response(JSON.stringify({error: "client is missing Stripe customer ID"}), {status: 422});
+    };
+
     // get the consult_requests_client row
 
     const selectClientConsultationsStatement = `SELECT *
@@ -99,18 +103,27 @@ export const POST = async ({request}) => {
         throw error;
     });
 
-    // get the Stripe balance
+    // get the Stripe customer balance
 
     const searched_stripe_customer = await stripe.customers.search({
         // @ts-ignore
         query: `email: '${clientEmail}'`,
     });
 
-    // get the Stripe invoices to the client
+    // get the Stripe invoices to the client if any
 
     const customer_invoices = await stripe.invoices.search({
         query: `customer: '${Stripe_customer_ID}'`,
     });
+
+    // get the customer payment methods if any
+
+    const paymentMethods = await stripe.customers.listPaymentMethods(
+        Stripe_customer_ID,
+        {
+            limit: 3,
+        }
+    );
 
     // @ts-ignore
     const clientDetails = {
@@ -119,7 +132,8 @@ export const POST = async ({request}) => {
         consultations: consultations,
         projects: projects,
         billing: searched_stripe_customer,
-        invoices: customer_invoices
+        invoices: customer_invoices,
+        payment_methods: paymentMethods
     };
 
     return new Response(

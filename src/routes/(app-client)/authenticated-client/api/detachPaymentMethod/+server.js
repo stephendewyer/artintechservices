@@ -13,7 +13,6 @@ export const POST = async ({request}) => {
     const data = await request.json();
 
     const { paymentMethodID } = data;
-
     const paymentMethod = await stripe.paymentMethods.detach(
         paymentMethodID
     );

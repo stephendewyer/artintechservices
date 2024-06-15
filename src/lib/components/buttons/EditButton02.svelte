@@ -1,7 +1,12 @@
 <script lang="ts">
     import EditIcon from "$lib/images/icons/edit_icon.svg?raw";
+
+    export let clicked: boolean = false;
 </script>
-<button>
+<button 
+    on:click={() => clicked = !clicked}
+    on:keyup={() => clicked = !clicked}
+>
     <slot />
     <div class="edit_icon">
         {@html EditIcon}

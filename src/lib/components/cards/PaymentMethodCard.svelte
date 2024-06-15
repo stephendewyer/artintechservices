@@ -1,10 +1,9 @@
 <script lang="ts">
-  import DeleteButton from "../buttons/DeleteButton.svelte";
-import EditButton from "../buttons/EditButton.svelte";
-  import EditButton02 from "../buttons/EditButton02.svelte";
-
-    
+    import DeleteButton from "../buttons/DeleteButton.svelte";
     export let paymentMethod;
+    export let deleteClicked: boolean = false;
+
+    console.log(paymentMethod)
 
 </script>
 
@@ -26,15 +25,15 @@ import EditButton from "../buttons/EditButton.svelte";
         <li>
             ...{paymentMethod.card.last4}
         </li>
+        <li>
+            expires: {paymentMethod.card.exp_month}/{paymentMethod.card.exp_year}
+        </li>
     {/if}
     <p>
         added: {new Date(paymentMethod.created * 1000).toUTCString().slice(0, 16)}
     </p>
     <div class="buttons_container">
-        <EditButton02>
-            edit
-        </EditButton02>
-        <DeleteButton>
+        <DeleteButton bind:clicked={deleteClicked}>
             delete
         </DeleteButton>
     </div>
@@ -60,7 +59,8 @@ import EditButton from "../buttons/EditButton.svelte";
 
     .buttons_container {
         display: flex;
+        flex-direction: row;
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-end;
     }
 </style>

@@ -21,8 +21,6 @@
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
-    import EditIcton from "$lib/images/icons/edit_icon.svg?raw";
-    import DeleteIcon from "$lib/images/icons/delete_icon.svg?raw";
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
     import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
@@ -30,9 +28,8 @@
     import Panel from "$lib/components/tabPanelClient/Panel.svelte";
     import PanelProjects from "$lib/components/tabPanelClient/ProjectsPanel.svelte";
     import PanelConsultations from "$lib/components/tabPanelClient/ConsultationsPanel.svelte";
-    
     import { v4 as uuidv4 } from 'uuid';
-  import PaymentMethodCard from "$lib/components/cards/PaymentMethodCard.svelte";
+    import PaymentMethodCard from "$lib/components/cards/PaymentMethodCard.svelte";
 
     let clientEmail = $page.data.streamed.user?.email;
 
@@ -63,23 +60,6 @@
     let startedProjects: Project[] = [];
 
     let completedProjects: Project[] = [];
-
-    const getPaymentMethods = async () => {
-
-        const response = await fetch("/authenticated-client/api/getPaymentMethods", {
-            method: "POST",
-            body: JSON.stringify({
-                clientEmail,
-                stripeCustomerID
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        paymentMethods = await response.json();
-
-    };
 
     let invoices: any[] = [];
 
@@ -118,6 +98,7 @@
             balance = clientData.billing.data[0].balance;
             stripeCustomerID = clientData.contact_information?.Stripe_customer_ID;
             invoices = clientData.invoices.data;
+            paymentMethods = clientData.payment_methods;
             clientData.consultations?.forEach((consultation: Consultation) => {
                 if (consultation.status === "requested") {
                     consultationRequests = [...consultationRequests, consultation];
@@ -142,9 +123,6 @@
             pendingClientData = false;
             getClientDataSuccess = false;
         };
-
-        // get payment methods if any
-        getPaymentMethods();
     };
 
     let pendingClientContactInformation: boolean = false;
@@ -313,6 +291,20 @@
 
     let pendingSubmitPaymentHandler: null | boolean = null;
 
+    const getPaymentMethods = async () => {
+        const response = await fetch("/authenticated-client/api/getPaymentMethods", {
+            method: "POST",
+            body: JSON.stringify({
+                clientEmail,
+                stripeCustomerID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        paymentMethods = await response.json();
+    };
+
     const submitPaymentMethodHandler = async () => {
 
         // avoid processing duplicates
@@ -374,15 +366,11 @@
             message: "payment method",
             data: paymentMethodID
         };
-
         $DeleteConfirmationStore = paymentMethodData;
-
     };
 
     const ConfirmedDeletePaymentMethod = async () => {
-
         const paymentMethodID = paymentMethods?.data[0].id;
-
         const response = await fetch("/authenticated-client/api/detachPaymentMethod", {
             method: "POST",
             body: JSON.stringify({
@@ -392,12 +380,9 @@
                 "Content-Type": "application/json"
             }
         });
-        
         let paymentMethod;
         paymentMethod = await response.json();
-
         getPaymentMethods();
-
     };
 
     $: if ($DeleteConfirmedStore === true) {
@@ -465,6 +450,14 @@
             data: [...completedProjects]
         },
     ];
+
+    let deletePaymentMethodClicked: boolean = false;
+
+    $: if (deletePaymentMethodClicked) {
+        // delete payment method click handler
+        detachPaymentMethodHandler(paymentMethods?.data[0].id);
+        deletePaymentMethodClicked = false;
+    }
     
 </script>
 
@@ -694,7 +687,10 @@
                 </h3>
                 {#if (paymentMethods?.data?.length > 0)}
                     {#each paymentMethods.data as paymentMethod, index}
-                        <PaymentMethodCard paymentMethod={paymentMethod} />
+                        <PaymentMethodCard 
+                            paymentMethod={paymentMethod} 
+                            bind:deleteClicked={deletePaymentMethodClicked}
+                        />
                     {/each}
                 {:else if !addPaymentMethod && (paymentMethods?.data?.length === 0)}
                     <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
@@ -877,19 +873,11 @@
         width: 100%;
         max-width: 60rem;
     }
-    
-    .delete_icon {
-        width: 1.25rem;
-    }
 
     @media screen and (max-width: 1440px) {
         table > tr > td {
             font-size: 1.175rem;
             padding: 0.25rem 0.5rem;
-        }
-
-        .button_table {
-            font-size: 1.175rem;
         }
     }
 
@@ -909,9 +897,6 @@
             padding: 0.25rem 0.5rem;
         }
 
-        .button_table {
-            font-size: 1rem;
-        }
     }
 
     @media screen and (max-width: 720px) {

@@ -3,16 +3,36 @@
     import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
     import { Elements, LinkAuthenticationElement, PaymentElement, Address } from 'svelte-stripe';
     import { onMount } from 'svelte';
+    import { ModalOpenStore } from '$lib/stores/ModalOpenStore.js';
+    import { DeleteConfirmationStore } from '$lib/stores/DeleteConfirmationStore.js';
+    import { DeleteConfirmedStore } from '$lib/stores/DeleteConfirmedStore.js';
     import SubmitButton from '$lib/components/buttons/SubmitButton.svelte';
-  import PaymentMethodCard from '$lib/components/cards/PaymentMethodCard.svelte';
+    import PaymentMethodCard from '$lib/components/cards/PaymentMethodCard.svelte';
+    import AddItemButton from '$lib/components/buttons/AddItemButton.svelte';
+    import LoadingSpinner from '$lib/components/loadingSpinners/LoadingSpinner.svelte';
+    import CancelSubmitButton from '$lib/components/buttons/CancelSubmitButton.svelte';
+    import SubmitButton02 from '$lib/components/buttons/SubmitButton02.svelte';
+    import PendingFlashMessage from '$lib/components/flashMessages/PendingFlashMessage.svelte';
+    import SuccessFlashMessage from '$lib/components/flashMessages/SuccessFlashMessage.svelte';
+    import ErrorFlashMessage from '$lib/components/flashMessages/ErrorFlashMessage.svelte';
+    import { page } from "$app/stores";
 
     export let data;
 
-    const customer: any = data.customer.data;
-    const invoice: any = data.invoice;
-    const paymentMethods: any = data.paymentMethods.data;
+    const clientEmail = $page.data.streamed.user?.email;
 
-    console.log(paymentMethods)
+    const customer: any = data.customer.data[0];
+    const stripeCustomerID = customer.id;
+    const invoice: any = data.invoice;
+    let paymentMethods: any = data.paymentMethods.data;
+    let paymentMethodID: string = "";
+
+    $: console.log(paymentMethods)
+
+    if (paymentMethods.length > 0) {
+        paymentMethodID = paymentMethods[0].id;
+    };
+
     let stripe: Stripe | null = null;
 
     const loadStripeHandler = async () => {
@@ -22,6 +42,167 @@
     onMount(() => {
         loadStripeHandler();  
     });
+
+    let addPaymentMethodClickHandler: boolean = false;
+
+    let pendingPaymentSetup: boolean = false;
+
+    let stripeClientSecret: string = "";
+
+    const createPaymentSetup = async () => {
+        pendingPaymentSetup = true;
+        const response = await fetch("/authenticated-client/api/setupPaymentIntent", {
+            method: "POST",
+            body: JSON.stringify({
+                clientEmail,
+                stripeCustomerID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        let clientSecretKey;
+        clientSecretKey = await response.json();
+        stripeClientSecret = clientSecretKey.clientSecretKey;
+        if (response.ok) {
+            pendingPaymentSetup = false;
+        } else if (!response.ok) {
+            pendingPaymentSetup = false;
+        };
+    };
+
+    let addPaymentMethod: boolean = false;
+
+    $: if (addPaymentMethodClickHandler) {
+        addPaymentMethod = true;
+        createPaymentSetup();
+        addPaymentMethodClickHandler = false;
+    };
+
+    let elements: StripeElements | any = null;
+
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        setTimeout(() => {
+            responseItem.success = "";
+            responseItem.error = "";
+            status: null;
+        }, 4000);
+    };
+
+    let pendingSubmitPaymentHandler: null | boolean = null;
+
+    const getPaymentMethods = async () => {
+        const response = await fetch("/authenticated-client/api/getPaymentMethods", {
+            method: "POST",
+            body: JSON.stringify({
+                clientEmail,
+                stripeCustomerID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        let paymentMethodsObj = await response.json();
+        paymentMethods = paymentMethodsObj.data;
+    };
+
+    const submitPaymentMethodHandler = async () => {
+        // avoid processing duplicates
+        if (pendingSubmitPaymentHandler) {
+            return;
+        };
+        pendingSubmitPaymentHandler = true;
+        const response = await stripe?.confirmSetup({
+            elements,
+            redirect: "if_required"
+        });
+
+        if (response?.error) {
+            // payment failed, notify the user
+            responseItem.error = response?.error.message;
+        };
+
+        stripe?.retrieveSetupIntent(stripeClientSecret)
+        .then(({setupIntent}) => {
+            switch (setupIntent?.status) {
+                case "succeeded":
+                    console.log("setup intent retrieved successfully!")
+                    responseItem.success = "success saving payment method!";
+                    elements = null;
+                    addPaymentMethod = false;
+                    // get payment methods if any
+                    getPaymentMethods();
+                    break;
+                case "processing":
+                    pendingSubmitPaymentHandler = true;
+                    break;
+                case "requires_payment_method":
+                    // payment again
+                    responseItem.error = "failed to process payment method.  Please try another payment method."
+                    break;
+            };
+        });
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        pendingSubmitPaymentHandler = false;
+    };
+
+    let cancelPaymentMethodClicked: boolean = false;
+
+    $: if (cancelPaymentMethodClicked) {
+        elements = null;
+        addPaymentMethod = false;
+        cancelPaymentMethodClicked = false;
+    };
+
+    const detachPaymentMethodHandler = async (paymentMethodID: string) => {
+
+        $ModalOpenStore = true;
+
+        const paymentMethodData: PaymentMethodDeleteItem | any = {
+            message: "payment method",
+            data: paymentMethodID
+        };
+
+        $DeleteConfirmationStore = paymentMethodData;
+
+    };
+    const ConfirmedDeletePaymentMethod = async () => {
+        const response = await fetch("/authenticated-client/api/detachPaymentMethod", {
+            method: "POST",
+            body: JSON.stringify({
+                paymentMethodID
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        let paymentMethod;
+        paymentMethod = await response.json();
+        getPaymentMethods();
+    };
+
+    $: if ($DeleteConfirmedStore === true) {
+        ConfirmedDeletePaymentMethod();
+        $DeleteConfirmedStore = false;
+    };
+
+    let deletePaymentMethodClicked: boolean = false;
+
+    $: if (deletePaymentMethodClicked) {
+        // delete payment method click handler
+        detachPaymentMethodHandler(paymentMethodID);
+        deletePaymentMethodClicked = false;
+    };
 
 </script>
 <div class="page">
@@ -81,13 +262,67 @@
     <ul class="payment_method_cards_container">
         {#if (paymentMethods.length > 0)}
             {#each paymentMethods as paymentMethod, index}
-                <PaymentMethodCard paymentMethod={paymentMethod}/>
+                <PaymentMethodCard 
+                    paymentMethod={paymentMethod}
+                    bind:deleteClicked={deletePaymentMethodClicked}
+                />
             {/each}
+        {:else if !addPaymentMethod && (paymentMethods.length === 0)}
+            <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
+                Add payment method
+            </AddItemButton>
+        {:else if addPaymentMethod && (!stripeClientSecret || !stripe)}
+            <LoadingSpinner />
+        {:else if addPaymentMethod && stripeClientSecret && stripe}
+            <div class="stripe_save_payment_method">
+                <Elements
+                    stripe={stripe}
+                    clientSecret={stripeClientSecret}
+                    theme="flat"
+                    variables={{ 
+                        colorPrimary: '#838B6A',
+                        colorBackground: '#EFF9F2',
+                        colorText: '#36261E',
+                        colorDanger: '#914732',
+                    }}
+                    rules={{ '.Input': { border: 'solid 2px #AEA89D' } }}
+                    bind:elements
+                >
+                    <form on:submit|preventDefault={submitPaymentMethodHandler} >
+                        <LinkAuthenticationElement />
+                        <PaymentElement />
+                        <Address mode="billing" />
+                        <div class="buttons_container">
+                            <CancelSubmitButton bind:cancelClicked={cancelPaymentMethodClicked}>
+                                cancel
+                            </CancelSubmitButton>
+                            <SubmitButton02>
+                                save
+                            </SubmitButton02>
+                        </div>
+                    </form>
+                    {#if (pendingSubmitPaymentHandler)}
+                        <PendingFlashMessage >
+                            please wait while we validate your data
+                        </PendingFlashMessage>
+                    {:else if (responseItem.error)}
+                        <ErrorFlashMessage >
+                            {responseItem.error}
+                        </ErrorFlashMessage>
+                    {:else if (responseItem.success)}
+                        <SuccessFlashMessage>
+                            {responseItem.success}
+                        </SuccessFlashMessage>
+                    {/if}
+                </Elements>
+            </div>
         {/if}
     </ul>
-    <SubmitButton>
-        pay invoice
-    </SubmitButton>
+    <div class="pay_invoice_button_container">
+        <SubmitButton>
+            pay invoice
+        </SubmitButton>
+    </div>
 </div>
 
 <style>
@@ -127,6 +362,21 @@
         max-width: 60rem;
         padding: 1rem;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .stripe_save_payment_method {
+        width: 100%;
+    }
+
+    .buttons_container {
+        padding: 1rem 0;
+    }
+
+    .pay_invoice_button_container {
+        padding: 1rem;
     }
 
     @media screen and (max-width: 1440px) {
