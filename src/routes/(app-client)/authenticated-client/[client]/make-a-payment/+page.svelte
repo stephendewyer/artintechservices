@@ -1,6 +1,6 @@
 <script lang="ts">
     import { PUBLIC_STRIPEPUBLISHABLEKey } from '$env/static/public';
-    import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
+    import { loadStripe, type PaymentIntentResult, type Stripe, type StripeElements } from '@stripe/stripe-js';
     import { Elements, LinkAuthenticationElement, PaymentElement, Address } from 'svelte-stripe';
     import { onMount } from 'svelte';
     import { ModalOpenStore } from '$lib/stores/ModalOpenStore.js';
@@ -16,18 +16,25 @@
     import SuccessFlashMessage from '$lib/components/flashMessages/SuccessFlashMessage.svelte';
     import ErrorFlashMessage from '$lib/components/flashMessages/ErrorFlashMessage.svelte';
     import { page } from "$app/stores";
+    import { PromptStore } from '$lib/stores/PromptStore.js';
+  import { goto } from '$app/navigation';
 
     export let data;
 
     const clientEmail = $page.data.streamed.user?.email;
 
-    const customer: any = data.customer.data[0];
-    const stripeCustomerID = customer.id;
+    const customer: any = data.customer?.data[0];
+    const stripeCustomerID: string = customer.id;
     const invoice: any = data.invoice;
-    let paymentMethods: any = data.paymentMethods.data;
-    let paymentMethodID: string = "";
 
-    $: console.log(paymentMethods)
+    let invoiceClientSecret: string = "";
+
+    if (data.clientSecret) {
+        invoiceClientSecret = data.clientSecret;
+    };
+
+    let paymentMethods: any = data.paymentMethods?.data;
+    let paymentMethodID: string = "";
 
     if (paymentMethods.length > 0) {
         paymentMethodID = paymentMethods[0].id;
@@ -124,7 +131,6 @@
             elements,
             redirect: "if_required"
         });
-
         if (response?.error) {
             // payment failed, notify the user
             responseItem.error = response?.error.message;
@@ -202,6 +208,43 @@
         // delete payment method click handler
         detachPaymentMethodHandler(paymentMethodID);
         deletePaymentMethodClicked = false;
+    };
+
+    let payInvoiceClicked: boolean = false;
+    let pendingPaymentConfirmation: boolean = false;
+    const payInvoice = async (invoiceClientSecret: string, paymentMethodID: string) => {
+        pendingPaymentConfirmation = true;
+        const response: PaymentIntentResult | undefined= await stripe?.confirmPayment({
+            clientSecret: invoiceClientSecret,
+            confirmParams: {
+                payment_method: paymentMethodID,
+            },
+            redirect: "if_required"
+        });
+        if (!response) {
+            pendingPaymentConfirmation = false;
+            responseItem.error = "failed to process payment on invoice";
+        } else {
+            pendingPaymentConfirmation = false;
+            responseItem.success = "successfully made payment on invoice"
+            goto("/authenticated-client/client");
+        };
+    };        
+
+    $: if (payInvoiceClicked) {
+        // if no payment method, prompt the use to add payment method
+        if (paymentMethods.length === 0) {
+            $ModalOpenStore = true;
+            const promptAddPayment: any = {
+                message: "payment method required",
+                data: "add a payment method to pay invoice"
+            };
+            $PromptStore = promptAddPayment;
+        } else if (paymentMethods.length > 0) {
+            // if payment method exists, continue to pay the invoice
+            payInvoice(invoiceClientSecret, paymentMethodID);
+        };
+        payInvoiceClicked = false;
     };
 
 </script>
@@ -319,9 +362,24 @@
         {/if}
     </ul>
     <div class="pay_invoice_button_container">
-        <SubmitButton>
+        <SubmitButton
+            bind:clicked={payInvoiceClicked}
+        >
             pay invoice
         </SubmitButton>
+        {#if (pendingPaymentConfirmation)}
+            <PendingFlashMessage >
+                please wait while we validate payment
+            </PendingFlashMessage>
+        {:else if (responseItem.error)}
+            <ErrorFlashMessage >
+                {responseItem.error}
+            </ErrorFlashMessage>
+        {:else if (responseItem.success)}
+            <SuccessFlashMessage>
+                {responseItem.success}
+            </SuccessFlashMessage>
+        {/if}
     </div>
 </div>
 

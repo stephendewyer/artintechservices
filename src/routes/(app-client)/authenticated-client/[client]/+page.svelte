@@ -670,10 +670,12 @@
                                     {/each}
                                 </td>
                                 <td>
-                                    {#if !invoice.paid}
+                                    {#if (!invoice.paid)}
                                         <a href={`/authenticated-client/client/make-a-payment?invoice-ID=${invoice.id}&client-email=${clientEmail}`}>
                                             make payment
                                         </a>
+                                    {:else if (invoice.paid)}
+                                        payment completed
                                     {/if}
                                 </td>
                             </tr>

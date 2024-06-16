@@ -8,6 +8,7 @@
 	import BannerImage from "$lib/images/Art_in_Tech_Services_banner_03.jpg";
 	import DeleteConfirmationModal from '$lib/components/modals/DeleteConfirmationModal.svelte';
   	import { ModalOpenStore } from '$lib/stores/ModalOpenStore';
+  	import PromptModal from '$lib/components/modals/PromptModal.svelte';
 
 	let backdrop: boolean = false;
     let openMobileNav: boolean = false;
@@ -47,6 +48,7 @@
 	{/if}
 	<SideDrawer bind:openMobileNav />
 	<DeleteConfirmationModal />
+	<PromptModal />
 </div>
 
 <style>

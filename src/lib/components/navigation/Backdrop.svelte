@@ -1,8 +1,7 @@
 <script lang="ts">
     import { page } from "$app/stores";
     import { ModalOpenStore } from '$lib/stores/ModalOpenStore';
-
-    let URLPathName = $page.url.pathname;
+    let URLPathName = $page.url.href;
 
     export let openMobileNav: boolean = false;
 

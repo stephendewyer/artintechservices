@@ -28,9 +28,11 @@ export const load = async ({url}) => {
 
     // get the Stripe invoices to the client
     const customer_invoices = await stripe.invoices.search({
-        query: `customer: '${stripeCustomerID}'`,
+        query: `customer: '${stripeCustomerID}'`
     });
-
+    /**
+     * @type {any}
+     */
     let invoice;
 
     customer_invoices.data.forEach((invoiceObj) => {
@@ -39,6 +41,12 @@ export const load = async ({url}) => {
         };
     });
 
+    if (!invoice) {
+        return new Response(JSON.stringify({error: "could not find invoice with invoiceID"}), {status: 422});
+    };
+
+    // get the Stripe payment methods for client if any
+
     const paymentMethods = await stripe.customers.listPaymentMethods(
         stripeCustomerID,
         {
@@ -46,9 +54,19 @@ export const load = async ({url}) => {
         }
     );
 
+    // get the client secret of invoice payment intent, which is created once the invoice is created
+    const paymentIntentID = invoice.payment_intent;
+    
+    const paymentIntent = await stripe.paymentIntents.retrieve(
+        paymentIntentID
+    );
+
+    const clientSecret = paymentIntent.client_secret;
+
     return {
         customer: customer, 
         invoice: invoice,
-        paymentMethods: paymentMethods
+        paymentMethods: paymentMethods,
+        clientSecret: clientSecret
     };
 }

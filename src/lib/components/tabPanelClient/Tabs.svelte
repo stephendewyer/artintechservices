@@ -106,7 +106,7 @@
 
         .tabs_container {
             padding: 0.5rem;
-            gap: 0.5rem;
+            gap: 1rem;
             width: 100%;
             justify-content: flex-start;
             flex-direction: row;
