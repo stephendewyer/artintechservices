@@ -206,7 +206,11 @@
                 cancel
             </CancelSubmitButton>
             <SubmitButton02 disable={false}>
-                send request
+                {#if (consultation)}
+                    update consultation
+                {:else if (!consultation)}
+                    send request
+                {/if}
             </SubmitButton02>
         </div>
     </form>

@@ -124,6 +124,7 @@ declare global {
 		image_public_ID: string;
 		document_timestamp: Date;
 		document_public_ID: string;
+		document_URL: string;
 	}
 
 	interface Consultation {

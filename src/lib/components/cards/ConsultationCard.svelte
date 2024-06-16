@@ -41,8 +41,8 @@
             {@html ConsultationIcon}
         </div>
         <div class="consultation_info">
-            <h4 style="margin: 0;">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
-            <h5 style="margin: 0;">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
+            <h4 style="margin: 0;" class="date">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
+            <h5 style="margin: 0;" class="time">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
             <p style="margin: 0;">{reasonShortened}...</p>
         </div>
     </div>
@@ -106,6 +106,7 @@
         .consultation_icon {
             height: 16rem;
         }
+
     }
 
     @media screen and (max-width: 1080px) {
@@ -127,6 +128,14 @@
             height: 15rem;
             width: 50%;
         }
+
+        .date {
+            font-size: 1.5rem;
+        }
+
+        .time {
+            font-size: 1.25rem;
+        }
     }
 
     @media screen and (max-width: 720px) {
@@ -135,7 +144,15 @@
         }
 
         .consultation_icon {
-            height: 14rem;
+            height: auto;
+        }
+
+        .date {
+            font-size: 1.125rem;
+        }
+
+        .time {
+            font-size: 1rem;
         }
     }
 </style>

@@ -22,7 +22,8 @@ export const load = async ({url}) => {
             image_collection.public_ID AS image_public_ID,
             documents_collection.document_ID,
             documents_collection.timestamp AS document_timestamp,
-            documents_collection.public_ID AS document_public_ID
+            documents_collection.public_ID AS document_public_ID,
+            documents_collection.document_URL AS document_URL
         FROM start_project_requests_client
             LEFT JOIN image_collection ON start_project_requests_client.image_ID = image_collection.image_ID
             LEFT JOIN documents_collection ON start_project_requests_client.document_ID = documents_collection.document_ID

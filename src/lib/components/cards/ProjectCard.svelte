@@ -43,7 +43,7 @@
         </div>
         <div class="project_text">
             <h4 style="margin: 0;">{projectInfoShortened}...</h4>
-            <p style="margin: 0;">request sent {new Date(project.date_created).toUTCString().slice(0, 16)}</p>
+            <p style="margin: 0;">created {new Date(project.date_created).toUTCString().slice(0, 16)}</p>
         </div>
     </div>
 </a>
@@ -75,14 +75,6 @@
         width: 100%;
     }
 
-    .overlay {
-        background-color: #ffff;
-        position: absolute;
-        opacity: 50%;
-        width: 100%;
-        height: 100%;
-    }
-
     .project_info {
         position: relative;
         padding: 1rem;
@@ -109,11 +101,13 @@
     }
     
     .project_text {
-        width: 100%;
-        height: 100%;
+        margin: auto;
+        height: auto;
+        padding: 0.5rem 1rem;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        background: rgb(255,255,255, 0.75);
     }
 
     @media screen and (max-width: 1440px) {

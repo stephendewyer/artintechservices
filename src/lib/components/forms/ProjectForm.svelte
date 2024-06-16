@@ -31,15 +31,20 @@
 
     const userEmail: string | undefined | null = data.streamed.user?.email;
 
+    let projectID: number | null = (project?.project_ID) ? project?.project_ID : null;
     let aboutProject: string = (project?.project_info) ? project.project_info : "";
     let projectStartDate: string = (project?.project_start_date) ? ConvertDateInputFormat(new Date(project.project_start_date)) : "";
     let projectEndDate: string = (project?.project_end_date) ? ConvertDateInputFormat(new Date(project.project_end_date)) : "";
     let projectBudget: number | null = (project?.project_budget) ? project.project_budget : null;
     let imageFileInputValue: string = (project?.image_URL) ? "/" : "";
+    let imageID: number | null = (project?.image_ID) ? project.image_ID : null;
     let image: any = (project?.image_URL) ? project.image_URL : "";
+    let imagePublicID: string = (project?.image_public_ID) ? project.image_public_ID : "";
+    let documentID: number | null = (project?.document_ID) ? project.document_ID : null;
     let documentFileInputValue: string = "";
     let documentFileName: string = "";
-    let document: any = (project?.document_public_ID) ? project.document_public_ID : "";
+    let documentPublicID: any = (project?.document_public_ID) ? project.document_public_ID : "";
+    let document: any = (project?.document_URL) ? project.document_URL : "";
 
     let artificialIntelligence: boolean = false;
     let brandIdentityDesign: boolean = false;
@@ -149,6 +154,7 @@
     };
 
     const updateStartProjectRequest = async (
+        projectID: number | null,
         userEmail: string | null | undefined,
         artificialIntelligence: boolean,
         brandIdentityDesign: boolean,
@@ -164,13 +170,18 @@
         projectBudget: number | null,
         imageFileInputValue: string,
         image: any,
+        imageID: number | null,
+        imagePublicID: string,
+        documentID: number | null,
+        document: any,
         documentFileInputValue: string,
         documentFileName: string,
-        document: any
+        documentPublicID: any
     ) => {	
         const response = await fetch("/authenticated-client/api/updateClientProjectRequest", {
             method: 'POST',
             body: JSON.stringify({
+                projectID,
                 userEmail,
                 artificialIntelligence,
                 brandIdentityDesign,
@@ -186,9 +197,13 @@
                 projectBudget,
                 imageFileInputValue,
                 image,
+                imageID,
+                imagePublicID,
+                documentID,
+                document,
                 documentFileInputValue,
                 documentFileName,
-                document
+                documentPublicID
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -204,6 +219,7 @@
         try {
 
             await updateStartProjectRequest(
+                projectID,
                 userEmail,
                 artificialIntelligence,
                 brandIdentityDesign,
@@ -219,9 +235,13 @@
                 projectBudget,
                 imageFileInputValue,
                 image,
+                imageID,
+                imagePublicID,
+                documentID,
+                document,
                 documentFileInputValue,
                 documentFileName,
-                document
+                documentPublicID
             );
 
             if (responseItem.success) {
@@ -412,7 +432,11 @@
                 cancel
             </CancelSubmitButton>
             <SubmitButton02 disable={false}>
-                send request
+                {#if !project}
+                    send request
+                {:else if project}
+                    update project
+                {/if}
             </SubmitButton02>
         </div>
     </form>
