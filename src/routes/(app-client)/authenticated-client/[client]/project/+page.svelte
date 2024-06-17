@@ -182,9 +182,9 @@
 
 <div class="page">
     <img 
-            class="project_banner" 
-            src={(project?.image_URL) ? project?.image_URL : DefaultProjectImage} 
-            alt={(project?.image_alt_text) ? project?.image_alt_text : "phases of the moon"}
+        class="project_banner" 
+        src={(project?.image_URL) ? project?.image_URL : DefaultProjectImage} 
+        alt={(project?.image_alt_text) ? project?.image_alt_text : "phases of the moon"}
     />
     <div class="project">
         <h1>project</h1>

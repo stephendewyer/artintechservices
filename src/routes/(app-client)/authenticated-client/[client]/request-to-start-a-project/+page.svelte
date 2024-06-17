@@ -81,7 +81,7 @@
     $: services;
 
     $: services.forEach(requestedService => {
-        if (requestedService.service === "artifical intelligence") {
+        if (requestedService.service === "artificial intelligence") {
             artificialIntelligence = requestedService.requested;
         } else if (requestedService.service === "brand identity design") {
             brandIdentityDesign = requestedService.requested;

@@ -20,6 +20,8 @@
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
     import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
+    import CloseButton from "$lib/components/buttons/CloseButton.svelte";
+  import DeleteButton from "../buttons/DeleteButton.svelte";
 
     export let data;
 
@@ -36,7 +38,7 @@
     let projectStartDate: string = (project?.project_start_date) ? ConvertDateInputFormat(new Date(project.project_start_date)) : "";
     let projectEndDate: string = (project?.project_end_date) ? ConvertDateInputFormat(new Date(project.project_end_date)) : "";
     let projectBudget: number | null = (project?.project_budget) ? project.project_budget : null;
-    let imageFileInputValue: string = (project?.image_URL) ? "/" : "";
+    let imageFileInputValue: string = "";
     let imageID: number | null = (project?.image_ID) ? project.image_ID : null;
     let image: any = (project?.image_URL) ? project.image_URL : "";
     let imagePublicID: string = (project?.image_public_ID) ? project.image_public_ID : "";
@@ -67,6 +69,8 @@
         image: string;
         requested: boolean;
     };
+
+    $: console.log(artificialIntelligence)
 
     const services: Service[] = [
         {
@@ -111,10 +115,41 @@
         }
     ];
 
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    let valueChanged: boolean = false;
+
     $: services;
 
+    let deleteImageClicked: boolean = false;
+    let deleteDocumentClicked: boolean = false;
+
+    let deleteDocument: boolean = false;
+    let deleteImage: boolean = false;
+
+    $: if (deleteImageClicked) {
+        deleteImage = true;
+        imageFileInputValue = "";
+        image = "";
+    } else if (!deleteImageClicked) {
+        deleteDocument = false;
+    };
+
+    $: if (deleteDocumentClicked) {
+        deleteDocument = true;
+        documentFileInputValue = "";
+        documentFileName = "";
+        document = "";
+    } else if (!deleteDocumentClicked) {
+        deleteImage = false;
+    };
+
     $: services.forEach(requestedService => {
-        if (requestedService.service === "artifical intelligence") {
+        if (requestedService.service === "artificial intelligence") {
             artificialIntelligence = requestedService.requested;
         } else if (requestedService.service === "brand identity design") {
             brandIdentityDesign = requestedService.requested;
@@ -132,14 +167,6 @@
             visualDesign = requestedService.requested;
         };
     });
-
-    let responseItem: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
-    let valueChanged = false;
 
     $: if (documentFileInputValue !== "") {
         documentFileName = documentFileInputValue.split(`\\`)[2];
@@ -172,11 +199,13 @@
         image: any,
         imageID: number | null,
         imagePublicID: string,
+        deleteImage: boolean,
         documentID: number | null,
         document: any,
         documentFileInputValue: string,
         documentFileName: string,
-        documentPublicID: any
+        documentPublicID: any,
+        deleteDocument: boolean
     ) => {	
         const response = await fetch("/authenticated-client/api/updateClientProjectRequest", {
             method: 'POST',
@@ -199,11 +228,13 @@
                 image,
                 imageID,
                 imagePublicID,
+                deleteImage,
                 documentID,
                 document,
                 documentFileInputValue,
                 documentFileName,
-                documentPublicID
+                documentPublicID,
+                deleteDocument
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -237,11 +268,13 @@
                 image,
                 imageID,
                 imagePublicID,
+                deleteImage,
                 documentID,
                 document,
                 documentFileInputValue,
                 documentFileName,
-                documentPublicID
+                documentPublicID,
+                deleteDocument
             );
 
             if (responseItem.success) {
@@ -285,6 +318,7 @@
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
     };
+
 </script>
 <div class="project_form">
     <form class="form" on:submit|preventDefault={updateClientProjectRequestHandler} >
@@ -392,7 +426,10 @@
                 </ImageFileInput>
                 {#if (image)}
                     <div class="project_image_container">
-                        <img src={image} alt="project"/>
+                        <div class="close_button_container">
+                            <CloseButton bind:closeButtonClicked={deleteImageClicked} />
+                        </div>
+                        <img src={image} alt="project" />
                     </div>
                 {/if}
             </div>
@@ -414,11 +451,18 @@
                 </DocumentFileInput>
                 {#if (document)}
                     <div class="project_document_container">
+                        <div class="close_button_container">
+                            <CloseButton bind:closeButtonClicked={deleteDocumentClicked} />
+                        </div>
                         <div class="document_icon">
                             {@html DocumentIcon}
                         </div>
                         <p class="document_label">
-                            {documentFileName}
+                            {#if (documentFileName)}
+                                {documentFileName}
+                            {:else if (!documentFileName)}
+                                {document}
+                            {/if}
                         </p>
                     </div>
                 {/if}
@@ -455,6 +499,10 @@
     {/if}
 </div>
 <style>
+
+    .project_form {
+        width: 100%;
+    }
 
     .services {
         list-style: none;
@@ -496,6 +544,10 @@
     }
 
     .project_image_container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
         padding: 1rem;
     }
 
@@ -505,11 +557,30 @@
         align-items: center;
         gap: 1rem;
         padding: 1rem;
+        position: relative;
+        width: 100%;
     }
 
     .document_icon {
+        position: relative;
         width: 4rem;
         min-width: 4rem;
+    }
+
+    .document_label {
+        position: relative;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        width: 50%;
+    }
+
+    .close_button_container {
+        position: absolute;
+        left: auto;
+        right: 2rem;
+        top: 0;
+        width: 3rem;
+        margin: 1rem;
     }
 
     @media screen and (max-width: 1440px) {
@@ -546,6 +617,10 @@
             flex-direction: row;
             flex-wrap: wrap;
             gap: 1rem;
+        }
+
+        .close_button_container {
+            right: 1rem;
         }
     }
 

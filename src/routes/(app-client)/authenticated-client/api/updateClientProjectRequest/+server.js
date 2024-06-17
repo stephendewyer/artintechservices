@@ -70,11 +70,13 @@ export async function POST({request}) {
     const imagePublicID = data.imagePublicID;
     const imageFileInputValue = data.imageFileInputValue;
     const imageFileName = data.imageFileName;
+    const deleteImage = data.deleteImage;
     const documentFile = data.document;
     let documentID = data.documentID;
     const documentPublicID = data.documentPublicID;
     const documentFileInputValue = data.documentFileInputValue;
     const documentFileName = data.documentFileName;
+    const deleteDocument = data.deleteDocument;
 
     if (
         !aboutProject ||
@@ -90,8 +92,10 @@ export async function POST({request}) {
     let uploadedImageURL = "";
     let uploadedImagePublicID = "";
 
+    let addImageID = false;
+
     // handle if local image file selected and project image already exists
-    if (imageFile && imageID) {
+    if (imageFileInputValue && imageID) {
 
         if (imageFile.size >  2000000) {
             return new Response(JSON.stringify({error: "image file cannot exceed 2MB"}), {status: 422});
@@ -122,22 +126,22 @@ export async function POST({request}) {
         // save the image data in the database
 
         const updateImageStatement = `UPDATE image_collection
-        SET
-            client_ID = "${clientID}", 
-            image_URL = "${uploadedImageURL}",
-            public_ID = "${uploadedImagePublicID}"
-        WHERE image_ID = "${imageID}"`;
+            SET
+                client_ID = "${clientID}", 
+                image_URL = "${uploadedImageURL}",
+                public_ID = "${uploadedImagePublicID}"
+            WHERE image_ID = "${imageID}"
+        `;
 
         await res.query(updateImageStatement)
-        .then(([ rows ]) => {
-            const rowsJSON = JSON.parse(JSON.stringify(rows));
-            imageID = rowsJSON.insertId;
+        .then(() => {
+            console.log("updated image row");
         })
         .catch(error => {
             throw error;
         });
 
-    } else if (imageFile && !imageID) {
+    } else if (imageFileInputValue && !imageID) {
 
         if (imageFile.size >  2000000) {
             return new Response(JSON.stringify({error: "image file cannot exceed 2MB"}), {status: 422});
@@ -175,6 +179,32 @@ export async function POST({request}) {
             console.log(error);
             throw error;
         });
+        
+        addImageID = true;
+    } else if (deleteImage && imageID) {
+        // delete the image associated with the action from Cloudinary 
+        try {
+            await cloudinary.uploader.destroy(imagePublicID);
+        } catch(error) {
+            console.log(error);
+            return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
+        };
+
+        const updateImageStatement = `UPDATE image_collection
+            SET
+                client_ID = ${clientID}, 
+                image_URL = NULL,
+                public_ID = NULL
+            WHERE image_ID = "${imageID}"
+        `;
+
+        await res.query(updateImageStatement)
+        .then(() => {
+            console.log("updated image row");
+        })
+        .catch(error => {
+            throw error;
+        });
     };
 
     // upload PDF to Cloudinary
@@ -183,7 +213,9 @@ export async function POST({request}) {
 
     let uploadedDocumentPublicID = "";
 
-    if (documentID && documentFile) {
+    let addDocumentID = false;
+
+    if (documentID && documentFileInputValue) {
 
         if (documentFile.size >  2000000) {
             return new Response(JSON.stringify({error: "document file cannot exceed 2MB"}), {status: 422});
@@ -219,15 +251,14 @@ export async function POST({request}) {
         `;
 
         await res.query(updateDocumentStatement)
-        .then(([ rows ]) => {
-            const rowsJSON = JSON.parse(JSON.stringify(rows));
-            documentID = rowsJSON.insertId;
+        .then(() => {
+            console.log("updated document row");
         })
         .catch(error => {
             throw error;
         });
 
-    } else if (!documentID && documentFile) {
+    } else if (!documentID && documentFileInputValue) {
         if (documentFile.size >  2000000) {
             return new Response(JSON.stringify({error: "document file cannot exceed 2MB"}), {status: 422});
         };
@@ -262,28 +293,114 @@ export async function POST({request}) {
             console.log(error);
             throw error;
         });
+
+        addDocumentID = true;
+    } else if (documentID && deleteDocument) {
+
+        // delete the document associated with the action from Cloudinary 
+        try {
+            await cloudinary.uploader.destroy(documentPublicID);
+        } catch(error) {
+            console.log(error);
+            return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
+        };
+
+        const updateDocumentStatement = `UPDATE documents_collection
+            SET
+                client_ID = "${clientID}", 
+                document_URL = NULL,
+                public_ID = NULL
+            WHERE document_ID = "${documentID}"
+        `;
+
+        await res.query(updateDocumentStatement)
+        .then(() => {
+            console.log("updated document row");
+        })
+        .catch(error => {
+            throw error;
+        });
     };
 
-    const updateProjectStatement = `UPDATE start_project_requests_client 
-        SET
-            image_ID = ${imageID},
-            document_ID = ${documentID},
-            project_info = "${aboutProject}",
-            project_start_date = "${projectStartDate}",
-            project_end_date = "${projectEndDate}",
-            project_budget = "${projectBudget}",
-            artificial_intelligence = "${artificialIntelligence}",
-            brand_identity_design = "${brandIdentityDesign}",
-            data_visualization = "${dataVisualization}",
-            photography = "${photography}",
-            software_development = "${softwareDevelopment}",
-            user_experience_design = "${userExperienceDesign}",
-            videography = "${videography}",
-            visual_design = "${visualDesign}",
-            status
-        WHERE
-            project_ID = ${projectID}
-    `;
+    let updateProjectStatement = "";
+
+    if (addDocumentID && addImageID) {
+        updateProjectStatement = `UPDATE start_project_requests_client 
+            SET
+                image_ID = ${imageID},
+                document_ID = ${documentID},
+                project_info = "${aboutProject}",
+                project_start_date = "${projectStartDate}",
+                project_end_date = "${projectEndDate}",
+                project_budget = "${projectBudget}",
+                artificial_intelligence = "${artificialIntelligence}",
+                brand_identity_design = "${brandIdentityDesign}",
+                data_visualization = "${dataVisualization}",
+                photography = "${photography}",
+                software_development = "${softwareDevelopment}",
+                user_experience_design = "${userExperienceDesign}",
+                videography = "${videography}",
+                visual_design = "${visualDesign}"
+            WHERE
+                project_ID = ${projectID}
+        `;
+    } else if (addDocumentID && !addImageID) {
+        updateProjectStatement = `UPDATE start_project_requests_client 
+            SET
+                document_ID = ${documentID},
+                project_info = "${aboutProject}",
+                project_start_date = "${projectStartDate}",
+                project_end_date = "${projectEndDate}",
+                project_budget = "${projectBudget}",
+                artificial_intelligence = "${artificialIntelligence}",
+                brand_identity_design = "${brandIdentityDesign}",
+                data_visualization = "${dataVisualization}",
+                photography = "${photography}",
+                software_development = "${softwareDevelopment}",
+                user_experience_design = "${userExperienceDesign}",
+                videography = "${videography}",
+                visual_design = "${visualDesign}"
+            WHERE
+                project_ID = ${projectID}
+        `;
+    } else if (!addDocumentID && addImageID) {
+        updateProjectStatement = `UPDATE start_project_requests_client 
+            SET
+                image_ID = ${imageID},
+                project_info = "${aboutProject}",
+                project_start_date = "${projectStartDate}",
+                project_end_date = "${projectEndDate}",
+                project_budget = "${projectBudget}",
+                artificial_intelligence = "${artificialIntelligence}",
+                brand_identity_design = "${brandIdentityDesign}",
+                data_visualization = "${dataVisualization}",
+                photography = "${photography}",
+                software_development = "${softwareDevelopment}",
+                user_experience_design = "${userExperienceDesign}",
+                videography = "${videography}",
+                visual_design = "${visualDesign}"
+            WHERE
+                project_ID = ${projectID}
+        `;
+    } else if (!addDocumentID && !addImageID) {
+        updateProjectStatement = `UPDATE start_project_requests_client 
+            SET
+                project_info = "${aboutProject}",
+                project_start_date = "${projectStartDate}",
+                project_end_date = "${projectEndDate}",
+                project_budget = "${projectBudget}",
+                artificial_intelligence = "${artificialIntelligence}",
+                brand_identity_design = "${brandIdentityDesign}",
+                data_visualization = "${dataVisualization}",
+                photography = "${photography}",
+                software_development = "${softwareDevelopment}",
+                user_experience_design = "${userExperienceDesign}",
+                videography = "${videography}",
+                visual_design = "${visualDesign}"
+            WHERE
+                project_ID = ${projectID}
+        `;
+    };    
 
     await res.query(updateProjectStatement)
     .then(() => {
@@ -304,11 +421,11 @@ export async function POST({request}) {
         {
         to: 'sdewyer@artintechservices.com', // verified sender
         from: 'sdewyer@artintechservices.com', // verified sender
-        subject: `a start project request was created for ${clientNameFirst} ${clientNameLast} at ${userEmail}`,
+        subject: `a start project request was updated for ${clientNameFirst} ${clientNameLast} at ${userEmail}`,
         text: 'sent via the start project request form',
         html: `hi stephen,<br /><br />
-            A start project request was created on ${date} for ${clientNameFirst} ${clientNameLast} at ${userEmail}.<br />
-            The following is a copy of the start project request:<br />
+            A start project request was updated on ${date} for ${clientNameFirst} ${clientNameLast} at ${userEmail}.<br />
+            The following is a copy of the updated start project request:<br />
             -  first name: ${clientNameFirst}<br />
             -  last name: ${clientNameLast}<br />
             -  email: ${userEmail}<br />
@@ -334,12 +451,11 @@ export async function POST({request}) {
         {
         to: userEmail,
         from: 'sdewyer@artintechservices.com', // verified sender
-        subject: `start project request created for ${clientNameFirst} ${clientNameLast} at ${userEmail}`,
-        text: 'sent via the start project request form',
+        subject: `start project request updated for ${clientNameFirst} ${clientNameLast} at ${userEmail}`,
+        text: 'updated via edit start project request',
         html: `<p>hi ${clientNameFirst} ${clientNameLast},
         <br /><br />
-        thank you for your start project request, which was created on ${date}.<br />
-        A representative from Art in Tech Services will contact you within 48 hours to discuss your start project request.<br />
+        your start project request was updated on ${date}.<br />
         The following is a copy of the start project request:<br />
         -  first name: ${clientNameFirst}<br />
         -  last name: ${clientNameLast}<br />

@@ -50,12 +50,14 @@ export const DELETE = async ({request}) => {
 
     if (projectImageID) {
 
-        try {
-            await cloudinary.uploader.destroy(projectImagePublicID, {});
-        } catch (err) {
-            console.log(err);
-            return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
-        };
+        if (projectImagePublicID) {
+            try {
+                await cloudinary.uploader.destroy(projectImagePublicID, {});
+            } catch (err) {
+                console.log(err);
+                return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
+            };
+        };        
 
         const deleteImageRowStatement = `DELETE FROM image_collection
             WHERE image_ID = ${projectImageID}
@@ -70,12 +72,15 @@ export const DELETE = async ({request}) => {
     };
 
     if (projectDocumentID) {
-        try {
-            await cloudinary.uploader.destroy(projectDocumentPublicID, {});
-        } catch (err) {
-            console.log(err);
-            return new Response(JSON.stringify({error: "problem with deleting document from Cloudinary"}), {status: 500});
-        };
+
+        if (projectDocumentPublicID) {
+            try {
+                await cloudinary.uploader.destroy(projectDocumentPublicID, {});
+            } catch (err) {
+                console.log(err);
+                return new Response(JSON.stringify({error: "problem with deleting document from Cloudinary"}), {status: 500});
+            };
+        };        
 
         const deleteDocumentRowStatement = `DELETE FROM documents_collection
             WHERE document_ID = ${projectDocumentID}
