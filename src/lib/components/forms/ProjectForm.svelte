@@ -21,7 +21,7 @@
     import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
     import CloseButton from "$lib/components/buttons/CloseButton.svelte";
-  import DeleteButton from "../buttons/DeleteButton.svelte";
+    import { goto } from "$app/navigation";
 
     export let data;
 
@@ -279,6 +279,7 @@
 
             if (responseItem.success) {
                 projectUpdated = true;
+                goto("/authenticated-client/client");
             };
 
             if (responseItem.error) {

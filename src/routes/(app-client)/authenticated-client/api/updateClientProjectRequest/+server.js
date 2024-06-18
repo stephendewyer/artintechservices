@@ -483,7 +483,7 @@ export async function POST({request}) {
 
     try {
         await sgMail.send(msg);
-        return new Response(JSON.stringify({success: `created project request for ${clientNameFirst} ${clientNameLast}`}), {status: 200});
+        return new Response(JSON.stringify({success: `updated project request for ${clientNameFirst} ${clientNameLast}`}), {status: 200});
     } catch (error) {
         return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
     };

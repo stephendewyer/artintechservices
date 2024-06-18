@@ -227,7 +227,7 @@
                             hours:
                         </td>
                         <td>
-                            9 a.m. and 4 p.m. U.S. Central Standard Time Monday through Friday except for holidays.
+                            9 a.m. and 4 p.m. U.S. Mountain Standard Time Monday through Friday except for holidays.
                         </td>
                     </tr>
                     <tr>
