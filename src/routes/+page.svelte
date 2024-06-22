@@ -5,7 +5,6 @@
     import Services from "$lib/components/Services.svelte";
     import InvestInUS from "$lib/images/maps/source_locally_map.svg?raw";
     import ArtTechExpertise from "$lib/images/expertise.png";
-    import ActionButton from "$lib/components/buttons/ActionButton.svelte";
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import WorkWithUsCard from "$lib/components/cards/WorkWithUsCard.svelte";
     import Consultation from "$lib/images/consultation/white-fluffy-clouds.jpg";
@@ -76,13 +75,15 @@
     <h2 class="heading_02">
         why choose us?
     </h2>
-    <div class="why_choose_us_item">
+    <div class="why_choose_us_item" style="background-color: #DAE3E4;">
         <div 
             class="why_choose_us_image_and_paragraph"
             id="investing_in_local_US_talent"
         >
             <div class="choose_us_image_container">
-                {@html InvestInUS}
+                <div class="why_choose_us_image">
+                    {@html InvestInUS}
+                </div>
             </div>
             <div class="why_choose_us_paragraph_container">
                 <h3 class="why_choose_us_heading">
@@ -94,7 +95,7 @@
             </div>
         </div>
     </div>
-    <div class="why_choose_us_item">
+    <div class="why_choose_us_item" style="background-color: #F6E7CE;">
         <div 
             class="why_choose_us_image_and_paragraph"
             id="art_and_tech_expertise"
@@ -108,7 +109,9 @@
                 </p> 
             </div>
             <div class="choose_us_image_container">
-                <img src={ArtTechExpertise} alt="art and tech expertise dumbbell" />
+                <div class="why_choose_us_image">
+                    <img src={ArtTechExpertise} alt="art and tech expertise dumbbell" />
+                </div>
             </div>
         </div>
     </div>
@@ -168,13 +171,13 @@
     }
 
     .why_choose_us_item {
-        max-width: 1440px;
         width: 100%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
+        justify-content: center;
         gap: 1rem;
-        padding: 0 1rem;
+        padding: 1rem;
     }
 
     .why_choose_us_heading {
@@ -192,6 +195,15 @@
 
     .choose_us_image_container {
         width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .why_choose_us_image {
+        width: 100%;
+        max-width: 100rem;
     }
 
     .why_choose_us_paragraph_container {
@@ -200,6 +212,7 @@
         flex-direction: column;
         align-items: center;
     }
+    
     .why_choose_us_paragraph {
         width: 100%;
         max-width: 40rem;
