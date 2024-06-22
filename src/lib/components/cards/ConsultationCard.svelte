@@ -2,6 +2,7 @@
     import Meatballs from "$lib/images/icons/meaballs.svg?raw";
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
     import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
+    import Clouds from "$lib/images/consultation/white-fluffy-clouds.jpg";
     export let consultation: Consultation;
 
     const reasonArray = consultation.consultation_reason.split(" ");
@@ -28,6 +29,9 @@
     href={`/authenticated-client/client/consultation?id=${consultation.request_ID}`}
     class="consultation_card_container"
 >
+    <div class="background_image_container">
+        <img src={Clouds} alt="fluffly clouds" class="background_image"/>
+    </div>
     <div class="meatballs_container">
         <div 
             class="meatballs"
@@ -58,10 +62,27 @@
         cursor: pointer;
         border-radius: 1rem;
         transition: box-shadow 0.2s linear;
-        
+        position: relative;
+    }
+
+    .background_image_container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .background_image {
+        position: relative;
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
     }
 
     .meatballs_container {
+        position: absolute;
+        right: 2rem;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -74,6 +95,7 @@
     }
 
     .consultation_card_content {
+        position: relative;
         display: flex;
         flex-direction: column;
     }

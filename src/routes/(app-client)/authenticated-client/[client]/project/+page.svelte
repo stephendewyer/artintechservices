@@ -2,7 +2,7 @@
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { page } from "$app/stores";
-    import DefaultProjectImage from "$lib/images/projects/default_project_image.jpg";
+    import DefaultProjectImage from "$lib/images/projects/Port_Mansfield_pier.jpg";
     import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
     import EditButton from "$lib/components/buttons/EditButton.svelte";
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";

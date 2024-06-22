@@ -3,7 +3,7 @@
     export let project: Project;
     const projectInfoArray = project.project_info.split(" ");
     const projectInfoShortened = projectInfoArray.slice(0, 5).join(" ");
-    import DefaultProjectImage from "$lib/images/projects/default_project_image.jpg";
+    import DefaultProjectImage from "$lib/images/projects/Port_Mansfield_pier.jpg";
 
     let cardHovered: boolean = false;
 
@@ -88,7 +88,7 @@
 
     .meatballs_container {
         position: absolute;
-        padding: 0 1rem;
+        padding: 0 2rem;
         width: 100%;
         display: flex;
         flex-direction: row;

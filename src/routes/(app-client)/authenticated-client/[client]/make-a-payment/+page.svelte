@@ -18,6 +18,7 @@
     import { page } from "$app/stores";
     import { PromptStore } from '$lib/stores/PromptStore.js';
   import { goto } from '$app/navigation';
+  import CancelButton from '$lib/components/buttons/CancelButton.svelte';
 
     export let data;
 
@@ -361,26 +362,32 @@
             </div>
         {/if}
     </ul>
-    <div class="pay_invoice_button_container">
+    <div class="buttons_container">
+        <a href="/authenticated-client/client">
+            <CancelButton>
+                cancel
+            </CancelButton>
+        </a>
         <SubmitButton
             bind:clicked={payInvoiceClicked}
         >
             pay invoice
         </SubmitButton>
-        {#if (pendingPaymentConfirmation)}
-            <PendingFlashMessage >
-                please wait while we validate payment
-            </PendingFlashMessage>
-        {:else if (responseItem.error)}
-            <ErrorFlashMessage >
-                {responseItem.error}
-            </ErrorFlashMessage>
-        {:else if (responseItem.success)}
-            <SuccessFlashMessage>
-                {responseItem.success}
-            </SuccessFlashMessage>
-        {/if}
+        
     </div>
+    {#if (pendingPaymentConfirmation)}
+        <PendingFlashMessage >
+            please wait while we validate payment
+        </PendingFlashMessage>
+    {:else if (responseItem.error)}
+        <ErrorFlashMessage >
+            {responseItem.error}
+        </ErrorFlashMessage>
+    {:else if (responseItem.success)}
+        <SuccessFlashMessage>
+            {responseItem.success}
+        </SuccessFlashMessage>
+    {/if}
 </div>
 
 <style>
