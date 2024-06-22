@@ -56,6 +56,7 @@
 
     .service_icon_container {
         width: 6rem;
+        height: 6rem;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -67,6 +68,7 @@
     .service_label {
         color: #838b6a;
         transition: color 0.3s linear;
+        text-align: left;
     }
 
     .arrow_container {
@@ -83,6 +85,7 @@
 
         .service_icon_container {
             width: 5rem;
+            height: 5rem;
         }
 
     }
@@ -113,6 +116,7 @@
 
         .service_icon_container {
             width: 4rem;
+            height: 4rem;
         }
 
         .arrow_container {

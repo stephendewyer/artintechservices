@@ -74,55 +74,78 @@
     });
 
 </script>
-<div class="services">
-    <ul class="services_column">
-        {#each sortedServicesDataWithIDs.slice(0, sortedServicesDataWithIDs.length/2) as serviceData, index}
-            <li class="service_button_container">
-                <ServiceButton service={serviceData} />
-            </li>
-        {/each}
-    </ul>
-    <ul class="services_column">
-        {#each sortedServicesDataWithIDs.slice(sortedServicesDataWithIDs.length/2, sortedServicesDataWithIDs.length) as serviceData, index}
-            <li class="service_button_container">
-                <ServiceButton service={serviceData} />
-            </li>
-        {/each}
-    </ul> 
-</div>
+<ul class="services_column">
+    {#each sortedServicesDataWithIDs as serviceData, index}
+        <li class="service_button_container">
+            <ServiceButton service={serviceData} />
+        </li>
+    {/each}
+</ul>
 <style>
-    .services {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        gap: 1rem;
-        width: 100%;
-        margin: 0 auto;
-    }
 
     .services_column {
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
         gap: 1rem;
         list-style: none;
-        padding: 0;
+        padding: 0 1rem;
+        height: 14rem;
+        width: 100%;
     }
 
-    @media screen and (max-width: 720px) {
-        .services {
-            padding: 0 1rem;
-        }
+    .service_button_container {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 1920px) {
 
         .services_column {
-            align-items: center;
+            height: 21rem;
         }
 
         .service_button_container {
-            height: 6rem;
+            width: 32%;
+        }
+    }
+
+    @media screen and (max-width: 1440px) {
+        .services_column {
+            height: 28rem;
+        }
+
+        .service_button_container {
+            width: 50%;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        .services_column {
+            height: 24rem;
+        }
+
+        .service_button_container {
+            width: 50%;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+
+        .services_column {
+            align-items: center;
+            height: 28rem;
+        }
+
+        .service_button_container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
+
     }
+
 </style>
