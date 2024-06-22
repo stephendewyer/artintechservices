@@ -137,6 +137,19 @@ declare global {
 		date_created: Date;
 		status: string;
 	}
+
+	interface ManageAccountLinks {
+		login_client: string;
+		create_account: string;
+	}
+
+	interface HowToWorkWithUsCard {
+        image: string;
+        pathname: string[];
+        altText: string;
+        header: string;
+        paragraph: string;
+    }
 }
 
 export {};

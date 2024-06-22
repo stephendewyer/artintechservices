@@ -6,28 +6,41 @@
     import InvestInUS from "$lib/images/maps/source_locally_map.svg?raw";
     import ArtTechExpertise from "$lib/images/expertise.png";
     import ActionButton from "$lib/components/buttons/ActionButton.svelte";
-    import Consultation from "$lib/images/icons/actions/consultation_solid.svg?raw";
-    import StartProject from "$lib/images/icons/actions/desk_call_bell_solid.svg?raw";
-    import ManageAccount from "$lib/images/icons/actions/manage_account_solid.svg?raw";
     import { PUBLIC_DOMAIN } from "$env/static/public";
-    import { page } from "$app/stores";
+    import WorkWithUsCard from "$lib/components/cards/WorkWithUsCard.svelte";
+    import Consultation from "$lib/images/consultation/white-fluffy-clouds.jpg";
+    import StartProject from "$lib/images/projects/Port_Mansfield_pier.jpg";
+    import ManageAccount from "$lib/images/manage_account/reduced/wood_doors.jpg";
 
-    const actions: Action[] = [
+    const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
             image: Consultation,
-            pathname: "/request-a-consultation",
-            label: "request a consultation"
+            altText: "fluffly clouds",
+            header: "FREE first consultation",
+            paragraph: "We discuss with you your project to help plan for success.  Your first consultation is free.  Each consultation after the first consultation is $65 per hour.",
+            pathname: [
+                "/request-a-consultation"
+            ]
         },
         {
             image: StartProject,
-            pathname: "/request-to-start-a-project",
-            label: "request to start a project"
+            altText: "ocean pier",
+            header: "start a project",
+            paragraph: "We provide the services to deliver your project to meet or exceed your expectations.",
+            pathname: [
+                "/request-to-start-a-project"
+            ]
         },
         {
             image: ManageAccount,
-            pathname: "/login-client",
-            label: "manage account"
-        }
+            altText: "locked doors",
+            header: "manage account",
+            paragraph: "Keep your projects organized, view and schedule your consultations, update your account and make payments.",
+            pathname: [
+                "/login-client",
+                "/create-a-client-account"
+            ]
+        },
     ];
 
 </script>
@@ -100,11 +113,11 @@
         </div>
     </div>
     <h2 class="heading_02">
-        work with us
+        how to work with us
     </h2>
     <div class="actions">
-        {#each actions as action, index}
-            <ActionButton action={action} />
+        {#each howToWorkWithUsCards as howToWorkWithUs, index}
+            <WorkWithUsCard card={howToWorkWithUs} />
         {/each}
     </div>
 </div>
@@ -197,9 +210,10 @@
         width: 100%;
         margin: 0 auto;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: space-evenly;
         align-items: center;
-        padding: 1rem 1rem 2rem 1rem;
+        padding: 1rem 1rem 4rem 1rem;
         gap: 1rem;
     }
 
@@ -216,10 +230,6 @@
         }
         .intro_paragraph {
             padding: 0.375rem 0.75rem;
-        }
-
-        .actions {
-            gap: 0.75rem;
         }
     }
 
@@ -262,7 +272,6 @@
         .actions {
             flex-direction: column;
             align-items: center;
-            gap: 0.5rem;
         }
     }
     
