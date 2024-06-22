@@ -94,6 +94,7 @@
 
         .service_button {
             gap: 0.5rem;
+            height: 6rem;
         }
         .service_button:hover {
             margin: 0 0.5rem 0 0;

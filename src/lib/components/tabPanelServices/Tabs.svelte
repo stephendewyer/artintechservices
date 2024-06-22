@@ -53,6 +53,14 @@
         padding: 0 1rem 0 0;
     }
 
+    li:hover > .icon_container {
+        fill: #d79679;
+    }
+
+    li:hover > .label {
+        color: #d79679;
+    }
+
     .active_tab::after {
         --size: 6px;
 		content: '';
@@ -72,6 +80,21 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        transition: fill 0.2s linear;
+    }
+
+    .label {
+        font-weight: normal;
+        transition: color 0.2s linear;
+    }
+
+    .active_tab > .label {
+        color: #838B6A;
+        font-weight: bold;
+    }
+
+    .active_tab > .icon_container {
+        fill: #838B6A;
     }
 
     @media screen and (max-width: 1440px) {
