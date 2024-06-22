@@ -150,8 +150,8 @@
     }
 
     .intro_paragraph {
-        background-color: rgba(244,254,242,1); 
-        padding: 1rem 2rem;
+        background: rgb(255,255,255, 0.75);
+        padding: 0.5rem 1rem;
     }
 
     .heading_02 {
