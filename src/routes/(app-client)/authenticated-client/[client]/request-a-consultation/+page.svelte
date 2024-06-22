@@ -173,7 +173,7 @@
                             fee:
                         </td>
                         <td>
-                            $65 per hour
+                            Your first consultation is free.  Consultations after your first consultation are $65 per hour.
                         </td>
                     </tr>
                     <tr>
