@@ -263,13 +263,13 @@
     }
 
     .embla__dot--selected::after {
-        box-shadow: inset 0 0 0 0.2rem #F4FEF2;
+        box-shadow: inset 0 0 0 0.2rem #838b6a;
         background-color: #F4FEF2; 
         transition: box-shadow 0.3s linear, background-color 0.3s linear;
     }
 
     .embla__dot--selected:hover::after {
-        box-shadow: inset 0 0 0 0.2rem #F4FEF2;
+        box-shadow: inset 0 0 0 0.2rem #838b6a;
         background-color: #F4FEF2; 
     }
 

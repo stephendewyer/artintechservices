@@ -58,8 +58,7 @@
         if (textInputValue === "") {
             errorMessage = textInputErrorMessage;
         };
-
-    }
+    };
 
 </script>
 

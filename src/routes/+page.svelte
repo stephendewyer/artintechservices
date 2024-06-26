@@ -90,7 +90,7 @@
                 investing in local, world-class talent in the U.S.
                 </h3>
                 <p class="why_choose_us_paragraph">
-                    We provide all of our services from our in-house team with talent cultivated in the United States. We are a U.S. company.  Working with us is an investment in the cultivation of talent in the United States.
+                    We provide all of our services from our in-house team in the United States. We invest in building the skills of our workers.  We are a U.S. company.  Working with us is an investment in talent in the United States.
                 </p>
             </div>
         </div>

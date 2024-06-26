@@ -150,6 +150,7 @@ declare global {
         header: string;
         paragraph: string;
     }
+
 }
 
 export {};

@@ -60,6 +60,10 @@
         };
     };
 
+    $: if (!isValid) {
+        phoneInputErrorMessage = "phone number required";
+    };
+
 </script>
 
 <div class="input_and_label_container">
