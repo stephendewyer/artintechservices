@@ -79,6 +79,7 @@
 	.banner_image {
 		position: relative;
 		object-fit: cover;
+		object-position: top;
 		height: 20rem;
 		width: 100%;
 	}

@@ -135,6 +135,7 @@
         position: relative;
         width: 100%;
         object-fit: cover;
+        object-position: top;
         height: 60rem;
         display: flex;
     }

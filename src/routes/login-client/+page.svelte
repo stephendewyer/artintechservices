@@ -56,7 +56,7 @@
                 email: emailInputValue,
                 password: passwordInputValue,
                 redirect: false,
-                callbackUrl: "/authenticated-client/client"
+                // callbackUrl: "/authenticated-client/client"
             });
             if (response) {
                 responseItem.success = "valid email and password";

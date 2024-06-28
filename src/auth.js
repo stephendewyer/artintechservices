@@ -17,7 +17,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
                     // @ts-ignore
                     const response = await clientAuthentication(credentials);
                     if (response === null) {
-                        throw new InvalidLoginError();
+                        return { error: "invalid email and/or password"};
                     } else if (response) {
                         responseItem = await response;
                         return responseItem ?? null;
@@ -26,7 +26,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
                     // @ts-ignore
                     const response = await administratorAuthentication(credentials);
                     if (response === null) {
-                        throw new InvalidLoginError();
+                        return { error: "invalid email and/or password"};
                     } else if (response) {
                         responseItem = await response;
                         return responseItem ?? null;
@@ -37,6 +37,15 @@ export const { handle, signIn, signOut } = SvelteKitAuth({
             }
         })
     ],
+    // callbacks: {
+    //     async signIn({user, account, profile, email, credentials})
+    //         {
+    //             if (user?.error === "invalid email and/or password") {
+    //                 throw new Error("invalid email and/or password to client");
+    //             };
+    //             return true;
+    //         }
+    // },
     secret: AUTH_SECRET,
     debug: true,
     session: {
