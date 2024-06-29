@@ -179,7 +179,9 @@
     .intro_paragraph {
         background: rgb(255,255,255, 0.75);
         padding: 0.5rem 1rem;
-        width: 50%;
+        max-width: 50%;
+        width: auto;
+        text-align: center;
     }
 
     .heading_02 {
@@ -301,7 +303,7 @@
 
         .intro_paragraph {
             padding: 0.25rem 0.5rem;
-            width: 60%;
+            max-width: 60%;
         }
 
         .choose_us_image_container {
