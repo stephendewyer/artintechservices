@@ -10,6 +10,7 @@
     import Consultation from "$lib/images/consultation/white-fluffy-clouds.jpg";
     import StartProject from "$lib/images/projects/Port_Mansfield_pier.jpg";
     import ManageAccount from "$lib/images/manage_account/reduced/wood_doors.jpg";
+    import SaguaroCactus from "$lib/images/cactus/saguaro_cactus_cropped.png";
 
     const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
@@ -54,9 +55,12 @@
 <div>
     <div class="intro_banner">
         <img class="banner_image" src={MoonShot} alt="moonshot"/>
+        <div class="saguaro_cactus_container">
+            <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
+        </div>
         <div class="intro_paragraph_container">
             <h1 class="intro_paragraph">
-                bringing the vision and technical expertise to make groundbreaking digital products
+                providing creative digital services to help businesses and communities
             </h1>
         </div>
     </div>
@@ -153,9 +157,29 @@
         padding: 1rem;
     }
 
+    .saguaro_cactus_container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
+    }
+
+    .saguaro_cactus {
+        height: 100%;
+        padding-top: 4rem;
+        width: auto;
+        margin-left: 12.5%;
+    }
+
     .intro_paragraph {
         background: rgb(255,255,255, 0.75);
         padding: 0.5rem 1rem;
+        width: 50%;
     }
 
     .heading_02 {
@@ -235,6 +259,10 @@
         .banner_image {
             height: 42rem;
         }
+
+        .saguaro_cactus {
+            padding-top: 4rem;
+        }
     }
 
     @media screen and (max-width: 1080px) {
@@ -244,6 +272,10 @@
         }
         .intro_paragraph {
             padding: 0.375rem 0.75rem;
+        }
+
+        .saguaro_cactus {
+            padding-top: 8rem;
         }
     }
 
@@ -262,9 +294,14 @@
             object-fit: cover;
         }
 
+        .saguaro_cactus {
+            padding-top: 8rem;
+            margin-left: 0.25rem;
+        }
+
         .intro_paragraph {
             padding: 0.25rem 0.5rem;
-            width: 100%;
+            width: 60%;
         }
 
         .choose_us_image_container {

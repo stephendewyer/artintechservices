@@ -36,18 +36,10 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in artificial intelligence including:",
+                    paragraph: "Our expertise in artificial intelligence includes the following technologies:",
                     skills: [
-                        "data preprocessing",
-                        "regression",
-                        "classification",
-                        "clustering",
-                        "association rule learning",
-                        "reinforcement learning",
-                        "natural language processing",
-                        "deep learning including artificial neural networks and convolutional neural networks",
-                        "dimensionality reduction",
-                        "model selection and boosting including XGBoost"
+                        "machine learning",
+                        "deep learning including artificial neural networks and convolutional neural networks"
                     ],
                     imageSrc: DeepNeuralNetwork,
                     imageAlt: "example of a deep neural network",
@@ -63,7 +55,7 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in brand identity design including:",
+                    paragraph: "Our expertise in brand identity design includes:",
                     skills: [
                         "brand discovery",
                         "brand definition",
@@ -83,9 +75,10 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in data visualization including:",
+                    paragraph: "Our expertise in data visualization includes:",
                     skills: [
-                        "D3.js"
+                        "dynamic data interactivity",
+                        "static data visualizations"
                     ],
                     imageSrc: WindSockWindIndicator,
                     imageAlt: "wind sock wind indicator",
@@ -101,8 +94,9 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in photography including:",
+                    paragraph: "Our expertise in photography includes:",
                     skills: [
+                        "staging",
                         "production",
                         "editing"
                     ],
@@ -120,17 +114,13 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in software development including:",
+                    paragraph: "We offer software expertise in the development of the following products:",
                     skills: [
-                        "web development",
-                        "native software development",
-                        "embedded software development",
-                        "geocoding",
-                        "software architecture",
-                        "eCommerce",
-                        "database design",
-                        "user interface development",
-                        "Section 508 and WCAG 2.1 compliance",
+                        "websites",
+                        "web applications",
+                        "embedded software",
+                        "native software",
+                        "mobile applications",
                         "custom content management development"
                     ],
                     imageSrc: Code,
@@ -147,19 +137,12 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in user experience design including:",
+                    paragraph: "Our expertise in user experience design includes:",
                     skills: [
                         "user interface design",
                         "user research",
                         "wire framing",
-                        "prototyping",
-                        "information architecture",
-                        "user interviews",
-                        "creating user flows",
-                        "5 stage design thinking",
-                        "responsive design",
-                        "content strategy",
-                        "copy writing and editing"
+                        "prototyping"
                     ],
                     imageSrc: DesignThinking,
                     imageAlt: "UX design",
@@ -175,8 +158,9 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in videography including:",
+                    paragraph: "Our expertise in videography includes:",
                     skills: [
+                        "pre-production",
                         "production",
                         "editing"
                     ],
@@ -194,10 +178,9 @@
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Expertise in visual design including:",
+                    paragraph: "Our expertise in visual design includes:",
                     skills: [
-                        "interface aesthetics",
-                        "visual commmunication"
+                        "art direction"
                     ],
                     imageSrc: OakTree,
                     imageAlt: "Oak tree",

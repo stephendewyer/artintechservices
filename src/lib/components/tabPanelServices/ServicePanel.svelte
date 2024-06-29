@@ -56,16 +56,19 @@
                     alt={serviceData?.imageAlt} 
                 />
             </div>
-            <p>
-                {serviceData?.paragraph}
-            </p>
-            <ul>
-                {#each serviceData?.skills as skill, index}
-                    <li>
-                        {skill}
-                    </li>
-                {/each}
-            </ul>
+            <div class="panel_paragraphs">
+                <p>
+                    {serviceData?.paragraph}
+                </p>
+                <ul>
+                    {#each serviceData?.skills as skill, index}
+                        <li>
+                            {skill}
+                        </li>
+                    {/each}
+                </ul>  
+            </div>
+            
         {/each}
     </div>
     <div class="select">
@@ -109,9 +112,30 @@
         
     }
 
+    .panel_paragraphs {
+        position: relative;
+        padding: 1rem;
+    }
+
+    p {
+        font-size: 2rem;
+    }
+
+    li {
+        font-size: 3rem;
+    }
+
     @media screen and (max-width: 1440px) {
         .image_container > img {
             height: 35rem;
+        }
+
+        p {
+            font-size: 1.75rem;
+        }
+
+        li {
+            font-size: 2.5rem;
         }
     }
 
@@ -131,6 +155,14 @@
         .image_container > img {
             height: 30rem;
         }
+
+        p {
+            font-size: 1.5rem;
+        }
+
+        li {
+            font-size: 2rem;
+        }
     }
 
     @media screen and (max-width: 720px) {
@@ -138,6 +170,14 @@
         .image_container > img {
             height: 20rem;
             
+        }
+
+        p {
+            font-size: 1.25rem;
+        }
+
+        li {
+            font-size: 1.75rem;
         }
     }
 
