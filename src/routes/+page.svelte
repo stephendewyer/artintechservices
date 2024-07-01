@@ -46,7 +46,7 @@
 </script>
 
 <svelte:head>
-    <title>Art in Tech Services - delivering state-of-the-art digital products since 2021</title>
+    <title>Art in Tech Services - providing creative digital services to help businesses and communities</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN}/>
