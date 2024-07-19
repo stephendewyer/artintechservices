@@ -339,7 +339,7 @@
         padding: 0.5rem 1rem;
         max-width: 50%;
         width: auto;
-        text-align: center;
+        text-align: left;
     }
 
     .heading_02 {
@@ -390,7 +390,7 @@
     .why_choose_us_heading {
         width: 100%;
         max-width: 40rem;
-        text-align: center;
+        text-align: left;
     }
 
     .why_choose_us_image_and_paragraph {
@@ -520,6 +520,7 @@
         .actions {
             flex-direction: column;
             align-items: center;
+            padding: 0 0 1rem 0;
         }
     }
     

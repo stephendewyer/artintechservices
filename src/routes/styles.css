@@ -56,6 +56,10 @@ p {
     color: #36261E;
 }
 
+table {
+    width: 100%;
+}
+
 table > tr > td {
     font-size: 1.25rem;
     padding: 1rem;
@@ -64,6 +68,10 @@ table > tr > td {
 table > tbody > tr > td {
     font-size: 1.25rem;
     padding: 1rem;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #F2F9F2;
 }
 
 a {

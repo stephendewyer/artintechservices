@@ -77,6 +77,7 @@
 
     @media screen and (max-width: 720px) {
         .card_container {
+            height: 24rem;
             width: 100%;
         }
     }

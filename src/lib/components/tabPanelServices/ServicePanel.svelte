@@ -3,7 +3,7 @@
     import { afterUpdate, onDestroy } from "svelte";
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
 
-    export let panel_data: ServicePanel[] | [null];
+    export let panel_data: ServicePanelData[];
 
     let checkboxValue: string;
 
@@ -41,7 +41,7 @@
     });
 
     onDestroy(() => {
-        panel_data = [null];
+        panel_data = [];
     });
 
 </script>
@@ -60,13 +60,17 @@
                 <p>
                     {serviceData?.paragraph}
                 </p>
-                <ul>
-                    {#each serviceData?.skills as skill, index}
-                        <li>
-                            {skill}
-                        </li>
-                    {/each}
-                </ul>  
+                <table>
+                    <tbody>
+                        {#each serviceData?.skills as skill, index}
+                        <tr>
+                            <td class="skill">
+                                {skill}
+                            </td>
+                        </tr>
+                        {/each}
+                    </tbody>
+                </table>  
             </div>
             
         {/each}
@@ -121,8 +125,8 @@
         font-size: 2rem;
     }
 
-    li {
-        font-size: 3rem;
+    .skill {
+        font-size: 1.75rem;
     }
 
     @media screen and (max-width: 1440px) {
@@ -134,8 +138,8 @@
             font-size: 1.75rem;
         }
 
-        li {
-            font-size: 2.5rem;
+        .skill {
+            font-size: 1.5rem;
         }
     }
 
@@ -160,8 +164,8 @@
             font-size: 1.5rem;
         }
 
-        li {
-            font-size: 2rem;
+        .skill {
+            font-size: 1.25rem;
         }
     }
 
@@ -176,8 +180,8 @@
             font-size: 1.25rem;
         }
 
-        li {
-            font-size: 1.75rem;
+        .skill {
+            font-size: 1rem;
         }
     }
 
