@@ -54,9 +54,9 @@ declare global {
         pathname: string;
     };
 
-	interface ServicePanel {
+	interface ServicePanelData {
 		paragraph: string;
-		skills: string[] | any;
+		skills: string[];
 		imageSrc: string;
 		imageAlt: string;
 		search: string;
@@ -66,7 +66,7 @@ declare global {
 		paragraph: string;
 		imageSrc: string;
 		imageAlt: string;
-		button: typeof SvelteComponent<any>;
+		button: typeof SvelteComponent<any> | null;
 	};
 
 	interface TabPanel {
@@ -76,9 +76,22 @@ declare global {
 		tabImageSrc: string;
 		panel: typeof SvelteComponent<any>;
 		data: any[
-			ServicePanel | ProcessPanel
+			ServicePanelData | ProcessPanel
 		];
     }
+
+	interface ServiceCardData {
+		skills: string[];
+		pathname: string;
+	}
+
+	interface ServiceCard {
+		id: string;
+		index: number;
+		label: string;
+		tabImageSrc: string;
+		data: ServiceCardData[];
+	}
 
 	interface ServiceSelected {
         service: string;
@@ -143,9 +156,14 @@ declare global {
 		create_account: string;
 	}
 
+	interface Pathname {
+		path: string;
+		label: string;
+	}
+
 	interface HowToWorkWithUsCard {
         image: string;
-        pathname: string[];
+        pathname: Pathname[];
         altText: string;
         header: string;
         paragraph: string;

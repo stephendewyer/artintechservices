@@ -192,8 +192,8 @@
 
     let activeTab: number = 0;
 
-    servicesTabPanels.forEach(tabPanel => {
-        tabPanel.data.forEach((data: ServicePanel) => {
+    servicesTabPanels.forEach((tabPanel: TabPanel) => {
+        tabPanel.data.forEach((data: ServicePanelData) => {
             if (data.search === $page.url.search) {
                 activeTab = tabPanel.index;
             };

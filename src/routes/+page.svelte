@@ -2,7 +2,6 @@
     import MoonShot from "$lib/images/Art_in_Tech_Services_banner.png";
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import SliderCaseStudies from "$lib/components/sliders/SliderCaseStudies.svelte";
-    import Services from "$lib/components/Services.svelte";
     import InvestInUS from "$lib/images/maps/source_locally_map.svg?raw";
     import ArtTechExpertise from "$lib/images/expertise.png";
     import { PUBLIC_DOMAIN } from "$env/static/public";
@@ -11,6 +10,148 @@
     import StartProject from "$lib/images/projects/Port_Mansfield_pier.jpg";
     import ManageAccount from "$lib/images/manage_account/reduced/wood_doors.jpg";
     import SaguaroCactus from "$lib/images/cactus/saguaro_cactus_cropped.png";
+    import WaterfallGalaxy from "$lib/images/services_background/services_background.jpg";
+    import { v4 as uuidv4 } from 'uuid';
+    import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
+    import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
+    import DataVisualization from "$lib/images/icons/services/data_visualization_icon.svg?raw";
+    import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
+    import UserExperienceDesign from "$lib/images/icons/services/UX_design.svg?raw";
+    import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
+    import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
+    import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
+    import CardService from "$lib/components/cards/ServiceCard.svelte";
+    
+    const serviceCards: ServiceCard[] = [
+        {
+            id: uuidv4(),
+            index: 0,
+            label: "artificial intelligence",
+            tabImageSrc: ArtificialIntelligence,
+            data: [
+                {
+                    skills: [
+                        "machine learning",
+                        "deep learning including artificial neural networks and convolutional neural networks"
+                    ],
+                    pathname: "/services?service=artificial-intelligence"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 1,
+            label: "brand identity design",
+            tabImageSrc: BrandIdentityDesign,
+            data: [
+                {
+                    skills: [
+                        "brand discovery",
+                        "brand definition",
+                        "logo design"
+                    ],
+                    pathname: "/services?service=brand-identity-design"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 2,
+            label: "data visualization",
+            tabImageSrc: DataVisualization,
+            data: [
+                {
+                    skills: [
+                        "dynamic data interactivity",
+                        "static data visualizations"
+                    ],
+                    pathname: "/services?service=data-visualization"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 3,
+            label: "photography",
+            tabImageSrc: Photography,
+            data: [
+                {
+                    skills: [
+                        "staging",
+                        "production",
+                        "editing"
+                    ],
+                    pathname: "/services?service=photography"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 4,
+            label: "software development",
+            tabImageSrc: SoftwareDevelopment,
+            data: [
+                {
+                    skills: [
+                        "websites",
+                        "web applications",
+                        "embedded software",
+                        "native software",
+                        "mobile applications",
+                        "custom content management development"
+                    ],
+                    pathname: "/services?service=software-development"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 5,
+            label: "user experience design",
+            tabImageSrc: UserExperienceDesign,
+            data: [
+                {
+                    skills: [
+                        "user interface design",
+                        "user research",
+                        "wire framing",
+                        "prototyping"
+                    ],
+                    pathname: "/services?service=user-experience-design"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 6,
+            label: "videography",
+            tabImageSrc: Videography,
+            data: [
+                {
+                    skills: [
+                        "pre-production",
+                        "production",
+                        "editing"
+                    ],
+                    pathname: "/services?service=videography"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 7,
+            label: "visual design",
+            tabImageSrc: VisualDesign,
+            data: [
+                {
+                    skills: [
+                        "art direction"
+                    ],
+                    pathname: "/services?service=visual-design"
+                }
+            ]
+        }
+    ];
 
     const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
@@ -19,7 +160,10 @@
             header: "FREE first consultation",
             paragraph: "We discuss with you your project to help plan for success.  Your first consultation is free.  Each consultation after the first consultation is $65 per hour.",
             pathname: [
-                "/request-a-consultation"
+                {
+                    path: "/request-a-consultation",
+                    label: "request a consultation"
+                }
             ]
         },
         {
@@ -28,7 +172,10 @@
             header: "start a project",
             paragraph: "We provide the services to deliver your project to meet or exceed your expectations.",
             pathname: [
-                "/request-to-start-a-project"
+                {
+                    path: "/request-to-start-a-project",
+                    label: "request to start a project"
+                }
             ]
         },
         {
@@ -37,8 +184,14 @@
             header: "manage account",
             paragraph: "Keep your projects organized, view and schedule your consultations, update your account and make payments.",
             pathname: [
-                "/login-client",
-                "/create-a-client-account"
+                {
+                    path: "/login-client",
+                    label: "client login"
+                },
+                {
+                    path: "/create-a-client-account",
+                    label: "create free client account"
+                }                
             ]
         },
     ];
@@ -70,11 +223,16 @@
     <div class="case_studies_carousel">
         <SliderCaseStudies />
     </div>
-    <h2 class="heading_02">
-        services we provide
-    </h2>
-    <div class="services">
-        <Services />
+    <div class="services_container">
+        <img class="services_background_image" src={ WaterfallGalaxy} alt="waterfall with galactic pool"/>
+        <h2 class="heading_02" style="color: #F4FEF2; position: relative">
+            services we provide
+        </h2>
+        <div class="services">
+            {#each serviceCards as serviceCard, index}
+                <CardService service_data={serviceCard} />
+            {/each}
+        </div>
     </div>
     <h2 class="heading_02">
         why choose us?
@@ -177,7 +335,7 @@
     }
 
     .intro_paragraph {
-        background: rgb(255,255,255, 0.75);
+        background: rgb(244,254,242, 0.75);
         padding: 0.5rem 1rem;
         max-width: 50%;
         width: auto;
@@ -195,6 +353,28 @@
         flex-direction: column;
         align-items: center;
         padding: 0 1rem;
+    }
+
+    .services_container {
+        position: relative;
+    }
+
+    .services_background_image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .services {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        column-gap: 1rem;
+        row-gap: 1rem;
+        padding: 1rem 1rem 2rem 1rem;;
+        justify-content: center;
     }
 
     .why_choose_us_item {
@@ -265,6 +445,10 @@
         .saguaro_cactus {
             padding-top: 4rem;
         }
+
+        .services {
+            grid-template-columns: auto auto auto;
+        }
     }
 
     @media screen and (max-width: 1080px) {
@@ -278,6 +462,17 @@
 
         .saguaro_cactus {
             padding-top: 8rem;
+        }
+
+        .services {
+            display: flex;
+            flex-direction: row;
+            column-gap: none;
+            row-gap: none;
+            gap: 1rem;
+            justify-content: flex-start;
+            overflow-x: auto;
+            overflow-y: hidden;
         }
     }
 

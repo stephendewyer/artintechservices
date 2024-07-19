@@ -20,30 +20,16 @@
             <p>
                 {card.paragraph}
             </p>
-            {#if (card.pathname.length > 1)}
-                {#each card.pathname as path, index}
-                    {#if (path === "/login-client")}
-                        <a href={path}>
-                            <ActionButtonSecondary>
-                                login
-                            </ActionButtonSecondary>
-                        </a>
-                    {:else if (path === "/create-a-client-account")}
-                        <p>or</p>
-                        <a href={path}>
-                            <ActionButtonSecondary>
-                                create account
-                            </ActionButtonSecondary>
-                        </a>
-                    {/if}
-                {/each}
-            {:else if (card.pathname.length === 1)}
-                <a href={card.pathname} >
+            {#each card.pathname as path, index}
+                <a href={path.path}>
                     <ActionButtonSecondary>
-                        request
+                        {path.label}
                     </ActionButtonSecondary>
                 </a>
-            {/if}
+                {#if (card.pathname.length > 1) && (index !== (card.pathname.length - 1))}
+                    or 
+                {/if}
+            {/each}
         </div>
     </div>
 </div>

@@ -243,13 +243,7 @@
                 *message
             </TextArea>
         </div>
-        <div class="buttons_container">
-            <a href="/">
-                <CancelButton>
-                    cancel
-                </CancelButton>
-            </a>
-            
+        <div class="buttons_container">            
             <SubmitButton disable={false}>
                 send request
             </SubmitButton>
