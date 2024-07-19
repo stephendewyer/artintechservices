@@ -54,7 +54,7 @@
             tabindex={-index}
         >
             <li 
-                class="{$page.url.pathname === item.slug ? 'mobile_nav_tab_active' : 'mobile_nav_tab'}"
+                class="mobile_nav_tab"
             >
                 <div class="mobile_nav_tab_icon_and_label">
                     {#if item.label === "login"}
@@ -90,8 +90,8 @@
                         aria-label="link to {mobileNavTabSecondary.label} page"
                     >
                         <li 
-                            class="{$page.url.pathname === mobileNavTabSecondary.slug ? 'mobile_nav_tab_secondary_active' : 'mobile_nav_tab_secondary'}"
-                            
+                            aria-current={$page.url.pathname === mobileNavTabSecondary.slug ? "page" : undefined}
+                            class="mobile_nav_tab_secondary"
                         >    
                             {mobileNavTabSecondary.label}
                             
@@ -103,11 +103,11 @@
     {:else if item.content === null}
         <a 
             href={item.slug}
-            on:click={() => handle01Click(item)} 
-            aria-label="link to products page"
+            on:click={() => handle01Click(item)}
         >
             <li 
-                class="{$page.url.pathname === item.slug ? 'mobile_nav_tab_active' : 'mobile_nav_tab'}"
+                aria-current={$page.url.pathname === item.slug ? "page" : undefined}
+                class="mobile_nav_tab"
             >
                 {item.label}
             </li>
@@ -126,6 +126,19 @@
 	li {
 		position: relative;
 	}
+    
+
+    li[aria-current="page"]::before {
+        --size: 6px;
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		border: var(--size) solid transparent;
+		border-left: 6px solid #E5BCA6;
+		overflow: visible;
+    }
 
     .accordion_container {
         background-color:#838B6A;
@@ -147,48 +160,17 @@
         background-color:#B2A1A1;
     }
 
-    .mobile_nav_tab_active {
-        transition: all 0.2s;
-        justify-content: space-between;
-        padding: 0.75rem 1.5rem;
-        cursor: pointer;
-        color:#2A333F;
-        font-weight: bold;
-        background-color: #E5BCA6;
-        fill: #B2A1A1;
-        font-size: 1rem;
-    }
-
-    .mobile_nav_tab_active:hover {
-        color:#2A333F;
-        background-color:#B2A1A1;
-    }
-
     .mobile_nav_tab_secondary {
         color: #FBF4F9;
-        background-color: #908987;
+        background-color: #838B6A;
         transition: all 0.2s;
-        padding: 0.75rem 1.5rem;
+        padding: 0.75rem 0.75rem 0.75rem 3rem;
         font-size: 1rem;
     }
 
     .mobile_nav_tab_secondary:hover {
         color: #FBF4F9;
         background-color: #B2A1A1;
-    }
-
-    .mobile_nav_tab_secondary_active {
-        transition: all 0.2s;
-        background-color: #E5BCA6;
-		padding: 0.75rem 1.5rem;
-		color: #2A333F;
-        font-weight: bold;
-        font-size: 1rem;
-    }
-
-    .mobile_nav_tab_secondary_active:hover {
-        color: #2A333F;
-        background-color:#B2A1A1;
     }
 
     .arrow {

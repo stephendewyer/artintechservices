@@ -159,6 +159,14 @@
         flex-direction: column;
     }
 
+    .content_inner > a {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
     .nav_tab {
         position: relative;
         display: flex;
@@ -175,7 +183,7 @@
         transition: all 0.15s linear;
         cursor: pointer;
         gap: 0.5rem;
-        text-align: center;
+        text-align: left;
     }
 
     .nav_tab:hover {

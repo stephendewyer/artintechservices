@@ -67,7 +67,7 @@
     }
 
     .card_info {
-        padding: 0.5rem 1rem;
+        padding: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: center;

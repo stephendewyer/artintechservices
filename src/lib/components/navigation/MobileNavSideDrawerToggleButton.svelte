@@ -6,6 +6,7 @@
 	class="hamburger" 
 	class:open 
 	on:click={() => open = !open}
+	on:keyup={() => open = !open}
 	aria-pressed={open}
 >
     <svg width=32 height=24>
@@ -27,6 +28,9 @@
         outline: none;
         position: relative;
         background: none;
+		background-color: #EDF8F9;
+		padding: 0.5rem 0.5rem 0rem 0.5rem;
+		margin: 0;
     }
 
 	.hamburger:hover > svg > line {

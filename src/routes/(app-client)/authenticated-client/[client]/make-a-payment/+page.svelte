@@ -363,17 +363,11 @@
         {/if}
     </ul>
     <div class="buttons_container">
-        <a href="/authenticated-client/client">
-            <CancelButton>
-                cancel
-            </CancelButton>
-        </a>
         <SubmitButton
             bind:clicked={payInvoiceClicked}
         >
             pay invoice
         </SubmitButton>
-        
     </div>
     {#if (pendingPaymentConfirmation)}
         <PendingFlashMessage >

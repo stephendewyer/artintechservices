@@ -21,19 +21,6 @@
     let passwordInputValue: string = "";
     let passwordIsValid: boolean = true;
 
-    let loginClientButtonDisabled: boolean = true;
-
-    $: if (
-        emailIsValid &&
-        passwordIsValid &&
-        (passwordInputValue !== "") &&
-        (emailInputValue !== "")
-    ) {
-        loginClientButtonDisabled = false;
-    } else {
-        loginClientButtonDisabled = true;
-    };
-
     let responseItem: ResponseObj = {
         success: "",
         error: "",
@@ -130,7 +117,7 @@
         </div>
         <div class="buttons_container">
             <SubmitButton 
-                disable={loginClientButtonDisabled}
+                disable={false}
             >
                 login
             </SubmitButton>
@@ -158,11 +145,6 @@
             </a>
         </div>
     </div>
-    <a href="/" class="cancel_button_container">
-        <CancelButton>
-            cancel
-        </CancelButton>
-    </a>
 </div>
 
 <style>
@@ -178,6 +160,7 @@
         gap: 1rem;
         justify-content: center;
         width: 100%;
+        padding: 0 0 2rem 0;
     }
 
     .login_helpers_column {
@@ -193,14 +176,6 @@
         text-align: center;
         width: 100%;
         padding: 0 0.5rem;
-    }
-
-    .cancel_button_container {
-        padding: 2rem 1rem 1rem 1rem;
-    }
-
-    @media screen and (max-width: 1440px) {
-
     }
 
     @media screen and (max-width: 1080px) {

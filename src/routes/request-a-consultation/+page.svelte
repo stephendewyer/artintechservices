@@ -398,11 +398,6 @@
             After you request a consultation, a representative from Art in Tech Services will contact you within 48 hours to schedule your consultation.
         </p>
         <div class="buttons_container">
-            <a href="/">
-                <CancelButton>
-                    cancel
-                </CancelButton>
-            </a>
             <SubmitButton disable={false}>
                 send request
             </SubmitButton>
@@ -454,10 +449,6 @@
 
     .table_heading {
         font-weight: bold;
-    }
-
-    tbody tr:nth-child(odd) {
-        background-color: #F2F9F2;
     }
 
     .buttons_container {

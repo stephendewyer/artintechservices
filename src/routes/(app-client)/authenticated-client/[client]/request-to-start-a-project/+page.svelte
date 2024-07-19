@@ -437,13 +437,7 @@
         <p>
             After you start a project, a representative from Art in Tech Services will contact you within 48 hours to discuss next steps in your project.  Starting a project is not an agreement.
         </p>
-        <div class="buttons_container">
-            <a href="/authenticated-client/client">
-                <CancelButton>
-                    cancel
-                </CancelButton>
-            </a>
-            
+        <div class="buttons_container">            
             <SubmitButton disable={false}>
                 send request
             </SubmitButton>

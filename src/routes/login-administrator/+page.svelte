@@ -19,19 +19,6 @@
     let passwordInputValue: string = "";
     let passwordIsValid: boolean = true;
 
-    let loginClientButtonDisabled: boolean = true;
-
-    $: if (
-        emailIsValid &&
-        passwordIsValid &&
-        (passwordInputValue !== "") &&
-        (emailInputValue !== "")
-    ) {
-        loginClientButtonDisabled = false;
-    } else {
-        loginClientButtonDisabled = true;
-    };
-
     let passwordInputErrorMessage = "password required";
 
     let responseItem: ResponseObj = {
@@ -115,7 +102,7 @@
         </div>
         <div class="buttons_container">
             <SubmitButton 
-                disable={loginClientButtonDisabled}
+                disable={false}
             >
                 login
             </SubmitButton>
@@ -133,11 +120,6 @@
             </a>
         </div>
     </div>
-    <a href="/" class="cancel_button_container">
-        <CancelButton>
-            cancel
-        </CancelButton>
-    </a>
 </div>
 
 <style>
@@ -153,6 +135,7 @@
         gap: 1rem;
         justify-content: center;
         width: 100%;
+        padding: 0 0 2rem 0;
     }
 
     .login_helpers_column {

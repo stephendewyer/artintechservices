@@ -199,11 +199,6 @@
                 />
             {/if}
         {/if}
-        <a href="/authenticated-client/client">
-            <CancelButton>
-                dashboard
-            </CancelButton>
-        </a>
     </div>
 </div>
 <style>

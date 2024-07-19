@@ -207,14 +207,14 @@
         }
 
         .meatballs {
-            width: 1.5rem;
+            width: 2rem;
             margin: 0.5rem;
         }
 
         .close_button {
             display: block;
             position: absolute;
-            width: 1.5rem;
+            width: 2rem;
             top: 0;
             right: 0;
             margin: 0.5rem;
