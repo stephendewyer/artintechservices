@@ -4,6 +4,7 @@ import { SENDGRIDAPIKey } from '$env/static/private';
 import { hashPassword } from "$lib/authentication/PasswordAuth.js";
 import Stripe from "stripe";
 import { STRIPE_SECRET_KEY } from "$env/static/private";
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 // initialize Stripe
 const stripe = new Stripe(STRIPE_SECRET_KEY);
@@ -119,8 +120,8 @@ export async function POST({request}) {
         email,
         password
     ) VALUES (
-        "${nameFirst}",
-        "${nameLast}",
+        "${htmlEntities(nameFirst)}",
+        "${htmlEntities(nameLast)}",
         "${email}",
         "${hashedPassword}"
     )`;

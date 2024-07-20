@@ -1,6 +1,7 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
 import sgMail from "@sendgrid/mail";
 import { SENDGRIDAPIKey } from '$env/static/private';
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 export const POST = async ({request}) => {
 
@@ -70,7 +71,7 @@ export const POST = async ({request}) => {
         ${clientID},
         "${consultationDate}",
         "${consultationTime}",
-        "${consultationReason}",
+        "${htmlEntities(consultationReason)}",
         "${consultationTimeZone}",
         "requested"
     )`;

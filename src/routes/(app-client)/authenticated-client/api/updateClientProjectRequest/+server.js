@@ -5,6 +5,7 @@ import { CLOUDINARYSECRETKEY } from "$env/static/private";
 import { CLOUDINARYAPIKEY } from "$env/static/private";
 import sgMail from "@sendgrid/mail";
 import { SENDGRIDAPIKey } from '$env/static/private';
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 cloudinary.config({ 
   cloud_name: CLOUDINARYCLOUDNAME, 
@@ -329,7 +330,7 @@ export async function POST({request}) {
             SET
                 image_ID = ${imageID},
                 document_ID = ${documentID},
-                project_info = "${aboutProject}",
+                project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",
@@ -348,7 +349,7 @@ export async function POST({request}) {
         updateProjectStatement = `UPDATE start_project_requests_client 
             SET
                 document_ID = ${documentID},
-                project_info = "${aboutProject}",
+                project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",
@@ -367,7 +368,7 @@ export async function POST({request}) {
         updateProjectStatement = `UPDATE start_project_requests_client 
             SET
                 image_ID = ${imageID},
-                project_info = "${aboutProject}",
+                project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",
@@ -385,7 +386,7 @@ export async function POST({request}) {
     } else if (!addDocumentID && !addImageID) {
         updateProjectStatement = `UPDATE start_project_requests_client 
             SET
-                project_info = "${aboutProject}",
+                project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",

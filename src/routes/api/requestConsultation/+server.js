@@ -1,6 +1,7 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
 import sgMail from "@sendgrid/mail";
 import { SENDGRIDAPIKey } from '$env/static/private';
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 export async function POST({request}) {
 
@@ -58,15 +59,15 @@ export async function POST({request}) {
         time_zone,
         status
     ) VALUES (
-        "${nameFirst}",
-        "${nameLast}",
+        "${htmlEntities(nameFirst)}",
+        "${htmlEntities(nameLast)}",
         "${email}",
-        "${company}",
+        "${htmlEntities(company)}",
         "${phoneNumber}",
-        "${website}",
+        "${htmlEntities(website)}",
         "${consultationDate}",
         "${consultationTime}",
-        "${consultationReason}",
+        "${htmlEntities(consultationReason)}",
         "${consultationTimeZone}",
         "requested"
     )`;

@@ -1,6 +1,7 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
 import sgMail from "@sendgrid/mail";
 import { SENDGRIDAPIKey } from '$env/static/private';
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 export const PATCH = async ({request}) => {
 
@@ -25,7 +26,7 @@ export const PATCH = async ({request}) => {
         SET
             consultation_date = "${consultationDate}",
             consultation_time = "${consultationTime}",
-            consultation_reason = "${consultationReason}",
+            consultation_reason = "${htmlEntities(consultationReason)}",
             time_zone = "${consultationTimeZone}"
         WHERE 
             request_ID = ${consultationRequestID}

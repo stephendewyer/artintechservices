@@ -1,4 +1,5 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 export const POST = async ({request}) => {
 
@@ -42,8 +43,8 @@ export const POST = async ({request}) => {
 
     const updateClientStatement = `UPDATE clients
         SET 
-            name_first = "${nameFirstInputValue}",
-            name_last = "${nameLastInputValue}"
+            name_first = "${htmlEntities(nameFirstInputValue)}",
+            name_last = "${htmlEntities(nameLastInputValue)}"
         WHERE email = "${clientEmail}";
     `;
 
@@ -92,13 +93,13 @@ export const POST = async ({request}) => {
 
         const updateClientInformationStatement = `UPDATE client_information
             SET 
-                company = "${companyInputValue}",
+                company = "${htmlEntities(companyInputValue)}",
                 phone_number = "${phoneInputValue}",
-                URL = "${URLInputValue}",
-                street_address = "${streetAddressInputValue}",
-                street_address_02 = "${streetAddress02InputValue}",
-                city = "${cityInputValue}",
-                state = "${stateInputValue}",
+                URL = "${htmlEntities(URLInputValue)}",
+                street_address = "${htmlEntities(streetAddressInputValue)}",
+                street_address_02 = "${htmlEntities(streetAddress02InputValue)}",
+                city = "${htmlEntities(cityInputValue)}",
+                state = "${htmlEntities(stateInputValue)}",
                 zip_code = "${zipCodeInputValue}"
             WHERE client_ID = "${clientID}";
         `;
@@ -124,13 +125,13 @@ export const POST = async ({request}) => {
                 zip_code
             ) VALUES ( 
                 ${clientID},
-                "${companyInputValue}",
+                "${htmlEntities(companyInputValue)}",
                 "${phoneInputValue}",
-                "${URLInputValue}",
-                "${streetAddressInputValue}",
-                "${streetAddress02InputValue}",
-                "${cityInputValue}",
-                "${stateInputValue}",
+                "${htmlEntities(URLInputValue)}",
+                "${htmlEntities(streetAddressInputValue)}",
+                "${htmlEntities(streetAddress02InputValue)}",
+                "${htmlEntities(cityInputValue)}",
+                "${htmlEntities(stateInputValue)}",
                 "${zipCodeInputValue}"
             );
         `;

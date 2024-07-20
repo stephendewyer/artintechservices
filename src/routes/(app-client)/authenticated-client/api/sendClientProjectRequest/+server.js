@@ -5,6 +5,7 @@ import { CLOUDINARYSECRETKEY } from "$env/static/private";
 import { CLOUDINARYAPIKEY } from "$env/static/private";
 import sgMail from "@sendgrid/mail";
 import { SENDGRIDAPIKey } from '$env/static/private';
+import { htmlEntities } from "$lib/util/htmlEntities.js";
 
 cloudinary.config({ 
   cloud_name: CLOUDINARYCLOUDNAME, 
@@ -197,7 +198,7 @@ export async function POST({request}) {
         ${clientID},
         ${imageID},
         ${documentID},
-        "${aboutProject}",
+        "${htmlEntities(aboutProject)}",
         "${projectStartDate}",
         "${projectEndDate}",
         "${projectBudget}",
