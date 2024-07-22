@@ -49,12 +49,14 @@
     <div class="service_info">
         {#each panel_data as serviceData, index}
             <div class="image_container">
-                <img 
-                    fetchpriority="high" 
-                    loading="eager"
-                    src={serviceData?.imageSrc} 
-                    alt={serviceData?.imageAlt} 
-                />
+                {#if serviceData.imageSrc}
+                    <img 
+                        fetchpriority="high" 
+                        loading="eager"
+                        src={serviceData?.imageSrc} 
+                        alt={serviceData?.imageAlt} 
+                    />
+                {/if}
             </div>
             <div class="panel_paragraphs">
                 <p>

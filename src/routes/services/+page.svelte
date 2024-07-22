@@ -16,14 +16,15 @@
     import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
     import DeepNeuralNetwork from "$lib/images/services/example_of_a_deep_neural_network.png";
-    import SeamlessFingerprintBackground from "$lib/images/services/fingerprint_seamless_background.jpg";
     import WindSockWindIndicator from "$lib/images/services/wind_socks_for_wind_indicator.jpg";
     import TucsonPhotograph from "$lib/images/services/Tucson,_Arizona_19_April_2024.jpg";
     import Code from "$lib/images/services/coding.jpg";
     import DesignThinking from "$lib/images/services/UX_design.jpg";
-    import VideoCamera from "$lib/images/services/videography.jpg";
-    import OakTree from "$lib/images/services/Savannah,_Georgia.jpg";
+    // import KauaiHawaiiPoster from "$lib/videos/Kauai,_Hawaii.jpg";
+    // import KauaiHawaiiVideo from "$lib/videos/Kauai,_Hawaii_30_May_2017.mp4"
+    import WaterfallGalaxy from "$lib/images/services/services_background.jpg";
     import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
+    import MoveableFarmLogo from "$lib/images/services/moveable_farm_logo.png";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
 
@@ -43,6 +44,8 @@
                     ],
                     imageSrc: DeepNeuralNetwork,
                     imageAlt: "example of a deep neural network",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=artificial-intelligence"
                 }
             ]
@@ -61,8 +64,10 @@
                         "brand definition",
                         "logo design"
                     ],
-                    imageSrc: SeamlessFingerprintBackground,
-                    imageAlt: "seamless fingerprint pattern",
+                    imageSrc: MoveableFarmLogo,
+                    imageAlt: "Moveable Farm logo",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=brand-identity-design"
                 }
             ]
@@ -82,6 +87,8 @@
                     ],
                     imageSrc: WindSockWindIndicator,
                     imageAlt: "wind sock wind indicator",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=data-visualization"
                 }
             ]
@@ -102,6 +109,8 @@
                     ],
                     imageSrc: TucsonPhotograph,
                     imageAlt: "photo of painted rock in Tucson, Arizona",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=photography"
                 }
             ]
@@ -125,6 +134,8 @@
                     ],
                     imageSrc: Code,
                     imageAlt: "code",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=software-development"
                 }
             ]
@@ -146,6 +157,8 @@
                     ],
                     imageSrc: DesignThinking,
                     imageAlt: "UX design",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=user-experience-design"
                 }
             ]
@@ -164,8 +177,10 @@
                         "production",
                         "editing"
                     ],
-                    imageSrc: VideoCamera,
-                    imageAlt: "video camera",
+                    imageSrc: null,
+                    imageAlt: null,
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=videography"
                 }
             ]
@@ -182,8 +197,10 @@
                     skills: [
                         "art direction"
                     ],
-                    imageSrc: OakTree,
-                    imageAlt: "Oak tree",
+                    imageSrc: WaterfallGalaxy,
+                    imageAlt: "waterfall galaxy",
+                    videoSrc: null,
+                    videoPoster: null,
                     search: "?service=visual-design"
                 }
             ]
