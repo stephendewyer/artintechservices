@@ -123,6 +123,7 @@
 
     .service_info {
         width: 75%;
+        max-width: 60rem;
     }
 
     .select {
@@ -130,7 +131,7 @@
         width: 25%;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: flex-start;
     }
 
     .image_container {
@@ -138,10 +139,7 @@
     }
 
     .image_container > img {
-        object-fit: cover;
-        height: 40rem;
         width: 100%;
-        object-position: center;
         
     }
 
@@ -159,9 +157,6 @@
     }
 
     @media screen and (max-width: 1440px) {
-        .image_container > img {
-            height: 35rem;
-        }
 
         p {
             font-size: 1.75rem;
@@ -185,10 +180,6 @@
             width: 100%;
         }
 
-        .image_container > img {
-            height: 30rem;
-        }
-
         p {
             font-size: 1.5rem;
         }
@@ -199,11 +190,6 @@
     }
 
     @media screen and (max-width: 720px) {
-
-        .image_container > img {
-            height: 20rem;
-            
-        }
 
         p {
             font-size: 1.25rem;

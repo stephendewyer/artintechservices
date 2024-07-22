@@ -86,6 +86,7 @@
     .label {
         font-weight: normal;
         transition: color 0.2s linear;
+        text-align: right;
     }
 
     .active_tab > .label {
