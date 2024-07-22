@@ -59,6 +59,8 @@ declare global {
 		skills: string[];
 		imageSrc: string;
 		imageAlt: string;
+		videoSrc: string;
+		videoPoster: string;
 		search: string;
 	};
 
