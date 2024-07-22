@@ -20,8 +20,8 @@
     import TucsonPhotograph from "$lib/images/services/Tucson,_Arizona_19_April_2024.jpg";
     import Code from "$lib/images/services/coding.jpg";
     import DesignThinking from "$lib/images/services/UX_design.jpg";
-    // import KauaiHawaiiPoster from "$lib/videos/Kauai,_Hawaii.jpg";
-    // import KauaiHawaiiVideo from "$lib/videos/Kauai,_Hawaii_30_May_2017.mp4"
+    import KauaiHawaiiPoster from "$lib/videos/Kauai,_Hawaii.jpg";
+    import KauaiHawaiiVideo from "$lib/videos/Kauai,_Hawaii_30_May_2017.mp4"
     import WaterfallGalaxy from "$lib/images/services/services_background.jpg";
     import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
     import MoveableFarmLogo from "$lib/images/services/moveable_farm_logo.png";
@@ -179,8 +179,8 @@
                     ],
                     imageSrc: null,
                     imageAlt: null,
-                    videoSrc: null,
-                    videoPoster: null,
+                    videoSrc: KauaiHawaiiVideo,
+                    videoPoster: KauaiHawaiiPoster,
                     search: "?service=videography"
                 }
             ]

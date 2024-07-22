@@ -1,7 +1,10 @@
 <script lang="ts">
     import Checkbox from "$lib/components/inputs/Checkbox.svelte";
-    import { afterUpdate, onDestroy } from "svelte";
+    import { afterUpdate, onDestroy, onMount } from "svelte";
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
+    import videojs from "video.js";
+    import "video.js/dist/video-js.min.css";
+    import type Player from "video.js/dist/types/player";
 
     export let panel_data: ServicePanelData[];
 
@@ -31,6 +34,14 @@
         $RequestedServicesStore[requestedServiceIndex].requested = false;
     };
 
+    let player: Player;
+
+    onMount(() => {
+        if (panel_data[0].videoSrc) {
+            player = videojs("player", {fluid: true});
+        };
+    });
+
     afterUpdate(() => {
         $RequestedServicesStore.forEach((service, index) => {
             const serviceSearchFormat = service.service.split(' ').join('-');
@@ -42,6 +53,9 @@
 
     onDestroy(() => {
         panel_data = [];
+        if (player) {
+            player.dispose();
+        };
     });
 
 </script>
@@ -56,6 +70,19 @@
                         src={serviceData?.imageSrc} 
                         alt={serviceData?.imageAlt} 
                     />
+                {/if}
+                {#if serviceData.videoSrc}
+                    <video 
+                        class="video-js"
+                        controls 
+                        id="player"
+                        muted={false}
+                        autoplay={false}
+                        poster={serviceData.videoPoster}
+                    >
+                        <track kind="captions">
+                        <source src={serviceData.videoSrc} type="video/mp4"/>
+                    </video>
                 {/if}
             </div>
             <div class="panel_paragraphs">
