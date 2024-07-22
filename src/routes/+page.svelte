@@ -2,8 +2,7 @@
     import MoonShot from "$lib/images/Art_in_Tech_Services_banner.png";
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import SliderCaseStudies from "$lib/components/sliders/SliderCaseStudies.svelte";
-    import InvestInUS from "$lib/images/maps/source_locally_map.svg?raw";
-    import ArtTechExpertise from "$lib/images/expertise.png";
+    import SliderTestimonials from "$lib/components/sliders/SliderTestimonials.svelte";
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import WorkWithUsCard from "$lib/components/cards/WorkWithUsCard.svelte";
     import Consultation from "$lib/images/consultation/white-fluffy-clouds.jpg";
@@ -237,46 +236,15 @@
     <h2 class="heading_02">
         why choose us?
     </h2>
-    <div class="why_choose_us_item" style="background-color: #DAE3E4;">
-        <div 
-            class="why_choose_us_image_and_paragraph"
-            id="investing_in_local_US_talent"
-        >
-            <div class="choose_us_image_container">
-                <div class="why_choose_us_image">
-                    {@html InvestInUS}
-                </div>
-            </div>
-            <div class="why_choose_us_paragraph_container">
-                <h3 class="why_choose_us_heading">
-                investing in local, world-class talent in the U.S.
-                </h3>
-                <p class="why_choose_us_paragraph">
-                    We provide all of our services from our in-house team in the United States. We invest in building the skills of our workers.  We are a U.S. company.  Working with us is an investment in talent in the United States.
-                </p>
-            </div>
-        </div>
-    </div>
-    <div class="why_choose_us_item" style="background-color: #F6E7CE;">
-        <div 
-            class="why_choose_us_image_and_paragraph"
-            id="art_and_tech_expertise"
-        >
-            <div class="why_choose_us_paragraph_container">
-                <h3 class="why_choose_us_heading">
-                    receive expertise on art and digital technology to create digital products optimized for human experiences
-                </h3>
-                <p class="why_choose_us_paragraph">
-                    We combine the vision and technical expertise to make groundbreaking digital products.
-                </p> 
-            </div>
-            <div class="choose_us_image_container">
-                <div class="why_choose_us_image">
-                    <img src={ArtTechExpertise} alt="art and tech expertise dumbbell" />
-                </div>
-            </div>
-        </div>
-    </div>
+    <p class="why_choose_us_paragraphs">
+        We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities.<br/><br/>
+        Whereas traditional digital technology companies separate art from engineering, we combine the two. We use state-of-the-art technologies in creative ways that improve human experiences of technology.<br /><br />
+        Working with us means working with some of the top experts in art and digital technology in the world. Our staff work in the United States and have been internationally recognized for their work. We are committed to growing talent in the United States. We invest in training our staff in state-of-the-art technologies.
+    </p>
+    <h2 class="heading_02">
+        testimonials
+    </h2>
+    <SliderTestimonials />
     <h2 class="heading_02">
         how to work with us
     </h2>
@@ -377,52 +345,11 @@
         justify-content: center;
     }
 
-    .why_choose_us_item {
+    .why_choose_us_paragraphs {
         width: 100%;
+        max-width: 40rem;
         margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        gap: 1rem;
-        padding: 1rem;
-    }
-
-    .why_choose_us_heading {
-        width: 100%;
-        max-width: 40rem;
-        text-align: left;
-    }
-
-    .why_choose_us_image_and_paragraph {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .choose_us_image_container {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .why_choose_us_image {
-        width: 100%;
-        max-width: 100rem;
-    }
-
-    .why_choose_us_paragraph_container {
-        width: 50%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .why_choose_us_paragraph {
-        width: 100%;
-        max-width: 40rem;
+        padding: 0 1rem;
     }
 
     .actions {
@@ -501,26 +428,17 @@
             max-width: 60%;
         }
 
-        .choose_us_image_container {
-            width: 100%;
-        }
-
-        .why_choose_us_paragraph_container {
-            width: 100%;
-        }
-
-        #investing_in_local_US_talent {
-            flex-direction: column;
-        }
-
-        #art_and_tech_expertise {
-            flex-direction: column-reverse;
-        }
-
         .actions {
             flex-direction: column;
             align-items: center;
             padding: 0 0 1rem 0;
+        }
+
+        .why_choose_us_paragraphs {
+            width: 100%;
+            max-width: 40rem;
+            margin: 0;
+            padding: 0 1rem;
         }
     }
     
