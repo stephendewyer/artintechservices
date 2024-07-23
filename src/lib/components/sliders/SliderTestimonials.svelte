@@ -144,10 +144,10 @@
                                 <h4>{testimonial.name}</h4>
                                 <h5>{testimonial.company}</h5>
                             </div>
-                            <div class="paragraphs">
-                                <p class="review">{testimonial.paragraph}</p>
-                                <p class="date">{testimonial.date}</p>
-                            </div>    
+                            <p class="paragraphs">
+                                <span class="review">{testimonial.paragraph}</span>
+                                <span class="date">{testimonial.date}</span>
+                            </p>    
                         </div>
                     </div>
                 {/each} 
@@ -168,7 +168,7 @@
 <style>
 
     .slide_image {
-        width: 12rem;
+        width: 100%;
     }
 
     .slide_carousel_container {
@@ -184,32 +184,30 @@
     }
 
     .slide_inner {
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
+        display: block;
     }
 
     .profile {
+        width: 100%;
+        max-width: 12rem;
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
-    }
-
-    .paragraphs {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
+        float: left;
+        padding: 0 1rem 0.5rem 0;
     }
 
     .review {
         padding: 0;
         margin: 0;
+        display: block;
     }
 
     .date {
-        padding: 0;
+        padding: 0.5rem 0 0 0;
         margin: 0;
         font-style: italic;
+        display: block;
     }
 
     .embla {
@@ -327,8 +325,8 @@
 
     @media (max-width: 750px) {
 
-        .slide_image {
-            width: 8rem;
+        .profile {
+            max-width: 8rem;
         }
 
         .slide_carousel_container {
