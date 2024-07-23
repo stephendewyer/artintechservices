@@ -5,7 +5,6 @@
     import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
     import EditButton from "$lib/components/buttons/EditButton.svelte";
     import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore.js";
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore.js";
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";

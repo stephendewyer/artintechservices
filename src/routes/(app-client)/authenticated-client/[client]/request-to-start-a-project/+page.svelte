@@ -298,7 +298,7 @@
             Want help on an existing digital project?  <br/>
             Have a digital problem that could use our help?
         </p>
-        <h4>*indicates required</h4>
+        <h4 class="indicates_required_heading">*indicates required</h4>
         <h2>
             requested services
         </h2>
@@ -336,7 +336,7 @@
                 textAreaInputErrorMessage="about project required"
                 required={true}
             >
-                *what is your project?
+                what is your project?*
             </TextArea>
         </div>
         <div class="inputs_row">
@@ -350,7 +350,7 @@
                     dateInputErrorMessage="project start date required"
                     required={true}
                 >
-                    *project start date
+                    project start date*
                 </DateInput>
             </div>
             <div class="input_column">
@@ -363,7 +363,7 @@
                     dateInputErrorMessage="project end date required"
                     required={true}
                 >
-                    *project end date
+                    project end date*
                 </DateInput>
             </div>
         </div>
@@ -379,14 +379,12 @@
                     numberInputErrorMessage="project budget required"
                     required={true}
                 >
-                    *project budget
+                    project budget*
                 </NumberInput>
             </div>
         </div>
         <div class="inputs_row">
             <div class="input_column">
-                <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
-                <p class="constraints">* maximum file size: 2MB</p>
                 <ImageFileInput
                     inputLabel={true}
                     bind:imageFileInputValue={imageFileInputValue}
@@ -405,10 +403,10 @@
                         <img src={image} alt="project"/>
                     </div>
                 {/if}
+                <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
+                <p class="constraints">* maximum file size: 2MB</p>
             </div>
             <div class="input_column">
-                <p class="constraints">* file formats accepted: PDF, pdf</p>
-                <p class="constraints">* maximum file size: 2MB</p>
                 <DocumentFileInput
                     inputLabel={true}
                     bind:documentFileInputValue={documentFileInputValue}
@@ -432,6 +430,8 @@
                         </p>
                     </div>
                 {/if}
+                <p class="constraints">* file formats accepted: PDF, pdf</p>
+                <p class="constraints">* maximum file size: 2MB</p>
             </div>
         </div>
         <p>

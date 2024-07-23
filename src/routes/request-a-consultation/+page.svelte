@@ -249,7 +249,7 @@
                 </tbody>
             </table>
         </div>
-        <h4>*indicates required</h4>
+        <h4 class="indicates_required_heading">*indicates required</h4>
         <div class="inputs_row">
             <div class="input_column">
                 <TextInput 
@@ -262,7 +262,7 @@
                     textInputErrorMessage="first name required"
                     required={true}
                 >
-                    *first name
+                    first name*
                 </TextInput>
             </div>
             <div class="input_column">
@@ -276,7 +276,7 @@
                     textInputErrorMessage="last name required"
                     required={true}
                 >
-                    *last name
+                    last name*
                 </TextInput>
             </div>        
         </div>
@@ -291,7 +291,7 @@
                     bind:isValid={emailIsValid}
                     required={true}
                 >
-                *email
+                    email*
                 </EmailInput>
             </div>
             <div class="input_column">
@@ -320,7 +320,7 @@
                     required={true}
                     phoneInputErrorMessage="phone number required"
                 >
-                    *phone number
+                    phone number*
                 </PhoneInput>
             </div>
             <div class="input_column">
@@ -349,7 +349,7 @@
                     dateInputErrorMessage="consultation date required"
                     required={true}
                 >
-                    *consultation date
+                    consultation date*
                 </DateInput>
             </div>
             <div class="input_column">
@@ -362,7 +362,7 @@
                     timeInputErrorMessage="consultation time required"
                     required={true}
                 >
-                    *consultation time
+                    consultation time*
                 </TimeInput>
             </div>
             <div class="input_column">
@@ -376,7 +376,7 @@
                     options={TimeZonesSorted}
                     required={true}
                 >
-                    *time zone
+                    time zone*
                 </SelectInput>
             </div>
         </div>
@@ -391,7 +391,7 @@
                 textAreaInputErrorMessage="consultation reason required"
                 required={true}
             >
-                *what is the reason for the consultation?
+                what is the reason for the consultation?*
             </TextArea>
         </div>
         <p>
@@ -458,9 +458,29 @@
         align-items: center;
     }
 
+    .indicates_required_heading {
+            font-size: 1rem;
+        }
+
+    @media screen and (max-width: 1440px) {
+        .indicates_required_heading {
+            font-size: 0.95rem;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        .indicates_required_heading {
+            font-size: 0.9rem;
+        }
+    }
+
     @media screen and (max-width: 720px) {
         .buttons_container {
             flex-direction: column-reverse;
+        }
+
+        .indicates_required_heading {
+            font-size: 0.85rem;
         }
     }
 

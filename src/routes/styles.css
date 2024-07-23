@@ -127,6 +127,10 @@ img {
     width: 50%;
 }
 
+.indicates_required_heading {
+    font-size: 1rem;
+}
+
 .buttons_container {
     display: flex;
     gap: 1rem;
@@ -192,6 +196,10 @@ img {
     .page {
         margin: 10rem 0 0 0;
     }
+
+    .indicates_required_heading {
+        font-size: 0.95rem;
+    }
     
 }
 
@@ -238,6 +246,9 @@ img {
 
     .page {
         margin: 8rem 0 0 0;
+    }
+    .indicates_required_heading {
+        font-size: 0.9rem;
     }
 }
 
@@ -311,5 +322,9 @@ img {
 
     .buttons_container {
         flex-direction: column-reverse;
+    }
+
+    .indicates_required_heading {
+        font-size: 0.85rem;
     }
 }

@@ -187,7 +187,7 @@
                 </tbody>
             </table>
         </div>
-        <h4>*indicates required</h4>
+        <h4 class="indicates_required_heading">*indicates required</h4>
         <div class="inputs_row">
             <div class="input_column">
                 <DateInput
@@ -199,7 +199,7 @@
                     dateInputErrorMessage="consultation date required"
                     required={true}
                 >
-                    *consultation date
+                    consultation date*
                 </DateInput>
             </div>
             <div class="input_column">
@@ -212,7 +212,7 @@
                     timeInputErrorMessage="consultation time required"
                     required={true}
                 >
-                    *consultation time
+                    consultation time*
                 </TimeInput>
             </div>
             <div class="input_column">
@@ -226,7 +226,7 @@
                     options={TimeZonesSorted}
                     required={true}
                 >
-                    *time zone
+                    time zone*
                 </SelectInput>
             </div>
         </div>
@@ -241,7 +241,7 @@
                 textAreaInputErrorMessage="consultation reason required"
                 required={true}
             >
-                *what is the reason for the consultation?
+                what is the reason for the consultation?*
             </TextArea>
         </div>
         <p>

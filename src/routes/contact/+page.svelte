@@ -151,11 +151,8 @@
 <div class="page">
     <form class="form" on:submit|preventDefault={sendMessageHandler}> 
         <h1>contact</h1>
-        <div class="megaphone">
-            {@html Megaphone}
-        </div>
         <h2>how can we help you?</h2>
-        <h4>*indicates requred</h4>
+        <h4 class="indicates_required_heading">indicates requred*</h4>
         <div class="inputs_row">
             <div class="input_column">
                 <TextInput 
@@ -168,7 +165,7 @@
                     textInputErrorMessage="first name required"
                     required={true}
                 >
-                    *first name
+                    first name*
                 </TextInput>
             </div>
             <div class="input_column">
@@ -182,7 +179,7 @@
                     textInputErrorMessage="last name required"
                     required={true}
                 >
-                    *last name
+                    last name*
                 </TextInput>
             </div>        
         </div>
@@ -197,7 +194,7 @@
                     bind:isValid={emailIsValid}
                     required={true}
                 >
-                *email
+                    email*
                 </EmailInput>
             </div>
             <div class="input_column">
@@ -226,7 +223,7 @@
                 textInputErrorMessage="message subject required"
                 required={true}
             >
-                *subject
+                subject*
             </TextInput>
         </div>
         <div class="inputs_row">
@@ -240,12 +237,12 @@
                 textAreaInputErrorMessage="message required"
                 required={true}
             >
-                *message
+                message*
             </TextArea>
         </div>
         <div class="buttons_container">            
             <SubmitButton disable={false}>
-                send request
+                send message
             </SubmitButton>
         </div>
     </form>
@@ -264,11 +261,6 @@
     {/if}
 </div>
 <style>
-    .megaphone {
-        width: 8rem;
-        fill: #36261E;
-    }
-
     .buttons_container {
         display: flex;
         gap: 1rem;

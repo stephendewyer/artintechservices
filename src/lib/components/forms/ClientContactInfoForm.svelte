@@ -173,6 +173,7 @@
 </script>
 
 <form class="form" on:submit|preventDefault={submitClientContactInfoHandler}>
+    <h4 class="indicates_required_heading">*indicates required</h4>
     <div class="inputs_row">
         <div class="input_column">
             <TextInput 
@@ -185,7 +186,7 @@
                 textInputErrorMessage="first name required"
                 required={true}
             >
-                *first name
+                first name*
             </TextInput>
         </div>
         <div class="input_column">
@@ -199,7 +200,7 @@
                 textInputErrorMessage="last name required"
                 required={true}
             >
-                *last name
+                last name*
             </TextInput>
         </div>        
     </div>
@@ -214,7 +215,7 @@
                 bind:isValid={emailIsValid}
                 required={true}
             >
-                *email
+                email*
             </TextInputReadOnly>
         </div>  
         <div class="input_column">
@@ -243,7 +244,7 @@
                 required={true}
                 phoneInputErrorMessage="phone number required"
             >
-                *phone number
+                phone number*
             </PhoneInput>
         </div>
         <div class="input_column">
@@ -273,7 +274,7 @@
                 textInputErrorMessage="street address required"
                 required={true}
             >
-                *street address
+                street address*
             </TextInput>
         </div>
         <div class="input_column">
@@ -303,7 +304,7 @@
                 textInputErrorMessage="city required"
                 required={true}
             >
-                *city
+                city*
             </TextInput>
         </div>
         <div class="input_column">
@@ -317,7 +318,7 @@
                 bind:selectInputValue={values.state}
                 isValid={stateIsValid}
             >
-                *state
+                state*
             </SelectInput>
         </div>
         <div class="input_column">
@@ -331,7 +332,7 @@
                 numberInputErrorMessage="zip code required"
                 required={true}
             >
-                *zip code
+                zip code*
             </NumberInput>
         </div>
     </div>

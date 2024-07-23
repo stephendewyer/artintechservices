@@ -5,7 +5,7 @@
 
     onDestroy(() => {
         panel_data = [null];
-    })
+    });
 
 </script>
 <div class="process_panel">
