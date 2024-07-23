@@ -1,5 +1,11 @@
 <script lang="ts">
-    export let panel_data: ServicePanel[] | [null];
+    import { onDestroy } from "svelte";
+
+    export let panel_data: ProcessPanel[] | [null];
+
+    onDestroy(() => {
+        panel_data = [null];
+    })
 
 </script>
 <div class="process_panel">
