@@ -17,8 +17,7 @@
     import ErrorFlashMessage from '$lib/components/flashMessages/ErrorFlashMessage.svelte';
     import { page } from "$app/stores";
     import { PromptStore } from '$lib/stores/PromptStore.js';
-  import { goto } from '$app/navigation';
-  import CancelButton from '$lib/components/buttons/CancelButton.svelte';
+    import { goto } from '$app/navigation';
 
     export let data;
 
@@ -432,10 +431,6 @@
 
     .buttons_container {
         padding: 1rem 0;
-    }
-
-    .pay_invoice_button_container {
-        padding: 1rem;
     }
 
     @media screen and (max-width: 1440px) {

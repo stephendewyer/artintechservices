@@ -458,29 +458,9 @@
         align-items: center;
     }
 
-    .indicates_required_heading {
-            font-size: 1rem;
-        }
-
-    @media screen and (max-width: 1440px) {
-        .indicates_required_heading {
-            font-size: 0.95rem;
-        }
-    }
-
-    @media screen and (max-width: 1080px) {
-        .indicates_required_heading {
-            font-size: 0.9rem;
-        }
-    }
-
     @media screen and (max-width: 720px) {
         .buttons_container {
             flex-direction: column-reverse;
-        }
-
-        .indicates_required_heading {
-            font-size: 0.85rem;
         }
     }
 

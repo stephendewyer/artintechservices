@@ -21,7 +21,6 @@
     import TextArea from "$lib/components/inputs/TextArea.svelte";
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import { goto } from "$app/navigation";
 
     export let data;

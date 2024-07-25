@@ -13,18 +13,6 @@
     let emailIsValid: boolean = true;
     let emailInputValue: string = "";
 
-    let buttonDisabled: boolean = true;
-
-    $: if (
-        emailIsValid &&
-        (emailInputValue !== "") &&
-        (emailInputValue.includes('@'))
-    ) {
-        buttonDisabled = false;
-    } else {
-        buttonDisabled = true;
-    };
-
     // after submit
 
 	let responseItem: ResponseObj = {
@@ -114,7 +102,7 @@
         </div>
         <div class="buttons_container">
             <SubmitButton
-                disable={buttonDisabled}
+                disable={false}
             >
                 send reset email
             </SubmitButton>

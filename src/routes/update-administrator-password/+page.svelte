@@ -21,18 +21,6 @@
     let passwordReenteredInputValue: string = "";
     let passwordReenteredIsValid: boolean = true;
 
-    let buttonDisabled: boolean = true;
-
-    $: if (
-            passwordInputValue === passwordReenteredInputValue &&
-            passwordInputValue !== "" && 
-            passwordReenteredInputValue !== ""
-        ) {
-        buttonDisabled = false;
-    } else {
-        buttonDisabled = true;
-    };
-
     // after submit
 
 	let responseItem: ResponseObj = {
@@ -117,7 +105,7 @@
                 <div slot="re-entered_password_label">re-enter new password</div>
             </PasswordCompare>
         </div>
-        <SubmitButton disable={buttonDisabled}>
+        <SubmitButton disable={false}>
             update password
         </SubmitButton>
     </form>
