@@ -25,22 +25,6 @@
     let passwordReenteredIsValid: boolean = true;
     let passwordsMatch: boolean | null = null;
 
-    let createClientAccountButtonDisabled: boolean = true;
-
-    $: if (
-        emailIsValid &&
-        (passwordsMatch === true) &&
-        (passwordInputValue !== "") &&
-        (emailInputValue !== "") &&
-        (passwordReenteredInputValue !== "") &&
-        (nameFirstInputValue !== "") &&
-        (nameLastInputValue !== "")
-    ) {
-        createClientAccountButtonDisabled = false;
-    } else {
-        createClientAccountButtonDisabled = true;
-    };
-
     let responseItem: ResponseObj = {
         success: "",
         error: "",
@@ -212,7 +196,7 @@
         </div>
         <div class="buttons_container">
             <SubmitButton 
-                disable={createClientAccountButtonDisabled}
+                disable={false}
             >
                 create account
             </SubmitButton>
