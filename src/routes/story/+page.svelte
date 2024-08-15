@@ -67,7 +67,7 @@
         <div class="story_section">
             <h2>mission</h2>
             <p class="paragraph">
-                Use advancements in art and digital technology to improve design for the public and businesses.   Deliver state-of-the-art digital products that improve human experiences of technology.
+                Art in Tech Services provides state-of-the-art digital services to create groundbreaking digital products using advancements in art and digital technology.  Our services improve human experiences of technology.
             </p>
         </div>
         <div class="story_section">
