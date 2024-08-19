@@ -54,7 +54,7 @@
             </ul>
             <a href={serviceData.pathname}>
                 <ActionButtonSecondary>
-                    details and shop
+                    learn and shop
                 </ActionButtonSecondary>
             </a>
         {/each}
