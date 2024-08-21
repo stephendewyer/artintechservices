@@ -131,11 +131,6 @@
             </ActionButtonSecondary>
         </a>
     </div>
-    <a href="/login-client" class="cancel_button_container">
-        <CancelButton>
-            cancel
-        </CancelButton>
-    </a>
 </div>
 
 <style>

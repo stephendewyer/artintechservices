@@ -2,9 +2,31 @@
     {
         "id": 1,
         "label": "case studies",
-        "expandable": false,
+        "expandable": true,
         "slug": "/case-studies",
-        "content": null
+        "content": [
+            {
+                "id": 1.1,
+                "label": "moveable farm web app",
+                "expandable": false,
+                "slug": "/case-studies/moveable-farm-web-app",
+                "content": null
+            },
+            {
+                "id": 1.2,
+                "label": "Suzanne Conti Quilts website",
+                "expandable": false,
+                "slug": "/case-studies/Suzanne-Conti-Quilts-website",
+                "content": null
+            },
+            {
+                "id": 1.3,
+                "label": "Joyfoodly website",
+                "expandable": false,
+                "slug": "/case-studies/Joyfoodly-website",
+                "content": null
+            }
+        ]
     },
     {
         "id": 2,
@@ -23,14 +45,14 @@
                 "id": 3.1,
                 "label": "request a consultation",
                 "expandable": false,
-                "slug": "/request-a-consultation",
+                "slug": "/work-with-us/request-a-consultation",
                 "content": null
             },
             {
                 "id": 3.2,
                 "label": "request to start a project",
                 "expandable": false,
-                "slug": "/request-to-start-a-project",
+                "slug": "/work-with-us/request-to-start-a-project",
                 "content": null
             }
         ]
@@ -45,28 +67,28 @@
                 "id": 4.1,
                 "label": "story",
                 "expandable": false,
-                "slug": "/story",
+                "slug": "/about/story",
                 "content": null
             },
             {
                 "id": 4.2,
                 "label": "process",
                 "expandable": false,
-                "slug": "/process",
+                "slug": "/about/process",
                 "content": null
             },
             {
                 "id": 4.2,
                 "label": "team",
                 "expandable": false,
-                "slug": "/team",
+                "slug": "/about/team",
                 "content": null
             },
             {
                 "id": 4.3,
                 "label": "careers",
                 "expandable": false,
-                "slug": "/careers",
+                "slug": "/about/careers",
                 "content": null
             }
         ]
@@ -88,14 +110,14 @@
                 "id": 6.1,
                 "label": "client",
                 "expandable": false,
-                "slug": "/login-client",
+                "slug": "/logins/login-client",
                 "content": null
             },
             {
                 "id": 6.2,
                 "label": "administrator",
                 "expandable": false,
-                "slug": "/login-administrator",
+                "slug": "/logins/login-administrator",
                 "content": null
             }
         ]

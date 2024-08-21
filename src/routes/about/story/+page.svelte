@@ -51,6 +51,7 @@
             muted={true}
             autoplay={true}
             poster={AboutVideoPoster}
+            loop={true}
         >
             <track kind="captions">
             <source src={AboutVideo} type="video/mp4"/>
@@ -116,7 +117,7 @@
             <p class="paragraph">
                 Our staff are some of the best in the fields of art and digital technology.
             </p>
-            <a href="/team">
+            <a href="/about/team">
                 <ActionButtonSecondary >
                     our staff
                 </ActionButtonSecondary>
@@ -129,7 +130,7 @@
             <p class="paragraph">
                 Our process has been tried and tested to produce the best results.
             </p>
-            <a href="/process">
+            <a href="/about/process">
                 <ActionButtonSecondary >
                     our process
                 </ActionButtonSecondary>

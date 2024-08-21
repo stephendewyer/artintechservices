@@ -1,6 +1,6 @@
 <script lang="ts">
-    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
-    export let card;
+    import ActionButtonTertiary from "$lib/components/buttons/ActionButtonTertiary.svelte";
+    export let card: HowToWorkWithUsCard;
 
 </script>
 
@@ -13,7 +13,9 @@
         />
     </div>
     <div class="card_info_container">
-        <div class="card_info">
+        <div 
+            class="card_info"
+        >
             <h3 style="text-align: center;">
                 {card.header}
             </h3>
@@ -22,9 +24,9 @@
             </p>
             {#each card.pathname as path, index}
                 <a href={path.path}>
-                    <ActionButtonSecondary>
+                    <ActionButtonTertiary parentControlled={false} >
                         {path.label}
-                    </ActionButtonSecondary>
+                    </ActionButtonTertiary>
                 </a>
                 {#if (card.pathname.length > 1) && (index !== (card.pathname.length - 1))}
                     or 
@@ -37,8 +39,8 @@
 <style>
 
     .card_container {
-        height: 36rem;
-        width: 24rem;
+        height: 28rem;
+        width: 100%;
         position: relative;
     }
 
@@ -58,27 +60,38 @@
 
     .card_info_container {
         position: relative;
-        padding: 1rem;
         height: 100%;
         width: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-end;
     }
 
     .card_info {
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: flex-start;
         background: rgb(255,255,255, 0.75);
+        height: 100%;
+    }
+
+    @media screen and (max-width: 1440px) {
+        .card_container {
+            height: 24rem;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        .card_container {
+            height: 20rem;
+        }
     }
 
     @media screen and (max-width: 720px) {
         .card_container {
-            height: 24rem;
-            width: 100%;
+            height: 16rem;
         }
     }
 

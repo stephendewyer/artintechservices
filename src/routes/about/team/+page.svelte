@@ -20,7 +20,7 @@
             experts in art and digital technology
         </h2>
         <div class="team_members">
-            <a href="/team/stephen_dewyer">
+            <a href="/about/team/stephen_dewyer">
                 <TeamMemberCard />
             </a>
         </div>    

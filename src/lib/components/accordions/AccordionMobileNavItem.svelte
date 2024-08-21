@@ -35,7 +35,9 @@
   const handle02Click = (item: AccordionTab) => {
     if (!item.expandable) {
         open = !open;
-    } else {
+    } else if (item.expandable && item.slug !== "#") {
+        open = !open;
+    } else if (item.expandable && item.slug === "#") {
         open = open;
     };
   };
@@ -44,31 +46,34 @@
 
 <ul class="accordion_container">
     {#if item.content !== null}
-        <a 
+        <li 
             on:click={() => handle01Click(item)}
-            href={item.slug}
+            on:keyup={() => handle01Click(item)}
             id="tabpanel_header_{item.label}"
             role="tab"
             aria-selected={activeTab === index ? true : false}
             aria-controls="{item.label}_tabpanel"
             tabindex={-index}
+            class="mobile_nav_tab"
         >
-            <li 
-                class="mobile_nav_tab"
+            <a 
+                href={item.slug}
+                class="mobile_nav_tab_icon_and_label"
+                on:click={() => handle02Click(item)}
+                on:keyup={() => handle02Click(item)}
+                style={$page.url.pathname.includes(item.slug) ? "text-decoration: underline;": "text-decoration: none;"}
             >
-                <div class="mobile_nav_tab_icon_and_label">
-                    {#if item.label === "login"}
-                        <div class="nav_icon">
-                            {@html LoginIcon}
-                        </div>
-                    {/if}
-                    {item.label}
-                </div>
-                <div class={ activeTab === index ? "arrow_active" : "arrow" }>
-                    {@html Arrow}
-                </div>
-            </li>
-        </a>
+                {#if item.label === "login"}
+                    <div class="nav_icon">
+                        {@html LoginIcon}
+                    </div>
+                {/if}
+                {item.label}
+            </a>
+            <div class={ activeTab === index ? "arrow_active" : "arrow" }>
+                {@html Arrow}
+            </div>
+        </li>
         <div
             class="expandable_container"
             style={ activeTab === index ? `height: ${height}px` : 'height: 0px;' }
@@ -204,6 +209,7 @@
         display: flex;
         align-items: center;
         gap: 0.25rem;
+        color: #FBF4F9;
     }
 
     .nav_icon {

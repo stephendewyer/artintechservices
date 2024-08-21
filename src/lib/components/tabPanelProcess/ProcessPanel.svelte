@@ -47,21 +47,21 @@
 
     .process_paragraph {
         width: 50%;
-        font-size: 2.25rem;
+        font-size: 2rem;
         max-width: 40rem;
     }
 
     @media screen and (max-width: 1440px) {
 
         .process_paragraph {
-            font-size: 2rem;
+            font-size: 1.5rem;
         }
     }
 
     @media screen and (max-width: 1080px) {
 
         .process_paragraph {
-            font-size: 1.75rem;
+            font-size: 1.25rem;
         }
     }
 
@@ -95,7 +95,7 @@
 
         .process_paragraph {
             width: 100%;
-            font-size: 1.5rem;
+            font-size: 1rem;
         }
     }
 

@@ -87,6 +87,18 @@ declare global {
 		pathname: string;
 	}
 
+	interface CaseStudyCard {
+        id: string;
+        index: number;
+        label: string;
+        paragraph: string;
+		imageBackgroundSrc: string;
+		imageBackgroundAlt: string;
+		imageForegroundSrc: string;
+		imageForegroundAlt: string;
+        path: string;
+    }
+
 	interface ServiceCard {
 		id: string;
 		index: number;

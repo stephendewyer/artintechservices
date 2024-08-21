@@ -1,7 +1,6 @@
 <script lang="ts">
     import MoonShot from "$lib/images/Art_in_Tech_Services_banner.png";
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
-    import SliderCaseStudies from "$lib/components/sliders/SliderCaseStudies.svelte";
     import SliderTestimonials from "$lib/components/sliders/SliderTestimonials.svelte";
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import WorkWithUsCard from "$lib/components/cards/WorkWithUsCard.svelte";
@@ -20,6 +19,49 @@
     import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
     import CardService from "$lib/components/cards/ServiceCard.svelte";
+    import MoveableFarmWebAppBanner from "$lib/images/case_studies/moveable_farm_web_app/reduced/grass.jpg";
+    import SuzanneContiQuiltsBanner from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_North_Carolina_01.jpg";
+    import JoyfoodlyBanner from "$lib/images/case_studies/Joyfoodly_website/reduced/Joyfoodly_recipe.jpg";
+    import CaseStudyCardElement from "$lib/components/cards/CaseStudyCard.svelte";
+    import MoveableFarmDesktopAndMobilePrototypes from "$lib/images/case_studies/moveable_farm_web_app/reduced/moveable_farm_prototypes.png";
+    import SuzanneContiQuiltsDesktopAndMobilePrototypes from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_Quilts_prototypes.png";
+    import JoyfoodlyDesktopAndMobilePrototypes from "$lib/images/case_studies/Joyfoodly_website/reduced/Joyfoodly_prototypes.png";
+
+    const caseStudyCards: CaseStudyCard[] = [
+        {
+            id: uuidv4(),
+            index: 0,
+            label: "moveable farm web app",
+            paragraph: "A web application to buy directly from local farmers.",
+            imageBackgroundSrc: MoveableFarmWebAppBanner,
+            imageBackgroundAlt: "moveable farm banner",
+            imageForegroundSrc: MoveableFarmDesktopAndMobilePrototypes,
+            imageForegroundAlt: "moveable farm desktop and mobile prototypes",
+            path: "/case-studies/moveable-farm-web-app"
+        },
+        {
+            id: uuidv4(),
+            index: 0,
+            label: "Suzanne Conti Quilts website",
+            paragraph: "An interactive collection of quilts by a prolific quilter and her ancestors.",
+            imageBackgroundSrc: SuzanneContiQuiltsBanner,
+            imageBackgroundAlt: "Suzanne Conti Quilts banner",
+            imageForegroundSrc: SuzanneContiQuiltsDesktopAndMobilePrototypes,
+            imageForegroundAlt: "Suzanne Conti Quilts desktop and mobile prototypes",
+            path: "/case-studies/Suzanne-Conti-Quilts-website"
+        },
+        {
+            id: uuidv4(),
+            index: 0,
+            label: "Joyfoodly website",
+            paragraph: "A website for a culinary education company helping busy families prepare nutritious food.",
+            imageBackgroundSrc: JoyfoodlyBanner,
+            imageBackgroundAlt: "Joyfoodly banner",
+            imageForegroundSrc: JoyfoodlyDesktopAndMobilePrototypes,
+            imageForegroundAlt: "Joyfoodly desktop and mobile prototypes",
+            path: "/case-studies/Joyfoodly-website"
+        }
+    ];
     
     const serviceCards: ServiceCard[] = [
         {
@@ -160,7 +202,7 @@
             paragraph: "We discuss with you your project to help plan for success.  Your first consultation is free.  Each consultation after the first consultation is $65 per hour.",
             pathname: [
                 {
-                    path: "/request-a-consultation",
+                    path: "/work-with-us/request-a-consultation",
                     label: "request a consultation"
                 }
             ]
@@ -172,7 +214,7 @@
             paragraph: "We provide the services to deliver your project to meet or exceed your expectations.",
             pathname: [
                 {
-                    path: "/request-to-start-a-project",
+                    path: "/work-with-us/request-to-start-a-project",
                     label: "request to start a project"
                 }
             ]
@@ -184,7 +226,7 @@
             paragraph: "Keep your projects organized, view and schedule your consultations, update your account and make payments.",
             pathname: [
                 {
-                    path: "/login-client",
+                    path: "/logins/login-client",
                     label: "client login"
                 },
                 {
@@ -203,7 +245,6 @@
     <meta property="og:image" content={ArtInTechServicesBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN}/>
 </svelte:head>
-
 <div>
     <div class="intro_banner">
         <img class="banner_image" src={MoonShot} alt="moonshot"/>
@@ -219,8 +260,14 @@
     <h2 class="heading_02">
         case studies
     </h2>
-    <div class="case_studies_carousel">
-        <SliderCaseStudies />
+    <div class="case_studies_section">
+        <div class="case_studies_container">
+            <div class="case_studies_inner">
+                {#each caseStudyCards as caseStudy, i}
+                    <CaseStudyCardElement caseStudyCardData={caseStudy} />
+                {/each}
+            </div>
+        </div>
     </div>
     <div class="services_container">
         <img class="services_background_image" src={ WaterfallGalaxy} alt="waterfall with galactic pool"/>
@@ -250,7 +297,9 @@
     </h2>
     <div class="actions">
         {#each howToWorkWithUsCards as howToWorkWithUs, index}
-            <WorkWithUsCard card={howToWorkWithUs} />
+            <WorkWithUsCard 
+                card={howToWorkWithUs}
+            />
         {/each}
     </div>
 </div>
@@ -315,12 +364,22 @@
         padding: 1rem;
     }
 
-    .case_studies_carousel {
+    .case_studies_section {
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .case_studies_container {
         width: 100%;
+        max-width: 1440px;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
+
+    .case_studies_inner {
+        gap: 1rem;
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 0 1rem;
+        flex-direction: row;
+        padding: 0 1rem 1rem 1rem;
     }
 
     .services_container {
@@ -341,7 +400,7 @@
         grid-template-columns: auto auto auto auto;
         column-gap: 1rem;
         row-gap: 1rem;
-        padding: 1rem 1rem 2rem 1rem;;
+        padding: 1rem 1rem 2rem 1rem;
         justify-content: center;
     }
 
@@ -405,10 +464,6 @@
 
     @media screen and (max-width: 720px) {
 
-        .case_studies_carousel {
-            padding: 0;
-        }
-
         .intro_banner {
             padding: 0;
         }
@@ -431,7 +486,7 @@
         .actions {
             flex-direction: column;
             align-items: center;
-            padding: 0 0 1rem 0;
+            padding: 0 1rem 1rem 1rem;
         }
 
         .why_choose_us_paragraphs {

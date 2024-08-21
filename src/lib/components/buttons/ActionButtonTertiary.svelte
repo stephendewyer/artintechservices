@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Arrow from "$lib/images/arrows/arrow_right.svg?raw";
+    import Arrow from "$lib/images/arrows/arrow_right.svg?raw"
     export let parentControlled: boolean = false;
     export let hovered: boolean = false;
 
@@ -18,6 +18,7 @@
             hovered = hovered;
         };
     };
+
 </script>
 
 <button 
@@ -47,25 +48,24 @@
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
+        border: none;
+        margin-right: 0.5rem;
         text-decoration: none;
+        background: none;
         text-align: left;
         cursor: pointer;
         outline: none;
-        transition: color 0.2s ease-in-out, border 0.2s ease-in-out, background-color 0.2s ease-in-out, margin-right 0.2s ease-in-out;
-        will-change: color border background-color margin-right;
+        transition: color 0.2s ease-in-out, margin-right 0.2s ease-in-out;
+        will-change: color margin-right;
     }
 
     .box_button_active {
         color:#838B6A;
-        border: 0.16rem solid #838B6A;
-        background-color: #EFD5C9;
         margin-right: 0;
     }
 
     .box_button_inactive {
         color: #424635;
-        border: 0.16rem solid #424635;
-        background-color: #EFD5C9;
         margin-right: 0.5rem;
     }
 
@@ -88,7 +88,6 @@
         margin-left: 0;
         fill: #424635;
     }
-    
 
 @media all and (max-width:750px){
 

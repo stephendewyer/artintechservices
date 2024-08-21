@@ -120,11 +120,6 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
-    <a href="/login-client" class="cancel_button_container">
-        <CancelButton>
-            cancel
-        </CancelButton>
-    </a>
 </div>
 
 <style>
@@ -138,27 +133,8 @@
         padding: 2rem 1rem 1rem 1rem;
     }
 
-    .login_helpers_column {
-        width: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .login_helper_prompt {
-        text-align: center;
-        width: 100%;
-        padding: 0 0.5rem;
-    }
-
     @media screen and (max-width: 1080px) {
 
-        .login_helpers_column {
-            width: 100%;
-            gap: 0.5rem;
-        }
     }
 
 </style>
