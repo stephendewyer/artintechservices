@@ -238,7 +238,7 @@
                         </a>
                     </li>   
                 {:else}
-                    <li>
+                    <li class="nav_column">
                         <ul 
                             on:focus={() => hoverPanelLeftHandler(index)}
                             on:mouseenter={() => hoverPanelLeftHandler(index)}
@@ -246,7 +246,7 @@
                             on:mouseleave={() => exitPanelLeftHandler(index)}
                             on:mouseout={() => exitPanelLeftHandler(index)}
                             on:blur={() => exitPanelLeftHandler(index)}
-                            class="nav_column"
+                            class="nav_column_unordered_list"
                         >
                             <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                 <a 
@@ -297,7 +297,7 @@
                         </a>
                     </li>   
                 {:else}
-                    <li>
+                    <li class="nav_column">
                         <ul 
                             on:focus={() => hoverPanelRightHandler(index)}
                             on:mouseenter={() => hoverPanelRightHandler(index)}
@@ -305,7 +305,7 @@
                             on:mouseleave={() => exitPanelRightHandler(index)}
                             on:mouseout={() => exitPanelRightHandler(index)}
                             on:blur={() => exitPanelRightHandler(index)}
-                            class="nav_column"
+                            class="nav_column_unordered_list"
                         >
                             <li aria-current={tabIsActive?.label === footerNavTab.label ? "page" : undefined}>
                                 <a 
@@ -422,6 +422,7 @@
         will-change: color, fill;
         transition: fill 0.2s ease-in-out, color 0.2s ease-in-out;
 	}
+
     .nav_row {
         display: flex;
         flex-direction: row;
@@ -430,6 +431,13 @@
     }
 
     .nav_column {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 33.55%;
+    }
+
+    .nav_column_unordered_list {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;

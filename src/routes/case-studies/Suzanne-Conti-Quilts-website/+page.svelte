@@ -8,6 +8,7 @@
     import type Player from "video.js/dist/types/player";
     import SuzanneContiQuiltsDemoVideo from "$lib/videos/Suzanne_Conti_Quilts_website_video_web.mp4";
     import SuzanneContiQuiltsDemoPoster from "$lib/videos/Suzanne_Conti_Quilts_website.jpg"
+    import ExternalLinkButton from "$lib/components/buttons/ExternalLinkButton.svelte";
 
     let player: Player;
 
@@ -46,6 +47,16 @@
             <track kind="captions">
             <source src={SuzanneContiQuiltsDemoVideo} type="video/mp4"/>
         </video>
+    </div>
+    <div class="case_study_external_link">
+        <a 
+            href="https://suzannecontiquilts.vercel.app/"
+            target="_blank"
+        >
+            <ExternalLinkButton>
+                visit Suzanne Conti Quilts website
+            </ExternalLinkButton>
+        </a>
     </div>
 </div>
 

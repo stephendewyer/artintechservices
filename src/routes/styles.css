@@ -57,6 +57,8 @@ p {
 }
 
 table {
+    border-spacing: 0;
+    table-layout: fixed;
     width: 100%;
 }
 
@@ -72,6 +74,13 @@ table > tbody > tr > td {
 
 tbody tr:nth-child(odd) {
     background-color: #F2F9F2;
+}
+
+table td:nth-child(odd) {
+    font-weight: bold;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    vertical-align: top;
 }
 
 a {

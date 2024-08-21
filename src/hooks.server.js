@@ -18,7 +18,7 @@ const authorizationHandle = async ({event, resolve}) => {
 
     if (event.url.pathname.startsWith("/authenticated-client")) {
         if (session?.user?.name !== "client") {
-            throw redirect(303, "/login-client");
+            throw redirect(303, "/logins/login-client");
         };
     };
 
@@ -31,7 +31,7 @@ const authorizationHandle = async ({event, resolve}) => {
 
     if (event.url.pathname.startsWith("/authenticated-administrator")) {
         if (session?.user?.name !== "administrator") {
-            throw redirect(303, "/login-administrator");
+            throw redirect(303, "/logins/login-administrator");
         };
     };
     // if still request, proceed as normal

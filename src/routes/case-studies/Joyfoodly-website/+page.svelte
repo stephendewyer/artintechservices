@@ -8,6 +8,7 @@
     import type Player from "video.js/dist/types/player";
     import JoyfoodlyDemoVideo from "$lib/videos/Joyfoodly_website_web.mp4";
     import JoyfoodlyDemoPoster from "$lib/videos/Joyfoodly_website.jpg";
+    import ExternalLinkButton from "$lib/components/buttons/ExternalLinkButton.svelte";
 
     let player: Player;
 
@@ -46,6 +47,16 @@
             <track kind="captions">
             <source src={JoyfoodlyDemoVideo} type="video/mp4"/>
         </video>
+    </div>
+    <div class="case_study_external_link">
+        <a 
+            href="http://joyfoodly.com"
+            target="_blank"
+        >
+            <ExternalLinkButton>
+                visit Joyfoodly website
+            </ExternalLinkButton>
+        </a>
     </div>
 </div>
 
