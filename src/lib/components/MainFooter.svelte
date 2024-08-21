@@ -22,11 +22,11 @@
 
     $: if (sessionClient?.name === "client") {
         nav_data = [...NavigationDataClient];
-        callbackURL = "/login-client";
+        callbackURL = "/logins/login-client";
         logoURL = "/authenticated-client/client";
     } else if (sessionClient?.name === "administrator") {
         nav_data = [...NavigationDataAdministrator];
-        callbackURL = "/login-administrator";
+        callbackURL = "/logins/login-administrator";
         logoURL = "/authenticated-administrator/administrator";
     } else if (!sessionClient) {
         nav_data = [...NavigationData];
