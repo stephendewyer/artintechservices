@@ -7,7 +7,6 @@
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     
     let emailIsValid: boolean = true;
     let emailInputValue: string = "";
@@ -127,10 +126,6 @@
     .input_row {
         width: 100%;
         max-width: 28rem;
-    }
-
-    .cancel_button_container {
-        padding: 2rem 1rem 1rem 1rem;
     }
 
     @media screen and (max-width: 1080px) {

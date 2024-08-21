@@ -53,6 +53,7 @@
             role="tab"
             aria-selected={activeTab === index ? true : false}
             aria-controls="{item.label}_tabpanel"
+            aria-current={$page.url.pathname === item.slug ? "page" : undefined}
             tabindex={-index}
             class="mobile_nav_tab"
         >
@@ -61,7 +62,13 @@
                 class="mobile_nav_tab_icon_and_label"
                 on:click={() => handle02Click(item)}
                 on:keyup={() => handle02Click(item)}
-                style={$page.url.pathname.includes(item.slug) ? "text-decoration: underline;": "text-decoration: none;"}
+                style={
+                    (
+                        ($page.url.pathname.includes(item.slug) && $page.url.pathname !== item.slug) || 
+                        ($page.url.pathname.replace(/-/g, " ").split("/")[1].includes(item.label) && $page.url.pathname !== item.slug)
+                    ) ? 
+                    "text-decoration: underline;": "text-decoration: none;"
+                }
             >
                 {#if item.label === "login"}
                     <div class="nav_icon">
