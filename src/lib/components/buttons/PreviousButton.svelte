@@ -29,7 +29,7 @@
     </div>
     <div class="button_labels">
         <div class="top_label">
-            next case study
+            previous case study
         </div>
         <div class="bottom_label">
             <slot/>

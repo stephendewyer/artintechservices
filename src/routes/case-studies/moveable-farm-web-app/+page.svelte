@@ -91,14 +91,14 @@
         </table>
     </div>
     <div class="case_study_nav_tabs">
-        <a href="/case-studies/Suzanne-Conti-Quilts-website" class="next_and_previous_button_link">
+        <a href="/case-studies/Joyfoodly-website" class="next_and_previous_button_link">
             <PreviousButton>
-                Suzanne Conti Quilts website
+                Joyfoodly website
             </PreviousButton>
         </a>
-        <a href="/case-studies/Joyfoodly-website" class="next_and_previous_button_link">
+        <a href="/case-studies/Suzanne-Conti-Quilts-website" class="next_and_previous_button_link">
             <NextButton>
-                Joyfoodly website
+                Suzanne Conti Quilts website
             </NextButton>
         </a>
     </div>
