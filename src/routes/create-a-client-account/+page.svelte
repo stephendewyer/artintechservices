@@ -144,6 +144,7 @@
         <h3>*indicates required</h3>
         <div class="input_row">
             <TextInput
+                textInputErrorMessage="valid first name required"
                 bind:isValid={nameFirstIsValid}
                 placeholder="myfirstname"
                 inputID="name_first"
@@ -157,6 +158,7 @@
         </div>
         <div class="input_row">
             <TextInput
+                textInputErrorMessage="valid last name required"
                 bind:isValid={nameLastIsValid}
                 placeholder="mylastname"
                 inputID="name_last"
@@ -221,10 +223,6 @@
     .input_row {
         width: 100%;
         max-width: 28rem;
-    }
-
-    .cancel_button_container {
-        padding: 2rem 1rem 1rem 1rem;
     }
 
 </style>

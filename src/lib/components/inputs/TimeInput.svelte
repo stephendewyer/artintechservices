@@ -15,17 +15,13 @@
 
     const timeInputValueChangedHandler = () => {
         if (required) {
-            if (timeInputTouched) {
-                if (timeInputValue === "") {
-                    isValid = false;
-                } else if (timeInputValue !== "") {
-                    isValid = true;
-                }
-            } else if (!timeInputTouched) {
+            if (timeInputValue === "") {
+                isValid = false;
+            } else if (timeInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     const timeInputFocusChangedHandler = () => {
         if (required) {
@@ -34,12 +30,10 @@
                     isValid = false;
                 } else if (timeInputValue !== "") {
                     isValid = true;
-                };
-            } else if (!timeInputTouched) {
-                isValid = true;
-            };
-        };
-    };
+                }
+            }
+        }
+    }
 
     const timeInputBlurChangedHandler = () => {
         if (required) {
@@ -48,15 +42,15 @@
                 isValid = false;
             } else if (timeInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     $: if (!isValid) {
         if (timeInputValue === "") {
             errorMessage = timeInputErrorMessage;
-        };
-    };
+        }
+    }
 
 </script>
 

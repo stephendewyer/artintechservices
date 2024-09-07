@@ -22,12 +22,12 @@
         if (required) {
             if (documentFileInputValue === "") {
                 isValid = false;
-            };
+            }
         } else if (documentFile?.size >  2000000) {
             isValid = false;
         } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
             isValid = false;
-        };
+        }
 
         const fileReader = new FileReader();
 
@@ -37,24 +37,24 @@
             fileReader.onload = (e) => {
                 // the file's text will be printed here;
                 document = e.target?.result;
-            };
+            }
             fileReader.readAsDataURL(documentFile);
-        };
-    };
+        }
+    }
 
     $: if (!isValid) {
         if (required) {
             if (documentFileInputValue === "") {
                 documentFileInputErrorMessage = "document required!";
-            };
+            }
         } else if (documentFile?.size >  2000000) {
             documentFileInputErrorMessage = "document cannot exceed 2MB in size!";
         } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
             documentFileInputErrorMessage = "invalid file type";
         } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
             documentFileInputErrorMessage = "invalid file type";
-        };
-    };
+        }
+    }
 
 </script>
 

@@ -54,7 +54,7 @@
             passwordsMatch = null;
             missingPassword = false;
         } else if (
-            (passwordInputValue.length < passwordReenteredInputValueLength) &&
+            (passwordInputValue.length <= passwordReenteredInputValueLength) &&
             (parsedReenteredPassword !== passwordInputValue)
         ) {
             passwordsMatch = false;
@@ -90,7 +90,7 @@
             passwordsMatch = null;
             missingPassword = false;
         } else if (
-            (passwordInputValue.length > passwordReenteredInputValueLength) && 
+            (passwordInputValue.length >= passwordReenteredInputValueLength) && 
             (parsedPassword !== passwordReenteredInputValue)
         ) {
             passwordsMatch = false;

@@ -20,49 +20,43 @@
     
     const phoneInputValueChangedHandler = () => {
         if (required) {
-            if (phoneInputTouched) {
-                if (phoneInputValue === null) {
-                    isValid = false;
-                    phoneInputErrorMessage = "phone number required";
-                } else if (phoneInputValue !== null) {
-                    isValid = true;
-                }
-            } else if (!phoneInputTouched) {
+            if (phoneInputValue === "") {
+                isValid = false;
+                phoneInputErrorMessage = "phone number required";
+            } else if (phoneInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     const phoneInputFocusChangedHandler = () => {
         if (required) {
             if (phoneInputTouched) {
-                if (phoneInputValue === null) {
+                if (phoneInputValue === "") {
                     isValid = false;
                     phoneInputErrorMessage = "phone number required";
-                } else if (phoneInputValue !== null) {
+                } else if (phoneInputValue !== "") {
                     isValid = true;
-                };
-            } else if (!phoneInputTouched) {
-                isValid = true;
-            };
-        };
-    };
+                }
+            }
+        }
+    }
 
     const phoneInputBlurChangedHandler = () => {
         if (required) {
             phoneInputTouched = true;
-            if (phoneInputValue === null) {
+            if (phoneInputValue === "") {
                 isValid = false;
                 phoneInputErrorMessage = "phone number required";
-            } else if (phoneInputValue !== null) {
+            } else if (phoneInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     $: if (!isValid) {
         phoneInputErrorMessage = "phone number required";
-    };
+    }
 
 </script>
 

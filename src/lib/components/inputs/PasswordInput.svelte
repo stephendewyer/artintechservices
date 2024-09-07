@@ -20,17 +20,13 @@
     const passwordInputValueChangedHandler = () => {
         inputValueChanged = true;
         if (required) {
-            if (passwordInputTouched) {
-                if (passwordInputValue === "") {
-                    isValid = false;
-                } else if (passwordInputValue !== "") {
-                    isValid = true;
-                };
-            } else if (!passwordInputTouched) {
+            if (passwordInputValue === "") {
+                isValid = false;
+            } else if (passwordInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     const passwordInputFocusChangedHandler = () => {
         if (passwordInputTouched) {
@@ -38,34 +34,30 @@
                 isValid = false;
             } else if (passwordInputValue !== "") {
                 isValid = true;
-            };
-        } else if (!passwordInputTouched) {
-            isValid = true;
-        };
-    };
+            }
+        }
+    }
 
     const passwordInputBlurChangedHandler = () => {
-
         passwordInputTouched = true;
-
         if (passwordInputValue === "") {
             isValid = false;
         } else if (passwordInputValue !== "") {
             isValid = true;
-        };
-    };
+        }
+    }
 
     $: if (passwordsMatch === false) {
         passwordMatchValidation = false;
     } else {
         passwordMatchValidation = true;
-    };
+    }
 
     $: if (!isValid) {
         if (passwordInputValue === "") {
             errorMessage = passwordInputErrorMessage;
-        };
-    };
+        }
+    }
   
 </script>
 

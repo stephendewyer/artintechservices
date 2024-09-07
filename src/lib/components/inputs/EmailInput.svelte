@@ -15,19 +15,23 @@
 
     const emailInputValueChangedHandler = () => {
         if (required) {
-            if (emailInputTouched) {
+            if (!emailInputTouched) {
                 if (emailInputValue === "") {
-                    isValid = false;
-                } else if (!emailInputValue.includes('@')) {
                     isValid = false;
                 } else if (emailInputValue !== "") {
                     isValid = true;
                 }
-            } else if (!emailInputTouched) {
-                isValid = true;
-            };
-        };
-    };
+            } else if (emailInputTouched) {
+                if (
+                    emailInputValue === "" || !emailInputValue.includes('@')
+                ) {
+                    isValid = false;
+                } else if (emailInputValue !== "" && emailInputValue.includes('@')) {
+                    isValid = true;
+                }
+            }
+        }
+    }
 
     const emailInputFocusChangedHandler = () => {
         if (required) {
@@ -38,12 +42,10 @@
                     isValid = false;
                 } else if (emailInputValue !== "") {
                     isValid = true;
-                };
-            } else if (!emailInputTouched) {
-                isValid = true;
-            };
-        };
-    };
+                }
+            }
+        }
+    }
 
     const emailInputBlurChangedHandler = () => {
         if (required) {
@@ -54,21 +56,17 @@
                 isValid = false;
             } else if (emailInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     $: if (!isValid) {
         if (emailInputValue === "") {
-            isValid = false;
             emailInputErrorMessage = "a valid email required";
         } else if (!emailInputValue.includes('@')) {
-            isValid = false;
             emailInputErrorMessage = "email must have an @ symbol";
-        } else if (emailInputValue !== "") {
-            isValid = true;
-        };
-    };
+        }
+    }
   
 </script>
 

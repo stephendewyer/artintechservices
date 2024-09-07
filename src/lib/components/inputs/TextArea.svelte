@@ -14,17 +14,13 @@
 
     const textareaInputValueChangedHandler = () => {
         if (required) {
-            if (textAreaInputTouched) {
-                if (textareaInputValue === "") {
-                    isValid = false;
-                } else if (textareaInputValue !== "") {
-                    isValid = true;
-                };
-            } else if (!textAreaInputTouched) {
+            if (textareaInputValue === "") {
+                isValid = false;
+            } else if (textareaInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     const textareaInputFocusChangedHandler = () => {
         if (required) {
@@ -32,30 +28,26 @@
                 if (textareaInputValue === "") {
                     isValid = false;
                 };
-            } else if (!textAreaInputTouched) {
-                isValid = true;
-            };
-        };
-    };
-
+            }
+        }
+    }
     
     const textareaInputBlurChangedHandler = () => {
         if (required) {
             textAreaInputTouched = true;
-
             if (textareaInputValue === "") {
                 isValid = false;
             } else if (textareaInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     $: if (!isValid) {
         if (textareaInputValue === "") {
             errorMessage = textAreaInputErrorMessage;
-        };
-    };
+        }
+    }
 
   </script>
   <div class="input_and_label_container">

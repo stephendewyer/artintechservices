@@ -22,12 +22,12 @@
         if (required) {
             if (imageFileInputValue === "") {
                 isValid = false;
-            };
+            }
         } else if (imageFile?.size >  2000000) {
             isValid = false;
         } else if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
             isValid = false;
-        };
+        }
 
         const fileReader = new FileReader();
 
@@ -37,10 +37,10 @@
             fileReader.onload = (e) => {
                 // the file's text will be printed here;
                 image = e.target?.result;
-            };
+            }
             fileReader.readAsDataURL(imageFile);
-        };
-    };
+        }
+    }
 
     $: if (!isValid) {
         if (required) {
@@ -50,9 +50,9 @@
                 imageFileInputErrorMessage = "images cannot exceed 2MB in size!";
             } else if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
                 imageFileInputErrorMessage = "invalid file type";
-            };
-        };
-    };
+            }
+        }
+    }
 
 </script>
 

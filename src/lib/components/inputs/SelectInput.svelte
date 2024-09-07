@@ -14,17 +14,13 @@
 
     const selectInputValueChangedHandler = () => {
         if (required) {
-            if (selectInputTouched) {
-                if (selectInputValue === "") {
-                    isValid = false;
-                } else if (selectInputValue !== "") {
-                    isValid = true;
-                }
-            } else if (!selectInputTouched) {
+            if (selectInputValue === "") {
+                isValid = false;
+            } else if (selectInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     const selectInputFocusChangedHandler = () => {
         if (required) {
@@ -33,12 +29,10 @@
                     isValid = false;
                 } else if (selectInputValue !== "") {
                     isValid = true;
-                };
-            } else if (!selectInputTouched) {
-                isValid = true;
-            };
-        };
-    };
+                }
+            }
+        }
+    }
 
     const selectInputBlurChangedHandler = () => {
         if (required) {
@@ -47,15 +41,15 @@
                 isValid = false;
             } else if (selectInputValue !== "") {
                 isValid = true;
-            };
-        };
-    };
+            }
+        }
+    }
 
     $: if (!isValid) {
         if (selectInputValue === "") {
             errorMessage = selectInputErrorMessage;
-        };
-    };
+        }
+    }
   
 </script>
 
