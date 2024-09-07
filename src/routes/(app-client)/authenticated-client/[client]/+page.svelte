@@ -95,7 +95,7 @@
             cityInputValue = clientData.contact_information?.city ? clientData.contact_information?.city : "";
             stateInputValue = clientData.contact_information?.state ? clientData.contact_information?.state : "";
             zipCodeInputValue = clientData.contact_information?.zip_code ? clientData.contact_information?.zip_code : "";
-            balance = clientData.billing.data[0].balance;
+            balance = clientData.billing.data[0]?.balance !== undefined ? clientData.billing.data[0].balance : "";
             stripeCustomerID = clientData.contact_information?.Stripe_customer_ID;
             invoices = clientData.invoices.data;
             paymentMethods = clientData.payment_methods;
@@ -163,7 +163,7 @@
             cityInputValue = clientContactInformation.contact_information?.city ? clientContactInformation.contact_information?.city : "";
             stateInputValue = clientContactInformation.contact_information?.state ? clientContactInformation.contact_information?.state : "";
             zipCodeInputValue = clientContactInformation.contact_information?.zip_code ? clientContactInformation.contact_information?.zip_code : "";
-            balance = clientData.billing.data[0].balance;
+            balance = clientData.billing.data[0]?.balance !== undefined ? clientData.billing.data[0].balance : "";
             pendingClientContactInformation = false;
             getClientContactInformationSuccess = true;
         } else if (!response.ok) {
