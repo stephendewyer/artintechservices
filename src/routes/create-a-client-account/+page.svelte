@@ -141,7 +141,7 @@
         <h2 style="text-align: center;">
             create a free client account to help streamline your projects
         </h2>
-        <h3>*indicates required</h3>
+        <h4 class="indicates_required_heading">*indicates required</h4>
         <div class="input_row">
             <TextInput
                 textInputErrorMessage="valid first name required"
