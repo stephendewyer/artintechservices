@@ -74,7 +74,7 @@
             );
 
             if (responseItem.success) {
-                goto("/login-client");
+                goto("/logins/login-client");
                 nameFirstInputValue = "", 
                 nameLastInputValue = "", 
                 emailInputValue = "", 
