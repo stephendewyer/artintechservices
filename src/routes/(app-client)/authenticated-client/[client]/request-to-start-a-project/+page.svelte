@@ -546,6 +546,7 @@
 
     .project_document_container {
         position: relative;
+        padding: 1rem;
     }
 
     .document_icon_and_label {
@@ -554,7 +555,6 @@
         flex-direction: row;
         align-items: center;
         gap: 1rem;
-        padding: 1rem;
         width: 100%;
     }
 
@@ -657,8 +657,8 @@
         }
 
         .cancel_button_container {
-            right: 0.5rem;
-            top: 0.5rem;
+            right: 0.25rem;
+            top: 0.25rem;
         }
         
     }
