@@ -22,6 +22,7 @@
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import { goto } from "$app/navigation";
+    import CloseButton from "$lib/components/buttons/CancelSubmitButton.svelte";
 
     export let data;
 
@@ -280,6 +281,35 @@
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
     };
+
+    let imageInputElement: HTMLInputElement;
+
+    let imageInputFiles: FileList | null = null;
+
+    let cancelImageUpload: boolean = false;
+
+    $: if (cancelImageUpload) {
+        imageInputElement.value = "";
+        image = null;
+        imageInputFiles = null;
+        imageFileInputValue = "";
+        cancelImageUpload = false;
+    }
+
+    let documentInputElement: HTMLInputElement;
+
+    let documentInputFiles: FileList | null = null;
+
+    let cancelDocumentUpload: boolean = false;
+
+    $: if (cancelDocumentUpload) {
+        documentInputElement.value = "";
+        document = null;
+        documentInputFiles = null;
+        documentFileInputValue = "";
+        cancelDocumentUpload = false;
+    }
+
 </script>
 <svelte:head>
 	<title>Art in Tech Services - request to start a project</title>
@@ -392,6 +422,8 @@
                     inputName="project_image_file"
                     inputID="project_image_file"
                     bind:isValid={imageFileIsValid}
+                    bind:files={imageInputFiles}
+                    bind:imageFileInputElement={imageInputElement}
                     required={false}
                     imageFileInputErrorMessage="image file required"
                 >
@@ -400,6 +432,9 @@
                 {#if (image)}
                     <div class="project_image_container">
                         <img src={image} alt="project"/>
+                        <div class="cancel_button_container">
+                            <CloseButton bind:closeButtonClicked={cancelImageUpload} />
+                        </div>
                     </div>
                 {/if}
                 <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
@@ -414,6 +449,8 @@
                     inputName="project_document_file"
                     inputID="project_document_file"
                     bind:isValid={documentFileIsValid}
+                    bind:files={documentInputFiles}
+                    bind:documentFileInputElement={documentInputElement}
                     required={false}
                     documentFileInputErrorMessage="document file required"
                 >
@@ -421,12 +458,17 @@
                 </DocumentFileInput>
                 {#if (document)}
                     <div class="project_document_container">
-                        <div class="document_icon">
-                            {@html DocumentIcon}
+                        <div class="document_icon_and_label">
+                            <div class="document_icon">
+                                {@html DocumentIcon}
+                            </div>
+                            <p class="document_label">
+                                {documentFileName}
+                            </p>
                         </div>
-                        <p class="document_label">
-                            {documentFileName}
-                        </p>
+                        <div class="cancel_button_container">
+                            <CloseButton bind:closeButtonClicked={cancelDocumentUpload} />
+                        </div>
                     </div>
                 {/if}
                 <p class="constraints">* file formats accepted: PDF, pdf</p>
@@ -498,20 +540,37 @@
     }
 
     .project_image_container {
+        position: relative;
         padding: 1rem;
     }
 
     .project_document_container {
+        position: relative;
+    }
+
+    .document_icon_and_label {
+        position: relative;
         display: flex;
         flex-direction: row;
         align-items: center;
         gap: 1rem;
         padding: 1rem;
+        width: 100%;
     }
 
     .document_icon {
-        width: 4rem;
-        min-width: 4rem;
+        width: 20%;
+    }
+
+    .document_label {
+        width: 80%;
+        word-wrap: break-word;
+    }
+
+    .cancel_button_container {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 
     @media screen and (max-width: 1440px) {
@@ -521,9 +580,15 @@
             justify-content: center;
             height: 5.5rem;
         }
+
         .service_icon {
             width: 3.5rem;
             min-width: 3.5rem;
+        }
+
+        .cancel_button_container {
+            right: 0.75rem;
+            top: 0.75rem;
         }
     }
 
@@ -548,6 +613,11 @@
             flex-direction: row;
             flex-wrap: wrap;
             gap: 1rem;
+        }
+
+        .cancel_button_container {
+            right: 0.5rem;
+            top: 0.5rem;
         }
     }
 
@@ -584,6 +654,11 @@
 
         .service_label {
             font-size: 0.9rem;
+        }
+
+        .cancel_button_container {
+            right: 0.5rem;
+            top: 0.5rem;
         }
         
     }

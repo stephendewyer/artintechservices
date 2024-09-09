@@ -10,35 +10,48 @@
     export let isValid: boolean;
     export let documentFileInputErrorMessage: string = "";
     export let required: boolean;
+    export let documentFileInputElement: HTMLInputElement;
+    export let files: FileList | null = null;
 
-    let documentFile: any;
+    let documentFile: File | null = null;
 
-    const documentFileChangedHandler = (event: any) => {
+    const documentFileChangedHandler = () => {
 
         document = "";
 
-        documentFile = event.target?.files[0];
+        if (files !== null) {
+            documentFile = files[0];
+        }
 
         if (required) {
             if (documentFileInputValue === "") {
                 isValid = false;
             }
-        } else if (documentFile?.size >  2000000) {
+        } else if (
+            (files !== null) && 
+            (files[0].size >  2000000)
+        ) {
             isValid = false;
-        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
+        } else if (
+            (files !== null) && 
+            (DocumentFileExtensionTest(files[0].type) === "false")
+        ) {
             isValid = false;
         }
 
         const fileReader = new FileReader();
 
-        if (documentFile && (DocumentFileExtensionTest(documentFile?.type) === "true") ) {
+        if (
+            (files !== null) && 
+            (DocumentFileExtensionTest(files[0].type) === "true") 
+        ) {
             isValid = true;
             documentFileInputErrorMessage = "";
             fileReader.onload = (e) => {
                 // the file's text will be printed here;
                 document = e.target?.result;
             }
-            fileReader.readAsDataURL(documentFile);
+            fileReader.readAsDataURL(files[0]);
         }
     }
 
@@ -47,11 +60,20 @@
             if (documentFileInputValue === "") {
                 documentFileInputErrorMessage = "document required!";
             }
-        } else if (documentFile?.size >  2000000) {
+        } else if (
+            (files !== null) &&
+            (files[0].size >  2000000)
+        ) {
             documentFileInputErrorMessage = "document cannot exceed 2MB in size!";
-        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
+        } else if (
+            (files !== null) && 
+            (DocumentFileExtensionTest(files[0].type) === "false")
+        ) {
             documentFileInputErrorMessage = "invalid file type";
-        } else if ((documentFile) && (DocumentFileExtensionTest(documentFile?.type) === "false")) {
+        } else if (
+            (files !== null) && 
+            (DocumentFileExtensionTest(files[0].type) === "false")
+        ) {
             documentFileInputErrorMessage = "invalid file type";
         }
     }
@@ -72,6 +94,8 @@
         id={inputID}
         name={inputName}
         type="file"
+        bind:this={documentFileInputElement}
+        bind:files={files}
         bind:value={documentFileInputValue}
         on:change={documentFileChangedHandler}
     />

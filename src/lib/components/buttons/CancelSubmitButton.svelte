@@ -1,61 +1,71 @@
 <script lang="ts">
-    export let disable: boolean = false;
-    export let cancelClicked: boolean = false;
+    import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
 
-    const cancelClickedHandler = () => {
-        cancelClicked = !cancelClicked;
+    export let closeButtonClicked:boolean = false;
+
+    const closeClickHandler = () => {
+        closeButtonClicked = !closeButtonClicked;
     };
-    
+
 </script>
 <button 
-    class="cancel_button" 
+    class="close_button"
+    on:click={() => closeClickHandler()}
+    on:keyup={() => closeClickHandler()}
     type="button"
-    on:click={cancelClickedHandler}
-    on:keyup={cancelClickedHandler}
-    disabled={disable}
 >
-    <div class="label">
-        <slot/>
+    <div class="close_icon">
+        {@html CloseIcon}    
     </div>
 </button>
 <style>
-
-    .cancel_button {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        border-radius: 2rem;
-        border-radius: 2rem;
-        color:#7D7E8D;
-        text-align: center;
-        font-weight: bold;
-        transition: color 0.2s linear, background-color 0.2s linear, border-color 0.2s linear, margin-left 0.2s ease-out;
+    
+    .close_button {
+        outline: none;
+        background-color: #E4C5B9;
+        border-radius: 100%;
+        border: solid 2px #4C4239;
+        transition: border-color 0.2s linear;
+        padding: 0.75rem;
+        margin: 1rem;
         cursor: pointer;
-        font-size: 1.5rem;
-        border: 2px solid #7D7E8D;
-        background-color: transparent;
     }
 
-    .cancel_button:hover {
-        color: #FFECEC;
-        border-color: #B2A1A1;
-        background-color: #B2A1A1;
+    .close_button:hover {
+        border-color: #9F1D20;
     }
 
-    .cancel_button:active {
-        color:#D89679;
-        border-color:#D89679;
+    .close_icon {
+        width: 2rem;
+        height: 2rem;
+        fill: #4C4239;
+        transition: fill 0.2s linear;
     }
 
-    @media all and (max-width: 751px){
+    .close_button:hover > .close_icon {
+        fill: #9F1D20;
+    }
 
-        .cancel_button {
-            margin: 0.2em auto;
-            font-size: 18px;
+    @media screen and (max-width: 1440px) {
+        .close_icon {
+            width: 1.75rem;
+            height: 1.75rem;
         }
-
     }
+
+    @media screen and (max-width: 1080px) {
+        .close_icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .close_icon {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+    }
+
 
 </style>

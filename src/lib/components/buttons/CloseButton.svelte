@@ -12,6 +12,7 @@
     class="close_button"
     on:click={() => closeClickHandler()}
     on:keyup={() => closeClickHandler()}
+    type="button"
 >
     {@html CloseIcon}
 </button>

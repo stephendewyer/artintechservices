@@ -5,40 +5,53 @@
     export let inputID: string;
     export let inputName: string;
     export let inputLabel: boolean;
-    export let imageFileInputValue: string; 
+    export let files: FileList | null = null;
+    export let imageFileInputValue: string = ""; 
     export let image: any;
     export let isValid: boolean;
     export let imageFileInputErrorMessage: string = "";
     export let required: boolean;
 
-    let imageFile: any;
+    export let imageFileInputElement: HTMLInputElement;
 
-    const imageFileChangedHandler = (event: any) => {
+    let imageFile: File | null = null;
+
+    const imageFileChangedHandler = () => {
 
         image = "";
 
-        imageFile = event.target?.files[0];
+        if (files !== null) {
+            imageFile = files[0];
+        }
 
         if (required) {
             if (imageFileInputValue === "") {
                 isValid = false;
             }
-        } else if (imageFile?.size >  2000000) {
+        } else if (
+            (files !== null) && 
+            (files[0].size > 2000000)
+        ) {
             isValid = false;
-        } else if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
+        } else if (
+            (files !== null) && 
+            (ImageFileExtensionTest(files[0].type) === "false")
+        ) {
             isValid = false;
         }
 
         const fileReader = new FileReader();
 
-        if (imageFile && (ImageFileExtensionTest(imageFile?.type) === "true") ) {
+        if (
+            (files !== null) && (ImageFileExtensionTest(files[0].type) === "true") 
+        ) {
             isValid = true;
             imageFileInputErrorMessage = "";
             fileReader.onload = (e) => {
                 // the file's text will be printed here;
                 image = e.target?.result;
             }
-            fileReader.readAsDataURL(imageFile);
+            fileReader.readAsDataURL(files[0]);
         }
     }
 
@@ -46,9 +59,15 @@
         if (required) {
             if (imageFileInputValue === "") {
                 imageFileInputErrorMessage = "image required!";
-            } else if (imageFile?.size >  2000000) {
+            } else if (
+                (files !== null) && 
+                (files[0].size > 2000000)
+            ) {
                 imageFileInputErrorMessage = "images cannot exceed 2MB in size!";
-            } else if ((imageFile) && (ImageFileExtensionTest(imageFile?.type) === "false")) {
+            } else if (
+                (files !== null) && 
+                (ImageFileExtensionTest(files[0].type) === "false")
+            ) {
                 imageFileInputErrorMessage = "invalid file type";
             }
         }
@@ -70,7 +89,9 @@
         id={inputID}
         name={inputName}
         type="file"
+        bind:this={imageFileInputElement}
         bind:value={imageFileInputValue}
+        bind:files={files}
         on:change={imageFileChangedHandler}
     />
     {#if ((required) && (!isValid))}
