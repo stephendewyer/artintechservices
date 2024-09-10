@@ -1,6 +1,5 @@
 <script lang="ts">
-    import Arrow from "$lib/images/arrows/arrow_left.svg?raw";
-
+    export let disable: boolean = false;
     export let cancelClicked: boolean = false;
 
     const cancelClickedHandler = () => {
@@ -13,10 +12,8 @@
     type="button"
     on:click={cancelClickedHandler}
     on:keyup={cancelClickedHandler}
+    disabled={disable}
 >
-    <div class="arrow">
-        {@html Arrow}
-    </div>
     <div class="label">
         <slot/>
     </div>
@@ -39,35 +36,17 @@
         font-size: 1.5rem;
         border: 2px solid #7D7E8D;
         background-color: transparent;
-        margin-left: 0.5rem;
     }
 
     .cancel_button:hover {
         color: #FFECEC;
         border-color: #B2A1A1;
         background-color: #B2A1A1;
-        margin-left: 0;
     }
 
     .cancel_button:active {
         color:#D89679;
         border-color:#D89679;
-    }
-
-    .arrow {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 0.75rem;
-        min-width: 0.75rem;
-        fill: #7D7E8D;
-        transition: fill 0.2s linear, margin 0.2s ease-out;
-        margin-right: 0;
-    }
-
-    .cancel_button:hover > .arrow {
-        fill: #FFECEC;
-        margin-right: 0.5rem;
     }
 
     @media all and (max-width: 751px){

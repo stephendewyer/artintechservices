@@ -10,7 +10,7 @@
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import { onDestroy } from "svelte";
-    import CancelButton from "$lib/components/buttons/CancelSubmitButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
 
     export let clientEmail: string;
