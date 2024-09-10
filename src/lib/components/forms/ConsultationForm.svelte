@@ -9,7 +9,7 @@
     import TimeZones from "$lib/data/timeZones.json";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
-    import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     
     export let consultation: Consultation | undefined;
     export let cancelEditConsultation: boolean = false;
@@ -202,9 +202,9 @@
             After you request a consultation, a representative from Art in Tech Services will contact you within 48 hours to schedule your consultation.
         </p>
         <div class="buttons_container">
-            <CancelSubmitButton bind:cancelClicked={cancelEditConsultation}>
+            <CancelButton bind:cancelClicked={cancelEditConsultation}>
                 cancel
-            </CancelSubmitButton>
+            </CancelButton>
             <SubmitButton02 disable={false}>
                 {#if (consultation)}
                     update consultation

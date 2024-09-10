@@ -17,7 +17,7 @@
     import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
     import { Elements, LinkAuthenticationElement, PaymentElement, Address } from 'svelte-stripe';
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
-    import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
@@ -720,9 +720,9 @@
                                 <PaymentElement />
                                 <Address mode="billing" />
                                 <div class="buttons_container">
-                                    <CancelSubmitButton bind:cancelClicked={cancelPaymentMethodClicked}>
+                                    <CancelButton bind:cancelClicked={cancelPaymentMethodClicked}>
                                         cancel
-                                    </CancelSubmitButton>
+                                    </CancelButton>
                                     <SubmitButton02>
                                         save
                                     </SubmitButton02>
@@ -750,6 +750,13 @@
 </div>
 
 <style>
+
+    table td:nth-child(odd) {
+        font-weight: normal;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        vertical-align: center;
+    }
 
     .client_dashboard {
         position: relative;
