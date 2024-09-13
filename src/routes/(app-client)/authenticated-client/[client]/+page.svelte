@@ -561,6 +561,7 @@
                                     {zipCodeInputValue}
                                 </td>
                             </tr>
+                            
                         </table>
                         <EditButton bind:editClicked={editContactDetailsClicked}>
                             edit
@@ -575,6 +576,11 @@
                         {@html Calendar}
                     </div>
                 </h2>
+                <a href="/authenticated-client/client/request-a-consultation">
+                    <ActionButtonSecondary>
+                        request a consultation
+                    </ActionButtonSecondary>
+                </a>
                 <div class="consultations">
                     <Tabs 
                         tabPanels={tabPanelsConsultations} 
@@ -585,11 +591,7 @@
                         bind:activeTab={activeTabConsultations}
                     />
                 </div>
-                <a href="/authenticated-client/client/request-a-consultation">
-                    <ActionButtonSecondary>
-                        request a consultation
-                    </ActionButtonSecondary>
-                </a>
+                
             </section>
             <section class="section_odd">
                 <h2 class="section_header">
@@ -598,6 +600,11 @@
                         {@html Project}
                     </div>
                 </h2>
+                <a href="/authenticated-client/client/request-to-start-a-project">
+                    <ActionButtonSecondary>
+                        request to start a project
+                    </ActionButtonSecondary>
+                </a>
                 <div class="projects">
                     <Tabs 
                         tabPanels={tabPanelsProjects} 
@@ -608,11 +615,7 @@
                         bind:activeTab={activeTabProjects}
                     />
                 </div>
-                <a href="/authenticated-client/client/request-to-start-a-project">
-                    <ActionButtonSecondary>
-                        request to start a project
-                    </ActionButtonSecondary>
-                </a>
+
             </section>
             <section class="section_even">
                 <h2 class="section_header">

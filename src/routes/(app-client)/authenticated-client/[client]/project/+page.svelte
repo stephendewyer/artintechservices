@@ -12,10 +12,13 @@
     import { goto } from "$app/navigation";
     import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
+    import PDFIcon from "$lib/images/icons/document.svg?raw";
 
     export let data;
 
     let project: Project | undefined = data.projectRow;
+
+    console.log(project)
 
     const projectID: number | undefined = data.projectRow.project_ID;
 
@@ -253,6 +256,20 @@
                             {dateCreated}
                         </td>
                     </tr>
+                    <tr>
+                        <td>
+                            document:
+                        </td>
+                        <td>
+                            {#if (project?.document_URL)}
+                                <div class="PDF_icon_container">
+                                    <a href={project.document_URL} target="_blank">
+                                        {@html PDFIcon}
+                                    </a>
+                                </div>
+                            {/if}
+                        </td>
+                    </tr>
                 </table>
                 {#if (project?.status === "requested")}
                     <div class="buttons_container">
@@ -327,6 +344,10 @@
 
     .right_table_column {
         width: 75%;
+    }
+
+    .PDF_icon_container {
+        width: 2rem;
     }
 
     @media screen and (max-width: 1440px) {

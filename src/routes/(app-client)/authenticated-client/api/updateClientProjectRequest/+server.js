@@ -11,7 +11,7 @@ cloudinary.config({
   cloud_name: CLOUDINARYCLOUDNAME, 
   api_key: CLOUDINARYAPIKEY, 
   api_secret: CLOUDINARYSECRETKEY
-});
+})
 
 export async function POST({request}) {
 
@@ -19,7 +19,7 @@ export async function POST({request}) {
 
     if (request.method !== 'POST') {
         return new Response(JSON.stringify({error: "method is not POST"}), {status: 422});
-    };
+    }
 
     const data = await request.json();
 
@@ -42,7 +42,7 @@ export async function POST({request}) {
         FROM clients
         WHERE email = "${userEmail}"`;
     
-    let res = await mysqlConnection();
+    let res = await mysqlConnection()
 
     await res.query(selectClientQuery)
     .then(([rows]) => {
@@ -52,7 +52,8 @@ export async function POST({request}) {
     })
     .catch(error => {
         throw error;
-    });
+    })
+
     const projectID = data.projectID;
     const artificialIntelligence = data.artificialIntelligence ? 1 : 0;
     const brandIdentityDesign = data.brandIdentityDesign ? 1 : 0;
@@ -86,7 +87,7 @@ export async function POST({request}) {
         !projectBudget
     ) {
         return new Response(JSON.stringify({error: "missing form data"}), {status: 422});
-    };
+    }
 
     // upload image to Cloudinary
 
@@ -96,11 +97,11 @@ export async function POST({request}) {
     let addImageID = false;
 
     // handle if local image file selected and project image already exists
-    if (imageFileInputValue && imageID) {
+    if (imageFileInputValue && imageID && imagePublicID) {
 
         if (imageFile.size >  2000000) {
             return new Response(JSON.stringify({error: "image file cannot exceed 2MB"}), {status: 422});
-        };
+        }
 
         // delete the image associated with the action from Cloudinary 
         try {
@@ -108,7 +109,7 @@ export async function POST({request}) {
         } catch(error) {
             console.log(error);
             return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
-        };
+        }
 
         // upload a new image to cloudinary 
         try {
@@ -122,7 +123,7 @@ export async function POST({request}) {
         } catch (err) {
             console.log(err);
             return new Response(JSON.stringify({error: "problem with the image upload to Cloudinary"}), {status: 500});
-        };
+        }
 
         // save the image data in the database
 
@@ -140,13 +141,14 @@ export async function POST({request}) {
         })
         .catch(error => {
             throw error;
-        });
+        })
 
-    } else if (imageFileInputValue && !imageID) {
+    } else if (imageFileInputValue && !imageID && !imagePublicID) {
+        // handle if user is adding image to replace default project image
 
-        if (imageFile.size >  2000000) {
+        if (imageFile.size > 2000000) {
             return new Response(JSON.stringify({error: "image file cannot exceed 2MB"}), {status: 422});
-        };
+        }
 
         try {
             const uploadImageResponse = await cloudinary.uploader.upload(imageFile, {
@@ -159,7 +161,7 @@ export async function POST({request}) {
         } catch (err) {
             console.log(err);
             return new Response(JSON.stringify({error: "problem with the image upload to Cloudinary"}), {status: 500});
-        };
+        }
 
         const insertImageStatement = `INSERT INTO image_collection (
             client_ID,
@@ -179,34 +181,44 @@ export async function POST({request}) {
         .catch(error => {
             console.log(error);
             throw error;
-        });
+        })
         
         addImageID = true;
-    } else if (deleteImage && imageID) {
-        // delete the image associated with the action from Cloudinary 
+    } else if (deleteImage && imageID && imagePublicID && !imageFileInputValue) {
+        // handle if user is deleting image they uploaded to restore default project image
+
+        // destroy the image in Cloudinary
         try {
             await cloudinary.uploader.destroy(imagePublicID);
         } catch(error) {
             console.log(error);
             return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
-        };
+        }
 
-        const updateImageStatement = `UPDATE image_collection
-            SET
-                client_ID = ${clientID}, 
-                image_URL = NULL,
-                public_ID = NULL
-            WHERE image_ID = "${imageID}"
-        `;
+        // delete the image foreign key from start_project_requests_client row using project_ID
 
-        await res.query(updateImageStatement)
+        const deleteImageIDFromProjectRow = `UPDATE start_project_requests_client SET image_ID = NULL WHERE project_ID=${projectID}`;
+
+        await res.query(deleteImageIDFromProjectRow)
         .then(() => {
-            console.log("updated image row");
+            console.log("image ID deleted from project row");
         })
         .catch(error => {
             throw error;
-        });
-    };
+        })
+
+        // delete the image row
+
+        const deleteImageRow = `DELETE FROM image_collection WHERE image_ID=${imageID}`;
+
+        await res.query(deleteImageRow)
+        .then(() => {
+            console.log("deleted image row");
+        })
+        .catch(error => {
+            throw error;
+        })
+    }
 
     // upload PDF to Cloudinary
 
@@ -216,11 +228,12 @@ export async function POST({request}) {
 
     let addDocumentID = false;
 
-    if (documentID && documentFileInputValue) {
+    if (documentID && documentFileInputValue && documentPublicID) {
+        // handle adding a document to project where document already saved
 
         if (documentFile.size >  2000000) {
             return new Response(JSON.stringify({error: "document file cannot exceed 2MB"}), {status: 422});
-        };
+        }
 
         // delete the document associated with the action from Cloudinary 
         try {
@@ -228,7 +241,7 @@ export async function POST({request}) {
         } catch(error) {
             console.log(error);
             return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
-        };
+        }
 
         // upload a new document to cloudinary 
         try {
@@ -241,12 +254,12 @@ export async function POST({request}) {
         } catch (err) {
             console.log(err);
             return new Response(JSON.stringify({error: "problem with the document upload to Cloudinary"}), {status: 500});
-        };
+        }
 
         const updateDocumentStatement = `UPDATE documents_collection
             SET
                 client_ID = "${clientID}", 
-                image_URL = "${uploadedDocumentURL}",
+                document_URL = "${uploadedDocumentURL}",
                 public_ID = "${uploadedDocumentPublicID}"
             WHERE document_ID = "${documentID}"
         `;
@@ -257,12 +270,15 @@ export async function POST({request}) {
         })
         .catch(error => {
             throw error;
-        });
+        })
 
-    } else if (!documentID && documentFileInputValue) {
+    } else if (!documentID && !documentPublicID && documentFileInputValue) {
+        // handle if no document exists for project and user is adding a project
+
         if (documentFile.size >  2000000) {
             return new Response(JSON.stringify({error: "document file cannot exceed 2MB"}), {status: 422});
         };
+
         try {
             const uploadDocumentResponse = await cloudinary.uploader.upload(documentFile, {
                 folder: "projects",
@@ -296,32 +312,43 @@ export async function POST({request}) {
         });
 
         addDocumentID = true;
-    } else if (documentID && deleteDocument) {
+
+    } else if (documentID && deleteDocument && !documentFileInputValue && documentPublicID) {
+        // handle if delete a document that already exists
 
         // delete the document associated with the action from Cloudinary 
         try {
             await cloudinary.uploader.destroy(documentPublicID);
         } catch(error) {
             console.log(error);
-            return new Response(JSON.stringify({error: "problem with deleting image from Cloudinary"}), {status: 500});
-        };
+            return new Response(JSON.stringify({error: "problem with deleting document from Cloudinary"}), {status: 500});
+        }
 
-        const updateDocumentStatement = `UPDATE documents_collection
-            SET
-                client_ID = "${clientID}", 
-                document_URL = NULL,
-                public_ID = NULL
-            WHERE document_ID = "${documentID}"
-        `;
+        // delete the document foreign key from start_project_requests_client row using project_ID
 
-        await res.query(updateDocumentStatement)
+        const deleteDocumentIDFromProjectRow = `UPDATE start_project_requests_client SET document_ID = NULL WHERE project_ID=${projectID}`;
+
+        await res.query(deleteDocumentIDFromProjectRow)
         .then(() => {
-            console.log("updated document row");
+            console.log("document ID deleted from project row");
         })
         .catch(error => {
             throw error;
-        });
-    };
+        })
+
+        // delete the document row
+
+        const deleteDocumentRow = `DELETE FROM documents_collection WHERE document_ID=${documentID}`;
+
+        await res.query(deleteDocumentRow)
+        .then(() => {
+            console.log("deleted document row");
+        })
+        .catch(error => {
+            throw error;
+        })
+
+    }
 
     let updateProjectStatement = "";
 
@@ -401,7 +428,7 @@ export async function POST({request}) {
             WHERE
                 project_ID = ${projectID}
         `;
-    };    
+    }
 
     await res.query(updateProjectStatement)
     .then(() => {
@@ -410,13 +437,13 @@ export async function POST({request}) {
     .catch(error => {
         console.log(error);
         throw error;
-    });
+    })
 
-    res.end();
+    res.end()
 
     // begin sending the message
 
-    sgMail.setApiKey(SENDGRIDAPIKey);
+    sgMail.setApiKey(SENDGRIDAPIKey)
 
     const msg = [
         {
@@ -487,6 +514,6 @@ export async function POST({request}) {
         return new Response(JSON.stringify({success: `updated project request for ${clientNameFirst} ${clientNameLast}`}), {status: 200});
     } catch (error) {
         return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
-    };
+    }
     
 }

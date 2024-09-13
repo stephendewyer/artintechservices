@@ -21,7 +21,6 @@
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
-    import CloseButton from "$lib/components/buttons/CloseButton.svelte";
     import { goto } from "$app/navigation";
 
     export let data;
@@ -41,8 +40,14 @@
     let projectBudget: number | null = (project?.project_budget) ? project.project_budget : null;
     let imageFileInputValue: string = "";
     let imageID: number | null = (project?.image_ID) ? project.image_ID : null;
+
+    console.log("imageID: ", imageID);
+    
     let image: any = (project?.image_URL) ? project.image_URL : "";
     let imagePublicID: string = (project?.image_public_ID) ? project.image_public_ID : "";
+
+    console.log("imagePublicID: ", imagePublicID);
+
     let documentID: number | null = (project?.document_ID) ? project.document_ID : null;
     let documentFileInputValue: string = "";
     let documentFileName: string = "";
@@ -69,9 +74,7 @@
         service: string;
         image: string;
         requested: boolean;
-    };
-
-    $: console.log(artificialIntelligence)
+    }
 
     const services: Service[] = [
         {
@@ -114,40 +117,20 @@
             image: VisualDesign,
             requested: project?.visual_design === 1 ? true : false
         }
-    ];
+    ]
 
     let responseItem: ResponseObj = {
         success: "",
         error: "",
         status: null
-    };
+    }
 
     let valueChanged: boolean = false;
 
     $: services;
 
-    let deleteImageClicked: boolean = false;
-    let deleteDocumentClicked: boolean = false;
-
     let deleteDocument: boolean = false;
     let deleteImage: boolean = false;
-
-    $: if (deleteImageClicked) {
-        deleteImage = true;
-        imageFileInputValue = "";
-        image = "";
-    } else if (!deleteImageClicked) {
-        deleteDocument = false;
-    };
-
-    $: if (deleteDocumentClicked) {
-        deleteDocument = true;
-        documentFileInputValue = "";
-        documentFileName = "";
-        document = "";
-    } else if (!deleteDocumentClicked) {
-        deleteImage = false;
-    };
 
     $: services.forEach(requestedService => {
         if (requestedService.service === "artificial intelligence") {
@@ -329,11 +312,16 @@
 
     $: if (cancelImageUpload) {
         imageInputElement.value = "";
-        image = null;
+        deleteImage = true;
         imageInputFiles = null;
         imageFileInputValue = "";
+        image = null;
         cancelImageUpload = false;
     }
+
+    // $: if (image) {
+    //     deleteImage = false;
+    // }
 
     let documentInputElement: HTMLInputElement;
 
@@ -343,10 +331,15 @@
 
     $: if (cancelDocumentUpload) {
         documentInputElement.value = "";
+        deleteDocument = true;
         document = null;
         documentInputFiles = null;
         documentFileInputValue = "";
         cancelDocumentUpload = false;
+    }
+
+    $: if (document) {
+        deleteDocument = false;
     }
 
 </script>
