@@ -60,6 +60,14 @@
 
 </script>
 <div class="service_panel">
+    <div class="select">
+        <Checkbox 
+            bind:checked={checkboxChecked} 
+            bind:value={checkboxValue}
+        >
+            add to my project
+        </Checkbox>
+    </div>
     <div class="service_info">
         {#each panel_data as serviceData, index}
             <div class="image_container">
@@ -101,16 +109,7 @@
                     </tbody>
                 </table>  
             </div>
-            
         {/each}
-    </div>
-    <div class="select">
-        <Checkbox 
-            bind:checked={checkboxChecked} 
-            bind:value={checkboxValue}
-        >
-            add to my requested services
-        </Checkbox>
     </div>
 </div>
 <style>
@@ -118,20 +117,18 @@
     .service_panel {
         width: 100%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
     }
 
     .service_info {
-        width: 75%;
-        max-width: 60rem;
+        width: 100%;
     }
 
     .select {
-        padding: 1rem;
-        width: 25%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        width: 100%;
     }
 
     .image_container {
@@ -197,6 +194,13 @@
 
         .skill {
             font-size: 1rem;
+        }
+
+        .select {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
         }
     }
 

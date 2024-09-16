@@ -55,8 +55,8 @@
         display: inline-flex;
         flex-direction: column;
         justify-content: center;
-        font-size: 18px;
-        padding: 0px 10px;
+        font-size: 1.5rem;
+        padding: 0 0.5rem;
     }
 
     /* begin checkbox */
@@ -110,6 +110,27 @@
         stroke-dashoffset: 42;
         transition: all 0.2s linear;
         transition-delay: 0.15s;
+    }
+
+    @media screen and (max-width: 1440px) {
+        .service_label { 
+            font-size: 1.35rem;
+        }
+
+    }
+
+    @media screen and (max-width: 1080px) {
+        .service_label { 
+            font-size: 1.175rem;
+        }
+
+    }
+
+    @media screen and (max-width: 720px) {
+        .service_label { 
+            font-size: 1rem;
+        }
+
     }
 
     /* end checkbox   */

@@ -236,102 +236,100 @@
 
 <div class="page">
     <h1>services</h1>
-    <div class="shopping_container">
-        <h2 class="shopping_heading">
-                request for my project
-            </h2>
-        <div class="shopping_tab_container">
-            <div class="shopping_tab">
+    <div class="services_tabpanel_and_selection">
+        <div class="tabpanel">
+            <div class="tabs_container">
+                <Tabs 
+                    tabPanels={servicesTabPanels} 
+                    bind:activeTab={activeTab}
+                />
+            </div>
+            <div class="panel_container">
+                <Panel 
+                    tabPanels={servicesTabPanels} 
+                    bind:activeTab={activeTab}
+                />
+            </div>
+        </div>
+        <div class="shopping_container">
+            <div class="selected_services_icon_and_heading">
                 <div class="shopping_cart">
                     {@html ShoppingCart}
                 </div>
-                <table class="shopping_items">
-                    <tbody>
-                        {#each $RequestedServicesStore as service, index}
-                            {#if (service.requested === true)}
-                                <tr>
-                                    <td class="service_selected">
-                                        <h4 class="service_heading">
-                                            {service.service}
-                                        </h4>
-                                        <button 
-                                            on:click={() => cancelServiceClickHandler(service)}
-                                            on:keyup={() => cancelServiceClickHandler(service)}
-                                            class="cancel_service_button"
-                                        >
-                                            {@html CloseIcon}
-                                        </button>
-                                    </td>
-                                </tr>
-                            {/if}
-                        {/each}
-                    </tbody>
-                </table>
+                <h2 class="selected_services_heading">
+                    my project services
+                </h2>
             </div>
-            <div class="action_tab_container">
-                <div class="action_tab">
-                    <a href="/work-with-us/request-to-start-a-project">
-                        <CallToActionButton >
-                            continue to start project request
-                        </CallToActionButton>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="tabpanel">
-        <div class="tabs_container">
-            <Tabs 
-                tabPanels={servicesTabPanels} 
-                bind:activeTab={activeTab}
-            />
-        </div>
-        <div class="panel_container">
-            <Panel 
-                tabPanels={servicesTabPanels} 
-                bind:activeTab={activeTab}
-            />
+            <table class="shopping_items">
+                <tbody>
+                    {#each $RequestedServicesStore as service, index}
+                        {#if (service.requested === true)}
+                            <tr>
+                                <td class="service_selected">
+                                    <h4 class="service_heading">
+                                        {service.service}
+                                    </h4>
+                                    <button 
+                                        on:click={() => cancelServiceClickHandler(service)}
+                                        on:keyup={() => cancelServiceClickHandler(service)}
+                                        class="cancel_service_button"
+                                    >
+                                        {@html CloseIcon}
+                                    </button>
+                                </td>
+                            </tr>
+                        {/if}
+                    {/each}
+                </tbody>
+            </table>
+            <a href="/work-with-us/request-to-start-a-project">
+                <CallToActionButton >
+                    start project
+                </CallToActionButton>
+            </a>
         </div>
     </div>
 </div>
 
 <style>
 
+    .services_tabpanel_and_selection {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        max-width: 2000px;
+    }
+
+    .tabpanel {
+        display: flex;
+        flex-direction: row;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .tabs_container {
+        width: auto;
+        position: relative;
+    }
+
+    .panel_container {
+        width: 100%;
+    }
+
     .shopping_container {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        width: 100%;
+        align-items: flex-start;
         padding: 1rem;
-        position: relative;
-    }
-
-    .shopping_tab_container {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
         gap: 1rem;
-    }
-
-    .shopping_tab {
         position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: start;
-        gap: 1rem;
-        margin-left: 33%;
-    }
-
-    .shopping_heading {
-        width: 100%;
-        text-align: center;
-        font-size: 1.5rem;
-        padding: 0 0 1rem 0;
+        width: 25%;
+        min-width: 25%;
     }
 
     .shopping_cart {
-        width: 8rem;
+        width: 4rem;
         fill: #36261E;
         display: flex;
         flex-direction: column;
@@ -340,8 +338,8 @@
     }
 
     table {
+        width: 100%;
         border-spacing: 0;
-        width: 20rem;
         table-layout: fixed;
     }
 
@@ -359,11 +357,16 @@
         background-color: #F2F9F2;
     }
 
-    .action_tab_container {
+    .selected_services_icon_and_heading {
         display: flex;
-        position: relative;
-        width: 33%;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
 
+    .selected_services_heading {
+        font-size: 1.5rem;
     }
 
     .service_selected {
@@ -387,89 +390,47 @@
         padding: 0;
     }
 
-    .action_tab {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .tabpanel {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        padding: 1rem;
-        max-width: 2000px;
-        gap: 1rem;
-    }
-
-    .panel_container {
-        width: 100%;
-    }
-
     @media screen and (max-width: 1440px) {
-
+        .selected_services_heading {
+            font-size: 1.35rem;
+        }
     }
 
     @media screen and (max-width: 1080px) {
 
-        .shopping_tab_container {
-            width: 100%;
-            justify-content: space-evenly;
+        .selected_services_heading {
+            font-size: 1.15rem;
         }
-
-        .shopping_tab {
-            margin-left: 0;
-        }
-        
     }
     
     @media screen and (max-width: 720px) {
-        .shopping_tab_container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 0.5rem;
-        }
 
-        .shopping_tab {
+        .services_tabpanel_and_selection {
             position: relative;
             display: flex;
-            flex-direction: row;
-            align-items: start;
-            gap: 0.5rem;
-            margin-left: 0;
+            flex-direction: column;
+            width: 100%;
+            max-width: 2000px;
         }
 
-        .shopping_heading {
-
-            font-size: 1.15rem;
-            padding: 0 0 1rem 0;
+        .shopping_container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            gap: 1rem;
+            position: relative;
+            width: 100%;
+            min-width: 100%;
         }
 
         .shopping_cart {
-            width: 5rem;
-            min-width: 5rem;
+            width: 3.5rem;
+            min-width: 3.5rem;
         }
 
-        table {
-            width: 100%;
-        }
-
-        .action_tab_container {
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .action_tab {
-            position: relative;
+        .selected_services_heading {
+            font-size: 1rem;
         }
 
         .tabpanel {

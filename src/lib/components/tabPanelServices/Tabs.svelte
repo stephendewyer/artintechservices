@@ -39,7 +39,7 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
-        width: 32rem;
+        width: 22rem;
     }
 
     li {
@@ -48,7 +48,6 @@
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
-        height: 6rem;
         gap: 1rem;
         padding: 0 1rem 0 0;
     }
@@ -62,19 +61,20 @@
     }
 
     .active_tab::after {
-        --size: 6px;
+        --size: 5px;
 		content: '';
 		position: absolute;
 		top: 0;
         bottom: 0;
 		right: 0;
 		border: var(--size) solid transparent;
-		border-right: 6px solid #838B6A;
+		border-right: 5px solid #838B6A;
 		overflow: visible;
     }
 
     .icon_container {
-        width: 6rem;
+        width: 4rem;
+        height: 4rem;
         fill: #36261E;
         display: flex;
         flex-direction: column;
@@ -87,6 +87,7 @@
         font-weight: normal;
         transition: color 0.2s linear;
         text-align: right;
+        font-size: 1.5rem;
     }
 
     .active_tab > .label {
@@ -101,30 +102,33 @@
     @media screen and (max-width: 1440px) {
         
         .tabs_container {
-            width: 24rem;
+            width: 22rem;
         }
 
         .icon_container {
-            width: 5rem;
+            width: 3.5rem;
+            height: 3.5rem;
         }
 
-        li {
-            height: 5rem;
+        .label {
+            font-size: 1.35rem;
         }
     }
 
     @media screen and (max-width: 1080px) {
         .tabs_container {
-            width: 20rem;
+            width: 18rem;
         }
 
         .icon_container {
-            width: 4rem;
+            width: 3rem;
+            height: 3rem;
         }
 
-        li {
-            height: 4rem;
+        .label {
+            font-size: 1.25rem;
         }
+
     }
 
     @media screen and (max-width: 720px) {

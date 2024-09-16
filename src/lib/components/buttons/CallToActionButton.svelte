@@ -25,13 +25,13 @@
         cursor: pointer;
         will-change: color, margin, background-color;
         transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out, margin 0.2s ease-in-out;
-        margin-left: 0;
+        margin-right: 0.75rem;
     }
 
     .call_to_action_button:hover {
         color: #DEDDD5;
         background-color: #706362;
-        margin-left: 0.75rem;
+        margin-right: 0rem;
     }
 
     .label {
@@ -50,7 +50,7 @@
         align-items: center;
         margin-left: 0;
         will-change: fill, margin;
-        transition: fill 0.2s ease-in-out,  margin 0.2s ease-in-out;
+        transition: fill 0.2s ease-in-out, margin 0.2s ease-in-out;
     }
 
     .call_to_action_button:hover > .arrow {
@@ -71,11 +71,15 @@
         }
 
         .call_to_action_button:hover > .arrow {
-            margin-left: 0.75rem;
+            margin-left: 0.625rem;
+        }
+
+        .call_to_action_button {
+            margin-right: 0.625rem;
         }
 
         .call_to_action_button:hover {
-            margin-left: 0.75rem;
+            margin-right: 0rem;
         }
     }
 
@@ -88,6 +92,14 @@
         .arrow {
             min-width: 0.7rem;
             width: 0.7rem;
+        }
+
+        .call_to_action_button:hover > .arrow {
+            margin-left: 0.5rem;
+        }
+
+        .call_to_action_button {
+            margin-right: 0.5rem;
         }
     }
 
