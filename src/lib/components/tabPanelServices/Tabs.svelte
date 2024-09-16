@@ -1,10 +1,13 @@
 <script lang="ts">
     export let tabPanels: TabPanel[];
     export let activeTab: number;
+    export let tabsWidth: number = 0;
 
 </script>
-
-<ul class="tabs_container">
+<ul 
+    class="tabs_container" 
+    bind:clientWidth={tabsWidth}
+>
     {#each tabPanels as tab, index}
         <a 
             href={`/services${tab.data[0].search}`}
@@ -30,16 +33,17 @@
         </a>
     {/each}
 </ul>
-
 <style>
 
     .tabs_container {
+        position: relative;
         list-style: none;
         padding: 0;
         display: flex;
         flex-direction: column;
         gap: 1rem;
         width: 22rem;
+        margin: 0;
     }
 
     li {

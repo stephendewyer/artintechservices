@@ -47,7 +47,6 @@
         display: flex;
         flex-direction: row;
         align-items: center;
-        margin-bottom: 20px;
     }
 
     .service_label {

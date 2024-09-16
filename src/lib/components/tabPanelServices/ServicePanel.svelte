@@ -58,17 +58,74 @@
         };
     });
 
+    let innerWidth: number = 0;
+
+    let y: number = 0;
+
+    let panelHeight: number = 0;
+    let panelWidth: number = 0;
+
+    let checkboxContainerHeight: number = 0;
+
+    let panelElement: HTMLElement;
+
+    let checkboxContainerTopPosition: number = 0;
+
+    let checkboxFixed: boolean = false;
+    let checkboxAbsolute: boolean = false;
+
+    onMount(() => {
+        checkboxContainerTopPosition = panelElement.getBoundingClientRect().top + window.scrollY;
+    })
+
+    const windowResizeHandler = () => {
+        checkboxContainerTopPosition = panelElement.getBoundingClientRect().top + window.scrollY;
+    }
+
+    // handle checkbox fixed
+    $: if (y > checkboxContainerTopPosition && y < (checkboxContainerTopPosition + (panelHeight - checkboxContainerHeight))) {
+        checkboxFixed = true;
+    } else {
+        checkboxFixed = false;
+    }
+
+    // handle checkbox absolute
+    $: if (y >= (checkboxContainerTopPosition + (panelHeight - checkboxContainerHeight))) {
+        checkboxAbsolute = true;
+    } else {
+        checkboxAbsolute = false;
+    }
+
 </script>
-<div class="service_panel">
-    <div class="select">
-        <Checkbox 
-            bind:checked={checkboxChecked} 
-            bind:value={checkboxValue}
-        >
-            add to my project
-        </Checkbox>
+<svelte:window  
+    bind:scrollY={y}
+    on:resize={windowResizeHandler}
+    bind:innerWidth
+/>
+<div 
+    class="service_panel"
+    bind:clientHeight={panelHeight}
+    bind:clientWidth={panelWidth}
+    bind:this={panelElement}
+>
+    <div 
+        id="checkbox"
+        class={innerWidth >= 720 ? checkboxAbsolute ? "checkbox_absolute": checkboxFixed ? "checkbox_fixed" : "checkbox_relative" : "checkbox_relative"}
+        bind:clientHeight={checkboxContainerHeight}
+    >
+        <div class="checkbox_container">
+            <Checkbox 
+                bind:checked={checkboxChecked} 
+                bind:value={checkboxValue}
+            >
+                add to my project
+            </Checkbox> 
+        </div>
     </div>
-    <div class="service_info">
+    <div 
+        class="service_info"
+        style={innerWidth >= 720 && (checkboxAbsolute || checkboxFixed) ? `padding-top: ${checkboxContainerHeight}px;` : ""}
+    >
         {#each panel_data as serviceData, index}
             <div class="image_container">
                 {#if serviceData.imageSrc}
@@ -115,20 +172,40 @@
 <style>
 
     .service_panel {
+        position: relative;
         width: 100%;
         display: flex;
         flex-direction: column;
     }
 
     .service_info {
+        position: relative;
         width: 100%;
     }
 
-    .select {
+    #checkbox {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
+        z-index: 1;
+    }
+
+    .checkbox_relative {
+        position: relative
+    }
+
+    .checkbox_fixed {
+        position: fixed;
+        top: 0;
+    }
+
+    .checkbox_absolute {
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
     }
 
     .image_container {
@@ -142,7 +219,6 @@
 
     .panel_paragraphs {
         position: relative;
-        padding: 1rem;
     }
 
     p {
@@ -151,6 +227,15 @@
 
     .skill {
         font-size: 1.75rem;
+    }
+
+    .checkbox_container {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 1rem;
+        background-color: #EAF9EA;
     }
 
     @media screen and (max-width: 1440px) {
