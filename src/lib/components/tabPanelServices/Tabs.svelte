@@ -149,7 +149,6 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            height: 8rem;
             gap: 0.5rem;
             padding: 0 0 1rem 0;
         }
@@ -163,8 +162,8 @@
         }
 
         .icon_container {
-            width: 4rem;
-            height: 4rem;
+            width: 2.5rem;
+            height: 2.5rem;
         }
 
         .label {
