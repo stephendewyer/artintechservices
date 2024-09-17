@@ -57,11 +57,11 @@
     }
 
     li:hover > .icon_container {
-        fill: #d79679;
+        fill: #838B6A;
     }
 
     li:hover > .label {
-        color: #d79679;
+        color: #838B6A;
     }
 
     .active_tab::after {
@@ -72,7 +72,7 @@
         bottom: 0;
 		right: 0;
 		border: var(--size) solid transparent;
-		border-right: 5px solid #838B6A;
+		border-right: 5px solid #424635;
 		overflow: visible;
     }
 
@@ -95,12 +95,12 @@
     }
 
     .active_tab > .label {
-        color: #838B6A;
+        color: #424635;
         font-weight: bold;
     }
 
     .active_tab > .icon_container {
-        fill: #838B6A;
+        fill: #424635;
     }
 
     @media screen and (max-width: 1440px) {

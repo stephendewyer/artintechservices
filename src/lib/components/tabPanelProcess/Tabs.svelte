@@ -77,19 +77,19 @@
 
     .tab:hover > .label_and_icon > .label {
         font-weight: normal;
-        color: #d79679;
-    }
-
-    .tab:hover > .label_and_icon > .arrow_container {
-        fill: #d79679;
-    }
-
-    .active_tab > .label_and_icon > .label {
         color: #838B6A;
     }
 
-    .active_tab > .label_and_icon > .arrow_container {
+    .tab:hover > .label_and_icon > .arrow_container {
         fill: #838B6A;
+    }
+
+    .active_tab > .label_and_icon > .label {
+        color: #424635;
+    }
+
+    .active_tab > .label_and_icon > .arrow_container {
+        fill: #424635;
     }
 
     .active_tab::after {
@@ -103,7 +103,7 @@
         bottom: 0;
         width: 100%;
         border: var(--size) solid transparent;
-        border-top: 6px solid #838B6A;
+        border-top: 6px solid #424635;
         overflow: visible;
     }
 

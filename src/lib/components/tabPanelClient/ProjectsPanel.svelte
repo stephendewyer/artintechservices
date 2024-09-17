@@ -2,6 +2,7 @@
     import { onDestroy } from "svelte";
     import ProjectCard from "$lib/components/cards/ProjectCard.svelte";
     import Pagination from "$lib/components/pagination/Pagination.svelte";
+    import { fade } from "svelte/transition";
 
     export let panel_data: Project[];
 
@@ -24,18 +25,24 @@
     });
 
 </script>
-<div class="projects">
-    {#if panel_data.length > 0}
-        {#each paginatedProjects as project, index}
-            <ProjectCard project={project} />
-        {/each}
-    {/if}
+<div 
+    in:fade={{ delay: 250, duration: 300 }}
+    class="projects_container"
+>
+    <div class="projects">
+        {#if panel_data.length > 0}
+            {#each paginatedProjects as project, index}
+                <ProjectCard project={project} />
+            {/each}
+        {/if}
+    </div>
+    <Pagination 
+            bind:currentPage={projectsCurrentPage}
+            totalCount={panel_data.length}
+            pageSize={pageSize} 
+    />
 </div>
-<Pagination 
-        bind:currentPage={projectsCurrentPage}
-        totalCount={panel_data.length}
-        pageSize={pageSize} 
-/>
+
 <style>
     .projects {
         width: 100%;
@@ -44,4 +51,12 @@
         flex-wrap: wrap;
         gap: 1rem;
     }
+
+    .projects_container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
 </style>
