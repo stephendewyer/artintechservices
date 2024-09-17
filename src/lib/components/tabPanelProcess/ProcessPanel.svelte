@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onDestroy } from "svelte";
+    import { fade } from 'svelte/transition';
 
     export let panel_data: ProcessPanel[] | [null];
 
@@ -8,7 +9,10 @@
     });
 
 </script>
-<div class="process_panel">
+<div 
+    in:fade={{ delay: 250, duration: 300 }}
+    class="process_panel"
+>
     <div class="process_info">
         {#each panel_data as processData, index}
             <div class="image_container">
