@@ -27,7 +27,7 @@
     import MoveableFarmLogo from "$lib/images/services/moveable_farm_logo.png";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
-    import { afterUpdate, onMount } from "svelte";
+    import { afterUpdate, beforeUpdate, onMount } from "svelte";
 
     const servicesTabPanels: TabPanel[] = [
         {
@@ -312,6 +312,22 @@
         shoppingCartAbsolute = false;
     }
 
+    let panelHeight: number = 0;
+
+    let updatedPanelHeight: number = 0;
+
+    beforeUpdate(() => {
+        // // panelHeight = 0;
+        // updatedPanelHeight = 0;
+    })
+
+    afterUpdate(() => {
+        updatedPanelHeight = panelHeight;
+    });
+
+    $: console.log("panelInnerHeight: ", panelHeight);
+    $: console.log("panelContainerHeight: ", updatedPanelHeight);
+
     const handleScroll = () => {
 
     }
@@ -350,21 +366,23 @@
                     bind:clientHeight={tabsHeight}
                 >
                     <Tabs 
- 
                         bind:tabsWidth={tabsWidth}
                         tabPanels={servicesTabPanels} 
                         bind:activeTab={activeTab}
                     />
                 </div>
             </div>
-            <div 
-                class="panel_container"
-                style={innerWidth < 720 && (tabsAbsolute || tabsFixed ) ? `padding-top: ${tabsHeight}px;` : ""}
-            >
-                <Panel 
-                    tabPanels={servicesTabPanels} 
-                    bind:activeTab={activeTab}
-                />
+            <div class="panel_container" >
+                <div 
+                    bind:clientHeight={panelHeight}
+                    class="panel_container_inner"
+                    style={innerWidth < 720 && (tabsAbsolute || tabsFixed ) ? `padding-top: ${tabsHeight}px;` : ""}
+                >
+                    <Panel 
+                        tabPanels={servicesTabPanels} 
+                        bind:activeTab={activeTab}
+                    />
+                </div>
             </div>
         </div>
         <div 
@@ -465,6 +483,12 @@
     }
 
     .panel_container {
+        width: 100%;
+        will-change: height;
+        transition: height 0.550s linear;
+    }
+
+    .panel_container_inner {
         width: 100%;
     }
 

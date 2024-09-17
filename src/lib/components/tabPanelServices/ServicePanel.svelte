@@ -1,6 +1,7 @@
 <script lang="ts">
     import Checkbox from "$lib/components/inputs/Checkbox.svelte";
     import { afterUpdate, onDestroy, onMount } from "svelte";
+    import { fade } from 'svelte/transition';
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
     import videojs from "video.js";
     import "video.js/dist/video-js.min.css";
@@ -103,6 +104,7 @@
     bind:innerWidth
 />
 <div 
+    in:fade={{ delay: 250, duration: 300 }}
     class="service_panel"
     bind:clientHeight={panelHeight}
     bind:clientWidth={panelWidth}
