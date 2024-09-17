@@ -486,6 +486,7 @@
         width: 100%;
         will-change: height;
         transition: height 0.550s linear;
+        min-height: 100vh;
     }
 
     .panel_container_inner {
@@ -599,6 +600,10 @@
     }
     
     @media screen and (max-width: 720px) {
+
+        .panel_container {
+            min-height: auto;
+        }
 
         .services_tabpanel_and_selection {
             position: relative;

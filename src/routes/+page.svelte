@@ -305,6 +305,7 @@
 </div>
 
 <style>
+
     .intro_banner {
         position: relative;
         width: 100%;
