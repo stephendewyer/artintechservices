@@ -8,6 +8,7 @@
     import type Player from "video.js/dist/types/player";
 
     export let panel_data: ServicePanelData[];
+    export let panelHeight: number = 0;
 
     let checkboxValue: string;
 
@@ -63,7 +64,6 @@
 
     let y: number = 0;
 
-    let panelHeight: number = 0;
     let panelWidth: number = 0;
 
     let checkboxContainerHeight: number = 0;
