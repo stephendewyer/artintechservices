@@ -91,18 +91,18 @@
                     <col class="right_column">
                 </colgroup>
                 <tr>
-                    <td>
+                    <td class="table_paragraph">
                         2021
                     </td>
-                    <td>
+                    <td class="table_paragraph">
                         Art in Tech Services Inc. launches
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="table_paragraph">
                         2024
                     </td>
-                    <td>
+                    <td class="table_paragraph">
                         begin research and development in AI applications
                     </td>
                 </tr>
@@ -111,16 +111,18 @@
         <div class="process">
 
         </div>
-        <div class="story_section">
+        <div class="story_section_02">
             <h2>
                 location
             </h2>
-            <div class="map_container">
-                <img src={USMap} alt="map of U.S. showing Art in Tech Services headquarters location" />
+            <div class="story_image_and_paragraph">
+                <div class="image_container">
+                    <img src={USMap} alt="map of U.S. showing Art in Tech Services headquarters location" />
+                </div>
+                <p class="paragraph_container">
+                    Art in Tech Services works across the United States and is moving its headquarters to Tucson, Arizona.
+                </p>    
             </div>
-            <p class="paragraph">
-                Art in Tech Services works across the United States and is moving its headquarters to Tucson, Arizona.
-            </p>
         </div>
         <div class="story_section">
             <h2>
@@ -258,6 +260,10 @@
         background-color: #F2F9F2;
     }
 
+    .table_paragraph {
+        font-size: 2rem;
+    }
+
     .paragraph {
         margin: 0;
         padding: 0;
@@ -271,10 +277,6 @@
 
     .right_column {
         width: 75%;
-    }
-
-    .map_container {
-        width: 100%;
     }
 
     .values {
@@ -294,6 +296,10 @@
         .paragraph {
             font-size: 1.4rem;
         }
+
+        .table_paragraph {
+            font-size: 1.4rem;
+        }
     }
 
     @media screen and (max-width: 1080px) {
@@ -302,6 +308,10 @@
         }
 
         .paragraph {
+            font-size: 1.3rem;
+        }
+
+        .table_paragraph {
             font-size: 1.3rem;
         }
     }
@@ -324,6 +334,10 @@
         }
 
         .paragraph {
+            font-size: 1.15rem;
+        }
+
+        .table_paragraph {
             font-size: 1.15rem;
         }
 
