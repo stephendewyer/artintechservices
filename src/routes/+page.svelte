@@ -26,6 +26,7 @@
     import MoveableFarmDesktopAndMobilePrototypes from "$lib/images/case_studies/moveable_farm_web_app/reduced/moveable_farm_prototypes.png";
     import SuzanneContiQuiltsDesktopAndMobilePrototypes from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_Quilts_prototypes.png";
     import JoyfoodlyDesktopAndMobilePrototypes from "$lib/images/case_studies/Joyfoodly_website/reduced/Joyfoodly_prototypes.png";
+  import { onMount } from "svelte";
 
     const caseStudyCards: CaseStudyCard[] = [
         {
@@ -237,6 +238,12 @@
         },
     ];
 
+    let introVisible: boolean = false;
+
+    onMount(() => {
+        setTimeout(() => introVisible = true, 300);
+    })
+
 </script>
 
 <svelte:head>
@@ -251,7 +258,10 @@
         <div class="saguaro_cactus_container">
             <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
         </div>
-        <div class="intro_paragraph_container">
+        <div 
+            class="intro_paragraph_container"
+            style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
+        >
             <h1 class="intro_paragraph">
                 providing creative digital services to help businesses and communities
             </h1>
@@ -331,6 +341,7 @@
         justify-content: center;
         align-items: center;
         padding: 1rem;
+        transition: opacity 0.2s linear;
     }
 
     .saguaro_cactus_container {

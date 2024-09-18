@@ -114,7 +114,9 @@
             disabled={!prevBtnEnabled} 
             class="arrow_button"
         >
-            {@html ArrowLeft}
+            <div class="arrow_container">
+                {@html ArrowLeft}
+            </div>
         </button>
         <button
             on:click={() => scrollNextClickHandler()} 
@@ -122,7 +124,9 @@
             disabled={!nextBtnEnabled} 
             class="arrow_button"
         >
-            {@html ArrowRight}
+            <div class="arrow_container">
+                {@html ArrowRight}
+            </div>
         </button>
     </div>
     <div class="slide_container">
@@ -141,8 +145,8 @@
                                     src={testimonial.imageSrc} 
                                     alt={testimonial.alt}
                                 />
-                                <h4>{testimonial.name}</h4>
-                                <h5>{testimonial.company}</h5>
+                                <h4 class="name">{testimonial.name}</h4>
+                                <h5 class="company">{testimonial.company}</h5>
                             </div>
                             <p class="paragraphs">
                                 <span class="review">{testimonial.paragraph}</span>
@@ -192,9 +196,9 @@
         max-width: 12rem;
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.125rem;
         float: left;
-        padding: 0 1rem 0.5rem 0;
+        padding: 0 0.5rem 0.2rem 0;
     }
 
     .review {
@@ -233,11 +237,12 @@
     }
 
     .arrow_button {
-        width: 2.5rem;
-        padding: 0;
+        position: relative;
+        padding: 1rem;
         background: none;
         color: #838b6a;
         fill: #838b6a;
+        background-color: rgb(244,254,242, 1);
         border: none;
         display: flex;
         flex-direction: column;
@@ -246,7 +251,16 @@
         transition: color 0.3s linear, fill 0.3s linear;
     }
 
-    .arrow_button:hover {
+    .arrow_container {
+        width: 1rem;
+        height: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .arrow_button:hover > .arrow_container {
         color: #d79679;
         fill: #d79679;
     }
@@ -318,9 +332,6 @@
     }
 
     @media screen and (max-width: 1080px) {
-        .arrow_button {
-            width: 1.75rem;
-        }
     }
 
     @media (max-width: 750px) {
@@ -329,36 +340,30 @@
             max-width: 8rem;
         }
 
-        .slide_carousel_container {
-            display: flex;
-            flex-direction: column-reverse
-        }
-
         .slide_container {
-            padding: 0 1rem;
+            padding: 0 3rem;
         }
 
         .arrows {
-            position: relative;
-            width: 100%;
-            padding: 1rem;
+            padding: 0.5rem;
         }
 
         .arrow_button {
-            width: 1.5rem;
+            padding: 0.75rem;
+        }
+
+        .arrow_container {
+            min-width: 0.75rem;
         }
 
         .embla__dots {
-            position: absolute;
-            bottom: 0.5rem;
-            margin: 0 4rem 0 4rem;
-            left: 0;
-            right: 0;
+            position: relative;
+            margin: 0 auto;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-        }
+            }
 
         .embla {
             margin: 0;

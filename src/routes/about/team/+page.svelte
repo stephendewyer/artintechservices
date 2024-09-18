@@ -3,7 +3,8 @@
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { page } from "$app/stores";
     import TeamMemberCard from "$lib/components/cards/TeamMemberCard.svelte";
-
+    import { fade } from "svelte/transition";
+    
 </script>
 <svelte:head>
     <title>Art in Tech Services - team</title>
@@ -19,7 +20,10 @@
         <h2>
             experts in art and digital technology
         </h2>
-        <div class="team_members">
+        <div 
+            in:fade={{ delay: 250, duration: 300 }}
+            class="team_members"
+        >
             <a href="/about/team/stephen_dewyer">
                 <TeamMemberCard />
             </a>
