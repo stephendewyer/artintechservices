@@ -10,6 +10,7 @@
     import { page } from "$app/stores";
     import USMap from "$lib/images/maps/Tucson,_AZ.svg"
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
+    import ContextSamplesSlider from "$lib/components/sliders/SliderContext.svelte";
 
     let player: Player;
 
@@ -58,7 +59,18 @@
         </video>
     </div>
     <div class="story_sections">
-        
+        <div class="story_section_02">
+            <h2>context</h2>
+            <div class="story_image_and_paragraph">
+                <div class="paragraph_container">
+                    Art expands the imagination of human possibility.  Without art, there would be no technological innovation.  Unfortunately, too often the art that gave vision to technological innovation is ignored.  As a result, we often get technology that is poorly designed for human use.
+                </div>
+                <div class="image_container">
+                    <h3 class="examples_context_heading">examples of art envisioning technological advancements</h3>
+                    <ContextSamplesSlider />
+                </div>
+            </div>
+        </div>
         <div class="story_section">
             <h2>vision</h2>
             <p class="paragraph">
@@ -194,6 +206,39 @@
         gap: 1rem;
     }
 
+    .story_section_02 {
+        max-width: 120rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .story_image_and_paragraph {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        max-width: 1920px;
+        gap: 1rem;
+    }
+
+    .examples_context_heading {
+        text-align: center;
+    }
+
+    .paragraph_container {
+        width: 50%;
+        font-size: 2rem;
+    }
+
+    .image_container {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 50%;
+    }
+
     table {
         border-spacing: 0;
         table-layout: fixed;
@@ -217,6 +262,7 @@
         margin: 0;
         padding: 0;
         width: 100%;
+        font-size: 2rem;
     }
 
     .left_column {
@@ -241,14 +287,45 @@
     }
 
     @media screen and (max-width: 1440px) {
+        .paragraph_container {
+            font-size: 1.4rem;
+        }
 
+        .paragraph {
+            font-size: 1.4rem;
+        }
     }
 
     @media screen and (max-width: 1080px) {
+        .paragraph_container {
+            font-size: 1.3rem;
+        }
 
+        .paragraph {
+            font-size: 1.3rem;
+        }
     }
 
     @media screen and (max-width: 720px) {
+
+        .story_image_and_paragraph {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .image_container {
+            width: 100%;
+        }
+
+        .paragraph_container {
+            width: 100%;
+            font-size: 1.15rem;
+        }
+
+        .paragraph {
+            font-size: 1.15rem;
+        }
 
     }
 </style>

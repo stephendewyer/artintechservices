@@ -4,38 +4,30 @@
     import Autoplay from "embla-carousel-autoplay";
     import ArrowLeft from "$lib/images/arrows/arrow_left.svg?raw";
     import ArrowRight from "$lib/images/arrows/arrow_right.svg?raw";
-    import SuzanneContiProfile from "$lib/images/testimonials/Suzanne_Conti.jpg";
-    import HollieGreeneRottmanProfile from "$lib/images/testimonials/Hollie_Greene_Rottman.jpg";
+    import Terravision from "$lib/images/context/context_02.jpg";
+    import LeVoyageDansLaLune from "$lib/images/context/context_01.jpg";
+
     import { onDestroy } from 'svelte';
     
     interface Slide {
       index: number;
       imageSrc: string;
       alt: string;
-      name: string;
-      company: string;
       paragraph: string;
-      date: string;
     };
 
-    let testimonials: Slide[] = [
+    let contextExamples: Slide[] = [
         {
             index: 1,
-            imageSrc: SuzanneContiProfile,
-            alt: "Suzanne Conti profile",
-            name: "Suzanne Conti",
-            company: "Suzanne Conti Quilts",
-            paragraph: "Art in Tech Services was extremely professional and generous in working to create my website to my expectations. Art in Tech Services had tremendous ideas and understood what I was trying to achieve with my website. Art in Tech Services exceeded my expectations for the functions of the website. I love the art and design. The sorting and filters were exceptional. I also like how Art in Tech Services created a special section for ancestral quilts. Art in Tech Services's leadership is outstanding, customer focused and determined to please. Great value. You cannot go wrong hiring Art in Tech Services.",
-            date: "6 May 2024"
+            imageSrc: LeVoyageDansLaLune,
+            alt: "still from Le voyage dans la lune (A Trip to the Moon), 1902, written, directed and produced by Georges Méliès",
+            paragraph: "Still from Le voyage dans la lune (A Trip to the Moon), 1902, written, directed and produced by Georges Méliès."
         },
         {
             index: 2,
-            imageSrc: HollieGreeneRottmanProfile,
-            alt: "Hollie Greene Rottman profile",
-            name: "Chef Hollie Greene Rottman",
-            company: "Joyfoodly",
-            paragraph: "Art in Tech Services [made] our daunting project of closing our business and two sites so easy and stress free. The legacy site Art in Tech Services created was exactly what we wanted. We appreciated Art in Tech Services's proactive way of working with us, never finding a challenge too much to handle. Art in Tech Services is a joy to work with!",
-            date: "12 February 2022"
+            imageSrc: Terravision,
+            alt: "Terravision, a 3D mapping software developed in 1993 by the German company ART+COM in Berlin",
+            paragraph: "Terravision, a 3D mapping software developed in 1993 by the German company ART+COM in Berlin.  Terravision was a prequel to Google Earth."
         }
     ];
 
@@ -136,22 +128,19 @@
             class="embla"
             role="group"
         >   <div class="embla__container">
-                {#each testimonials as testimonial, i}
+                {#each contextExamples as contextExample, i}
                     <div class="embla__slide">
                         <div class="slide_inner">
-                            <div class="profile">
+                            <div class="context_example">
                                 <img 
                                     class="slide_image"
-                                    src={testimonial.imageSrc} 
-                                    alt={testimonial.alt}
+                                    src={contextExample.imageSrc} 
+                                    alt={contextExample.alt}
                                 />
-                                <h4 class="name">{testimonial.name}</h4>
-                                <h5 class="company">{testimonial.company}</h5>
+                                <p class="paragraphs">
+                                    {contextExample.paragraph}
+                                </p>   
                             </div>
-                            <p class="paragraphs">
-                                <span class="review">{testimonial.paragraph}</span>
-                                <span class="date">{testimonial.date}</span>
-                            </p>    
                         </div>
                     </div>
                 {/each} 
@@ -173,6 +162,8 @@
 
     .slide_image {
         width: 100%;
+        height: 100%;
+        object-fit: cover;
     }
 
     .slide_carousel_container {
@@ -191,27 +182,20 @@
         display: block;
     }
 
-    .profile {
+    .context_example {
+        position: relative;
         width: 100%;
-        max-width: 12rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.125rem;
-        float: left;
-        padding: 0 0.5rem 0.2rem 0;
+        height: 32rem;
     }
 
-    .review {
-        padding: 0;
+    .paragraphs {
+        position: absolute;
+        background-color: rgb(244,254,242, 0.75);
+        bottom: 0;
+        left: 0;
+        right: 0;
         margin: 0;
-        display: block;
-    }
-
-    .date {
-        padding: 0.5rem 0 0 0;
-        margin: 0;
-        font-style: italic;
-        display: block;
+        padding: 0.5rem 1rem;
     }
 
     .embla {
@@ -331,13 +315,22 @@
         background-color: #F4FEF2; 
     }
 
+    @media screen and (max-width: 1440px) {
+        .context_example {
+            height: 26rem;
+        }
+    }
+
     @media screen and (max-width: 1080px) {
+        .context_example {
+            height: 20rem;
+        }
     }
 
     @media (max-width: 750px) {
 
-        .profile {
-            max-width: 8rem;
+        .context_example {
+            height: 16rem;
         }
 
         .slide_container {
@@ -345,7 +338,7 @@
         }
 
         .arrows {
-            padding: 0.5rem;
+            padding: 0rem;
         }
 
         .arrow_button {
