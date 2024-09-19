@@ -255,11 +255,7 @@
     let caseStudiesFrameWidth: number = 0;
 
     $: if (caseStudiesFrameElement) {
-        if (caseStudiesFrameElement.scrollLeft === 0) {
-            prevCaseStudiesBtnEnabled = false;
-        } else if (caseStudiesFrameElement.scrollLeft > 0) {
-            prevCaseStudiesBtnEnabled = true;
-        }
+
         if (caseStudiesFrameElement.scrollWidth === caseStudiesFrameWidth) {
             nextCaseStudiesBtnEnabled = false;
         }
