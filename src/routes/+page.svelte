@@ -255,7 +255,6 @@
     let caseStudiesFrameWidth: number = 0;
 
     $: if (caseStudiesFrameElement) {
-
         if (caseStudiesFrameElement.scrollWidth === caseStudiesFrameWidth) {
             nextCaseStudiesBtnEnabled = false;
         }
@@ -271,7 +270,7 @@
 
     const handleCaseStudiesScroll = () => {
         caseStudiesScrollLeftPosition = caseStudiesFrameElement.scrollLeft;
-        if (caseStudiesFrameElement.scrollWidth >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+        if (caseStudiesFrameElement.scrollWidth -1 >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
             nextCaseStudiesBtnEnabled = true;
         } else {
             nextCaseStudiesBtnEnabled = false;
@@ -280,12 +279,12 @@
 
     const handleWindowResize = () => {
         caseStudiesScrollLeftPosition = caseStudiesFrameElement.scrollLeft;
-        if (caseStudiesFrameElement.scrollWidth >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+        if (caseStudiesFrameElement.scrollWidth - 1 >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
             nextCaseStudiesBtnEnabled = true;
         } else {
             nextCaseStudiesBtnEnabled = false;
         }
-        if (caseStudiesFrameElement.scrollWidth === caseStudiesFrameWidth) {
+        if (caseStudiesFrameElement.scrollWidth <= caseStudiesFrameWidth) {
             nextCaseStudiesBtnEnabled = false;
         }
     }
