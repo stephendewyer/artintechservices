@@ -251,17 +251,17 @@
     let prevCaseStudiesBtnEnabled: boolean = true;
     let nextCaseStudiesBtnEnabled: boolean = true;
 
-    let caseStudiesInnerElement: HTMLElement;
     let caseStudiesFrameElement: HTMLElement;
-
     let caseStudiesFrameWidth: number = 0;
-    let caseStudiesInnerWidth: number = 0;
 
     $: if (caseStudiesFrameElement) {
         if (caseStudiesFrameElement.scrollLeft === 0) {
-            console.log("case studies element scrolled to beginning")
+            prevCaseStudiesBtnEnabled = false;
         } else if (caseStudiesFrameElement.scrollLeft > 0) {
-            console.log("case studies element scroll not at beginning")
+            prevCaseStudiesBtnEnabled = true;
+        }
+        if (caseStudiesFrameElement.scrollWidth === caseStudiesFrameWidth) {
+            nextCaseStudiesBtnEnabled = false;
         }
     }
 
@@ -287,6 +287,9 @@
         if (caseStudiesFrameElement.scrollWidth >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
             nextCaseStudiesBtnEnabled = true;
         } else {
+            nextCaseStudiesBtnEnabled = false;
+        }
+        if (caseStudiesFrameElement.scrollWidth === caseStudiesFrameWidth) {
             nextCaseStudiesBtnEnabled = false;
         }
     }
@@ -343,8 +346,6 @@
             class="case_studies_container"
         >
             <div 
-                bind:clientWidth={caseStudiesInnerWidth}
-                bind:this={caseStudiesInnerElement}
                 class="case_studies_inner"
             >
                 {#each caseStudyCards as caseStudy, i}
