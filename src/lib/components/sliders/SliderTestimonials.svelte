@@ -2,8 +2,8 @@
     import EmblaCarouselSvelte from "embla-carousel-svelte";
     import type { EmblaCarouselType, EmblaOptionsType } from 'embla-carousel';
     import Autoplay from "embla-carousel-autoplay";
-    import ArrowLeft from "$lib/images/arrows/arrow_left.svg?raw";
-    import ArrowRight from "$lib/images/arrows/arrow_right.svg?raw";
+    import ArrowButtonNext from "$lib/components/buttons/ArrowButtonNext.svelte";
+    import ArrowButtonPrevious from "$lib/components/buttons/ArrowButtonPrevious.svelte";
     import SuzanneContiProfile from "$lib/images/testimonials/Suzanne_Conti.jpg";
     import HollieGreeneRottmanProfile from "$lib/images/testimonials/Hollie_Greene_Rottman.jpg";
     import { onDestroy } from 'svelte';
@@ -53,9 +53,9 @@
     const onSelect = (emblaApi: EmblaCarouselType): void => {
         if (!emblaApi) {
             return;
-        };
+        }
         selectedIndex = emblaApi.selectedScrollSnap();
-    };
+    }
 
     let prevBtnEnabled: boolean = false;
     let nextBtnEnabled: boolean = false;
@@ -65,69 +65,62 @@
     function onInit(event: { detail: EmblaCarouselType }) {
         emblaApi = event.detail;
         // console.log(emblaApi.slideNodes()); // Access API
-        emblaApi.on("select", onSelect);
+        emblaApi.on("select", onSelect)
         if (emblaApi.canScrollNext()) {
             nextBtnEnabled = true;
         } else {
             nextBtnEnabled = false;
-        };
+        }
         if (emblaApi.canScrollPrev()) {
             prevBtnEnabled = true;
         } else {
             prevBtnEnabled = false;
-        };
+        }
         scrollSnaps = emblaApi.scrollSnapList();
-        
-    };
+    }
 
     onDestroy(() => {
-        emblaApi?.destroy();
-    });
+        emblaApi?.destroy()
+    })
 
     const onNavButtonClick = (emblaApi: EmblaCarouselType) => {
         const autoplay: any = emblaApi?.plugins()?.autoplay;
-        autoplay.reset();
-    };
+        autoplay.reset()
+    }
 
-    const scrollPreviousClickHandler = () => {
+    let scrollPreviousClicked: boolean = false;
+
+    $: if (scrollPreviousClicked) {
         emblaApi.scrollPrev();
         onNavButtonClick(emblaApi);
-    };
+        scrollPreviousClicked = false;
+    }
 
-    const scrollNextClickHandler = () => {
+    let scrollNextClicked: boolean = false;
+
+    $: if (scrollNextClicked) {
         emblaApi.scrollNext();
         onNavButtonClick(emblaApi);
-    };
+        scrollNextClicked = false;
+    }
 
     const scrollTo = (index: number) => {
         emblaApi.scrollTo(index);
         const autoplay: any = emblaApi?.plugins()?.autoplay;
         autoplay.reset();
-    };
+    }
 
 </script>
 <div class="slide_carousel_container">
     <div class="arrows">
-        <button
-            on:click={() => scrollPreviousClickHandler()} 
-            on:keyup={() => scrollPreviousClickHandler()} 
-            disabled={!prevBtnEnabled} 
-            class="arrow_button"
-        >
-            <div class="arrow_container">
-                {@html ArrowLeft}
-            </div>
-        </button>
-        <button
-            on:click={() => scrollNextClickHandler()} 
-            on:keyup={() => scrollNextClickHandler()} 
-            disabled={!nextBtnEnabled} 
-            class="arrow_button"
-        >
-            <div class="arrow_container">
-                {@html ArrowRight}
-            </div>
-        </button>
+        <ArrowButtonPrevious
+            bind:arrowPrevClicked={scrollPreviousClicked}
+            prevBtnEnabled={prevBtnEnabled}
+        />
+        <ArrowButtonNext
+            bind:arrowNextClicked={scrollNextClicked}
+            nextBtnEnabled={nextBtnEnabled}
+        />
     </div>
     <div class="slide_container">
         <div 
@@ -236,35 +229,6 @@
         background: transparent;
     }
 
-    .arrow_button {
-        position: relative;
-        padding: 1rem;
-        background: none;
-        color: #838b6a;
-        fill: #838b6a;
-        background-color: rgb(244,254,242, 1);
-        border: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        cursor: pointer;
-    }
-
-    .arrow_container {
-        width: 1rem;
-        height: 1rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: color 0.3s linear, fill 0.3s linear;
-    }
-
-    .arrow_button:hover > .arrow_container {
-        color: #d79679;
-        fill: #d79679;
-    }
-
     .embla__container {
         display: flex;
     }
@@ -346,14 +310,6 @@
 
         .arrows {
             padding: 0.5rem;
-        }
-
-        .arrow_button {
-            padding: 0.75rem;
-        }
-
-        .arrow_container {
-            min-width: 0.75rem;
         }
 
         .embla__dots {

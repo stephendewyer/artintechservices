@@ -27,6 +27,8 @@
     import SuzanneContiQuiltsDesktopAndMobilePrototypes from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_Quilts_prototypes.png";
     import JoyfoodlyDesktopAndMobilePrototypes from "$lib/images/case_studies/Joyfoodly_website/reduced/Joyfoodly_prototypes.png";
     import { onMount } from "svelte";
+    import ArrowButtonNext from "$lib/components/buttons/ArrowButtonNext.svelte";
+    import ArrowButtonPrevious from "$lib/components/buttons/ArrowButtonPrevious.svelte";
 
     const caseStudyCards: CaseStudyCard[] = [
         {
@@ -244,7 +246,70 @@
         setTimeout(() => introVisible = true, 300);
     })
 
+    let scrollCaseStudiesPreviousClicked: boolean = false;
+    let scrollCaseStudiesNextClicked: boolean = false;
+    let prevCaseStudiesBtnEnabled: boolean = true;
+    let nextCaseStudiesBtnEnabled: boolean = true;
+
+    let caseStudiesInnerElement: HTMLElement;
+    let caseStudiesFrameElement: HTMLElement;
+
+    let caseStudiesFrameWidth: number = 0;
+    let caseStudiesInnerWidth: number = 0;
+
+    $: if (caseStudiesFrameElement) {
+        if (caseStudiesFrameElement.scrollLeft === 0) {
+            console.log("case studies element scrolled to beginning")
+        } else if (caseStudiesFrameElement.scrollLeft > 0) {
+            console.log("case studies element scroll not at beginning")
+        }
+    }
+
+    let caseStudiesScrollLeftPosition: number = 0;
+
+    $: if (caseStudiesScrollLeftPosition === 0) {
+        prevCaseStudiesBtnEnabled = false;
+    } else {
+        prevCaseStudiesBtnEnabled = true;
+    }
+
+    const handleCaseStudiesScroll = () => {
+        caseStudiesScrollLeftPosition = caseStudiesFrameElement.scrollLeft;
+        if (caseStudiesFrameElement.scrollWidth >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+            nextCaseStudiesBtnEnabled = true;
+        } else {
+            nextCaseStudiesBtnEnabled = false;
+        }
+    }
+
+    const handleWindowResize = () => {
+        caseStudiesScrollLeftPosition = caseStudiesFrameElement.scrollLeft;
+        if (caseStudiesFrameElement.scrollWidth >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+            nextCaseStudiesBtnEnabled = true;
+        } else {
+            nextCaseStudiesBtnEnabled = false;
+        }
+    }
+
+    $: if (scrollCaseStudiesPreviousClicked) {
+        if (caseStudiesScrollLeftPosition > 0) {
+            caseStudiesFrameElement.scrollLeft = caseStudiesScrollLeftPosition - (caseStudiesFrameWidth/2);
+        }
+        scrollCaseStudiesPreviousClicked = false;
+    }
+
+    $: if (scrollCaseStudiesNextClicked) {
+        if (caseStudiesScrollLeftPosition < (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+            caseStudiesFrameElement.scrollLeft = caseStudiesScrollLeftPosition + (caseStudiesFrameWidth/2);
+        }
+        scrollCaseStudiesNextClicked = false;
+    }
+
 </script>
+
+<svelte:window 
+    on:resize={handleWindowResize}
+/>
 
 <svelte:head>
     <title>Art in Tech Services - providing creative digital services to help businesses and communities</title>
@@ -271,12 +336,33 @@
         case studies
     </h2>
     <div class="case_studies_section">
-        <div class="case_studies_container">
-            <div class="case_studies_inner">
+        <div 
+            bind:clientWidth={caseStudiesFrameWidth}
+            on:scroll={handleCaseStudiesScroll}
+            bind:this={caseStudiesFrameElement}
+            class="case_studies_container"
+        >
+            <div 
+                bind:clientWidth={caseStudiesInnerWidth}
+                bind:this={caseStudiesInnerElement}
+                class="case_studies_inner"
+            >
                 {#each caseStudyCards as caseStudy, i}
                     <CaseStudyCardElement caseStudyCardData={caseStudy} />
                 {/each}
             </div>
+        </div>
+        <div class="arrow_button_previous_case_studies">
+            <ArrowButtonPrevious
+                bind:arrowPrevClicked={scrollCaseStudiesPreviousClicked}
+                prevBtnEnabled={prevCaseStudiesBtnEnabled}
+            />
+        </div>
+        <div class="arrow_button_next_case_studies">
+            <ArrowButtonNext
+                bind:arrowNextClicked={scrollCaseStudiesNextClicked}
+                nextBtnEnabled={nextCaseStudiesBtnEnabled}
+            />
         </div>
     </div>
     <div class="services_container">
@@ -377,21 +463,47 @@
     }
 
     .case_studies_section {
-        padding: 0 1rem 1rem 1rem;
+        position: relative;
+        margin: 0 1rem 1rem 1rem;
     }
 
     .case_studies_container {
+        position: relative;
         width: 100%;
         max-width: 1440px;
         margin: 0 auto;
         overflow-x: auto;
+        scroll-behavior: smooth;
     }
 
     .case_studies_inner {
         gap: 1rem;
         display: flex;
         flex-direction: row;
-        padding: 0 1rem 1rem 1rem;
+        padding: 0 0 1rem 0;
+    }
+
+    .arrow_button_previous_case_studies {
+        position: absolute;
+        left: 0;
+        right: auto;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        left: auto;
+    }
+
+    .arrow_button_next_case_studies {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        left: auto;
     }
 
     .services_container {
@@ -434,6 +546,8 @@
         padding: 1rem 1rem 4rem 1rem;
         gap: 1rem;
     }
+
+    
 
     @media screen and (max-width: 1440px) {
         .banner_image {
