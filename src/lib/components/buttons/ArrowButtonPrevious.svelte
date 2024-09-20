@@ -27,12 +27,10 @@
     #arrow_left_button {
         position: relative;
         padding: 1rem;
-        background: none;
         color: #838b6a;
         fill: #838b6a;
         background-color: rgb(244,254,242, 1);
         border: none;
-        display: flex;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
@@ -41,10 +39,11 @@
     }
 
     .arrow_button_disabled {
-        opacity: 0;
+        display: none;
     }
 
     .arrow_button_active {
+        display: flex;
         opacity: 100%;
     }
 
