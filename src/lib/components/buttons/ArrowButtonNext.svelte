@@ -25,9 +25,7 @@
 <style>
     #arrow_right_button {
         margin: 0;
-    }
-
-    .arrow_button_active {
+        transition: opacity 0.2s linear;
         position: relative;
         padding: 1rem;
         background: none;
@@ -41,8 +39,12 @@
         cursor: pointer;
     }
 
+    .arrow_button_active {
+        opacity: 100%;
+    }
+
     .active_button_disabled {
-        display: none;
+        opacity: 0;
     }
 
     .arrow_container {
@@ -58,14 +60,6 @@
     .arrow_button_active:hover > .arrow_container {
         color: #d79679;
         fill: #d79679;
-    }
-
-    @media screen and (max-width: 1440px) {
-
-    }
-
-    @media screen and (max-width: 1080px) {
-
     }
 
     @media screen and (max-width: 720px) {

@@ -72,7 +72,7 @@
 
     const handleCaseStudiesScroll = () => {
         caseStudiesScrollLeftPosition = caseStudiesFrameElement.scrollLeft;
-        if (caseStudiesFrameElement.scrollWidth -1 >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+        if (caseStudiesFrameElement.scrollWidth -1 > Math.ceil(caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
             nextCaseStudiesBtnEnabled = true;
         } else {
             nextCaseStudiesBtnEnabled = false;
@@ -81,7 +81,7 @@
 
     const handleWindowResize = () => {
         caseStudiesScrollLeftPosition = caseStudiesFrameElement.scrollLeft;
-        if (caseStudiesFrameElement.scrollWidth - 1 >= (caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
+        if (caseStudiesFrameElement.scrollWidth - 1 > Math.ceil(caseStudiesScrollLeftPosition + caseStudiesFrameWidth)) {
             nextCaseStudiesBtnEnabled = true;
         } else {
             nextCaseStudiesBtnEnabled = false;

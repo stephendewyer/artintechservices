@@ -25,14 +25,6 @@
 <style>
 
     #arrow_left_button {
-        margin: 0;
-    }
-
-    .arrow_button_disabled {
-        display: none;
-    }
-
-    .arrow_button_active {
         position: relative;
         padding: 1rem;
         background: none;
@@ -44,6 +36,16 @@
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
+        margin: 0;
+        transition: opacity 0.2s linear;
+    }
+
+    .arrow_button_disabled {
+        opacity: 0;
+    }
+
+    .arrow_button_active {
+        opacity: 100%;
     }
 
     .arrow_container {
@@ -59,14 +61,6 @@
     .arrow_button_active:hover > .arrow_container {
         color: #d79679;
         fill: #d79679;
-    }
-
-    @media screen and (max-width: 1440px) {
-
-    }
-
-    @media screen and (max-width: 1080px) {
-
     }
 
     @media screen and (max-width: 720px) {

@@ -184,7 +184,7 @@
 
     const handleWindowResize = () => {
         servicesScrollLeftPosition = servicesFrameElement.scrollLeft;
-        if (servicesFrameElement.scrollWidth - 1 >= (servicesScrollLeftPosition + servicesFrameWidth)) {
+        if (servicesFrameElement.scrollWidth - 1 > Math.ceil(servicesScrollLeftPosition + servicesFrameWidth)) {
             nextServicesBtnEnabled = true;
         } else {
             nextServicesBtnEnabled = false;
@@ -196,7 +196,7 @@
 
     const handleServicesScroll = () => {
         servicesScrollLeftPosition = servicesFrameElement.scrollLeft;
-        if (servicesFrameElement.scrollWidth -1 >= (servicesScrollLeftPosition + servicesFrameWidth)) {
+        if (servicesFrameElement.scrollWidth - 1 > Math.ceil(servicesScrollLeftPosition + servicesFrameWidth)) {
             nextServicesBtnEnabled = true;
         } else {
             nextServicesBtnEnabled = false;
