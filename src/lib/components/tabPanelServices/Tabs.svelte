@@ -47,7 +47,7 @@
 
     const handleTabsScroll = () => {
         tabsScrollLeftPosition = tabsFrameElement.scrollLeft;
-        if (tabsFrameElement.scrollWidth - 1 > (Math.ceil(tabsScrollLeftPosition + tabsFrameWidth))) {
+        if (tabsFrameElement.scrollWidth - 1 > Math.ceil(tabsScrollLeftPosition + tabsFrameWidth)) {
             console.log("scrolled to end")
             nextTabsBtnEnabled = true;
         } else {
@@ -60,7 +60,7 @@
 
     const handleWindowResize = () => {
         tabsScrollLeftPosition = tabsFrameElement.scrollLeft;
-        if (tabsFrameElement.scrollWidth - 1 > (Math.ceil(tabsScrollLeftPosition + tabsFrameWidth))) {
+        if (tabsFrameElement.scrollWidth - 1 > Math.ceil(tabsScrollLeftPosition + tabsFrameWidth)) {
             nextTabsBtnEnabled = true;
         } else {
             nextTabsBtnEnabled = false;
