@@ -49,7 +49,6 @@
 </a>
 <style>
 
-
     .project_card {
         position: relative;
         width: 32%;
