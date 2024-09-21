@@ -99,11 +99,23 @@
     <h2 class="heading_02">
         why choose us?
     </h2>
-    <p class="why_choose_us_paragraphs">
-        We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities.<br/><br/>
-        Whereas traditional digital technology companies separate art from engineering, we combine the two. We use state-of-the-art technologies in creative ways that improve human experiences of technology.<br /><br />
-        Working with us means working with some of the top experts in art and digital technology in the world. Our staff work in the United States and have been internationally recognized for their work. We are committed to growing talent in the United States. We invest in training our staff in state-of-the-art technologies.
-    </p>
+    <ol class="why_choose_us_paragraphs">
+        <li>
+            We offer superior digital design because we combine the best of art and technology.  We understand human desire and state-of-the-art digital technology.  
+        </li>
+        <li>
+            We&#39;ll help provide digital solutions to problems you know you had in addition to helping you discover new and valuable ways to help your business and community.  We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities. 
+        </li>
+        <li>
+            We&#39;re committed to making a positive impact.  We do all our work in-house from the United States.  We invest in training our staff in state-of-the-art technologies.  Working with us means you are working with a reliable partner who can guarantee quality far into the future.
+        </li>
+        <li>
+            Working with us means working with some of the top experts in art and digital technology in the world.  We can guarantee superior quality of our products because of the quality of our staff, many of whom are nationally and internationally recognized for their work.
+        </li>
+        <li>
+            We&#39;re not a typical digital technology company.  We&#39;re on a mission to make digital technology work better for humans.
+        </li>
+    </ol>
     <h2 class="heading_02">
         testimonials
     </h2>
