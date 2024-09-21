@@ -34,6 +34,7 @@
         border: none;
         flex-direction: column;
         justify-content: center;
+        cursor: pointer;
     }
 
     .arrow_button_active {
