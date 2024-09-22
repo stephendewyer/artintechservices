@@ -119,7 +119,7 @@
                 Working with us means working with some of the top experts in art and digital technology in the world.  We can guarantee superior quality of our products because of the quality of our staff, many of whom are nationally and internationally recognized for their work.
             </li>
             <li>
-                <h4>Technology serving humans (not vice versa)</h4>
+                <h4>Technology serving humans (not <span style="font-style: italic;">vice versa</span>)</h4>
                 We&#39;re not a typical digital technology company.  We&#39;re on a mission to make digital technology work better for humans.
             </li>
         </ol>
