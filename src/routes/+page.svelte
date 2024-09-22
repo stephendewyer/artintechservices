@@ -89,37 +89,47 @@
         case studies
     </h2>
     <ScrollableCaseStudies />
-    <div class="services_section">
+    <section class="services_section">
         <img class="services_background_image" src={ WaterfallGalaxy} alt="waterfall with galactic pool"/>
         <h2 class="heading_02" style="color: #F4FEF2; position: relative">
             services we provide
         </h2>
         <ScrollableServices />
-    </div>
-    <h2 class="heading_02">
-        why choose us?
-    </h2>
-    <ol class="why_choose_us_paragraphs">
-        <li>
-            We offer superior digital design because we combine the best of art and technology.  We understand human desire and state-of-the-art digital technology.  
-        </li>
-        <li>
-            We&#39;ll help provide digital solutions to problems you know you had in addition to helping you discover new and valuable ways to help your business and community.  We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities. 
-        </li>
-        <li>
-            We&#39;re committed to making a positive impact.  We do all our work in-house from the United States.  We invest in training our staff in state-of-the-art technologies.  Working with us means you are working with a reliable partner who can guarantee quality far into the future.
-        </li>
-        <li>
-            Working with us means working with some of the top experts in art and digital technology in the world.  We can guarantee superior quality of our products because of the quality of our staff, many of whom are nationally and internationally recognized for their work.
-        </li>
-        <li>
-            We&#39;re not a typical digital technology company.  We&#39;re on a mission to make digital technology work better for humans.
-        </li>
-    </ol>
-    <h2 class="heading_02">
-        testimonials
-    </h2>
-    <SliderTestimonials />
+    </section>
+    <section class="why_choose_us_section">
+        <h2 class="heading_02">
+            why choose us?
+        </h2>
+        <h3 class="work_with_us_intro">Work with us to get:</h3>
+        <ol class="why_choose_us_paragraphs">
+            <li>
+                <h4>Superior digital design capabilities</h4>
+                We offer superior digital design because we combine the best of art and technology.  We understand human desire and state-of-the-art digital technology.  
+            </li>
+            <li>
+                <h4>Creative problem solving</h4>
+                We&#39;ll help provide digital solutions to problems you know you had in addition to helping you discover new and valuable ways to help your business and community.  We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities. 
+            </li>
+            <li>
+                <h4>Local support</h4>
+                We&#39;re committed to making a positive impact.  We do all our work in-house from the United States.  We invest in training our staff in state-of-the-art technologies.  Working with us means you are working with a reliable partner who can guarantee quality far into the future.
+            </li>
+            <li>
+                <h4>World-class expertise</h4>
+                Working with us means working with some of the top experts in art and digital technology in the world.  We can guarantee superior quality of our products because of the quality of our staff, many of whom are nationally and internationally recognized for their work.
+            </li>
+            <li>
+                <h4>Technology serving humans (not vice versa)</h4>
+                We&#39;re not a typical digital technology company.  We&#39;re on a mission to make digital technology work better for humans.
+            </li>
+        </ol>
+    </section>
+    <section class="testimonials_section">
+        <h2 class="heading_02">
+            testimonials
+        </h2>
+        <SliderTestimonials />
+    </section>
     <h2 class="heading_02">
         how to work with us
     </h2>
@@ -207,11 +217,30 @@
         object-position: center;
     }
 
-    .why_choose_us_paragraphs {
+    .why_choose_us_section {
         width: 100%;
         max-width: 40rem;
         margin: 0 auto;
         padding: 0 1rem;
+    }
+
+    .work_with_us_intro {
+        padding: 0 0 1rem 0;
+    }
+
+    .why_choose_us_paragraphs {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .testimonials_section {
+        width: 100%;
+        padding: 0 1rem;
+        display: flex;
+        flex-direction: column;
     }
 
     .actions {
@@ -234,6 +263,14 @@
         .saguaro_cactus {
             padding-top: 4rem;
         }
+
+        .work_with_us_intro {
+            padding: 0 0 0.75rem 0;
+        }
+
+        .why_choose_us_paragraphs {
+            gap: 0.75rem;
+        }
     }
 
     @media screen and (max-width: 1080px) {
@@ -247,6 +284,14 @@
 
         .saguaro_cactus {
             padding-top: 8rem;
+        }
+
+        .work_with_us_intro {
+            padding: 0 0 0.5rem 0;
+        }
+
+        .why_choose_us_paragraphs {
+            gap: 0.5rem;
         }
     }
 

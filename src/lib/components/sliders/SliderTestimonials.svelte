@@ -309,7 +309,7 @@
         }
 
         .arrows {
-            padding: 0.5rem;
+            padding: 0rem;
         }
 
         .embla__dots {
