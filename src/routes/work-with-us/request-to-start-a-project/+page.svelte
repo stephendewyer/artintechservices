@@ -33,7 +33,6 @@
         service: string;
         image: string;
         requested: boolean;
-
     };
 
     const services = [
@@ -100,6 +99,7 @@
     let company: string = "";
     let phone: E164Number | null = null;
     let URL: string = "";
+    let nameProject: string = "";
     let aboutProject: string = "";
     let projectStartDate: string = "";
     let projectEndDate: string = "";
@@ -120,7 +120,7 @@
     let visualDesign: boolean = false;
 
     $: $RequestedServicesStore.forEach(requestedService => {
-        if (requestedService.service === "artifical intelligence") {
+        if (requestedService.service === "artificial intelligence") {
             artificialIntelligence = requestedService.requested;
         } else if (requestedService.service === "brand identity design") {
             brandIdentityDesign = requestedService.requested;
@@ -146,6 +146,7 @@
     let companyIsValid: boolean = true;
     let phoneIsValid: boolean = true;
     let URLisValid: boolean = true;
+    let nameProjectIsValid: boolean = true;
     let aboutProjectIsValid: boolean = true;
     let projectStartDateIsValid: boolean = true;
     let projectEndDateIsValid: boolean = true;
@@ -186,6 +187,7 @@
         company: string,
         phone: E164Number | null,
         URL: string,
+        nameProject: string,
         aboutProject: string,
         projectStartDate: string,
         projectEndDate: string,
@@ -214,6 +216,7 @@
                 company,
                 phone,
                 URL,
+                nameProject,
                 aboutProject,
                 projectStartDate,
                 projectEndDate,
@@ -252,6 +255,7 @@
                 company,
                 phone,
                 URL,
+                nameProject,
                 aboutProject,
                 projectStartDate,
                 projectEndDate,
@@ -278,6 +282,7 @@
                 company = "";
                 phone = null;
                 URL = "";
+                nameProject = "";
                 aboutProject = "";
                 projectStartDate = "";
                 projectEndDate = "";
@@ -319,6 +324,12 @@
                 } else if (phone !== "" && phone !== null) {
                     phoneIsValid = true;
                 };
+
+                if (nameProject === "") {
+                    nameProjectIsValid = false;
+                } else if (nameProject !== "") {
+                    nameProjectIsValid = true;
+                }
 
                 if (aboutProject === "") {
                     aboutProjectIsValid = false;
@@ -520,6 +531,20 @@
             about your project
         </h2> 
         <div class="inputs_row">
+            <TextInput
+                placeholder="web application for ..."
+                inputID="project_name"
+                inputName="project_name"
+                inputLabel={true}
+                bind:textInputValue={nameProject}
+                bind:isValid={nameProjectIsValid}
+                textInputErrorMessage="project name required"
+                required={true}
+            >
+                what is the name of your project?*
+            </TextInput>
+        </div>
+        <div class="inputs_row">
             <TextArea
                 placeholder="I want a web application to ..."
                 inputID="about_project"
@@ -621,6 +646,8 @@
                 >
                     document file
                 </DocumentFileInput>
+                <p class="constraints">* file formats accepted: PDF, pdf</p>
+                <p class="constraints">* maximum file size: 2MB</p>
                 {#if (document)}
                     <div class="project_document_container">
                         <div class="document_icon_and_label">
@@ -636,8 +663,7 @@
                         </div>
                     </div>
                 {/if}
-                <p class="constraints">* file formats accepted: PDF, pdf</p>
-                <p class="constraints">* maximum file size: 2MB</p>
+                
             </div>
         </div>
         <p>

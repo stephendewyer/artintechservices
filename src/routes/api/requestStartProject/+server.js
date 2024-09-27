@@ -37,6 +37,7 @@ export async function POST({request}) {
     const company = data.company;
     const phoneNumber = data.phone;
     const website = data.URL;
+    const nameProject = data.nameProject;
     const aboutProject = data.aboutProject;
     const projectStartDate = data.projectStartDate;
     const projectEndDate = data.projectEndDate;
@@ -53,6 +54,7 @@ export async function POST({request}) {
         !nameLast ||
         !email ||
         !phoneNumber ||
+        !nameProject ||
         !aboutProject ||
         !projectStartDate ||
         !projectEndDate ||
@@ -181,7 +183,8 @@ export async function POST({request}) {
         user_experience_design,
         videography,
         visual_design,
-        status
+        status,
+        project_name
     ) VALUES (
         ${imageID},
         ${documentID},
@@ -203,7 +206,8 @@ export async function POST({request}) {
         "${userExperienceDesign}",
         "${videography}",
         "${visualDesign}",
-        "requested"
+        "requested",
+        "${htmlEntities(nameProject)}"
     )`;
 
     await res.query(insertProjectStatement)
@@ -236,6 +240,7 @@ export async function POST({request}) {
             -  company: ${company}<br />
             -  phone number: ${phoneNumber}<br />
             -  URL: ${website}<br />
+            -  project name: ${nameProject}<br />
             -  about project: ${aboutProject}<br />
             -  project start date: ${projectStartDate}<br />
             -  project end date: ${projectEndDate}<br />
@@ -271,6 +276,7 @@ export async function POST({request}) {
         -  company: ${company}<br />
         -  phone number: ${phoneNumber}<br />
         -  URL: ${website}<br />
+        -  project name: ${nameProject}<br />
         -  about project: ${aboutProject}<br />
         -  project start date: ${projectStartDate}<br />
         -  project end date: ${projectEndDate}<br />

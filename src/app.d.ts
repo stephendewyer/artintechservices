@@ -131,6 +131,7 @@ declare global {
 		client_ID: number;
 		image_ID: number;
 		document_ID: number;
+		project_name: string;
 		project_info: string;
 		project_start_date: Date;
 		project_end_date: Date;
@@ -159,6 +160,7 @@ declare global {
 		client_ID: number;
 		consultation_date: Date;
 		consultation_time: string;
+		consultation_topic: string;
 		consultation_reason: string;
 		time_zone: string;
 		date_created: Date;

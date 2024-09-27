@@ -17,6 +17,7 @@ export async function POST({request}) {
     const phoneNumber = data.phone;
     const company = data.company;
     const website = data.URL;
+    const consultationTopic = data.consultationTopic;
     const consultationDate = data.consultationDate;
     const consultationTime = data.consultationTime;
     const consultationTimeZone = data.consultationTimeZone;
@@ -30,6 +31,7 @@ export async function POST({request}) {
         !email ||
         !phoneNumber ||
         !phoneNumber ||
+        !consultationTopic ||
         !consultationDate ||
         !consultationTime ||
         !consultationTimeZone ||
@@ -53,6 +55,7 @@ export async function POST({request}) {
         company,
         phone_number,
         URL,
+        consultation_topic,
         consultation_date,
         consultation_time,
         consultation_reason,
@@ -65,6 +68,7 @@ export async function POST({request}) {
         "${htmlEntities(company)}",
         "${phoneNumber}",
         "${htmlEntities(website)}",
+        "${htmlEntities(consultationTopic)}",
         "${consultationDate}",
         "${consultationTime}",
         "${htmlEntities(consultationReason)}",
@@ -102,6 +106,7 @@ export async function POST({request}) {
             -  company: ${company}<br />
             -  phone number: ${phoneNumber}<br />
             -  URL: ${website}<br />
+            -  consultation topic: ${consultationTopic}<br />
             -  consultation date: ${consultationDate}<br />
             -  consultation time: ${consultationTime}<br />
             -  consultation time zone: ${consultationTimeZone}<br />
@@ -129,6 +134,7 @@ export async function POST({request}) {
         -  company: ${company}<br />
         -  phone number: ${phoneNumber}<br />
         -  URL: ${website}<br />
+        -  consultation topic: ${consultationTopic}<br />
         -  consultation date: ${consultationDate}<br />
         -  consultation time: ${consultationTime}<br />
         -  consultation time zone: ${consultationTimeZone}<br />

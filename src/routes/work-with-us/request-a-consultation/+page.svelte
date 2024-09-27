@@ -13,7 +13,6 @@
     import type { E164Number } from 'svelte-tel-input/types';
     import PhoneInput from "$lib/components/inputs/PhoneInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import TimeInput from "$lib/components/inputs/TimeInput.svelte";
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
@@ -36,6 +35,7 @@
     let phone: E164Number | null = null;
     let company: string = "";
     let URL: string = "";
+    let consultationTopic: string = "";
     let consultationDate: string = "";
     let consultationTime: string = "";
     let consultationTimeZone: string = "";
@@ -47,6 +47,7 @@
     let phoneIsValid: boolean = true;
     let URLisValid: boolean = true;
     let companyIsValid: boolean = true;
+    let consultationTopicIsValid: boolean = true;
     let consultationDateIsValid: boolean = true;
     let consultationTimeIsValid: boolean = true;
     let consultationTimeZoneIsValid: boolean = true;
@@ -63,8 +64,8 @@
             responseItem.success = "";
             responseItem.error = "";
             status: null;
-        }, 4000)
-    };
+        }, 4000);
+    }
 
     async function createConsultationRequest (
         nameFirst: string, 
@@ -73,6 +74,7 @@
         phone: E164Number | null,
         company: string,
         URL: string,
+        consultationTopic: string,
         consultationDate: string,
         consultationTime: string,
         consultationTimeZone: string,
@@ -88,6 +90,7 @@
                 phone,
                 company,
                 URL,
+                consultationTopic,
                 consultationDate,
                 consultationTime,
                 consultationTimeZone,
@@ -99,7 +102,7 @@
         });
         responseItem = await response.json();
         return responseItem;
-    };
+    }
 
     const sendConsultationRequestHandler = async () => {
         pending = true;
@@ -113,26 +116,27 @@
                 phone,
                 company,
                 URL,
+                consultationTopic,
                 consultationDate,
                 consultationTime,
                 consultationTimeZone,
                 consultationReason
-            );
+            )
 
             if (responseItem.success) {
-
                 nameFirst = ""; 
                 nameLast = "";
                 email = "";
                 phone = null;
                 company = "";
                 URL = "";
+                consultationTopic = "";
                 consultationDate = "";
                 consultationTime = "";
                 consultationTimeZone = "";
                 consultationReason = "";
                 goto("/");
-            };
+            }
 
             if (responseItem.error) {
                 if (email === "") {
@@ -141,61 +145,67 @@
                     emailIsValid = false;
                 } else if (email !== "") {
                     emailIsValid = true;
-                };
+                }
 
                 if (nameFirst === "") {
                     nameFirstIsValid = false;
                 } else if (nameFirst !== "") {
                     nameFirstIsValid = true;
-                };
+                }
 
                 if (nameLast === "") {
                     nameLastIsValid = false;
                 } else if (nameLast !== "") {
                     nameLastIsValid = true;
-                };
+                }
 
                 if (phone === "" || phone === null) {
                     phoneIsValid = false;
                 } else if (phone !== "" && phone !== null) {
                     phoneIsValid = true;
-                };
+                }
+
+                if (consultationTopic === "") {
+                    consultationTopicIsValid = false;
+                } else if (consultationTopic !== "") {
+                    consultationTopicIsValid = true;
+                }
 
                 if (consultationDate === "") {
                     consultationDateIsValid = false;
                 } else if (consultationDate !== "") {
                     consultationDateIsValid = true;
-                };
+                }
 
                 if (consultationTime === "") {
                     consultationTimeIsValid = false;
                 } else if (consultationTime !== "") {
                     consultationTimeIsValid = true;
-                };
+                }
 
                 if (consultationTimeZone === "") {
                     consultationTimeZoneIsValid = false;
                 } else if (consultationTimeZone !== "") {
                     consultationTimeZoneIsValid = true;
-                };
+                }
 
                 if (consultationReason === "") {
                     consultationReasonIsValid = false;
                 } else if (consultationReason !== "") {
                     consultationReasonIsValid = true;
-                };
-            };
+                }
+            }
         } catch (error) {
             console.log(error);
-        };
+        }
 
-    };
+    }
 
     let pending: boolean = false;
 
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
-    };
+    }
 
 </script>
 
@@ -250,6 +260,9 @@
             </table>
         </div>
         <h4 class="indicates_required_heading">*indicates required</h4>
+        <h2>
+            how would you like us to contact you?
+        </h2>
         <div class="inputs_row">
             <div class="input_column">
                 <TextInput 
@@ -337,6 +350,23 @@
                     URL
                 </TextInput>
             </div>
+        </div>
+        <h2>
+            about your consultation
+        </h2>
+        <div class="inputs_row">
+            <TextInput 
+                placeholder="need help with software"
+                inputID="consultation_topic"
+                inputName="consultation_topic"
+                inputLabel={true}
+                bind:textInputValue={consultationTopic}
+                bind:isValid={consultationTopicIsValid}
+                textInputErrorMessage="consultation topic required"
+                required={false}
+            >
+                what is your consultation topic?*
+            </TextInput>
         </div>
         <div class="inputs_row">
             <div class="input_column">
