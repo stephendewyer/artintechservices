@@ -12,6 +12,7 @@
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
     import ConsultationForm from "$lib/components/forms/ConsultationForm.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
+    import BackButton from "$lib/components/buttons/BackButton.svelte";
 
     export let data;
 
@@ -125,6 +126,14 @@
 </svelte:head>
 <div class="page">
     <div class="consultation">
+        <a 
+            href="/authenticated-client/client" 
+            class="back_button_container"
+        >
+            <BackButton>
+                back
+            </BackButton>
+        </a>
         <div class="consultation_banner">
             {@html ConsultationIcon}
         </div>
@@ -203,6 +212,7 @@
 <style>
 
     .consultation {
+        position: relative;
         max-width: 60rem;
         width: 100%;
         display: flex;
@@ -211,6 +221,13 @@
         gap: 1rem;
         margin: 0 0 4rem 0;
     }
+
+    .back_button_container {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
     .consultation_banner {
         width: 100%;
         max-width: 20rem;
@@ -267,6 +284,18 @@
     }
 
     @media screen and (max-width: 720px) {
+
+        .consultation {
+            padding: 0 1rem;
+        }
+
+        .back_button_container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
 
         .left_table_column {
             width: 40%;

@@ -202,9 +202,6 @@
             After you request a consultation, a representative from Art in Tech Services will contact you within 48 hours to schedule your consultation.
         </p>
         <div class="buttons_container">
-            <CancelButton bind:cancelClicked={cancelEditConsultation}>
-                cancel
-            </CancelButton>
             <SubmitButton02 disable={false}>
                 {#if (consultation)}
                     update consultation
@@ -212,6 +209,9 @@
                     send request
                 {/if}
             </SubmitButton02>
+            <CancelButton bind:cancelClicked={cancelEditConsultation}>
+                cancel
+            </CancelButton>
         </div>
     </form>
     {#if (pending)}
@@ -233,14 +233,8 @@
     .buttons_container {
         display: flex;
         gap: 1rem;
-        flex-direction: row;
+        flex-direction: column;
         align-items: center;
-    }
-
-    @media screen and (max-width: 720px) {
-        .buttons_container {
-            flex-direction: column-reverse;
-        }
     }
 
 </style>

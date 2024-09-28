@@ -23,6 +23,7 @@
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import { goto } from "$app/navigation";
     import CloseButton from "$lib/components/buttons/CancelSubmitButton.svelte";
+  import BackButton from "$lib/components/buttons/BackButton.svelte";
 
     export let data;
 
@@ -318,7 +319,18 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
-    <form class="form" on:submit|preventDefault={sendClientProjectRequestHandler} >
+    <form 
+        class="form" 
+        on:submit|preventDefault={sendClientProjectRequestHandler} 
+    >
+        <a 
+            href="/authenticated-client/client" 
+            class="back_button_container"
+        >
+            <BackButton>
+                back
+            </BackButton>
+        </a>
         <h1>
             request to start a project
         </h1>
@@ -500,6 +512,22 @@
 </div>
 <style>
 
+    .form {
+        position: relative;
+        width: 100%;
+        max-width: 50rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 1rem;
+    }
+
+    .back_button_container {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
     .services {
         list-style: none;
         padding: 1rem 0;
@@ -622,6 +650,14 @@
     }
 
     @media screen and (max-width: 720px) {
+
+        .back_button_container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+        }
 
         .services {
             list-style: none;

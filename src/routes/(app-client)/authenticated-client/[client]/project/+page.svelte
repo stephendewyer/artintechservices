@@ -13,6 +13,7 @@
     import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import PDFIcon from "$lib/images/icons/document.svg?raw";
+  import BackButton from "$lib/components/buttons/BackButton.svelte";
 
     export let data;
 
@@ -184,6 +185,14 @@
 </svelte:head>
 
 <div class="page">
+    <a 
+        href="/authenticated-client/client" 
+        class="back_button_container"
+    >
+        <BackButton>
+            back
+        </BackButton>
+    </a>
     <img 
         class="project_banner" 
         src={(project?.image_URL) ? project?.image_URL : DefaultProjectImage} 
@@ -294,6 +303,7 @@
 <style>
 
     .project {
+        position: relative;
         width: 100%;
         max-width: 60rem;
         display: flex;
@@ -301,6 +311,15 @@
         align-items: center;
         gap: 1rem;
         margin: 0 0 4rem 0;
+    }
+
+    .back_button_container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start; 
+        padding: 0 0 1rem 0;
     }
 
     .project_banner {

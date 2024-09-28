@@ -337,12 +337,12 @@
         </div>
     </div>
     <div class="buttons_container">
-        <CancelButton bind:cancelClicked={cancelClicked}>
-            cancel
-        </CancelButton>
         <SubmitButton>
             save
         </SubmitButton>
+        <CancelButton bind:cancelClicked={cancelClicked}>
+            cancel
+        </CancelButton>
     </div>
 </form>
 {#if (pending)}
@@ -358,3 +358,14 @@
         {responseItem.success}
     </SuccessFlashMessage>
 {/if}
+
+<style>
+
+    .buttons_container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+    }
+
+</style>

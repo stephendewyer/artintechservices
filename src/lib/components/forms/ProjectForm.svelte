@@ -504,9 +504,6 @@
             After you start a project, a representative from Art in Tech Services will contact you within 48 hours to discuss next steps in your project.  Starting a project is not an agreement.
         </p>
         <div class="buttons_container">
-            <CancelButton bind:cancelClicked={cancelEditProject}>
-                cancel
-            </CancelButton>
             <SubmitButton02 disable={false}>
                 {#if !project}
                     send request
@@ -514,6 +511,9 @@
                     update project
                 {/if}
             </SubmitButton02>
+            <CancelButton bind:cancelClicked={cancelEditProject}>
+                cancel
+            </CancelButton>
         </div>
     </form>
     {#if (pending)}
@@ -607,6 +607,13 @@
         position: absolute;
         right: 1rem;
         top: 1rem;
+    }
+
+    .buttons_container {
+        display: flex;
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
     }
 
     @media screen and (max-width: 1440px) {

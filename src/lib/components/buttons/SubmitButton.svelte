@@ -67,10 +67,9 @@
         fill: #DEDDD5;
     }
 
-    
-
     button[disabled] {
-        display: none;
+        pointer-events: none;
+        opacity: 50%;
     }
 
     @media screen and (max-width: 1440px) {

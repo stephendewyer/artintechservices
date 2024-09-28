@@ -69,6 +69,10 @@
             border-width: 2px;
         }
 
+        .add_button:hover {
+            border-width: 2px;
+        }
+
         .plus_sign {
             width: 0.4rem;
         }

@@ -14,6 +14,7 @@
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
     import { goto } from "$app/navigation";
+  import BackButton from "$lib/components/buttons/BackButton.svelte";
     // sort time zones by alphabetical order
 
     export let data;
@@ -145,48 +146,57 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
-    <form class="form" on:submit|preventDefault={sendClientConsultationRequestHandler}>
+    <form 
+        class="form" 
+        on:submit|preventDefault={sendClientConsultationRequestHandler}
+    >
+        <a 
+            href="/authenticated-client/client" 
+            class="back_button_container"
+        >
+            <BackButton>
+                back
+            </BackButton>
+        </a>
         <h1>
             request a consultation 
         </h1>
-        <div class="consultation_info">
-            <div class="consultation_icon">
-                {@html ConsultationIcon}
-            </div>
-            <p>We recommend scheduling a consultation before starting a project.  During a consultation, we help you plan your project for success.</p>
-            <table>
-                <colgroup>
-                    <col style="width:30%">
-                    <col style="width:70%">
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td class="table_heading">
-                            hours:
-                        </td>
-                        <td>
-                            9 a.m. and 4 p.m. U.S. Mountain Standard Time Monday through Friday except for holidays.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table_heading">
-                            fee:
-                        </td>
-                        <td>
-                            Your first consultation is free.  Consultations after your first consultation are $65 per hour.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table_heading">
-                            location:
-                        </td>
-                        <td>
-                            Remote and in-person.  Travel expenses are added for in-person.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="consultation_icon">
+            {@html ConsultationIcon}
         </div>
+        <p>We recommend scheduling a consultation before starting a project.  During a consultation, we help you plan your project for success.</p>
+        <table>
+            <colgroup>
+                <col style="width:30%">
+                <col style="width:70%">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td class="table_heading">
+                        hours:
+                    </td>
+                    <td>
+                        9 a.m. and 4 p.m. U.S. Mountain Standard Time Monday through Friday except for holidays.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_heading">
+                        fee:
+                    </td>
+                    <td>
+                        Your first consultation is free.  Consultations after your first consultation are $65 per hour.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_heading">
+                        location:
+                    </td>
+                    <td>
+                        Remote and in-person.  Travel expenses are added for in-person.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <h4 class="indicates_required_heading">*indicates required</h4>
         <div class="inputs_row">
             <div class="input_column">
@@ -269,12 +279,20 @@
 </div>
 <style>
 
-    .consultation_info {
+    .form {
+        position: relative;
         width: 100%;
         max-width: 50rem;
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 0 1rem;
+    }
+
+    .back_button_container {
+        position: absolute;
+        left: 0;
+        top: 0;
     }
 
     .consultation_icon {
@@ -313,8 +331,12 @@
     }
 
     @media screen and (max-width: 720px) {
-        .buttons_container {
-            flex-direction: column-reverse;
+        .back_button_container {
+            position: relative;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
         }
     }
 
