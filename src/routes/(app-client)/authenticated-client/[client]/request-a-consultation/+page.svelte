@@ -14,7 +14,9 @@
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
     import { goto } from "$app/navigation";
-  import BackButton from "$lib/components/buttons/BackButton.svelte";
+    import BackButton from "$lib/components/buttons/BackButton.svelte";
+    import TextInput from "$lib/components/inputs/TextInput.svelte";
+
     // sort time zones by alphabetical order
 
     export let data;
@@ -34,11 +36,13 @@
     let consultationDate: string = "";
     let consultationTime: string = "";
     let consultationTimeZone: string = "";
+    let consultationTopic: string = "";
     let consultationReason: string = "";
 
     let consultationDateIsValid: boolean = true;
     let consultationTimeIsValid: boolean = true;
     let consultationTimeZoneIsValid: boolean = true;
+    let consultationTopicIsValid: boolean = true;
     let consultationReasonIsValid: boolean = true;
 
     let responseItem: ResponseObj = {
@@ -53,13 +57,14 @@
             responseItem.error = "";
             status: null;
         }, 4000)
-    };
+    }
 
     async function createConsultationRequest (
         userEmail: string | undefined | null,
         consultationDate: string,
         consultationTime: string,
         consultationTimeZone: string,
+        consultationTopic: string,
         consultationReason: string
     ) {	
         const response = await fetch("/authenticated-client/api/sendClientConsultationRequest", {
@@ -70,6 +75,7 @@
                 consultationDate,
                 consultationTime,
                 consultationTimeZone,
+                consultationTopic,
                 consultationReason
             }),
             headers: {
@@ -90,16 +96,18 @@
                 consultationDate,
                 consultationTime,
                 consultationTimeZone,
+                consultationTopic,
                 consultationReason
-            );
+            )
 
             if (responseItem.success) {
                 consultationDate = "";
                 consultationTime = "";
                 consultationTimeZone = "";
+                consultationTopic = "";
                 consultationReason = "";
                 goto("/authenticated-client/client");
-            };
+            }
 
             if (responseItem.error) {
 
@@ -107,37 +115,43 @@
                     consultationDateIsValid = false;
                 } else if (consultationDate !== "") {
                     consultationDateIsValid = true;
-                };
+                }
 
                 if (consultationTime === "") {
                     consultationTimeIsValid = false;
                 } else if (consultationTime !== "") {
                     consultationTimeIsValid = true;
-                };
+                }
 
                 if (consultationTimeZone === "") {
                     consultationTimeZoneIsValid = false;
                 } else if (consultationTimeZone !== "") {
                     consultationTimeZoneIsValid = true;
-                };
+                }
+
+                if (consultationTopic === "") {
+                    consultationTopicIsValid = false;
+                } else if (consultationTopic !== "") {
+                    consultationTopicIsValid = true;
+                }
 
                 if (consultationReason === "") {
                     consultationReasonIsValid = false;
                 } else if (consultationReason !== "") {
                     consultationReasonIsValid = true;
-                };
-            };
+                }
+            }
         } catch (error) {
             console.log(error);
-        };
+        }
 
-    };
+    }
 
     let pending: boolean = false;
 
     $: if((responseItem.success) || (responseItem.error)) {
         pending = false;
-    };
+    }
 </script>
 <svelte:head>
 	<title>Art in Tech Services - request a consultation</title>
@@ -239,6 +253,20 @@
                     time zone*
                 </SelectInput>
             </div>
+        </div>
+        <div class="inputs_row">
+            <TextInput 
+                placeholder="need help with software"
+                inputID="consultation_topic"
+                inputName="consultation_topic"
+                inputLabel={true}
+                bind:textInputValue={consultationTopic}
+                bind:isValid={consultationTopicIsValid}
+                textInputErrorMessage="consultation topic required"
+                required={false}
+            >
+                what is your consultation topic?*
+            </TextInput>
         </div>
         <div class="inputs_row">
             <TextArea

@@ -45,16 +45,16 @@ export const POST = async ({request}) => {
     const consultationDate = data.consultationDate;
     const consultationTime = data.consultationTime;
     const consultationTimeZone = data.consultationTimeZone;
+    const consultationTopic = data.consultationTopic;
     const consultationReason = data.consultationReason;
 
     const date = new Date().toUTCString();
-
-    console.log(data);
 
     if (
         !consultationDate ||
         !consultationTime ||
         !consultationTimeZone ||
+        !consultationTopic ||
         !consultationReason
     ) {
         return new Response(JSON.stringify({error: "missing form data"}), {status: 422});
@@ -66,14 +66,16 @@ export const POST = async ({request}) => {
         consultation_time,
         consultation_reason,
         time_zone,
-        status
+        status,
+        consultation_topic
     ) VALUES (
         ${clientID},
         "${consultationDate}",
         "${consultationTime}",
         "${htmlEntities(consultationReason)}",
         "${consultationTimeZone}",
-        "requested"
+        "requested",
+        "${htmlEntities(consultationTopic)}"
     )`;
 
     await res.query(insertConsultationRequestStatement)
@@ -106,6 +108,7 @@ export const POST = async ({request}) => {
             -  consultation date: ${consultationDate}<br />
             -  consultation time: ${consultationTime}<br />
             -  consultation time zone: ${consultationTimeZone}<br />
+            -  consultation topic: ${consultationTopic}<br />
             -  consultation reason: ${consultationReason}<br />
             <br />
             Best,<br /><br />
@@ -130,6 +133,7 @@ export const POST = async ({request}) => {
         -  consultation date: ${consultationDate}<br />
         -  consultation time: ${consultationTime}<br />
         -  consultation time zone: ${consultationTimeZone}<br />
+        -  consultation topic: ${consultationTopic}<br />
         -  consultation reason: ${consultationReason}<br />
         <br />
         Best,<br /><br />

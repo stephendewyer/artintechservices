@@ -107,6 +107,10 @@
                 We offer superior digital design because we combine the best of art and technology.  We understand human desire and state-of-the-art digital technology.  
             </li>
             <li>
+                <h4>State-of-the-art digital technologies</h4>
+                We use state-of-the-art digital technologies and are relentless in our pursuit to advance digital technology.  We're not only great people with whom to work, we also have superior technology chops.
+            </li>
+            <li>
                 <h4>Creative problem solving</h4>
                 We&#39;ll help provide digital solutions to problems you know you had in addition to helping you discover new and valuable ways to help your business and community.  We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities. 
             </li>

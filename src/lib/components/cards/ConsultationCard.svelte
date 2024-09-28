@@ -3,10 +3,17 @@
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
     import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
     import Clouds from "$lib/images/consultation/white-fluffy-clouds.jpg";
+
     export let consultation: Consultation;
 
-    const reasonArray = consultation.consultation_reason.split(" ");
-    const reasonShortened = reasonArray.slice(0, 5).join(" ");
+    const topicArray = consultation.consultation_topic.split(" ");
+    const topicShortened = topicArray.slice(0, 5).join(" ");
+
+    let includeDotDotDot: boolean = false;
+
+    if (topicArray.length > topicArray.slice(0, 5).length) {
+        includeDotDotDot = true;
+    }
 
     let cardHovered: boolean = false;
 
@@ -47,7 +54,7 @@
         <div class="consultation_info">
             <h4 style="margin: 0;" class="date">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
             <h5 style="margin: 0;" class="time">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
-            <p style="margin: 0;">{reasonShortened}...</p>
+            <p style="margin: 0;">{topicShortened}{#if includeDotDotDot}...{/if}</p>
         </div>
     </div>
 </a>
