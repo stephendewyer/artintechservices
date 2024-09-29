@@ -25,18 +25,28 @@
 <style>
     #arrow_right_button {
         margin: 0;
-        transition: opacity 0.2s linear;
+        transition: opacity 0.2s linear, box-shadow 0.2s linear;
         position: relative;
         padding: 1rem;
         color: #838b6a;
         fill: #838b6a;
         background: rgb(244,254,242);
-        background: linear-gradient(90deg, rgba(244,254,242,0) 0%, rgba(244,254,242,1) 100%);
+        background: linear-gradient(90deg, rgba(244,254,242,0) 0%, rgba(244,254,242,1) 35%, rgba(244,254,242,1) 100%);
         border: none;
         border-radius: 50%;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
+    }
+
+    #arrow_right_button:hover {
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.075),
+            0 2px 2px hsl(0deg 0% 0% / 0.075),
+            0 4px 4px hsl(0deg 0% 0% / 0.075),
+            0 8px 8px hsl(0deg 0% 0% / 0.075),
+            0 16px 16px hsl(0deg 0% 0% / 0.075)
+        ;
     }
 
     .arrow_button_active {

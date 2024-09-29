@@ -30,14 +30,24 @@
         color: #838b6a;
         fill: #838b6a;
         background: rgb(244,254,242);
-        background: linear-gradient(90deg, rgba(244,254,242,1) 0%, rgba(244,254,242,0) 100%);
+        background: linear-gradient(90deg, rgba(244,254,242,1) 0%, rgba(244,254,242,1) 65%, rgba(244,254,242,0) 100%);
         border-radius: 50%;
         border: none;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
         margin: 0;
-        transition: opacity 0.2s linear;
+        transition: opacity 0.2s linear, box-shadow 0.2s linear;
+    }
+
+    #arrow_left_button:hover {
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.075),
+            0 2px 2px hsl(0deg 0% 0% / 0.075),
+            0 4px 4px hsl(0deg 0% 0% / 0.075),
+            0 8px 8px hsl(0deg 0% 0% / 0.075),
+            0 16px 16px hsl(0deg 0% 0% / 0.075)
+        ;
     }
 
     .arrow_button_disabled {
