@@ -228,6 +228,7 @@
         </SuccessFlashMessage>
     {/if}
 </div>
+
 <style>
 
     .buttons_container {

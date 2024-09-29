@@ -30,8 +30,10 @@
         padding: 1rem;
         color: #838b6a;
         fill: #838b6a;
-        background-color: rgb(244,254,242, 1);
+        background: rgb(244,254,242);
+        background: linear-gradient(90deg, rgba(244,254,242,0) 0%, rgba(244,254,242,1) 100%);
         border: none;
+        border-radius: 50%;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;

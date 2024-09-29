@@ -108,7 +108,7 @@
             </li>
             <li>
                 <h4>State-of-the-art digital technologies</h4>
-                We use state-of-the-art digital technologies and are relentless in our pursuit to advance digital technology.  We're not only great people with whom to work, we also have superior technology chops.  Is your organization slow to adapt?  Work with us and we will get you up to speed.
+                We use state-of-the-art digital technologies and are relentless in our pursuit to advance digital technology.  We&#39;re not only great people with whom to work, we also have superior technology chops.  Is your organization slow to adapt?  Work with us and we will get you up to speed.
             </li>
             <li>
                 <h4>Creative problem solving</h4>

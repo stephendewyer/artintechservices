@@ -19,11 +19,11 @@
 
     const cardHoveredHandler = () => {
         cardHovered = true;
-    };
+    }
 
     const cardExitedHandler = () => {
         cardHovered = false;
-    };
+    }
 
 </script>
 <a 
