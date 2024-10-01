@@ -198,7 +198,7 @@
                         fee:
                     </td>
                     <td>
-                        Your first consultation is free.  Consultations after your first consultation are $65 per hour.
+                        Consultations are free.
                     </td>
                 </tr>
                 <tr>
@@ -206,7 +206,7 @@
                         location:
                     </td>
                     <td>
-                        Remote and in-person.  Travel expenses are added for in-person.
+                        Remote or in-person.
                     </td>
                 </tr>
             </tbody>

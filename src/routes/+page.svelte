@@ -17,8 +17,8 @@
         {
             image: Consultation,
             altText: "fluffly clouds",
-            header: "FREE first consultation",
-            paragraph: "We discuss with you your project to help plan for success.  Your first consultation is free.  Each consultation after the first consultation is $65 per hour.",
+            header: "FREE consultations",
+            paragraph: "We discuss with you your project to help plan for success.",
             pathname: [
                 {
                     path: "/work-with-us/request-a-consultation",
