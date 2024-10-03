@@ -164,6 +164,8 @@
         object-fit: cover;
         object-position: top;
         display: flex;
+        will-change: transform;
+        transition: transform 200ms ease-out;
     }
 
     .intro_paragraph_container {
