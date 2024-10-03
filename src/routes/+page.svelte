@@ -155,6 +155,7 @@
         width: 100%;
         height: 60rem;
         overflow: hidden;
+        background-color: #443F3B;
     }
 
     .banner_image {
