@@ -62,8 +62,10 @@
         setTimeout(() => introVisible = true, 300);
     });
 
-</script>
+    let y: number = 0;
 
+</script>
+<svelte:window bind:scrollY={y} />
 <svelte:head>
     <title>Art in Tech Services - providing creative digital services to help businesses and communities</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
@@ -72,7 +74,7 @@
 </svelte:head>
 <div>
     <div class="intro_banner">
-        <img class="banner_image" src={MoonShot} alt="moonshot"/>
+        <img style={`transform: translate(0, ${y}px)`} class="banner_image" src={MoonShot} alt="moonshot"/>
         <div class="saguaro_cactus_container">
             <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
         </div>
@@ -151,14 +153,16 @@
     .intro_banner {
         position: relative;
         width: 100%;
+        height: 60rem;
+        overflow: hidden;
     }
 
     .banner_image {
-        position: relative;
+        position: absolute;
         width: 100%;
+        height: 100%;
         object-fit: cover;
         object-position: top;
-        height: 60rem;
         display: flex;
     }
 
@@ -260,7 +264,8 @@
     }
 
     @media screen and (max-width: 1440px) {
-        .banner_image {
+
+        .intro_banner {
             height: 42rem;
         }
 
@@ -279,9 +284,10 @@
 
     @media screen and (max-width: 1080px) {
 
-        .banner_image {
+        .intro_banner {
             height: 34rem;
         }
+
         .intro_paragraph {
             padding: 0.375rem 0.75rem;
         }
@@ -303,11 +309,7 @@
 
         .intro_banner {
             padding: 0;
-        }
-
-        .banner_image {
             height: 24rem;
-            object-fit: cover;
         }
 
         .saguaro_cactus {
