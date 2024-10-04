@@ -162,11 +162,11 @@
         position: absolute;
         width: 100%;
         height: 100%;
+        top: 0;
         object-fit: cover;
         object-position: top;
         display: flex;
         will-change: transform;
-        transition: transform 200ms ease-out;
     }
 
     .intro_paragraph_container {
