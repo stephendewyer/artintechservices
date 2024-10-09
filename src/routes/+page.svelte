@@ -74,7 +74,12 @@
 </svelte:head>
 <div>
     <div class="intro_banner">
-        <img style={`transform: translate(0, ${y}px)`} class="banner_image" src={MoonShot} alt="moonshot"/>
+        <img 
+            style={`transform: translate(0, ${y}px)`} 
+            class="banner_image" 
+            src={MoonShot} 
+            alt="moonshot"
+        />
         <div class="saguaro_cactus_container">
             <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
         </div>
@@ -82,7 +87,10 @@
             class="intro_paragraph_container"
             style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
         >
-            <h1 class="intro_paragraph">
+            <h1 
+                style={`transform: translate(0, ${(y/2)}px)`}
+                class="intro_paragraph"
+            >
                 providing creative digital services to help businesses and communities
             </h1>
         </div>
