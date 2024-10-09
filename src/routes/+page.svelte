@@ -11,7 +11,7 @@
     import WaterfallGalaxy from "$lib/images/services_background/services_background.jpg";
     import { onMount } from "svelte";
     import ScrollableCaseStudies from "$lib/components/scrollables/ScrollableCaseStudies.svelte";
-  import ScrollableServices from "$lib/components/scrollables/ScrollableServices.svelte";
+    import ScrollableServices from "$lib/components/scrollables/ScrollableServices.svelte";
 
     const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
@@ -62,10 +62,19 @@
         setTimeout(() => introVisible = true, 300);
     });
 
-    let y: number = 0;
+    let debouncedY: number = 0;
+
+    const debounce = (v: number) => {
+        let timeout: ReturnType<typeof setTimeout>;
+        timeout = setTimeout(() => debouncedY = v, 40);
+    };
+
+    const handleScroll = () => {
+        debounce(window.scrollY);
+    };    
 
 </script>
-<svelte:window bind:scrollY={y} />
+<svelte:window on:scroll={handleScroll}/>
 <svelte:head>
     <title>Art in Tech Services - providing creative digital services to help businesses and communities</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
@@ -75,7 +84,7 @@
 <div>
     <div class="intro_banner">
         <img 
-            style={`transform: translate(0, ${y}px)`} 
+            style={`transform: translate(0, ${debouncedY}px)`} 
             class="banner_image" 
             src={MoonShot} 
             alt="moonshot"
@@ -88,7 +97,7 @@
             style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
         >
             <h1 
-                style={`transform: translate(0, ${(y/2)}px)`}
+                style={`transform: translate(0, ${(debouncedY/2)}px)`}
                 class="intro_paragraph"
             >
                 providing creative digital services to help businesses and communities
