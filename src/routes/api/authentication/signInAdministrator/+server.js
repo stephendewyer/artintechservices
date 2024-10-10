@@ -20,20 +20,20 @@ export async function POST({request}) {
         return new Response(JSON.stringify({error: "missing password"}), {status: 422});
     };
 
-    // search clients for client account with email that matches the user
+    // search administrator for administrator account with email that matches the user
 
     let res = await mysqlConnection();
 
     /**
      * @type {string | any[]}
      */
-    let clientRows = [];
+    let administratorRows = [];
 
-    const checkClientEmailQuery = `SELECT * FROM clients WHERE email = '${email}'`;
+    const checkAdministratorEmailQuery = `SELECT * FROM administrators WHERE email = '${email}'`;
 
-    await res.query(checkClientEmailQuery)
+    await res.query(checkAdministratorEmailQuery)
     .then(([ rows ]) => {
-        clientRows = JSON.parse(JSON.stringify(rows));
+        administratorRows = JSON.parse(JSON.stringify(rows));
     })
     .catch(error => {
         throw error;
@@ -41,18 +41,17 @@ export async function POST({request}) {
 
     res.end();
 
-    if (clientRows?.length === 0) {
+    if (administratorRows?.length === 0) {
         return new Response(JSON.stringify({error: "invalid email and/or password"}), {status: 422});
     };
 
-    const clientExistsPassword = clientRows[0].password;
+    const administratorExistsPassword = administratorRows[0].password;
 
-    const isValidPassword = await verifyPassword(password, clientExistsPassword);
+    const isValidPassword = await verifyPassword(password, administratorExistsPassword);
         
     if (!isValidPassword) {
         return new Response(JSON.stringify({error: "invalid email and/or password"}), {status: 422});
     } else if (isValidPassword) {
-        return new Response(JSON.stringify({success: `valid credentials.  Logging into client account.`}), {status: 200});
+        return new Response(JSON.stringify({success: `valid credentials.  Logging into administrator account.`}), {status: 200});
     };
-
 }
