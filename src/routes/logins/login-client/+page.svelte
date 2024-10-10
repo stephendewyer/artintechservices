@@ -2,13 +2,12 @@
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { page } from "$app/stores";
-    // import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
-    // import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
-    // import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
+    import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
+    import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
+    import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { goto } from '$app/navigation';
     import { signIn } from "@auth/sveltekit/client";
@@ -35,21 +34,47 @@
         }, 4000)
     };
 
+    const loginClient = async (
+        email: string,
+        password: string
+    ) => {
+        const response = await fetch("/api/authentication/signInClient", {
+            method: "POST",
+            body: JSON.stringify({
+                email,
+                password
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
+
     const loginClientHandler = async () => {
         pending = true;
         try {
-            const response = await signIn("credentials", {
-                providerId: "client-login",
-                email: emailInputValue,
-                password: passwordInputValue,
-                redirect: false,
-                // callbackUrl: "/authenticated-client/client"
-            });
-            if (response) {
-                responseItem.success = "valid email and password";
-                emailInputValue = "";
-                passwordInputValue = "";
-                goto(`/authenticated-client/client`)
+            await loginClient(emailInputValue, passwordInputValue);
+            if (responseItem.success) {
+                try {
+                    await signIn("credentials", {
+                        providerId: "client-login",
+                        email: emailInputValue,
+                        password: passwordInputValue,
+                        redirect: true,
+                        callbackUrl: "/authenticated-client/client"
+                    });
+                } catch (error) {
+                    console.log(error);
+                };
+            } else if (responseItem.error) {
+                if ((emailInputValue === "") || (!emailInputValue.includes('@'))) {
+                    emailIsValid = false;
+                };
+                if (passwordInputValue === "") {
+                    passwordIsValid = false;
+                };
             };
         } catch (error) {
             console.log(error);
@@ -123,6 +148,19 @@
             </SubmitButton>
         </div>
     </form>
+    {#if (pending)}
+        <PendingFlashMessage >
+            please wait while we validate your credentials
+        </PendingFlashMessage>
+    {:else if (responseItem.error)}
+        <ErrorFlashMessage >
+            {responseItem.error}
+        </ErrorFlashMessage>
+    {:else if (responseItem.success)}
+        <SuccessFlashMessage>
+            {responseItem.success}
+        </SuccessFlashMessage>
+    {/if}
     <div class="login_helpers_container">
         <div class="login_helpers_column">
             <h4 class="login_helper_prompt">
