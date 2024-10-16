@@ -28,6 +28,21 @@ export const administratorAuthentication = async (/** @type {Credentials} */ cre
         throw error;
     });
 
+    if (administratorRows?.length > 0) {
+        // update login date and time to client last_login
+        const updateLastLoginTimestamp = `UPDATE administrators 
+            SET last_login = now()
+            WHERE email = "${credentials.email}"`;
+
+        await res.query(updateLastLoginTimestamp)
+        .then(() => {
+            console.log("administrator last login updated!");
+        })
+        .catch(error => {
+            throw error;
+        });
+    };
+
     res.end();
 
     if (administratorRows?.length <= 0) {

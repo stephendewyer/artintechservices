@@ -9,7 +9,6 @@
     import DateInput from "$lib/components/inputs/DateInput.svelte";
     import TextArea from "$lib/components/inputs/TextArea.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import TimeInput from "$lib/components/inputs/TimeInput.svelte";
     import SelectInput from "$lib/components/inputs/SelectInput.svelte";
     import TimeZones from "$lib/data/timeZones.json";
@@ -106,7 +105,7 @@
                 consultationTimeZone = "";
                 consultationTopic = "";
                 consultationReason = "";
-                goto("/authenticated-client/client");
+                goto("/authenticated-client/client/consultations");
             }
 
             if (responseItem.error) {
@@ -159,13 +158,13 @@
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
-<div class="page">
+<section class="request_a_consultation_page">
     <form 
         class="form" 
         on:submit|preventDefault={sendClientConsultationRequestHandler}
     >
         <a 
-            href="/authenticated-client/client" 
+            href="/authenticated-client/client/consultations" 
             class="back_button_container"
         >
             <BackButton>
@@ -304,8 +303,14 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
-</div>
+</section>
 <style>
+
+    .request_a_consultation_page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
     .form {
         position: relative;

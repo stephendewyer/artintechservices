@@ -1,7 +1,7 @@
 <script lang="ts">
     import Meatballs from "$lib/images/icons/meaballs.svg?raw";
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
-    import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
+    import ConsultationIcon from "$lib/images/icons/consultation_icon.svg?raw"
     import Clouds from "$lib/images/consultation/white-fluffy-clouds.jpg";
 
     export let consultation: Consultation;
@@ -120,6 +120,7 @@
         align-items: center;
         width: 100%;
         height: 16rem;
+        fill: #3D3832;
     }
 
     .consultation_card_container:hover {

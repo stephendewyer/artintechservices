@@ -309,7 +309,7 @@
         documentInputFiles = null;
         documentFileInputValue = "";
         cancelDocumentUpload = false;
-    }
+    };
 
 </script>
 <svelte:head>
@@ -318,13 +318,13 @@
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
-<div class="page">
+<section class="request_to_start_a_project_page">
     <form 
         class="form" 
         on:submit|preventDefault={sendClientProjectRequestHandler} 
     >
         <a 
-            href="/authenticated-client/client" 
+            href="/authenticated-client/client/projects" 
             class="back_button_container"
         >
             <BackButton>
@@ -336,7 +336,7 @@
         </h1>
         <p> 
             Have a digital project idea?<br />  
-            Want help on an existing digital project?  <br/>
+            Want help on an existing digital project?<br/>
             Have a digital problem that could use our help?
         </p>
         <h4 class="indicates_required_heading">*indicates required</h4>
@@ -509,8 +509,16 @@
             {responseItem.success}
         </SuccessFlashMessage>
     {/if}
-</div>
+</section>
+
 <style>
+
+    .request_to_start_a_project_page {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
 
     .form {
         position: relative;

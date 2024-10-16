@@ -2,21 +2,92 @@
     import { signOut } from "@auth/sveltekit/client";
     import LogoutIcon from "$lib/images/icons/logout.svg?raw";
     export let callbackUrl: string;
+    import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
+    export let email: string | null | undefined = null;
+    export let userGroup: string | null | undefined = null;
+
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        setTimeout(() => {
+            responseItem.success = "";
+            responseItem.error = "";
+            status: null;
+        }, 4000);
+    };
+
+    let pendingUpdatePreviousLogin: boolean = false;
+
+    const updatePreviousLoginClient = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+        pendingUpdatePreviousLogin = true;
+        const response = await fetch("/authenticated-client/api/updateClientPreviousLogin", {
+            method: "PATCH",
+            body: JSON.stringify({
+                email,
+                userGroup
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        responseItem = await response.json();
+        return responseItem;
+    };
+    
+    const updatePreviousLoginAdministrator = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+        pendingUpdatePreviousLogin = true;
+        const response = await fetch("/authenticated-administrator/api/updateAdministratorPreviousLogin", {
+            method: "PATCH",
+            body: JSON.stringify({
+                email,
+                userGroup
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
+
+    const handleLogout = async () => {
+        try {
+            if (userGroup === "client") {
+                await updatePreviousLoginClient(email, userGroup);
+            } else if (userGroup === "administrator") {
+                await updatePreviousLoginAdministrator(email, userGroup);
+            };
+                if (responseItem.success) {
+                signOut({
+                    redirect: true,
+                    callbackUrl: `${callbackUrl}`
+                });
+            }
+        } catch(err) {
+            console.log(err);
+        };        
+    };
 
 </script>
 
-<button 
-    on:click={() => signOut({
-        redirect: true,
-        callbackUrl: `${callbackUrl}`
-    })}
-    class="button_external_link"
->
-    <div class="external_link_icon" >
-        {@html LogoutIcon}
-    </div>
-    <slot />
-</button>
+{#if pendingUpdatePreviousLogin}
+    <LoadingSpinner />
+{:else}
+    <button 
+        on:click={handleLogout}
+        class="button_external_link"
+        >
+        <div class="external_link_icon" >
+            {@html LogoutIcon}
+        </div>
+        <slot />
+    </button>
+{/if}
 
 <style>
     .button_external_link {

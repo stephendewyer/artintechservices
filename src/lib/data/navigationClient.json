@@ -1,23 +1,23 @@
 [
     {
         "id": 1,
-        "label": "messages",
-        "expandable": false,
-        "slug": "/authenticated-client/client/messages",
-        "content": null
-    },
-    {
-        "id": 2,
         "label": "request a consultation",
         "expandable": false,
         "slug": "/authenticated-client/client/request-a-consultation",
         "content": null
     },
     {
-        "id": 3,
+        "id": 2,
         "label": "request to start a project",
         "expandable": false,
         "slug": "/authenticated-client/client/request-to-start-a-project",
+        "content": null
+    },
+    {
+        "id": 3,
+        "label": "make a payment",
+        "expandable": false,
+        "slug": "/authenticated-client/client/invoicing",
         "content": null
     }
 ]

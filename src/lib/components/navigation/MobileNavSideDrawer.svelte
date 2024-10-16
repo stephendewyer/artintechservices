@@ -53,7 +53,11 @@
         />
         {#if sessionClient}
             <div class="logout_button_container">
-                <LogoutButtonMobile callbackUrl={callbackURL}>
+                <LogoutButtonMobile 
+                    email={sessionClient?.email}
+                    userGroup={sessionClient?.name}
+                    callbackUrl={callbackURL}
+                >
                     logout
                 </LogoutButtonMobile>
             </div>

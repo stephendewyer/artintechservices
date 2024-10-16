@@ -91,7 +91,11 @@
         </ul>
     {:else if (sessionClient)}
         <div class="login_nav_desktop">
-            <LogoutButton callbackUrl={callbackURL}>
+            <LogoutButton 
+                callbackUrl={callbackURL}
+                email={sessionClient?.email}
+                userGroup={sessionClient?.name}
+            >
                 logout
             </LogoutButton>
         </div>
@@ -134,7 +138,7 @@
 		left: 0;
 		right: 0;
 		border: var(--size) solid transparent;
-		border-top: 6px solid #838B6A;
+		border-top: 6px solid #4F544D;
 		overflow: visible;
 	}
 

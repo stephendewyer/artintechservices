@@ -10,49 +10,33 @@ export const POST = async ({request}) => {
 
     const { clientEmail } = data;
 
-    let clientID;
-
-    let client;
-
-    const selectClientQuery = `SELECT user_ID, email, name_first, name_last, date_created
+    const selectClientContactQuery = `SELECT 
+            clients.user_ID, 
+            clients.email, 
+            clients.name_first, 
+            clients.name_last,
+            client_information.*
         FROM clients
-        WHERE email = "${clientEmail}"`;
+        INNER JOIN client_information
+        ON client_information.client_ID = clients.user_ID
+        WHERE clients.email = "${clientEmail}"
+    `;
     
     let res = await mysqlConnection();
 
-    await res.query(selectClientQuery)
+    let clientContactRow;
+
+    await res.query(selectClientContactQuery)
     .then(([rows]) => {
-        client = JSON.parse(JSON.stringify(rows))[0];
-        clientID = JSON.parse(JSON.stringify(rows))[0].user_ID;
+        clientContactRow = JSON.parse(JSON.stringify(rows))[0];
     })
     .catch(error => {
         throw error;
     });
 
-    // get the client_information row
-
-    const selectClientInformationRowStatement = `SELECT * 
-        FROM client_information
-        WHERE client_ID = ${clientID};
-    `;
-
-    let clientInformationRow;
-
-    await res.query(selectClientInformationRowStatement)
-    .then(([rows]) => {
-        clientInformationRow = JSON.parse(JSON.stringify(rows))[0];
-    })
-    .catch(error => {
-        throw error;
-    });
-    
-    // @ts-ignore
-    const clientDetails = {
-        client: client,
-        contact_information: clientInformationRow
-    };
+    res.end();
 
     return new Response(
-        JSON.stringify({...clientDetails}), {status: 200}
+        JSON.stringify(clientContactRow), {status: 200}
     );
 }

@@ -8,7 +8,7 @@ export const POST = async ({request}) => {
     };
 
     const data = await request.json();
-    console.log(data);
+    // console.log(data);
     const { 
         clientEmail,
         nameFirstInputValue,
@@ -21,7 +21,8 @@ export const POST = async ({request}) => {
         streetAddress02InputValue,
         cityInputValue,
         stateInputValue,
-        zipCodeInputValue
+        zipCodeInputValue,
+        countryInputValue
     } = data;
 
     if (!clientEmail) {
@@ -34,7 +35,8 @@ export const POST = async ({request}) => {
         !streetAddressInputValue ||
         !cityInputValue ||
         !stateInputValue ||
-        !zipCodeInputValue
+        !zipCodeInputValue ||
+        !countryInputValue
     ) {
         return new Response(JSON.stringify({error: "missing required form data"}), {status: 422});
     };
@@ -100,7 +102,8 @@ export const POST = async ({request}) => {
                 street_address_02 = "${htmlEntities(streetAddress02InputValue)}",
                 city = "${htmlEntities(cityInputValue)}",
                 state = "${htmlEntities(stateInputValue)}",
-                zip_code = "${zipCodeInputValue}"
+                zip_code = "${zipCodeInputValue}",
+                country = "${countryInputValue}"
             WHERE client_ID = "${clientID}";
         `;
         await res.query(updateClientInformationStatement)
@@ -122,7 +125,8 @@ export const POST = async ({request}) => {
                 street_address_02,
                 city,
                 state,
-                zip_code
+                zip_code,
+                country
             ) VALUES ( 
                 ${clientID},
                 "${htmlEntities(companyInputValue)}",
@@ -132,7 +136,8 @@ export const POST = async ({request}) => {
                 "${htmlEntities(streetAddress02InputValue)}",
                 "${htmlEntities(cityInputValue)}",
                 "${htmlEntities(stateInputValue)}",
-                "${zipCodeInputValue}"
+                "${zipCodeInputValue}",
+                "${countryInputValue}"
             );
         `;
         await res.query(insertOrUpdateClientInformationRowStatement)
@@ -143,6 +148,8 @@ export const POST = async ({request}) => {
             throw error;
         });
     }
+
+    res.end();
 
     return new Response(JSON.stringify({success: "contact information saved"}), {status: 200});
 }

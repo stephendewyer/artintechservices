@@ -9,7 +9,6 @@
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
-    import { goto } from '$app/navigation';
     import { signIn } from "@auth/sveltekit/client";
 
     // receive form data from server
@@ -101,16 +100,19 @@
         <h1>login client</h1>
         <ul>
             <li>
-                start and keep track of your projects
+                schedule and keep track of consultations
             </li>
             <li>
-                schedule your consultations
+                start and keep track of projects
             </li>
             <li>
-                make payments
+                send and receive secure messages
             </li>
             <li>
-                send and receive messages and documents
+                handle invoices
+            </li>
+            <li>
+                handle personal account details
             </li>
         </ul>
         <div class="input_row">

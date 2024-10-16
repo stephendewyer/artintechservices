@@ -304,13 +304,13 @@
         shoppingCartFixed = true;
     } else {
         shoppingCartFixed = false;
-    }
+    };
 
     $: if (y >= (shoppingCartContainerYPosition + (shoppingCartContainerHeight - shoppingCartHeight))) {
         shoppingCartAbsolute = true;
     } else {
         shoppingCartAbsolute = false;
-    }
+    };
 
     let panelHeight: number = 0;
 
@@ -319,18 +319,19 @@
     beforeUpdate(() => {
         // // panelHeight = 0;
         // updatedPanelHeight = 0;
-    })
+    });
 
     afterUpdate(() => {
         updatedPanelHeight = panelHeight;
     });
 
-    $: console.log("panelInnerHeight: ", panelHeight);
-    $: console.log("panelContainerHeight: ", updatedPanelHeight);
+    // $: console.log("panelInnerHeight: ", panelHeight);
+    // $: console.log("panelContainerHeight: ", updatedPanelHeight);
 
     const handleScroll = () => {
-
-    }
+        tabsContainerTopYPosition = tabsContainerElement.getBoundingClientRect().top + window.scrollY;
+        shoppingCartContainerYPosition = shoppingCartContainerElement.getBoundingClientRect().top + window.scrollY;
+    };
 
 </script>
 <svelte:window 

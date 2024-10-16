@@ -13,12 +13,12 @@
         transition: all 0.15s;
         background-color: #ffff;
         padding: 0.75rem 1rem;
-        fill: #838b6a;
+        fill: #4F544D;
         transition: all 0.2s;
     }
 
     .logo:hover {
-        fill: #B2A1A1;
+        fill: #838b6a;
         transition: all 0.2s;
     }
 

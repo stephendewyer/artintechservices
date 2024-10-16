@@ -10,7 +10,6 @@ declare global {
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
-
 	}
 
 	interface ResponseObj {
@@ -18,6 +17,30 @@ declare global {
         error: string | undefined;
         status: number | null;
     };
+
+	interface ClientProfile {
+        user_ID: number;
+        name_first: string;
+        name_last: string;
+        email: string;
+        date_created: Date;
+        last_login: Date;
+        client_information_ID: number;
+        company: string;
+        phone_number: string;
+        URL: string;
+        street_address: string;
+        street_address_02: string;
+        city: string;
+        state: string;
+        zip_code: number;
+        Stripe_customer_ID: string;
+        profile_image_ID: number;
+        profile_image_URL: string;
+        profile_image_alt_text: string;
+        profile_image_public_ID: string;
+		country: string;
+    }
 
 	interface NavTab {
 		id: number;

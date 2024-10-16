@@ -14,8 +14,6 @@ export const POST = async ({request}) => {
 
     const { clientEmail, stripeCustomerID } = data;
 
-    console.log(stripeCustomerID)
-
     const paymentMethods = await stripe.customers.listPaymentMethods(
         stripeCustomerID,
         {

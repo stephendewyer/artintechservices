@@ -334,7 +334,11 @@
         
     </ul>
     {#if (sessionClient)}
-        <LogoutButtonFooter callbackUrl={callbackURL}>
+        <LogoutButtonFooter 
+            callbackUrl={callbackURL}
+            email={sessionClient?.email}
+            userGroup={sessionClient?.name}
+        >
             logout
         </LogoutButtonFooter>
     {/if}

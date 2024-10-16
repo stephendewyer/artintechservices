@@ -249,163 +249,161 @@
     };
 
 </script>
-<div class="page">
-    <div class="make_a_payment">
-        <a 
-            href="/authenticated-client/client" 
-            class="back_button_container"
-        >
-            <BackButton>
-                back
-            </BackButton>
-        </a>
-        <h1>
-            invoice
-        </h1>
-        <table class="invoices_table">
-            <colgroup>
-                <col style="width: 35%;"/>
-                <col style="width: 65%;" />
-            </colgroup>
-            <tr>
-                <td>
-                    date created:
-                </td>
-                <td>
-                    {new Date(invoice.created * 1000).toUTCString().slice(0, 16)}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    due date:
-                </td>
-                <td>
-                    {new Date(invoice.due_date * 1000).toUTCString().slice(0, 16)}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    amount due:
-                </td>
-                <td>
-                    ${invoice.amount_due * 0.01}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    status:
-                </td>
-                <td>
-                    {invoice.status}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    details:
-                </td>
-                <td>
-                    {#each invoice.lines.data as invoiceLineItem, index}
-                        {invoiceLineItem.description}
-                    {/each}
-                </td>
-        </table>
-        <h2>
-            payment method
-        </h2>
-        <ul class="payment_method_cards_container">
-            {#if (paymentMethods.length > 0)}
-                {#each paymentMethods as paymentMethod, index}
-                    <PaymentMethodCard 
-                        paymentMethod={paymentMethod}
-                        bind:deleteClicked={deletePaymentMethodClicked}
-                    />
+<section class="make_a_payment">
+    <a 
+        href="/authenticated-client/client/invoicing" 
+        class="back_button_container"
+    >
+        <BackButton>
+            back
+        </BackButton>
+    </a>
+    <h1>
+        invoice
+    </h1>
+    <table class="invoices_table">
+        <colgroup>
+            <col style="width: 35%;"/>
+            <col style="width: 65%;" />
+        </colgroup>
+        <tr>
+            <td>
+                date created:
+            </td>
+            <td>
+                {new Date(invoice.created * 1000).toUTCString().slice(0, 16)}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                due date:
+            </td>
+            <td>
+                {new Date(invoice.due_date * 1000).toUTCString().slice(0, 16)}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                amount due:
+            </td>
+            <td>
+                ${invoice.amount_due * 0.01}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                status:
+            </td>
+            <td>
+                {invoice.status}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                details:
+            </td>
+            <td>
+                {#each invoice.lines.data as invoiceLineItem, index}
+                    {invoiceLineItem.description}
                 {/each}
-            {:else if !addPaymentMethod && (paymentMethods.length === 0)}
-                <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
-                    Add payment method
-                </AddItemButton>
-            {:else if addPaymentMethod && (!stripeClientSecret || !stripe)}
-                <LoadingSpinner />
-            {:else if addPaymentMethod && stripeClientSecret && stripe}
-                <div class="stripe_save_payment_method">
-                    <Elements
-                        stripe={stripe}
-                        clientSecret={stripeClientSecret}
-                        theme="flat"
-                        variables={{ 
-                            colorPrimary: '#838B6A',
-                            colorBackground: '#EFF9F2',
-                            colorText: '#36261E',
-                            colorDanger: '#914732',
-                        }}
-                        rules={{ '.Input': { border: 'solid 2px #AEA89D' } }}
-                        bind:elements
-                    >
-                        <form on:submit|preventDefault={submitPaymentMethodHandler} >
-                            <LinkAuthenticationElement />
-                            <PaymentElement />
-                            <Address mode="billing" />
-                            <div class="buttons_container">
-                                <SubmitButton02>
-                                    save payment method
-                                </SubmitButton02>
-                                <CancelButton bind:cancelClicked={cancelPaymentMethodClicked}>
-                                    cancel payment method
-                                </CancelButton>
-                            </div>
-                        </form>
-                        {#if (pendingSubmitPaymentHandler)}
-                            <PendingFlashMessage >
-                                please wait while we validate your data
-                            </PendingFlashMessage>
-                        {:else if (responseItem.error)}
-                            <ErrorFlashMessage >
-                                {responseItem.error}
-                            </ErrorFlashMessage>
-                        {:else if (responseItem.success)}
-                            <SuccessFlashMessage>
-                                {responseItem.success}
-                            </SuccessFlashMessage>
-                        {/if}
-                    </Elements>
-                </div>
-            {/if}
-        </ul>
-        <div class="buttons_container">
-            <SubmitButton
-                bind:clicked={payInvoiceClicked}
-                disable={paymentMethods.length === 0}
-            >
-                pay invoice
-            </SubmitButton>
-        </div>
-        {#if (pendingPaymentConfirmation)}
-            <PendingFlashMessage >
-                please wait while we validate payment
-            </PendingFlashMessage>
-        {:else if (responseItem.error && payInvoiceClicked)}
-            <ErrorFlashMessage >
-                {responseItem.error && payInvoiceClicked}
-            </ErrorFlashMessage>
-        {:else if (responseItem.success && payInvoiceClicked)}
-            <SuccessFlashMessage>
-                {responseItem.success}
-            </SuccessFlashMessage>
+            </td>
+    </table>
+    <h2>
+        payment method
+    </h2>
+    <ul class="payment_method_cards_container">
+        {#if (paymentMethods.length > 0)}
+            {#each paymentMethods as paymentMethod, index}
+                <PaymentMethodCard 
+                    paymentMethod={paymentMethod}
+                    bind:deleteClicked={deletePaymentMethodClicked}
+                />
+            {/each}
+        {:else if !addPaymentMethod && (paymentMethods.length === 0)}
+            <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
+                Add payment method
+            </AddItemButton>
+        {:else if addPaymentMethod && (!stripeClientSecret || !stripe)}
+            <LoadingSpinner />
+        {:else if addPaymentMethod && stripeClientSecret && stripe}
+            <div class="stripe_save_payment_method">
+                <Elements
+                    stripe={stripe}
+                    clientSecret={stripeClientSecret}
+                    theme="flat"
+                    variables={{ 
+                        colorPrimary: '#838B6A',
+                        colorBackground: '#EFF9F2',
+                        colorText: '#36261E',
+                        colorDanger: '#914732',
+                    }}
+                    rules={{ '.Input': { border: 'solid 2px #AEA89D' } }}
+                    bind:elements
+                >
+                    <form on:submit|preventDefault={submitPaymentMethodHandler} >
+                        <LinkAuthenticationElement />
+                        <PaymentElement />
+                        <Address mode="billing" />
+                        <div class="buttons_container">
+                            <SubmitButton02>
+                                save payment method
+                            </SubmitButton02>
+                            <CancelButton bind:cancelClicked={cancelPaymentMethodClicked}>
+                                cancel payment method
+                            </CancelButton>
+                        </div>
+                    </form>
+                    {#if (pendingSubmitPaymentHandler)}
+                        <PendingFlashMessage >
+                            please wait while we validate your data
+                        </PendingFlashMessage>
+                    {:else if (responseItem.error)}
+                        <ErrorFlashMessage >
+                            {responseItem.error}
+                        </ErrorFlashMessage>
+                    {:else if (responseItem.success)}
+                        <SuccessFlashMessage>
+                            {responseItem.success}
+                        </SuccessFlashMessage>
+                    {/if}
+                </Elements>
+            </div>
         {/if}
+    </ul>
+    <div class="buttons_container">
+        <SubmitButton
+            bind:clicked={payInvoiceClicked}
+            disable={paymentMethods.length === 0}
+        >
+            pay invoice
+        </SubmitButton>
     </div>
-</div>
+    {#if (pendingPaymentConfirmation)}
+        <PendingFlashMessage >
+            please wait while we validate payment
+        </PendingFlashMessage>
+    {:else if (responseItem.error && payInvoiceClicked)}
+        <ErrorFlashMessage >
+            {responseItem.error && payInvoiceClicked}
+        </ErrorFlashMessage>
+    {:else if (responseItem.success && payInvoiceClicked)}
+        <SuccessFlashMessage>
+            {responseItem.success}
+        </SuccessFlashMessage>
+    {/if}
+</section>
 
 <style>
 
+
     .make_a_payment {
         position: relative;
-        max-width: 60rem;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        margin: 0 0 4rem 0;
+        padding: 0 0 1rem 0;
     }
 
     .back_button_container {
@@ -418,7 +416,8 @@
         border-spacing: 0;
         table-layout: fixed;
         width: 100%;
-        max-width: 60rem;
+        max-width: 80rem;
+        padding: 0 1rem;
     }
 
     table > tr {

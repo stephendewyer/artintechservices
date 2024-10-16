@@ -1,25 +1,96 @@
 <script lang="ts">
     import { signOut } from "@auth/sveltekit/client";
     import LogoutIcon from "$lib/images/icons/logout.svg?raw";
+    import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     export let callbackUrl: string;
+    export let email: string | null | undefined = null;
+    export let userGroup: string | null | undefined = null;
+
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        setTimeout(() => {
+            responseItem.success = "";
+            responseItem.error = "";
+            status: null;
+        }, 4000);
+    };
+
+    let pendingUpdatePreviousLogin: boolean = false;
+
+    const updatePreviousLoginClient = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+        pendingUpdatePreviousLogin = true;
+        const response = await fetch("/authenticated-client/api/updateClientPreviousLogin", {
+            method: "PATCH",
+            body: JSON.stringify({
+                email,
+                userGroup
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        responseItem = await response.json();
+        return responseItem;
+    };
+
+    const updatePreviousLoginAdministrator = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+        pendingUpdatePreviousLogin = true;
+        const response = await fetch("/authenticated-administrator/api/updateAdministratorPreviousLogin", {
+            method: "PATCH",
+            body: JSON.stringify({
+                email,
+                userGroup
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
+
+    const handleLogout = async () => {
+        try {
+            if (userGroup === "client") {
+                await updatePreviousLoginClient(email, userGroup);
+            } else if (userGroup === "administrator") {
+                await updatePreviousLoginAdministrator(email, userGroup);
+            };
+                if (responseItem.success) {
+                signOut({
+                    redirect: true,
+                    callbackUrl: `${callbackUrl}`
+                });
+            }
+        } catch(err) {
+            console.log(err);
+        };        
+    };
 
 </script>
 
 <button 
-    on:click={() => signOut({
-        redirect: true,
-        callbackUrl: `${callbackUrl}`
-    })}
+    on:click={handleLogout}
     class="submit_button"
 >
-    <ul>
-        <li>
-            <div class="logout_icon">
-                {@html LogoutIcon}
-            </div>
-            <slot />
-        </li>
-    </ul>
+    {#if pendingUpdatePreviousLogin}
+        <LoadingSpinner />
+    {:else}
+        <ul>
+            <li>
+                <div class="logout_icon">
+                    {@html LogoutIcon}
+                </div>
+                <slot />
+            </li>
+        </ul>
+    {/if}
 </button>
 
 <style>
@@ -45,7 +116,7 @@
 		align-items: center;
         position: relative;
         background-color: #ffff;
-        color: #838B6A;
+        color: #4F544D;
         display: flex;
         justify-content: center;
         padding: 0.5rem;
@@ -58,11 +129,11 @@
 	}
 
     .submit_button:hover > ul > li {
-        color: #B2A1A1;
+        color: #838B6A;;
     }
 
     .submit_button > ul > li > .logout_icon {
-        fill: #838B6A;
+        fill: #4F544D;
         transition: fill 0.2s linear;
         width: 1.75rem;
         display: flex;
@@ -70,7 +141,7 @@
     }
     
     .submit_button:hover > ul > li > .logout_icon {
-        fill: #B2A1A1;
+        fill: #838B6A;;
     }
 
     @media all and (max-width: 1800px) {

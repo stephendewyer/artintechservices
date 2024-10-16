@@ -18,7 +18,7 @@ export const clientAuthentication = async (/** @type {Credentials} */ credential
      */
     let clientRows = [];
 
-    const checkClientEmailQuery = `SELECT * FROM clients WHERE email = '${credentials.email}'`;
+    const checkClientEmailQuery = `SELECT * FROM clients WHERE email = "${credentials.email}"`;
 
     await res.query(checkClientEmailQuery)
     .then(([ rows ]) => {
@@ -27,6 +27,21 @@ export const clientAuthentication = async (/** @type {Credentials} */ credential
     .catch(error => {
         throw error;
     });
+
+    if (clientRows?.length > 0) {
+        // update login date and time to client last_login
+        const updateLastLoginTimestamp = `UPDATE clients 
+            SET last_login = now()
+            WHERE email = "${credentials.email}"`;
+
+        await res.query(updateLastLoginTimestamp)
+        .then(() => {
+            console.log("client last login updated!");
+        })
+        .catch(error => {
+            throw error;
+        });
+    };
 
     res.end();
 

@@ -124,102 +124,99 @@
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
-<div class="page">
-    <div class="consultation">
-        <a 
-            href="/authenticated-client/client" 
-            class="back_button_container"
-        >
-            <BackButton>
-                back
-            </BackButton>
-        </a>
-        <div class="consultation_banner">
-            {@html ConsultationIcon}
-        </div>
-        {#if pendingConsultationRequestUpdate}
-            <LoadingSpinner />
-        {:else if (!pendingConsultationRequestUpdate)}
-            <h1>consultation request</h1> 
-            {#if !editConsultationRequest}
-                <table>
-                    <colgroup>
-                        <col class="left_table_column"/>
-                        <col class="right_table_column"/>
-                    </colgroup>
-                    <tr>
-                        <td>
-                            date:
-                        </td>
-                        <td>
-                            {consultationDate}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            time:
-                        </td>
-                        <td>
-                            {ConvertTimeToStandard(consultation?.consultation_time)} {consultation?.time_zone}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            status:
-                        </td>
-                        <td>
-                            {consultation?.status}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            reason:
-                        </td>
-                        <td>
-                            {consultation?.consultation_reason}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            creation date:
-                        </td>
-                        <td>
-                            {consultationRequestCreatedDate}
-                        </td>
-                    </tr>
-                </table>
-                {#if (consultation?.status === "requested")}
-                    <div class="buttons_container">
-                        <EditButton bind:editClicked={editConsultationRequest}>
-                            edit consultation
-                        </EditButton>
-                        <DeleteButton bind:clicked={deleteButtonClickHandler}>
-                            cancel consultation request
-                        </DeleteButton>
-                    </div>
-                {/if}
-            {:else if editConsultationRequest}
-                <ConsultationForm 
-                    data={data}
-                    consultation={consultation}
-                    bind:cancelEditConsultation={editConsultationRequest}
-                    bind:consultationRequestUpdated={consultationRequestUpdated}
-                />
-            {/if}
-        {/if}
+<section class="consultation">
+    <a 
+        href="/authenticated-client/client/consultations" 
+        class="back_button_container"
+    >
+        <BackButton>
+            back
+        </BackButton>
+    </a>
+    <div class="consultation_banner">
+        {@html ConsultationIcon}
     </div>
-</div>
+    {#if pendingConsultationRequestUpdate}
+        <LoadingSpinner />
+    {:else if (!pendingConsultationRequestUpdate)}
+        <h1>consultation request</h1> 
+        {#if !editConsultationRequest}
+            <table>
+                <colgroup>
+                    <col class="left_table_column"/>
+                    <col class="right_table_column"/>
+                </colgroup>
+                <tr>
+                    <td>
+                        date:
+                    </td>
+                    <td>
+                        {consultationDate}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        time:
+                    </td>
+                    <td>
+                        {ConvertTimeToStandard(consultation?.consultation_time)} {consultation?.time_zone}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        status:
+                    </td>
+                    <td>
+                        {consultation?.status}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        reason:
+                    </td>
+                    <td>
+                        {consultation?.consultation_reason}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        creation date:
+                    </td>
+                    <td>
+                        {consultationRequestCreatedDate}
+                    </td>
+                </tr>
+            </table>
+            {#if (consultation?.status === "requested")}
+                <div class="buttons_container">
+                    <EditButton bind:editClicked={editConsultationRequest}>
+                        edit consultation
+                    </EditButton>
+                    <DeleteButton bind:clicked={deleteButtonClickHandler}>
+                        cancel consultation request
+                    </DeleteButton>
+                </div>
+            {/if}
+        {:else if editConsultationRequest}
+            <ConsultationForm 
+                data={data}
+                consultation={consultation}
+                bind:cancelEditConsultation={editConsultationRequest}
+                bind:consultationRequestUpdated={consultationRequestUpdated}
+            />
+        {/if}
+    {/if}
+</section>
 <style>
 
     .consultation {
         position: relative;
-        max-width: 60rem;
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        margin: 0 0 4rem 0;
+        padding: 0 0 1rem 0;
     }
 
     .back_button_container {
@@ -237,6 +234,8 @@
         border-spacing: 0;
         table-layout: fixed;
         width: 100%;
+        max-width: 80rem;
+        padding: 0 1rem;
     }
 
     table > tr {

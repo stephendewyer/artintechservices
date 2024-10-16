@@ -146,7 +146,7 @@
 		left: 0;
 		right: 0;
 		border: var(--size) solid transparent;
-		border-top: 6px solid #838B6A;
+		border-top: 6px solid #4F544D;
 		overflow: visible;
 	}
     
@@ -172,7 +172,7 @@
         display: flex;
         flex-direction: row;
         background-color: #ffff;
-        color: #838B6A;
+        color: #4F544D;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -188,7 +188,7 @@
 
     .nav_tab:hover {
         background-color: #ffff;
-        color: #B2A1A1;
+        color: #838B6A;;
     }
 
     .arrow {
@@ -198,18 +198,18 @@
     }
 
     .nav_tab:hover > .arrow {
-        fill: #B2A1A1;
+        fill: #838B6A;;
     }
 
     .nav_tab:hover > .login_icon {
-        fill: #B2A1A1;
+        fill: #838B6A;;
     }
 
     .login_icon {
         width: 1.75rem;
         display: flex;
         justify-content: center;
-        fill: #838B6A;
+        fill: #4F544D;
         transition: fill 0.15s linear, color 0.15s linear;
     }
 
@@ -242,7 +242,7 @@
         transition: transform 0.4s ease;
         display: flex;
         justify-content: center;
-        fill: #838B6A;
+        fill: #4F544D;
     }
 
     @media all and (max-width: 1800px) {
