@@ -32,8 +32,6 @@ export const load = async (event) => {
         throw error;
     });
 
-    console.log(clientProfileImageURL);
-
   // get the profile image if any
   return {
     streamed: {

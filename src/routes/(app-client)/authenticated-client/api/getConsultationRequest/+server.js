@@ -31,6 +31,7 @@ export const POST = async ({request}) => {
     .catch((/** @type {any} */ error) => {
         throw error;
     });
+    
     res.end();
 
     return new Response(

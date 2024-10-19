@@ -263,11 +263,8 @@
     {#if pendingClientFinancials}
         <LoadingSpinner />
     {:else}
-        <table class="invoice_table">
-            <colgroup>
-                <col style="width: 30%;" />
-                <col style="width: 70%;" />
-            </colgroup>
+    <div class="total_amount_due_container">
+        <table>
             <tbody>
                 <tr>
                     <td>
@@ -279,6 +276,8 @@
                 </tr>
             </tbody>
         </table>
+    </div>
+        
         <h2>
             invoices
         </h2>
@@ -417,6 +416,8 @@
     .invoicing_page {
         position: relative;
         width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -435,26 +436,27 @@
         width: 12rem;
     }
 
+    .total_amount_due_container {
+        padding: 0 1rem;
+        width: 100%;
+    }
+
     .table_container {
         position: relative;
         overflow-x: auto;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        max-width: 80rem;
+        width: 100%;
+        max-width: 100%;
+        white-space: nowrap;
+        display: block;
+        padding: 0 1rem;
     }
 
     .invoices_table {
-        /* min-width: 50rem; */
-        padding: 0 1rem;
-    }
-
-    .invoice_table {
-        padding: 0 1rem;
+        position: relative;
         width: 100%;
-        max-width: 80rem;
-    }
+        display: block;
 
+    }
     form {
         display: flex;
         flex-direction: column;

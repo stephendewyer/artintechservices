@@ -56,7 +56,7 @@
             responseItem.error = "";
             status: null;
         }, 4000)
-    }
+    };
 
     async function createConsultationRequest (
         userEmail: string | undefined | null,
@@ -163,14 +163,13 @@
         class="form" 
         on:submit|preventDefault={sendClientConsultationRequestHandler}
     >
-        <a 
-            href="/authenticated-client/client/consultations" 
-            class="back_button_container"
-        >
-            <BackButton>
-                consultations
-            </BackButton>
-        </a>
+        <div class="back_button_container">
+            <a href="/authenticated-client/client/consultations" >
+                <BackButton>
+                    consultations
+                </BackButton>
+            </a>
+        </div>
         <h1>
             request a consultation 
         </h1>
@@ -323,9 +322,8 @@
     }
 
     .back_button_container {
-        position: absolute;
-        left: 0;
-        top: 0;
+        position: relative;
+        width: 100%;
     }
 
     .consultation_icon {

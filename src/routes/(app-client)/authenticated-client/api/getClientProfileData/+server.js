@@ -79,6 +79,8 @@ export const POST = async ({request}) => {
         throw error;
     });
 
+    res.end();
+
     if (!Stripe_customer_ID) {
         return new Response(JSON.stringify({error: "client is missing Stripe customer ID"}), {status: 422});
     };

@@ -250,14 +250,13 @@
 
 </script>
 <section class="make_a_payment">
-    <a 
-        href="/authenticated-client/client/invoicing" 
-        class="back_button_container"
-    >
-        <BackButton>
-            invoices
-        </BackButton>
-    </a>
+    <div class="back_button_container">
+        <a href="/authenticated-client/client/invoicing">
+            <BackButton>
+                invoices
+            </BackButton>
+        </a>
+    </div>
     <h1>
         invoice
     </h1>
@@ -266,39 +265,40 @@
             <col style="width: 35%;"/>
             <col style="width: 65%;" />
         </colgroup>
-        <tr>
-            <td>
-                date created:
-            </td>
-            <td>
-                {new Date(invoice.created * 1000).toUTCString().slice(0, 16)}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                due date:
-            </td>
-            <td>
-                {new Date(invoice.due_date * 1000).toUTCString().slice(0, 16)}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                amount due:
-            </td>
-            <td>
-                ${invoice.amount_due * 0.01}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                status:
-            </td>
-            <td>
-                {invoice.status}
-            </td>
-        </tr>
-        <tr>
+        <tbody>
+            <tr>
+                <td>
+                    date created:
+                </td>
+                <td>
+                    {new Date(invoice.created * 1000).toUTCString().slice(0, 16)}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    due date:
+                </td>
+                <td>
+                    {new Date(invoice.due_date * 1000).toUTCString().slice(0, 16)}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    amount due:
+                </td>
+                <td>
+                    ${invoice.amount_due * 0.01}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    status:
+                </td>
+                <td>
+                    {invoice.status}
+                </td>
+            </tr>
+            <tr>
             <td>
                 details:
             </td>
@@ -307,6 +307,7 @@
                     {invoiceLineItem.description}
                 {/each}
             </td>
+        </tbody>
     </table>
     <h2>
         payment method
@@ -399,25 +400,24 @@
     .make_a_payment {
         position: relative;
         width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        padding: 0 0 1rem 0;
+        padding: 0 1rem 1rem 1rem;
     }
 
     .back_button_container {
-        position: absolute;
-        left: 0;
-        top: 0;
+        position: relative;
+        width: 100%;
     }
 
     table {
         border-spacing: 0;
         table-layout: fixed;
         width: 100%;
-        max-width: 80rem;
-        padding: 0 1rem;
     }
 
     table > tr {

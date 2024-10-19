@@ -212,17 +212,18 @@
     .consultation {
         position: relative;
         width: 100%;
+        max-width: 60rem;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        padding: 0 0 1rem 0;
+        padding: 0 1rem 1rem 1rem;
     }
 
     .back_button_container {
-        position: absolute;
-        left: 0;
-        top: 0;
+        position: relative;
+        width: 100%;
     }
 
     .consultation_banner {
@@ -234,8 +235,6 @@
         border-spacing: 0;
         table-layout: fixed;
         width: 100%;
-        max-width: 80rem;
-        padding: 0 1rem;
     }
 
     table > tr {

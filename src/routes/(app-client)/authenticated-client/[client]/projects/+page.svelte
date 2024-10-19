@@ -6,8 +6,14 @@
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { v4 as uuidv4 } from 'uuid';
     import PanelProjects from "$lib/components/tabPanelClient/ProjectsPanel.svelte";
+    import { page } from "$app/stores";
+    import { onMount } from "svelte";
+
+    const clientEmail = $page.data.streamed.user?.email;
 
     let tabPanelsProjects: TabPanel[];
+
+    let projects: Project[] = [];
 
     let projectRequests: Project[] = [];
 
@@ -17,9 +23,11 @@
 
     let activeTabProjects: number = 0;
 
-    const getClientData = async () => {
-        pendingClientData = true;
-        const response = await fetch("/authenticated-client/api/getClientData", {
+    let pendingProjects: boolean = false;
+
+    const getProjects = async () => {
+        pendingProjects = true;
+        const response = await fetch("/authenticated-client/api/getProjects", {
             method: "POST",
             body: JSON.stringify({
                 clientEmail
@@ -29,10 +37,12 @@
             }
         });
 
-        clientData = await response.json();
+        projects = await response.json();
+
+        console.log(projects)
 
         if (response.ok) {
-            clientData.projects?.forEach((project: Project) => {
+            projects?.forEach((project: Project) => {
                 if (project.status === "requested") {
                     projectRequests = [...projectRequests, project];
                 } else if (project.status === "started") {
@@ -41,13 +51,15 @@
                     completedProjects = [...completedProjects, project];
                 };
             });
-            pendingClientData = false;
-            getClientDataSuccess = true;
+            pendingProjects = false;
         } else if (!response.ok) {
-            pendingClientData = false;
-            getClientDataSuccess = false;
+            pendingProjects = false;
         };
     };
+
+    onMount(() => {
+        getProjects();
+    })
 
     $: tabPanelsProjects = [
         {
@@ -78,38 +90,62 @@
 
 </script>
 
-<section class="section_odd">
-    <h2 class="section_header">
+<section class="projects_section">
+    <h1 class="section_header">
         projects
         <div class="heading_icon_container">
             {@html Project}
         </div>
-    </h2>
+    </h1>
     <a href="/authenticated-client/client/request-to-start-a-project">
         <ActionButtonSecondary>
-            request to start a project
+            start a project
         </ActionButtonSecondary>
     </a>
     <div class="projects">
-        <Tabs 
-            tabPanels={tabPanelsProjects} 
-            bind:activeTab={activeTabProjects}
-        />
-        <Panel 
-            tabPanels={tabPanelsProjects} 
-            bind:activeTab={activeTabProjects}
-        />
+        {#if pendingProjects}
+            <LoadingSpinner />
+        {:else}
+            <Tabs 
+                tabPanels={tabPanelsProjects} 
+                bind:activeTab={activeTabProjects}
+            />
+            <Panel 
+                tabPanels={tabPanelsProjects} 
+                bind:activeTab={activeTabProjects}
+            />
+        {/if}
     </div>
 </section>
 
 <style>
 
-    .projects {
+    .projects_section {
         width: 100%;
-        max-width: 60rem;
         display: flex;
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
+    }
+
+    .section_header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .heading_icon_container {
+        width: 12rem;
+    }
+
+    .projects {
+        width: 100%;
+        max-width: 80rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 0 1rem 0;
     }
 
 </style>

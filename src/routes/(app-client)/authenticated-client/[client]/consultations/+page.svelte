@@ -103,12 +103,12 @@
 </script>
 
 <section class="consultations_page">
-    <h2 class="section_header">
+    <h1 class="section_header">
         consultations
         <div class="heading_icon_container">
             {@html ConsultationIcon}
         </div>
-    </h2>
+    </h1>
     <a href="/authenticated-client/client/request-a-consultation">
         <ActionButtonSecondary>
             request a consultation
@@ -138,6 +138,9 @@
         align-items: center;
         gap: 1rem;
         padding: 0 0 1rem 0;
+        width: 100%;
+        max-width: 80rem;
+        margin: 0 auto;
     }
 
     .section_header {
@@ -149,7 +152,9 @@
     .heading_icon_container {
         width: 12rem;
     }
+
     .consultations {
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;

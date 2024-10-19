@@ -184,31 +184,33 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
-<div class="page">
-    <a 
-        href="/authenticated-client/client" 
-        class="back_button_container"
-    >
-        <BackButton>
-            back
-        </BackButton>
-    </a>
+<section class="project">
+    <div class="back_button_container">
+        <a 
+            href="/authenticated-client/client" 
+            
+        >
+            <BackButton>
+                projects
+            </BackButton>
+        </a>
+    </div>
     <img 
         class="project_banner" 
         src={(project?.image_URL) ? project?.image_URL : DefaultProjectImage} 
         alt={(project?.image_alt_text) ? project?.image_alt_text : "phases of the moon"}
     />
-    <div class="project">
-        <h1>project</h1>
-        {#if pendingProjectUpdate}
-            <LoadingSpinner />
-        {:else if !pendingProjectUpdate}
-            {#if !editProject}
-                <table>
-                    <colgroup>
-                        <col class="left_table_column" />
-                        <col class="right_table_column" />
-                    </colgroup>
+    <h1>project</h1>
+    {#if pendingProjectUpdate}
+        <LoadingSpinner />
+    {:else if !pendingProjectUpdate}
+        {#if !editProject}
+            <table class="project_info">
+                <colgroup>
+                    <col class="left_table_column" />
+                    <col class="right_table_column" />
+                </colgroup>
+                <tbody>
                     <tr>
                         <td>
                             services:
@@ -279,27 +281,27 @@
                             {/if}
                         </td>
                     </tr>
-                </table>
-                {#if (project?.status === "requested")}
-                    <div class="buttons_container">
-                        <EditButton bind:editClicked={editProject}>
-                            edit project request
-                        </EditButton>
-                        <DeleteButton bind:clicked={deleteButtonClickHandler}>
-                            delete project request
-                        </DeleteButton>
-                    </div>
-                {/if}
-            {:else if (editProject)}
-                <ProjectForm 
-                    project={project} 
-                    data={data}
-                    bind:cancelEditProject={editProject}
-                />
+                </tbody>
+            </table>
+            {#if (project?.status === "requested")}
+                <div class="buttons_container">
+                    <EditButton bind:editClicked={editProject}>
+                        edit project request
+                    </EditButton>
+                    <DeleteButton bind:clicked={deleteButtonClickHandler}>
+                        delete project request
+                    </DeleteButton>
+                </div>
             {/if}
+        {:else if (editProject)}
+            <ProjectForm 
+                project={project} 
+                data={data}
+                bind:cancelEditProject={editProject}
+            />
         {/if}
-    </div>
-</div>
+    {/if}
+</section>
 <style>
 
     .project {
@@ -310,23 +312,20 @@
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        margin: 0 0 4rem 0;
+        padding: 0 1rem 1rem 1rem;
+        margin: 0 auto;
     }
 
     .back_button_container {
         position: relative;
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start; 
-        padding: 0 0 1rem 0;
     }
 
     .project_banner {
         max-width: 1920px;
         width: 100%;
         object-fit: cover;
-        height: 48rem;;
+        height: 48rem;
     }
 
     table {

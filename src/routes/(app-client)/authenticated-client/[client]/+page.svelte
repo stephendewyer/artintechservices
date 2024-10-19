@@ -232,6 +232,8 @@
                 image_URL = uploadedImage.client_profile_image_URL ? uploadedImage.client_profile_image_URL : ProfilePhotoDefault;
                 image_ID = uploadedImage.client_profile_image_ID ? uploadedImage.client_profile_image_ID : null;
                 public_ID = uploadedImage.client_profile_image_public_ID ? uploadedImage.client_profile_image_public_ID : "";
+                image = "";
+                imageFileInputValue = "";
             };
 
         } catch (err) {
