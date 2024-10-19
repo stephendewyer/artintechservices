@@ -9,12 +9,20 @@
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import AddItemButton from "$lib/components/buttons/AddItemButton.svelte";
     import ProfilePhotoDefault from "$lib/images/default/default_profile_photo.jpg";
+    import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
+    import CloseButton from "$lib/components/buttons/CloseButton.svelte";
+    import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
+    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
+    import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
+    import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
+    import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
+    import { ClientProfileImageUpdatedStore } from "$lib/stores/ClientProfileImageUpdatedStore";
 
     let clientEmail = $page.data.streamed.user?.email;
 
     let clientProfileData: ClientProfile;
 
-    let dateCreated: string;
+    let dateCreated: string = "";
 
     let contactInfoAdded: boolean = false;
 
@@ -22,6 +30,7 @@
 
     let getClientProfileDataSuccess: boolean | null = null;
 
+    let clientID: number | null = null;
     let nameFirstInputValue: string = "";
     let nameLastInputValue: string = "";
     let emailInputValue: string = "";
@@ -34,7 +43,11 @@
     let stateInputValue: string = "";
     let zipCodeInputValue: number | null | string = null;
     let countryInputValue: string = "";
-    let profileImageSrc: string = "";
+
+    let image_ID: number | null = null;
+    let image_URL: string = "";
+    let alt_text: string = "";
+    let public_ID: string = "";
 
     const getClientProfileData = async () => {
         pendingClientProfileData = true;
@@ -58,6 +71,7 @@
                 contactInfoAdded = false;
             };
             dateCreated = new Date(clientProfileData?.date_created).toUTCString();
+            clientID = clientProfileData?.user_ID ? clientProfileData?.user_ID : null;
             nameFirstInputValue = clientProfileData?.name_first ? clientProfileData?.name_first : "";
             nameLastInputValue = clientProfileData?.name_last ? clientProfileData?.name_last : "";
             emailInputValue = clientProfileData?.email ? clientProfileData?.email : "";
@@ -70,6 +84,10 @@
             stateInputValue = clientProfileData?.state ? clientProfileData?.state : "";
             zipCodeInputValue = clientProfileData?.zip_code ? clientProfileData?.zip_code : "";
             countryInputValue = clientProfileData?.country ? clientProfileData?.country : "";
+            public_ID = clientProfileData?.public_ID ? clientProfileData?.public_ID : "";
+            alt_text = clientProfileData?.alt_text ? clientProfileData?.alt_text : "The Art of Living, 1967, by René Magritte";
+            image_URL = clientProfileData?.image_URL ? clientProfileData?.image_URL : ProfilePhotoDefault;
+            image_ID = clientProfileData?.image_ID ? clientProfileData?.image_ID : null;
             pendingClientProfileData = false;
             getClientProfileDataSuccess = true;
         } else if (!response.ok) {
@@ -129,6 +147,24 @@
 
     };
 
+    let changeImageClicked: boolean = false;
+
+    let imageFileInputValue: string = "";
+    let image: any;
+    let imageFileIsValid: boolean = true;
+    let imageInputElement: HTMLInputElement;
+    let imageInputFiles: FileList | null = null;
+    let cancelImageUpload: boolean = false;
+
+    $: if (cancelImageUpload) {
+        imageInputElement.value = "";
+        image = null;
+        imageInputFiles = null;
+        imageFileInputValue = "";
+        cancelImageUpload = false;
+    };
+
+
     let addContactDetails: boolean = false;
 
     let editContactDetailsClicked: boolean = false;
@@ -151,6 +187,99 @@
         editContactDetailsClicked = false;
         contactValuesSaved = false;
     };
+
+    let cancelImageSelect: boolean = false;
+
+    $: if (cancelImageSelect) {
+        changeImageClicked = false;
+        cancelImageSelect = false;
+    };
+
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        setTimeout(() => {
+            responseItem.success = "";
+            responseItem.error = "";
+            status: null;
+        }, 4000)
+    };
+
+    let pendingUploadedImage: boolean = false;
+
+    const getUploadedClientProfileImage = async () => {
+
+        pendingUploadedImage = true;
+
+        try {
+            const response = await fetch("/authenticated-client/api/getUploadedClientProfileImage", {
+                method: "POST",
+                body: JSON.stringify({
+                    clientEmail
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const uploadedImage = await response.json();
+
+            if (response.ok) {
+                image_URL = uploadedImage.client_profile_image_URL ? uploadedImage.client_profile_image_URL : ProfilePhotoDefault;
+                image_ID = uploadedImage.client_profile_image_ID ? uploadedImage.client_profile_image_ID : null;
+                public_ID = uploadedImage.client_profile_image_public_ID ? uploadedImage.client_profile_image_public_ID : "";
+            };
+
+        } catch (err) {
+            console.log(err);
+        };
+
+        pendingUploadedImage = false;
+
+    };
+
+
+    let pendingImageUpload: boolean = false;
+
+    const uploadImageSubmitHandler = async () => {
+        pendingImageUpload = true;
+        try {
+            const response = await fetch("/authenticated-client/api/uploadProfileImage", {
+                method: "POST",
+                body: JSON.stringify({
+                    clientEmail,
+                    imageFileInputValue,
+                    image,
+                    public_ID,
+                    image_ID,
+                    clientID
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            responseItem = await response.json();
+
+            if (responseItem.success) {
+                $ClientProfileImageUpdatedStore = true;
+                changeImageClicked = false;
+                getUploadedClientProfileImage();
+            };
+
+        } catch (err) {
+            console.log(err);
+        };
+
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        pendingImageUpload = false;
+    };
     
 </script>
 
@@ -165,46 +294,103 @@
         <LoadingSpinner />
     {:else if (!pendingClientProfileData)}
         <h1>
-            welcome, {clientProfileData?.name_first} {clientProfileData?.name_last}
+            welcome, {clientProfileData?.name_first} {clientProfileData?.name_last}!
         </h1>
-        <table class="dates">
-            <colgroup>
-                <col style="width: 30%" />
-                <col style="width: 70%" />
-            </colgroup>
-            <tbody>
-                <tr>
-                    <td>
-                        last login:
-                    </td>
-                    <td>
-                        {new Date(clientProfileData?.last_login).toUTCString()}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        account created:
-                    </td>
-                    <td>
-                        {new Date(clientProfileData?.date_created).toUTCString()}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="profile_photo_section">
-            <h2>
-                profile photo
-            </h2>
-            <div class="profile_photo_and_action_button">
-                <div class="profile_photo">
-                    <img 
-                        src={ProfilePhotoDefault} 
-                        alt={"The Art of Living, 1967, by René Magritte" } 
-                    />
-                </div>
-                <EditButton>
-                    change image
-                </EditButton>
+        <div class="profile_photo_and_dates">
+            <table class="dates">
+                <colgroup>
+                    <col style="width: 30%" />
+                    <col style="width: 70%" />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td>
+                            last login:
+                        </td>
+                        <td>
+                            {new Date(clientProfileData?.last_login).toUTCString()}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            account created:
+                        </td>
+                        <td>
+                            {new Date(clientProfileData?.date_created).toUTCString()}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="profile_photo_section">
+                <h2>
+                    profile photo
+                </h2>
+                {#if changeImageClicked}
+                    <form on:submit|preventDefault={uploadImageSubmitHandler} class="upload_profile_photo_form">
+                        <ImageFileInput
+                            inputLabel={true}
+                            bind:imageFileInputValue={imageFileInputValue}
+                            bind:image={image}
+                            placeholder="/image.jpg"
+                            inputName="project_image_file"
+                            inputID="project_image_file"
+                            bind:isValid={imageFileIsValid}
+                            bind:files={imageInputFiles}
+                            bind:imageFileInputElement={imageInputElement}
+                            required={false}
+                            imageFileInputErrorMessage="image file required"
+                        >
+                            select
+                        </ImageFileInput>
+                        {#if (image)}
+                            <div class="project_image_container">
+                                <img src={image} alt="project"/>
+                                <div class="cancel_button_container">
+                                    <CloseButton bind:closeButtonClicked={cancelImageUpload} />
+                                </div>
+                            </div>
+                        {/if}
+                        <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
+                        <p class="constraints">* maximum file size: 2MB</p>
+                        <SubmitButton02 disable={!imageFileInputValue}>
+                            upload image
+                        </SubmitButton02>
+                        <CancelButton bind:cancelClicked={cancelImageSelect}>
+                            cancel
+                        </CancelButton>    
+                    </form>
+                    {#if (pendingImageUpload)}
+                        <PendingFlashMessage >
+                            uploading profile image
+                        </PendingFlashMessage>
+                    {:else if (responseItem.error)}
+                        <ErrorFlashMessage >
+                            {responseItem.error}
+                        </ErrorFlashMessage>
+                    {:else if (responseItem.success)}
+                        <SuccessFlashMessage>
+                            {responseItem.success}
+                        </SuccessFlashMessage>
+                    {/if}
+                {:else}
+                    <div class="profile_photo_and_action_button">
+                        {#if pendingUploadedImage}
+                            <LoadingSpinner />
+                        {:else}
+                            <div class="profile_photo">
+                                <img 
+                                    src={image_URL} 
+                                    alt={"The Art of Living, 1967, by René Magritte"} 
+                                />
+                                <div class="change_profile_photo_button_container">
+                                    <EditButton bind:editClicked={changeImageClicked}>
+                                        change image
+                                    </EditButton>
+                                </div>
+                            </div>
+                        {/if}
+                    </div>
+                {/if}
             </div>
         </div>
         <div class="contact_details_section">
@@ -372,7 +558,29 @@
         align-items: center;
         gap: 1rem;
         width: 100%;
-        padding: 0 0 1rem 0;
+        padding: 0 1rem 1rem 1rem;
+    }
+
+    .profile_photo_and_dates {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 100%;
+    }
+
+    .dates {
+        max-width: 40rem;
+        width: 100%;
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.075),
+            0 2px 2px hsl(0deg 0% 0% / 0.075),
+            0 4px 4px hsl(0deg 0% 0% / 0.075),
+            0 8px 8px hsl(0deg 0% 0% / 0.075),
+            0 16px 16px hsl(0deg 0% 0% / 0.075)
+        ;
     }
 
     .profile_photo_section {
@@ -380,18 +588,31 @@
         flex-direction: column;
         gap: 1rem;
         align-items: center;
+        width: 60%;
+        min-width: 20rem;
+    }
+
+    .upload_profile_photo_form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
     }
 
     .profile_photo_and_action_button {
+        position: relative;
         display: flex;
-        flex-direction: row;
-        align-items: center;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
         gap: 1rem;
+        width: 20rem;
+        height: 20rem;
     }
 
     .profile_photo {
-        width: 12rem;
-        height: 12rem;
+        width: 100%;
+        height: 100%;
     }
 
     .profile_photo > img {
@@ -400,11 +621,22 @@
         width: 100%;
     }
 
+    .change_profile_photo_button_container {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem;
+    }
+
     .contact_details_section {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        
     }
 
     .contact_info_tables {
@@ -412,20 +644,23 @@
         display: flex;
         align-items: flex-start;
         gap: 1rem;
-        padding: 0 1rem;
     }
 
-    .dates {
-        width: 100%;
-        max-width: 40rem;
+    .contact_details {
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.075),
+            0 2px 2px hsl(0deg 0% 0% / 0.075),
+            0 4px 4px hsl(0deg 0% 0% / 0.075),
+            0 8px 8px hsl(0deg 0% 0% / 0.075),
+            0 16px 16px hsl(0deg 0% 0% / 0.075)
+        ;
     }
-
 
     table {
         border-spacing: 0;
         table-layout: fixed;
         width: 100%;
-    }    
+    } 
 
     table > tbody > tr {
         height: auto;
@@ -441,6 +676,24 @@
 
     table > tbody > tr:nth-child(odd) {
         background-color: #F2F9F2;
+    }
+
+    .project_image_container {
+        position: relative;
+        width: 20rem;
+        height: 20rem;
+    }
+
+    .project_image_container > img  {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .cancel_button_container {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 
     @media screen and (max-width: 1440px) {

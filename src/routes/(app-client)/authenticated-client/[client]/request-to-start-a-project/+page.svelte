@@ -23,7 +23,7 @@
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import { goto } from "$app/navigation";
     import CloseButton from "$lib/components/buttons/CancelSubmitButton.svelte";
-  import BackButton from "$lib/components/buttons/BackButton.svelte";
+    import BackButton from "$lib/components/buttons/BackButton.svelte";
 
     export let data;
 
@@ -295,7 +295,7 @@
         imageInputFiles = null;
         imageFileInputValue = "";
         cancelImageUpload = false;
-    }
+    };
 
     let documentInputElement: HTMLInputElement;
 
@@ -328,7 +328,7 @@
             class="back_button_container"
         >
             <BackButton>
-                back
+                projects
             </BackButton>
         </a>
         <h1>
@@ -569,12 +569,7 @@
     .service_label {
         font-size: 1rem;
     }
-
-    .constraints {
-        padding: 0;
-        margin: 0;
-    }
-
+    
     .project_image_container {
         position: relative;
         padding: 1rem;

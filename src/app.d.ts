@@ -35,10 +35,10 @@ declare global {
         state: string;
         zip_code: number;
         Stripe_customer_ID: string;
-        profile_image_ID: number;
-        profile_image_URL: string;
-        profile_image_alt_text: string;
-        profile_image_public_ID: string;
+        image_ID: number;
+        image_URL: string;
+        alt_text: string;
+        public_ID: string;
 		country: string;
     }
 

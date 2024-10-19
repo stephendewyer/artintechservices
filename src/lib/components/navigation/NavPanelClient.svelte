@@ -7,6 +7,58 @@
     import settingsIcon from "$lib/images/icons/settings_icon.svg?raw";
     import { page } from "$app/stores";
     import { onMount } from "svelte";
+    import { ClientProfileImageUpdatedStore } from "$lib/stores/ClientProfileImageUpdatedStore";
+    import LoadingSpinner from "../loadingSpinners/LoadingSpinner.svelte";
+
+    export let clientEmail = "";
+    export let clientProfileImageID = null;
+    export let clientProfileImageURL = "";
+
+    let profileImageAltText = "client profile image"
+
+    $: if (!clientProfileImageURL) {
+        clientProfileImageURL = ProfilePhotoDefault;
+        profileImageAltText = "The Art of Living, 1967, by René Magritte";
+    } else {
+        clientProfileImageURL = clientProfileImageURL;
+    };
+
+    let pendingUploadedImage: boolean = false;
+
+    const getUploadedClientProfileImage = async () => {
+
+        pendingUploadedImage = true;
+
+        try {
+            const response = await fetch("/authenticated-client/api/getUploadedClientProfileImage", {
+                method: "POST",
+                body: JSON.stringify({
+                    clientEmail
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const uploadedImage = await response.json();
+
+            if (response.ok) {
+                clientProfileImageURL = uploadedImage.client_profile_image_URL ? uploadedImage.client_profile_image_URL : ProfilePhotoDefault;
+                clientProfileImageID = uploadedImage.client_profile_image_ID ? uploadedImage.client_profile_image_ID : null;
+            } 
+
+        } catch (err) {
+            console.log(err);
+        };
+
+        pendingUploadedImage = false;
+
+    };
+
+    $: if ($ClientProfileImageUpdatedStore) {
+        getUploadedClientProfileImage();
+        $ClientProfileImageUpdatedStore = false;
+    };
 
     export let width: number = 0;
     export let height: number = 0;
@@ -53,11 +105,15 @@
 
             >
                 <div class="profile_image_container">
-                    <img
-                        src={ProfilePhotoDefault} 
-                        alt="The Art of Living, 1967, by René Magritte" 
-                        class="profile_image"
-                    />          
+                    {#if (pendingUploadedImage)}
+                        <LoadingSpinner />
+                    {:else}
+                        <img
+                            src={clientProfileImageURL} 
+                            alt={profileImageAltText}
+                            class="profile_image"
+                        /> 
+                    {/if}         
                 </div>
             </a>
         </li>

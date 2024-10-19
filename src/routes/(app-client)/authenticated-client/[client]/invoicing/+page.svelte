@@ -103,7 +103,7 @@
 
     onMount(() => {
         getClientFinancials();
-    })
+    });
 
     const getPaymentMethods = async () => {
         const response = await fetch("/authenticated-client/api/getPaymentMethods", {
@@ -385,12 +385,12 @@
                         <PaymentElement />
                         <Address mode="billing" />
                         <div class="buttons_container">
-                            <CancelButton bind:cancelClicked={cancelPaymentMethodClicked}>
-                                cancel
-                            </CancelButton>
                             <SubmitButton02>
                                 save
                             </SubmitButton02>
+                            <CancelButton bind:cancelClicked={cancelPaymentMethodClicked}>
+                                cancel
+                            </CancelButton>
                         </div>
                     </form>
                     {#if (pendingSubmitPaymentHandler)}

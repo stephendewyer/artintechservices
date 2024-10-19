@@ -79,6 +79,7 @@ table > tbody > tr > th  {
 
 tbody tr:nth-child(odd) {
     background-color: #F2F9F2;
+    border-top-left-radius: 1rem;
 }
 
 table td:nth-child(1) {
@@ -86,6 +87,7 @@ table td:nth-child(1) {
     overflow-wrap: break-word;
     hyphens: auto;
     vertical-align: top;
+
 }
 
 a {
@@ -148,9 +150,14 @@ img {
 .buttons_container {
     display: flex;
     gap: 1rem;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.constraints {
+    padding: 0;
+    margin: 0;
 }
 
 @media screen and (max-width: 1440px) {
@@ -347,10 +354,6 @@ img {
 
     .input_column {
         width: 100%;
-    }
-
-    .buttons_container {
-        flex-direction: column-reverse;
     }
 
     .indicates_required_heading {

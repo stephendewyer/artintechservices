@@ -13,13 +13,13 @@
     import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import PDFIcon from "$lib/images/icons/document.svg?raw";
-  import BackButton from "$lib/components/buttons/BackButton.svelte";
+    import BackButton from "$lib/components/buttons/BackButton.svelte";
 
     export let data;
 
     let project: Project | undefined = data.projectRow;
 
-    console.log(project)
+    // console.log(project)
 
     const projectID: number | undefined = data.projectRow.project_ID;
 

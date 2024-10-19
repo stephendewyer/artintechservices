@@ -18,7 +18,7 @@
     import { PromptStore } from '$lib/stores/PromptStore.js';
     import { goto } from '$app/navigation';
     import BackButton from '$lib/components/buttons/BackButton.svelte';
-  import CancelButton from '$lib/components/buttons/CancelButton.svelte';
+    import CancelButton from '$lib/components/buttons/CancelButton.svelte';
 
     export let data;
 
@@ -255,7 +255,7 @@
         class="back_button_container"
     >
         <BackButton>
-            back
+            invoices
         </BackButton>
     </a>
     <h1>

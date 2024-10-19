@@ -8,8 +8,6 @@ export const PATCH = async ({request}) => {
 
     const data = await request.json();
 
-    console.log(data);
-
     const { email, userGroup } = data;
     
     if (!email) {

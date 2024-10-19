@@ -45,7 +45,8 @@
     }
 
     button[disabled] {
-        display: none;
+        opacity: 50%;
+        pointer-events: none;
     }
 
     @media screen and (max-width: 1440px) {

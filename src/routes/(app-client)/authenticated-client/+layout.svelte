@@ -1,6 +1,11 @@
 <script lang="ts">
     import NavPanelClient from "$lib/components/navigation/NavPanelClient.svelte";
     import { onMount } from "svelte";
+    import { page } from "$app/stores";
+
+    let clientProfileImageID = $page.data.streamed.client_profile_image_ID;
+    let clientProfileImageURL = $page.data.streamed.client_profile_image_URL;
+    let clientEmail = $page.data.streamed.user?.email;
 
     let navPanelWidth: number = 0;
     let navPanelHeight: number = 0;
@@ -90,6 +95,9 @@
                 navPanelFixed={navPanelFixed}
                 navPanelAbsolute={navPanelAbsolute}
                 navPanelRelative={navPanelRelative}
+                clientProfileImageID={clientProfileImageID}
+                clientProfileImageURL={clientProfileImageURL}
+                clientEmail={clientEmail}
             />
         </div>
         <div 

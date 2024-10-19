@@ -68,6 +68,10 @@ export const POST = async ({request}) => {
     await res.query(selectClientProfileImageData)
     .then(([rows]) => {
         const response = JSON.parse(JSON.stringify(rows))[0];
+        // const profile_image_ID = JSON.parse(JSON.stringify(rows))[0].image_ID;
+        // const profile_image_public_ID = JSON.parse(JSON.stringify(rows))[0].public_ID;
+        // const profile_image_URL = JSON.parse(JSON.stringify(rows))[0].image_URL;
+        // const profile_image_alt_text = JSON.parse(JSON.stringify(rows))[0].alt_text;
         clientProfile = {...clientProfile, ...response};
         Stripe_customer_ID = clientProfile.Stripe_customer_ID;
     })
