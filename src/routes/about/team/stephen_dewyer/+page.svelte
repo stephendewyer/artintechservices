@@ -56,102 +56,104 @@
                         <col class="left_table_column">
                         <col class="right_table_column">
                     </colgroup>
-                    <tr>
-                        <td>
-                            programming languages
-                        </td>
-                        <td>
-                            JavaScript, TypeScript, C++, PHP, Python
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            artificial intelligence
-                        </td>
-                        <td>
-                            data preprocessing, regression, classification, clustering, association rule learning, reinforcement learning, natural language processing, deep learning including artificial intelligence neural networks and convolutional neural networks, dimensionality reduction, model selection and boosting including XGBoost
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            stylesheet languages
-                        </td>
-                        <td>
-                            CSS 3
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            markup languages
-                        </td>
-                        <td>
-                            HTML 5
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            javaScript compilers, frameworks and libraries
-                        </td>
-                        <td>
-                            SvelteKit, Svelte, Next.js, React, Vue.js, Express, Handlebars
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            server environments
-                        </td>
-                        <td>
-                            Node
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            database management systems
-                        </td>
-                        <td>
-                            PostgreSQL, MySQL, MongoDB
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            web accessibility standards
-                        </td>
-                        <td>
-                            WCAG 2.1
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            user experience design
-                        </td>
-                        <td>
-                            user interface design, user research, wire framing, prototyping, information architecture, user interviews, creating user flows, 5 stage design thinking, responsive design, content strategy, copy writing and editing
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            data visalization
-                        </td>
-                        <td>
-                            D3.js
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            geocoding
-                        </td>
-                        <td>
-                            TomTom, Google Maps
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            art direction
-                        </td>
-                        <td>
-                            photography, videography, visual design, brand identity design, animation
-                        </td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td>
+                                programming languages
+                            </td>
+                            <td>
+                                JavaScript, TypeScript, C++, PHP, Python
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                artificial intelligence
+                            </td>
+                            <td>
+                                data preprocessing, regression, classification, clustering, association rule learning, reinforcement learning, natural language processing, deep learning including artificial intelligence neural networks and convolutional neural networks, dimensionality reduction, model selection and boosting including XGBoost
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                stylesheet languages
+                            </td>
+                            <td>
+                                CSS 3
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                markup languages
+                            </td>
+                            <td>
+                                HTML 5
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                javaScript compilers, frameworks and libraries
+                            </td>
+                            <td>
+                                SvelteKit, Svelte, Next.js, React, Vue.js, Express, Handlebars
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                server environments
+                            </td>
+                            <td>
+                                Node
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                database management systems
+                            </td>
+                            <td>
+                                PostgreSQL, MySQL, MongoDB
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                web accessibility standards
+                            </td>
+                            <td>
+                                WCAG 2.1
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                user experience design
+                            </td>
+                            <td>
+                                user interface design, user research, wire framing, prototyping, information architecture, user interviews, creating user flows, 5 stage design thinking, responsive design, content strategy, copy writing and editing
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                data visalization
+                            </td>
+                            <td>
+                                D3.js
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                geocoding
+                            </td>
+                            <td>
+                                TomTom, Google Maps
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                art direction
+                            </td>
+                            <td>
+                                photography, videography, visual design, brand identity design, animation
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
 

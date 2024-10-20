@@ -10,11 +10,12 @@
     import { ClientProfileImageUpdatedStore } from "$lib/stores/ClientProfileImageUpdatedStore";
     import LoadingSpinner from "../loadingSpinners/LoadingSpinner.svelte";
 
-    export let clientEmail = "";
-    export let clientProfileImageID = null;
-    export let clientProfileImageURL = "";
+    export let clientEmail: string = "";
+    export let clientProfileImageID: number | null = null;
+    export let clientProfileImageURL: string = "";
+    export let mobileNavPanelFixed: boolean = false;
 
-    let profileImageAltText = "client profile image"
+    let profileImageAltText = "client profile image";
 
     $: if (!clientProfileImageURL) {
         clientProfileImageURL = ProfilePhotoDefault;
@@ -88,7 +89,7 @@
 
 <nav 
     id="client_nav_panel"
-    class={navPanelFixed ? "client_nav_panel_fixed" : navPanelAbsolute ? "client_nav_panel_absolute" : navPanelRelative ? "client_nav_panel_relative": "client_nav_panel_relative"}
+    class={navPanelFixed || mobileNavPanelFixed ? "client_nav_panel_fixed" : navPanelAbsolute ? "client_nav_panel_absolute" : navPanelRelative ? "client_nav_panel_relative": "client_nav_panel_relative"}
     bind:this={navPanelElement}
     bind:clientWidth={width}
     bind:clientHeight={height}
@@ -129,7 +130,9 @@
                 <div class="nav_icon">
                     {@html letterIcon}
                 </div>
-                messages
+                <span class="label">
+                    messages
+                </span>
             </a>
         </li>
         <li
@@ -144,7 +147,9 @@
                 <div class="nav_icon">
                     {@html consultationIcon}
                 </div>
-                consultations
+                <span class="label">
+                    consultations
+                </span>
             </a>
         </li>
         <li
@@ -159,7 +164,9 @@
                 <div class="nav_icon">
                     {@html projectIcon}
                 </div>
-                projects
+                <span class="label">
+                    projects
+                </span>
             </a>
             
         </li>
@@ -175,9 +182,10 @@
                 <div class="nav_icon">
                     {@html billingIcon}
                 </div>
-                invoicing
+                <span class="label">
+                    invoicing
+                </span>
             </a>
-            
         </li>
         <li
             aria-current={(
@@ -191,7 +199,9 @@
                 <div class="nav_icon">
                     {@html settingsIcon}
                 </div>
-                account
+                <span class="label">
+                    account
+                </span>
             </a>
         </li>
     </ul>
@@ -201,6 +211,7 @@
 
     #client_nav_panel {
         width: 12rem;
+        z-index: 1;
     }
 
     .client_nav_panel_fixed {
@@ -237,7 +248,7 @@
     .client_nav_panel_tabs {
         position: relative;
         list-style: none;
-        padding: 1rem 0;
+        padding: 0 1rem;
         margin: 0;
         gap: 0.5rem;
         display: flex;
@@ -299,6 +310,65 @@
         justify-content: center;
         fill: #3D3832;
         transition: fill 0.3s linear;
+    }
+
+    .label {
+        display: block;
+    }
+
+    @media screen and (max-width: 720px) {
+
+        #client_nav_panel {
+            width: 100%;
+            background-color:#FFECEC;
+        }
+
+        .client_nav_panel_tabs {
+            flex-direction: row;
+            margin: 0;
+            padding: 0 1rem;
+            justify-content: space-between;
+            gap: 0.125rem;
+        }
+
+        li[aria-current="page"] > .client_nav_panel_tab::after {
+            --size: 6px;
+            content: '';
+            position: absolute;
+            top: auto;
+            left: 0;
+            right: 0;
+            bottom:0;
+            border: var(--size) solid transparent;
+            border-bottom: 6px solid #3D3832;
+            overflow: visible;
+        }
+
+        .client_nav_panel_tab {
+            gap: 0;
+            padding: 0 0 1rem 0;
+            height: 100%;
+        }
+
+        .nav_icon {
+            width: 2.5rem;
+            height: 2rem;
+        }
+
+        .label {
+            display: none;
+        }
+
+        .profile_image_container {
+            width: 3rem;
+            height: 3rem;
+        }
+
+        .client_nav_panel_fixed {
+            position: fixed;
+            top: auto;
+            bottom: 0;
+        }
     }
     
 </style>

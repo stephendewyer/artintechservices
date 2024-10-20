@@ -90,22 +90,24 @@
                     <col class="left_column">
                     <col class="right_column">
                 </colgroup>
-                <tr>
-                    <td class="table_paragraph">
-                        2021
-                    </td>
-                    <td class="table_paragraph">
-                        Art in Tech Services Inc. launches
-                    </td>
-                </tr>
-                <tr>
-                    <td class="table_paragraph">
-                        2024
-                    </td>
-                    <td class="table_paragraph">
-                        begin research and development in AI applications
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td class="table_paragraph">
+                            2021
+                        </td>
+                        <td class="table_paragraph">
+                            Art in Tech Services Inc. launches
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="table_paragraph">
+                            2024
+                        </td>
+                        <td class="table_paragraph">
+                            begin research and development in AI applications
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
         <div class="process">
