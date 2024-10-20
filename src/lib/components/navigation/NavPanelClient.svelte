@@ -9,6 +9,7 @@
     import { onMount } from "svelte";
     import { ClientProfileImageUpdatedStore } from "$lib/stores/ClientProfileImageUpdatedStore";
     import LoadingSpinner from "../loadingSpinners/LoadingSpinner.svelte";
+    import { afterNavigate } from "$app/navigation";
 
     export let clientEmail: string = "";
     export let clientProfileImageID: number | null = null;
@@ -82,6 +83,10 @@
     const scrollHandler = () => {
         navPanelTopYPosition = navPanelElement.getBoundingClientRect().top + window.scrollY;
     };
+
+    afterNavigate(() => {
+        navPanelTopYPosition = navPanelElement.getBoundingClientRect().top + window.scrollY;
+    });
     
 </script>
 
@@ -248,7 +253,7 @@
     .client_nav_panel_tabs {
         position: relative;
         list-style: none;
-        padding: 0 1rem;
+        padding: 0;
         margin: 0;
         gap: 0.5rem;
         display: flex;
@@ -278,7 +283,7 @@
 
     .profile_image_container {
         width: 100%;
-        height: 10rem;
+        height: 12rem;
         transition: box-shadow 0.3s linear;
         box-shadow: none;
     }
@@ -314,6 +319,7 @@
 
     .label {
         display: block;
+        font-size: 1rem;
     }
 
     @media screen and (max-width: 720px) {

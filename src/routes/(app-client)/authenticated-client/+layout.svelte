@@ -2,6 +2,7 @@
     import NavPanelClient from "$lib/components/navigation/NavPanelClient.svelte";
     import { afterUpdate, onMount } from "svelte";
     import { page } from "$app/stores";
+    import { ClientPageWidthStore } from "$lib/stores/ClientPageWidthStore";
 
     let clientProfileImageID = $page.data.streamed.client_profile_image_ID;
     let clientProfileImageURL = $page.data.streamed.client_profile_image_URL;
@@ -13,6 +14,7 @@
     let navPanelTopYPosition: number = 0;
     let navPanelBottomYPosition: number = 0;
     let clientPageHeight: number = 0;
+    let clientPageWidth: number = 0;
     let navPanelContainerTopYPosition: number = 0;
     let navPanelContainerElement: HTMLElement;
     let y: number = 0;
@@ -34,6 +36,7 @@
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;   
+        $ClientPageWidthStore = innerWidth - navPanelWidth;
         // console.log("navPanelContainerElement.getBoundingClientRect().bottom: ", navPanelContainerElement.getBoundingClientRect().bottom )
         // console.log("y + innerHeight: ", y + innerHeight);
         // console.log("( y + innerHeight) < navPanelBottomYPosition: ", ( y + innerHeight) < navPanelBottomYPosition )     
@@ -44,18 +47,21 @@
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;   
+        $ClientPageWidthStore = innerWidth - navPanelWidth;
     })
 
     const windowResizeHandler = () => {
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;
+        $ClientPageWidthStore = innerWidth - navPanelWidth;
     };
     
     const scrollHandler = () => {
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;
+        $ClientPageWidthStore = innerWidth - navPanelWidth;
     };
 
     // handle relative position
@@ -77,11 +83,11 @@
     $: if (
         (innerWidth > 720) && (
             ( navPanelHeight < clientPageHeight ) && 
-            ( navPanelTopYPosition > ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) )
+            ( navPanelTopYPosition >= ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) )
         )
     ) {
         navPanelAbsolute = true;
-    } else {
+    } else if ( (innerWidth > 720) && ( navPanelHeight < clientPageHeight ) && ( navPanelTopYPosition < ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) ) ) {
         navPanelAbsolute = false;
     };
 
@@ -151,6 +157,7 @@
         <div 
             class="page_client_portal"
             bind:clientHeight={clientPageHeight}
+            bind:clientWidth={clientPageWidth}
             bind:this={clientPageElement}
             style={mobileNavPanelFixed ? `padding-bottom: ${navPanelHeight};` : ""}
         >

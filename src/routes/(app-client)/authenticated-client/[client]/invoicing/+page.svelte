@@ -17,6 +17,9 @@
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
     import Billing from "$lib/images/icons/billing.svg?raw";
     import ActionButtonTertiary from "$lib/components/buttons/ActionButtonTertiary.svelte";
+    import { ClientPageWidthStore } from "$lib/stores/ClientPageWidthStore";
+
+    $: console.log("$clientPageWidthStore: ", $ClientPageWidthStore);
 
     let clientEmail = $page.data.streamed.user?.email;
 
@@ -252,8 +255,13 @@
         deletePaymentMethodClicked = false;
     };
 
+    let innerWidth: number = 0;
+
 </script>
-<section class="invoicing_page">
+
+<svelte:window bind:innerWidth />
+
+<section class="invoicing_page" style={innerWidth >= 720 ? `max-width: ${$ClientPageWidthStore}px;` : "max-width: 100%;"}>
     <h1 class="header_and_icon">
         invoicing
         <div class="invoicing_icon_container">
@@ -281,7 +289,7 @@
         <h2>
             invoices
         </h2>
-        <div class="table_container">
+        <div class="table_container" >
             <table class="invoices_table">
                 <tbody>
                     <tr>
@@ -333,7 +341,7 @@
                                 {#if (!invoice.paid)}
                                     <a href={`/authenticated-client/client/make-a-payment?invoice-ID=${invoice.id}&client-email=${clientEmail}`}>
                                         <ActionButtonTertiary parentControlled={false}>
-                                            make payment
+                                            pay invoice
                                         </ActionButtonTertiary>
                                         
                                     </a>
@@ -416,13 +424,13 @@
     .invoicing_page {
         position: relative;
         width: 100%;
-        max-width: 80rem;
+        max-width: 100%;
         margin: 0 auto;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
-        padding: 0 0 1rem 0;
+        padding: 0 3rem 1rem 0;
     }
 
     .header_and_icon {
@@ -437,7 +445,6 @@
     }
 
     .total_amount_due_container {
-        padding: 0 1rem;
         width: 100%;
     }
 
@@ -445,18 +452,16 @@
         position: relative;
         overflow-x: auto;
         width: 100%;
-        max-width: 100%;
-        white-space: nowrap;
         display: block;
-        padding: 0 1rem;
+        padding: 0 1rem 1rem 1rem;
     }
 
     .invoices_table {
         position: relative;
         width: 100%;
-        display: block;
-
+        min-width: 100%;
     }
+
     form {
         display: flex;
         flex-direction: column;
@@ -466,6 +471,25 @@
     .stripe_save_payment_method {
         width: 100%;
         max-width: 60rem;
-        padding: 0 1rem;
+    }
+
+    @media screen and (max-width: 1440px) {
+
+        .invoices_table {
+            min-width: 60rem;
+        }
+
+    }
+
+    @media screen and (max-width: 1080px) {
+        .invoices_table {
+            min-width: 60rem;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .invoicing_page {
+            padding: 0 1rem 1rem 1rem;
+        }
     }
 </style>
