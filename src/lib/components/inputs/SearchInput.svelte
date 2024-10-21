@@ -53,8 +53,8 @@
 <style>
 
     @font-face {
-        font-family: "IBM_Plex_Sans";
-        src: url($lib/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf);
+        /* font-family: "IBM_Plex_Sans";
+        src: url($lib/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf); */
     }
 
     .input_and_label_container {
