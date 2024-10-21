@@ -41,7 +41,7 @@
 
     #next_button {
         padding: 0;
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         background: none;
         border: none;

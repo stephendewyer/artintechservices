@@ -27,7 +27,7 @@
         position: relative;
         padding: 1rem 1.75rem;
         border-radius: 2rem;
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 0.75rem;

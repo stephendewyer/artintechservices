@@ -34,7 +34,7 @@
 		gap: 0.5rem;
 		font-size: 1.25rem;
 		font-weight: 600;
-		display: flex;
+		display: inline-flex;
 		flex-direction: row;
 		align-items: center;
 		border-radius: 3rem;

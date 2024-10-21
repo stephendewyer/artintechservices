@@ -25,12 +25,12 @@
 
 <style>
     .box_button {
-        display:flex;
+        display:inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
-        border: 0.16rem solid #424635;
+        border: 2px solid #424635;
         text-decoration: none;
         color: #424635;
         background-color: #EFD5C9;
@@ -67,8 +67,14 @@
         transition: margin-left 0.2s ease-in-out, fill 0.2s ease-in-out;
     }
 
-@media all and (max-width:750px){
+@media screen and (max-width:750px){
+    .box_button {
+        border: 1px solid #424635;
+    }
 
+    .box_button:hover {
+        border: 1px solid #838B6A;
+    }
 }
 
 </style>

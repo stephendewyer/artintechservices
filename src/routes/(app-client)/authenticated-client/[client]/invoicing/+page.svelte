@@ -343,7 +343,6 @@
                                         <ActionButtonTertiary parentControlled={false}>
                                             pay invoice
                                         </ActionButtonTertiary>
-                                        
                                     </a>
                                 {:else if (invoice.paid)}
                                     payment completed

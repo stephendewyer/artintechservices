@@ -42,7 +42,7 @@
 
 <style>
     #box_button {
-        display:flex;
+        display:inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 0.5rem;
@@ -57,14 +57,14 @@
 
     .box_button_active {
         color:#838B6A;
-        border: 0.16rem solid #838B6A;
+        border: 2px solid #838B6A;
         background-color: #EFD5C9;
         margin-right: 0;
     }
 
     .box_button_inactive {
         color: #424635;
-        border: 0.16rem solid #424635;
+        border: 2px solid #424635;
         background-color: #EFD5C9;
         margin-right: 0.5rem;
     }
@@ -90,7 +90,14 @@
     }
     
 
-@media all and (max-width:750px){
+@media screen and (max-width:750px) {
+    .box_button_active {
+        border: 1px solid #838B6A;
+    }
+
+    .box_button_inactive {
+        border: 1px solid #424635;
+    }
 
 }
 

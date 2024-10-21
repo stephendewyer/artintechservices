@@ -23,7 +23,7 @@
 
 <style>
     .action_button {
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 1rem;

@@ -17,7 +17,7 @@
 
 <style>
     .delete_button {
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         gap: 0.5rem;
         align-items: center;

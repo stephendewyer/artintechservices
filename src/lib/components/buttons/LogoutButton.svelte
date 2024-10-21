@@ -96,7 +96,7 @@
 <style>
 
     .submit_button {
-        background: nons;
+        background: none;
         border: none;
         margin: 0;
         padding: 0;
@@ -111,7 +111,7 @@
 
     li {
 		position: relative;
-		display: flex;
+		display: inline-flex;
 		flex-direction: row;
 		align-items: center;
         position: relative;

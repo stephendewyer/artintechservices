@@ -43,13 +43,12 @@
 
 <style>
     #box_button {
-        display:flex;
+        display:inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 0.5rem;
         padding: 0.5rem 1rem;
         border: none;
-        margin-right: 0.5rem;
         text-decoration: none;
         background: none;
         text-align: left;
@@ -89,8 +88,22 @@
         fill: #424635;
     }
 
-@media all and (max-width:750px){
+    @media screen and (max-width: 1440px) {
+        #box_button {
+            font-size: 1.25rem;
+        }
+    }
 
-}
+    @media screen and (max-width: 1080px) {
+        #box_button {
+            font-size: 1rem;
+        }
+    }
+
+    @media screen and (max-width:750px){
+        #box_button {
+            font-size: 0.85rem;
+        }
+    }
 
 </style>

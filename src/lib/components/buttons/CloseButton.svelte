@@ -27,6 +27,7 @@
         width: 3rem;
         margin: 1rem;
         cursor: pointer;
+        display: inline-flex
     }
 
     .close_button:hover {

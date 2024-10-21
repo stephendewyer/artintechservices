@@ -18,7 +18,7 @@
         position: relative;
         padding: 0.75rem 1.5rem;
         border-radius: 2rem;
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 0.75rem;

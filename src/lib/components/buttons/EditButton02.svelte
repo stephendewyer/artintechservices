@@ -27,6 +27,7 @@
         font-size: 1.25rem;
         transition: color 0.2s linear;
         color: #424635;
+        display: inline-flex;
     }
 
     button:hover {

@@ -23,7 +23,7 @@
 <style>
 
     .service_button {
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         align-items: center;
         background-color: transparent;

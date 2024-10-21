@@ -34,6 +34,7 @@
         background: linear-gradient(90deg, rgba(244,254,242,0) 0%, rgba(244,254,242,1) 35%, rgba(244,254,242,1) 100%);
         border: none;
         border-radius: 50%;
+        display: inline-flex;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;

@@ -5,21 +5,18 @@
     import DefaultProjectImage from "$lib/images/projects/Port_Mansfield_pier.jpg";
     import DeleteButton from "$lib/components/buttons/DeleteButton.svelte";
     import EditButton from "$lib/components/buttons/EditButton.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore.js";
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore.js";
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore.js";
     import { goto } from "$app/navigation";
     import ProjectForm from "$lib/components/forms/ProjectForm.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
-    import PDFIcon from "$lib/images/icons/document.svg?raw";
     import BackButton from "$lib/components/buttons/BackButton.svelte";
+    import DocumentFileButton from "$lib/components/buttons/DocumentFileButton.svelte";
 
     export let data;
 
     let project: Project | undefined = data.projectRow;
-
-    // console.log(project)
 
     const projectID: number | undefined = data.projectRow.project_ID;
 
@@ -273,11 +270,8 @@
                         </td>
                         <td>
                             {#if (project?.document_URL)}
-                                <div class="PDF_icon_container">
-                                    <a href={project.document_URL} target="_blank">
-                                        {@html PDFIcon}
-                                    </a>
-                                </div>
+      
+                                <DocumentFileButton documentURL={project.document_URL} />
                             {/if}
                         </td>
                     </tr>
@@ -334,28 +328,6 @@
         width: 100%;
     }
 
-    table > tr {
-        height: auto;
-        padding: 0;
-    }
-
-    table > tr > td {
-        font-size: 1.25rem;
-        padding: 1rem;
-        overflow-wrap: break-word;
-        hyphens: auto;
-    }
-
-    table tr:nth-child(odd) {
-        background-color: #F2F9F2;
-    }
-
-    table td:nth-child(odd) {
-        font-weight: bold;
-        overflow-wrap: break-word;
-        hyphens: auto;
-    }
-
     .left_table_column {
         width: 25%;
     }
@@ -364,8 +336,11 @@
         width: 75%;
     }
 
-    .PDF_icon_container {
-        width: 2rem;
+    .PDF_link {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
     }
 
     @media screen and (max-width: 1440px) {
@@ -373,10 +348,6 @@
             height: 36rem;;
         }
 
-        table > tr > td {
-            font-size: 1.175rem;
-            padding: 1rem;
-        }
     }
 
     @media screen and (max-width: 1080px) {
@@ -384,10 +355,6 @@
             height: 28rem;;
         }
 
-        table > tr > td {
-            font-size: 1rem;
-            padding: 0.5rem;
-        }
     }
 
     @media screen and (max-width: 720px) {

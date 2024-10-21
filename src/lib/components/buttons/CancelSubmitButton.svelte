@@ -29,6 +29,7 @@
         padding: 0.75rem;
         margin: 1rem;
         cursor: pointer;
+        display: inline-flex;
     }
 
     .close_button:hover {
