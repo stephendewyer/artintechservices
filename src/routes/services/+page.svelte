@@ -27,7 +27,7 @@
     import MoveableFarmLogo from "$lib/images/services/moveable_farm_logo.png";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
-    import { afterUpdate, beforeUpdate, onMount } from "svelte";
+    import { afterUpdate, onMount } from "svelte";
 
     const servicesTabPanels: TabPanel[] = [
         {
@@ -256,13 +256,12 @@
     onMount(() => {
         tabsContainerTopYPosition = tabsContainerElement.getBoundingClientRect().top + window.scrollY;
         shoppingCartContainerYPosition = shoppingCartContainerElement.getBoundingClientRect().top + window.scrollY;
-        
-    })
+    });
 
     const windowResizeHandler = () => {
         tabsContainerTopYPosition = tabsContainerElement.getBoundingClientRect().top + window.scrollY;
         shoppingCartContainerYPosition = shoppingCartContainerElement.getBoundingClientRect().top + window.scrollY;
-    }
+    };
 
     // afterUpdate(() => {
 
@@ -315,11 +314,6 @@
     let panelHeight: number = 0;
 
     let updatedPanelHeight: number = 0;
-
-    beforeUpdate(() => {
-        // // panelHeight = 0;
-        // updatedPanelHeight = 0;
-    });
 
     afterUpdate(() => {
         updatedPanelHeight = panelHeight;
@@ -581,7 +575,7 @@
         margin: 0 0.5rem 0 0;
         background-color: transparent;
         border: none;
-        display: flex;
+        display: inline-flex;
         flex-direction: column;
         justify-content: center;
         padding: 0;
