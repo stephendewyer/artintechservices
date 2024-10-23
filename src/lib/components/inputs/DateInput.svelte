@@ -8,12 +8,14 @@
     export let isValid: boolean;
     export let dateInputErrorMessage: string;
     export let required: boolean;
+    export let dateInputValueChange: boolean = false;
 
     let errorMessage: string = "";
 
     let dateInputTouched: boolean = false;
 
     const dateInputValueChangedHandler = () => {
+        dateInputValueChange = true;
         if (required) {
             if (dateInputValue === "") {
                 isValid = false;

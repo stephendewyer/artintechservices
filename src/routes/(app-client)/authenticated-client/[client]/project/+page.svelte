@@ -336,13 +336,6 @@
         width: 75%;
     }
 
-    .PDF_link {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-    }
-
     @media screen and (max-width: 1440px) {
         .project_banner {
             height: 36rem;;

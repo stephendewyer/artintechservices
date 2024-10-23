@@ -9,10 +9,8 @@
     import type { E164Number } from 'svelte-tel-input/types';
     import PhoneInput from "$lib/components/inputs/PhoneInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton02.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import TextInput from "$lib/components/inputs/TextInput.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
-    import Megaphone from "$lib/images/icons/contact_megaphone.svg?raw";
 
     let nameFirstInputValue: string = "";
     let nameLastInputValue: string = "";

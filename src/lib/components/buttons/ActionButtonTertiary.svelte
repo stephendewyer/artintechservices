@@ -102,7 +102,7 @@
 
     @media screen and (max-width:750px){
         #box_button {
-            font-size: 0.85rem;
+            font-size: 1rem;
         }
     }
 

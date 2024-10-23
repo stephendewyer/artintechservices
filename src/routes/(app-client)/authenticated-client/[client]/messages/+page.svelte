@@ -52,6 +52,10 @@
 
     let searchContactOrSubjectInputValue: string = "";
     let searchContactOrSubjectValueChange: boolean = false;
+    let searchDateInputValue: string = "";
+    let searchDateInputValueChange: boolean = false;
+
+    
 </script>
 <section class="messages_page">
     <div class="messages_heading">
@@ -60,17 +64,36 @@
             {@html MessagesIcon}
         </div>
     </div>
-    <form>
-        <SearchInput
-            placeholder="I want a web application to ..."
-            inputID="about_project"
-            inputName="about_project"
-            inputLabel={true}
-            bind:searchInputValue={searchContactOrSubjectInputValue}
-            bind:searchInputValueChange={searchContactOrSubjectValueChange}
-        >
-
-        </SearchInput>
+    <h4 class="indicates_required_heading">indicates requred*</h4>
+    <form class="search_all_messages_form">
+        <h2>search all messages</h2>
+        <div class="form_row">
+            <SearchInput
+                placeholder="firstname lastname | project X needs Y"
+                inputID="contact_or_subject_search"
+                inputName="contact_or_subject_search"
+                inputLabel={true}
+                bind:searchInputValue={searchContactOrSubjectInputValue}
+                bind:searchInputValueChange={searchContactOrSubjectValueChange}
+            >
+                contact or subject
+            </SearchInput>
+            <div class="date_input_container">
+                <DateInput
+                    inputID="project_end_date"
+                    inputName="project_end_date"
+                    inputLabel={true}
+                    bind:dateInputValue={searchDateInputValue}
+                    bind:dateInputValueChange={searchDateInputValueChange}
+                    isValid={true}
+                    dateInputErrorMessage="project end date required"
+                    required={false}
+                >
+                    date
+                </DateInput>   
+            </div>
+        </div>
+        
     </form>
     <div class="messages_container">
         {#if pendingMessages}
@@ -97,7 +120,9 @@
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        padding: 0 1rem 1rem 1rem;
     }
+
     .messages_heading {
         display: flex;
         flex-direction: row;
@@ -109,7 +134,28 @@
         width: 12rem;
     }
 
+    .search_all_messages_form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .form_row {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        gap: 1rem;
+    }
+
     .messages_container {
         width: 100%;
+    }
+
+    @media screen and (max-width: 720px) {
+        .form_row {
+            flex-direction: column;
+        }
     }
 </style>

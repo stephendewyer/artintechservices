@@ -33,7 +33,6 @@
         background: linear-gradient(90deg, rgba(244,254,242,1) 0%, rgba(244,254,242,1) 65%, rgba(244,254,242,0) 100%);
         border-radius: 50%;
         border: none;
-        display: inline-flex;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
@@ -56,7 +55,7 @@
     }
 
     .arrow_button_active {
-        display: flex;
+        display: inline-flex;
         opacity: 100%;
     }
 
