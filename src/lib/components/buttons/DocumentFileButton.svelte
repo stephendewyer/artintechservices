@@ -16,7 +16,7 @@
 <style>
 
     .document_button_container {
-        display: inline-block;
+        display: inline-flex;
     }
 
     .document_button {
@@ -35,6 +35,7 @@
     .icon_container {
         fill: #424635;
         width: 1.5rem;
+        min-width: 1.5rem;
         transition: fill 0.3s linear;
     }
 
