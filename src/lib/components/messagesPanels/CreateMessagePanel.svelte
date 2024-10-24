@@ -33,7 +33,7 @@
         </form>
     </div>
     <div class="send_message_form_container">
-        <SendMessageForm reply={false} />
+        <SendMessageForm reply={false} forward={false}/>
     </div>
 </section>
 <style>

@@ -1,7 +1,6 @@
 <script lang="ts">
     import SearchInput from "../inputs/SearchInput.svelte";
     import ContactCard from "../cards/ContactCard.svelte";
-    // import SendMessageForm from "../forms/SendMessageForm.svelte";
     import ReceivedMessageForm from "../forms/ReceivedMessageForm.svelte";
     let searchContactInputValue: string = "";
     let searchContactValueChange: boolean = false;
@@ -18,7 +17,7 @@
                 bind:searchInputValue={searchContactInputValue}
                 bind:searchInputValueChange={searchContactValueChange}
             >
-                contact
+                sender
             </SearchInput>
             <ul class="selected_contacts">
                 <li>

@@ -5,6 +5,9 @@
     import AttachmentImage from "$lib/images/projects/Port_Mansfield_pier.jpg"
     import DocumentFileButton from "../buttons/DocumentFileButton.svelte";
     import SendMessageForm from "./SendMessageForm.svelte";
+    import Checkbox from "../inputs/Checkbox.svelte";
+
+    export let deletedMessage: boolean = false;
 
     let subjectIsValid: boolean = true;
     let subjectInputValue: string = "";
@@ -31,10 +34,19 @@
 
     let attachDocumentClicked: boolean = false;
     let attachImageClicked: boolean = false;
+
+    let permanentlyDeleteMessageValueChanged: boolean = false;
+    let permanentlyDeleteMessageChecked: boolean = false;
+    let permanentlyDeleteMessageValue: string = "";
+
+    let restoreDeletedMessageValueChanged: boolean = false;
+    let restoreDeletedMessageChecked: boolean = false;
+    let restoreDeletedMessageValue: string = "";
+
 </script>
 
-<form class="received_message_form">
-    <div class="received_message">
+<form class="sent_message_form">
+    <div class="sent_message">
         <p class="date">
             yesterday, 23 September 2024
         </p>
@@ -60,9 +72,28 @@
             </div>
         </div>
     </div>
-    <div class="reply">
-        <SendMessageForm reply={true} forward={false}/>
-    </div>
+    {#if deletedMessage}
+        <div class="deleted_message_options">
+            <Checkbox 
+                bind:valueChanged={permanentlyDeleteMessageValueChanged}
+                bind:checked={permanentlyDeleteMessageChecked}
+                bind:value={permanentlyDeleteMessageValue}
+            >
+                permanently delete message?
+            </Checkbox>
+            <Checkbox 
+                bind:valueChanged={restoreDeletedMessageValueChanged}
+                bind:checked={restoreDeletedMessageChecked}
+                bind:value={restoreDeletedMessageValue}
+            >
+                restore message?
+            </Checkbox>
+        </div>
+    {:else}
+        <div class="forward">
+            <SendMessageForm reply={false} forward={true}/>
+        </div>
+    {/if}
 </form>
 {#if (pendingMessageSent)}
     <PendingFlashMessage >
@@ -79,14 +110,14 @@
 {/if}
 
 <style>
-    .received_message_form {
+    .sent_message_form {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 1rem;
     }
 
-    .received_message {
+    .sent_message {
         background-color: #F2F9F2;
         padding: 1rem;
         display: flex;
@@ -143,9 +174,19 @@
         width: auto;
     }
 
-    .reply {
-        background-color: #FFF3ED;
+    .forward {
+        background-color: #F2F9F2;
         width: 100%;
+    }
+
+    .deleted_message_options {
+        background-color: #F2F9F2;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        padding: 1rem;
+        justify-content: space-evenly;
     }
 
     @media screen and (max-width: 1440px) {

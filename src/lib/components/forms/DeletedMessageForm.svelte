@@ -60,9 +60,7 @@
             </div>
         </div>
     </div>
-    <div class="reply">
-        <SendMessageForm reply={true} forward={false}/>
-    </div>
+
 </form>
 {#if (pendingMessageSent)}
     <PendingFlashMessage >

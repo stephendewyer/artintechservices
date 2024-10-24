@@ -8,6 +8,7 @@
     import ErrorFlashMessage from "../flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "../flashMessages/SuccessFlashMessage.svelte";
 
+    export let forward: boolean = false;
     export let reply: boolean = false;
 
     let subjectIsValid: boolean = true;
@@ -74,6 +75,8 @@
         <SubmitButton02>
             {#if reply}
                 reply
+            {:else if forward}
+                forward
             {:else}
                 send
             {/if}
