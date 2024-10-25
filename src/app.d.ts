@@ -202,6 +202,7 @@ declare global {
 
 	interface HowToWorkWithUsCard {
         image: string;
+		icon: string;
         pathname: Pathname[];
         altText: string;
         header: string;

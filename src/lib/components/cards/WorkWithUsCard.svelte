@@ -16,9 +16,15 @@
         <div 
             class="card_info"
         >
-            <h3 style="text-align: center;">
-                {card.header}
-            </h3>
+            <div class="card_icon_and_heading">
+                <div class="icon_container">
+                    {@html card.icon}
+                </div>
+                <h3 style="text-align: center;">
+                    {card.header}
+                </h3>
+            </div>
+            
             <p>
                 {card.paragraph}
             </p>
@@ -67,6 +73,19 @@
         justify-content: flex-end;
     }
 
+    .card_icon_and_heading {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        margin: 0 auto;
+    }
+
+    .icon_container {
+        width: 4rem;
+        fill: #2d3530;
+    }
+
     .card_info {
         padding: 1rem;
         display: flex;
@@ -92,6 +111,10 @@
     @media screen and (max-width: 720px) {
         .card_container {
             height: 16rem;
+        }
+
+        .icon_container {
+            width: 3rem;
         }
     }
 

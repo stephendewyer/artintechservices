@@ -20,10 +20,14 @@
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { signIn } from "@auth/sveltekit/client";
+    import ConsultationIcon from "$lib/images/icons/consultation_icon.svg?raw";
+    import ProjectIcon from "$lib/images/icons/project.svg?raw";
+    import ManageAccountIcon from "$lib/images/icons/manage_account_solid.svg?raw";
 
     const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
             image: Consultation,
+            icon: ConsultationIcon,
             altText: "fluffly clouds",
             header: "FREE consultations",
             paragraph: "We discuss with you your project to help plan for success.",
@@ -36,6 +40,7 @@
         },
         {
             image: StartProject,
+            icon: ProjectIcon,
             altText: "ocean pier",
             header: "start a project",
             paragraph: "We provide the services to deliver your project to meet or exceed your expectations.",
@@ -48,6 +53,7 @@
         },
         {
             image: ManageAccount,
+            icon: ManageAccountIcon,
             altText: "locked doors",
             header: "manage account",
             paragraph: "Keep your projects organized, view and schedule your consultations, update your account and make payments.",
