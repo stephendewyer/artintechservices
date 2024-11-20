@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onDestroy } from "svelte";
     import ProjectCard from "$lib/components/cards/ProjectCard.svelte";
     import Pagination from "$lib/components/pagination/Pagination.svelte";
     import { fade } from "svelte/transition";
@@ -20,22 +19,20 @@
 
     $: paginatedProjects = panel_data.slice(firstPageIndexProjects, lastPageIndexProjects);
 
-    onDestroy(() => {
-        panel_data = []
-    });
-
 </script>
 <div 
     in:fade={{ delay: 250, duration: 300 }}
     class="projects_container"
 >
-    <div class="projects">
-        {#if panel_data.length > 0}
-            {#each paginatedProjects as project, index}
-                <ProjectCard project={project} />
-            {/each}
-        {/if}
-    </div>
+    {#key paginatedProjects}
+        <div class="projects" in:fade={{ delay: 250, duration: 300 }}>
+            {#if panel_data.length > 0}
+                {#each paginatedProjects as project, index}
+                    <ProjectCard project={project} />
+                {/each}
+            {/if}
+        </div>
+    {/key}
     <Pagination 
             bind:currentPage={projectsCurrentPage}
             totalCount={panel_data.length}

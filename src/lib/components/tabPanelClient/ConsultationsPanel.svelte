@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { onDestroy } from "svelte";
     import ConsultationCard from "$lib/components/cards/ConsultationCard.svelte";
     import Pagination from "$lib/components/pagination/Pagination.svelte";
     import { fade } from "svelte/transition";
@@ -20,22 +19,17 @@
 
     $: paginatedConsultations = panel_data.slice(firstPageIndexConsultations, lastPageIndexConsultations);
 
-    onDestroy(() => {
-        panel_data = []
-    });
-
 </script>
-<div 
-    in:fade={{ delay: 250, duration: 300 }}
-    class="consultations_container"
->
-    <div class="consultations">
-        {#if panel_data.length > 0}
-            {#each paginatedConsultations as consultation, index}
-                <ConsultationCard consultation={consultation} />
-            {/each}
-        {/if}
-    </div>
+<div class="consultations_container" in:fade={{ delay: 250, duration: 300 }}>
+    {#key paginatedConsultations}
+        <div class="consultations" in:fade={{ delay: 250, duration: 300 }}>
+            {#if panel_data.length > 0}
+                {#each paginatedConsultations as consultation, index}
+                    <ConsultationCard consultation={consultation} />
+                {/each}
+            {/if}
+        </div>
+    {/key}
     <Pagination 
         bind:currentPage={consultationsCurrentPage}
         totalCount={panel_data.length}

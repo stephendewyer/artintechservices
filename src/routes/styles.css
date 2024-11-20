@@ -76,11 +76,15 @@ table > tbody {
 table > tr > td {
     font-size: 1.25rem;
     padding: 1rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 table > tbody > tr > td {
     font-size: 1.25rem;
     padding: 1rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 table > tbody > tr > th  {
@@ -98,7 +102,6 @@ table td:nth-child(1) {
     overflow-wrap: break-word;
     hyphens: auto;
     vertical-align: top;
-
 }
 
 a {

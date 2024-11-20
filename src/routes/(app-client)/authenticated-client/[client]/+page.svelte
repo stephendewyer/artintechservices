@@ -307,7 +307,7 @@
                 <tbody>
                     <tr>
                         <td>
-                            last login
+                            last login:
                         </td>
                         <td>
                             {new Date(clientProfileData?.last_login).toUTCString()}
@@ -315,7 +315,7 @@
                     </tr>
                     <tr>
                         <td>
-                            account created
+                            account created:
                         </td>
                         <td>
                             {new Date(clientProfileData?.date_created).toUTCString()}
@@ -434,7 +434,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        first name 
+                                        first name:
                                     </td>
                                     <td>
                                         {nameFirstInputValue}
@@ -442,7 +442,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        last name
+                                        last name:
                                     </td>
                                     <td>
                                         {nameLastInputValue}
@@ -450,7 +450,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        company
+                                        company:
                                     </td>
                                     <td>
                                         {companyInputValue}
@@ -458,7 +458,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        phone
+                                        phone:
                                     </td>
                                     <td>
                                         {phoneInputValue}
@@ -466,7 +466,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        email
+                                        email:
                                     </td>
                                     <td>
                                         {emailInputValue}
@@ -474,7 +474,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        URL
+                                        URL:
                                     </td>
                                     <td>
                                         <a href={URLInputValue} target="_blank">
@@ -492,7 +492,7 @@
                             <tbody>
                                 <tr>
                                     <td>
-                                        street address
+                                        street address:
                                     </td>
                                     <td>
                                         {streetAddressInputValue}
@@ -500,7 +500,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        apartment/unit
+                                        apartment/unit:
                                     </td>
                                     <td>
                                         {streetAddress02InputValue}
@@ -508,7 +508,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        city
+                                        city:
                                     </td>
                                     <td>
                                         {cityInputValue}
@@ -516,7 +516,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        state
+                                        state:
                                     </td>
                                     <td>
                                         {stateInputValue}
@@ -524,7 +524,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        zip code
+                                        zip code:
                                     </td>
                                     <td>
                                         {zipCodeInputValue}
@@ -532,7 +532,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        country
+                                        country:
                                     </td>
                                     <td>
                                         {countryInputValue}

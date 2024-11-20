@@ -13,9 +13,14 @@
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import Countries from "$lib/data/countries.json";
 
-    export let values: ClientProfile;
+    export let values: AdministratorProfile;
     export let contactValuesSaved: boolean = false;
     export let cancelClicked: boolean = false;
+
+    let userNameIsValid: boolean = true;
+    let userNameInputValue: string = values.username;
+
+    let emailInputValue: string = values.email;
 
     let nameFirstIsValid: boolean = true;
     let nameFirstInputValue: string = values.name_first;
@@ -23,17 +28,8 @@
     let nameLastIsValid: boolean = true;
     let nameLastInputValue: string = values.name_last;
 
-    let emailIsValid: boolean = true;
-    let emailInputValue: string = values.email;
-
     let phoneIsValid: boolean = true;
     let phoneInputValue: E164Number = values.phone_number;
-
-    let URLisValid: boolean = true;
-    let URLInputValue: string = values.URL;
-
-    let companyIsValid: boolean = true;
-    let companyInputValue: string = values.company;
 
     let streetAddressIsValid: boolean = true;
     let streetAddressInputValue: string = values.street_address;
@@ -69,14 +65,12 @@
 
     let pending: null | boolean = null;
 
-    const submitClientContactInfo = async (
-        clientEmail: string,
+    const submitAdministratorContactInfo = async (
+        emailInputValue: string,
+        userNameInputValue: string,
         nameFirstInputValue: string,
         nameLastInputValue: string,
-        emailInputValue: string,
         phoneInputValue: E164Number | null,
-        companyInputValue: string,
-        URLInputValue: string,
         streetAddressInputValue: string,
         streetAddress02InputValue: string,
         cityInputValue: string,
@@ -84,16 +78,14 @@
         zipCodeInputValue: number | null,
         countryInputValue: string
     ) => {
-        const response = await fetch("/authenticated-client/api/submitClientContactInfo", {
+        const response = await fetch("/authenticated-administrator/api/submitAdministratorContactInfo", {
             method: 'POST',
             body: JSON.stringify({
-                clientEmail,
+                emailInputValue,
+                userNameInputValue,
                 nameFirstInputValue,
                 nameLastInputValue,
-                emailInputValue,
                 phoneInputValue,
-                companyInputValue,
-                URLInputValue,
                 streetAddressInputValue,
                 streetAddress02InputValue,
                 cityInputValue,
@@ -114,14 +106,12 @@
         pending = true;
 
         try {
-            await submitClientContactInfo(
-                values.email,
+            await submitAdministratorContactInfo(
+                emailInputValue,
                 nameFirstInputValue,
                 nameLastInputValue,
-                emailInputValue,
+                userNameInputValue,
                 phoneInputValue,
-                companyInputValue,
-                URLInputValue,
                 streetAddressInputValue,
                 streetAddress02InputValue,
                 cityInputValue,
@@ -137,50 +127,49 @@
 
             if (responseItem.error) {
                 contactValuesSaved = false;
-                if (values.email === "") {
-                    emailIsValid = false;
-                } else if (!values.email.includes('@')) {
-                    emailIsValid = false;
-                } else if (values.email !== "") {
-                    emailIsValid = true;
+
+                if (userNameInputValue === "") {
+                    userNameIsValid = false;
+                } else if (userNameInputValue !== "") {
+                    userNameIsValid = true;
                 };
 
-                if (values.name_first === "") {
+                if (nameFirstInputValue === "") {
                     nameFirstIsValid = false;
-                } else if (values.name_first !== "") {
+                } else if (nameFirstInputValue !== "") {
                     nameFirstIsValid = true;
                 };
 
-                if (values.name_last === "") {
+                if (nameLastInputValue === "") {
                     nameLastIsValid = false;
-                } else if (values.name_last !== "") {
+                } else if (nameLastInputValue !== "") {
                     nameLastIsValid = true;
                 };
 
-                if (values.phone_number === "" || values.phone_number === null) {
+                if (phoneInputValue === "" || phoneInputValue === null) {
                     phoneIsValid = false;
 
-                } else if (values.phone_number !== "" && values.phone_number !== null) {
+                } else if (phoneInputValue !== "" && phoneInputValue !== null) {
                     phoneIsValid = true;
                 };
 
-                if (values.street_address === "") {
+                if (streetAddressInputValue === "") {
                     streetAddressIsValid = false;
                 };
 
-                if (values.city === "") {
+                if (cityInputValue === "") {
                     cityIsValid = false;
                 };
 
-                if (values.state === "") {
+                if (stateInputValue === "") {
                     stateIsValid = false;
                 };
 
-                if (!values.zip_code) {
+                if (!zipCodeInputValue) {
                     zipCodeIsValid = false;
                 };
 
-                if (!values.country) {
+                if (!countryInputValue) {
                     countryIsValid = false;
                 };
             };
@@ -229,31 +218,31 @@
         </div>
         <div class="inputs_row">
             <div class="input_column">
+                <TextInput 
+                    placeholder="nameFirstNameLast"
+                    inputID="username"
+                    inputName="username"
+                    inputLabel={true}
+                    bind:textInputValue={userNameInputValue}
+                    bind:isValid={userNameIsValid}
+                    textInputErrorMessage="username required"
+                    required={true}
+                >
+                    username*
+                </TextInput>
+            </div>        
+            <div class="input_column">
                 <TextInputReadOnly 
-                    placeholder="myEmail@myCompany.com"
+                    placeholder="name@artintechservices.com"
                     inputID="email"
                     inputName="email"
                     inputLabel={true}
                     bind:textInputValue={emailInputValue}
-                    bind:isValid={emailIsValid}
+                    isValid={true}
                     required={true}
                 >
-                    email*
+                    email
                 </TextInputReadOnly>
-            </div>  
-            <div class="input_column">
-                <TextInput 
-                    placeholder="myCompany"
-                    inputID="company"
-                    inputName="company"
-                    inputLabel={true}
-                    bind:textInputValue={companyInputValue}
-                    bind:isValid={companyIsValid}
-                    textInputErrorMessage="company required"
-                    required={false}
-                >
-                    company
-                </TextInput>
             </div>
         </div>
         <div class="inputs_row">
@@ -272,22 +261,6 @@
             </div>
             <div class="input_column">
                 <TextInput
-                    placeholder="https://mydomain.com"
-                    inputID="URL"
-                    inputName="URL"
-                    inputLabel={true}
-                    bind:textInputValue={URLInputValue}
-                    bind:isValid={URLisValid}
-                    textInputErrorMessage="URL required"
-                    required={false}
-                >
-                    URL
-                </TextInput>
-            </div>
-        </div>
-        <div class="inputs_row">
-            <div class="input_column">
-                <TextInput
                     placeholder="1234 myStreet"
                     inputID="street_address"
                     inputName="street_address"
@@ -300,6 +273,8 @@
                     street address*
                 </TextInput>
             </div>
+        </div>
+        <div class="inputs_row">
             <div class="input_column">
                 <TextInput
                     placeholder="apt. #"
@@ -314,8 +289,6 @@
                     street address 2
                 </TextInput>
             </div>
-        </div>
-        <div class="inputs_row">
             <div class="input_column">
                 <TextInput
                     placeholder="myCity"
@@ -330,6 +303,8 @@
                     city*
                 </TextInput>
             </div>
+        </div>
+        <div class="inputs_row">
             <div class="input_column">
                 <SelectInput 
                     options={States}

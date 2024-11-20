@@ -42,6 +42,100 @@ declare global {
 		country: string;
     }
 
+	interface ClientContactInformation {
+		company: string;
+		city: string;
+		country: string;
+		email: string;
+		name_first: string;
+		name_last: string;
+		phone_number: string;
+		state: string;
+		street_address: string;
+		street_address_02: string;
+		zip_code: number;
+	}
+
+	interface ClientProfileAdminView {
+		stripe_customer_ID: string;
+		URL: string;
+		alt_text: string;
+		city: string;
+		client_ID: number;
+		client_information_ID: number;
+		company: string;
+		constultations: any[];
+		country: string;
+		date_created: Date;
+		email: string;
+		image_URL: string;
+		invoices: any[];
+		last_login: Date;
+		name_first: string;
+		name_last: string;
+		payment_methods: any[];
+		phone_number: string;
+		previous_login: Date;
+		image_URL: string;
+		profile_image_ID: number;
+		projects: any[];
+		public_ID: string;
+		state: string;
+		street_address: string;
+		street_address_02: string;
+		total_amount_due: number;
+		user_ID: number;
+		zip_code: number;
+	}
+
+	interface ClientProfileWithInvoices {
+        user_ID: number;
+        name_first: string;
+        name_last: string;
+        email: string;
+        date_created: Date;
+        last_login: Date;
+        client_information_ID: number;
+        company: string;
+        phone_number: string;
+        URL: string;
+        street_address: string;
+        street_address_02: string;
+        city: string;
+        state: string;
+        zip_code: number;
+        Stripe_customer_ID: string;
+        image_ID: number;
+        image_URL: string;
+        alt_text: string;
+        public_ID: string;
+		country: string;
+		invoices: any[];
+		total_amount_due: number;
+    }
+
+	interface AdministratorProfile {
+		ID: number;
+		username: string;
+		email: string;
+		date_created: Date;
+		last_login: Date;
+		name_first: string;
+		name_last: string;
+		administrator_information_ID: number;
+		phone_number: string;
+		street_address: string;
+		street_address_02: string;
+		city: string;
+		state: string;
+		zip_code: number;
+		image_ID: number;
+		image_URL: string;
+		alt_text: string;
+		public_ID: string;
+		country: string;
+	}
+
 	interface NavTab {
 		id: number;
 		label: string;
