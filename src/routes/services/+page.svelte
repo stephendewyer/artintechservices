@@ -210,21 +210,21 @@
 
     let activeTab: number = 0;
 
-    servicesTabPanels.forEach((tabPanel: TabPanel) => {
+    $: servicesTabPanels.forEach((tabPanel: TabPanel) => {
         tabPanel.data.forEach((data: ServicePanelData) => {
             if (data.search === $page.url.search) {
                 activeTab = tabPanel.index;
-            }
-        })
-    })
+            };
+        });
+    });
 
     const cancelServiceClickHandler = (serviceSelected: ServiceSelected) => {
         $RequestedServicesStore.forEach((service, index) => {
             if (serviceSelected.service === service.service) {
                 $RequestedServicesStore[index].requested = !$RequestedServicesStore[index].requested;
-            }
-        })
-    }
+            };
+        });
+    };
 
     let tabsContainerElement: HTMLElement;
     let tabsHeight: number = 0;
@@ -497,7 +497,7 @@
     #shopping_cart_inner {
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         padding: 1rem;
         gap: 1rem;
     }
@@ -552,6 +552,7 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        justify-content: center;
         gap: 1rem;
         width: 100%;
     }

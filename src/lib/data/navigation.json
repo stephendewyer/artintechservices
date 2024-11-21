@@ -33,7 +33,64 @@
         "label": "services",
         "expandable": false,
         "slug": "/services",
-        "content": null
+        "content": [
+            {
+                "id": 2.1,
+                "label": "software development",
+                "expandable": false,
+                "slug": "/services?service=software-development",
+                "content": null
+            },
+            {
+                "id": 2.2,
+                "label": "artificial intelligence",
+                "expandable": false,
+                "slug": "/services?service=artificial-intelligence",
+                "content": null
+            },
+            {
+                "id": 2.3,
+                "label": "user experience design",
+                "expandable": false,
+                "slug": "/services?service=user-experience-design",
+                "content": null
+            },
+            {
+                "id": 2.4,
+                "label": "visual design",
+                "expandable": false,
+                "slug": "/services?service=visual-design",
+                "content": null
+            },
+            {
+                "id": 2.5,
+                "label": "data visualization",
+                "expandable": false,
+                "slug": "/services?service=data-visualization",
+                "content": null
+            },
+            {
+                "id": 2.6,
+                "label": "photography",
+                "expandable": false,
+                "slug": "/services?service=photography",
+                "content": null
+            },
+            {
+                "id": 2.7,
+                "label": "videography",
+                "expandable": false,
+                "slug": "/services?service=videography",
+                "content": null
+            },
+            {
+                "id": 2.8,
+                "label": "brand identity design",
+                "expandable": false,
+                "slug": "/services?service=brand-identity-design",
+                "content": null
+            }
+        ]
     },
     {
         "id": 3,
