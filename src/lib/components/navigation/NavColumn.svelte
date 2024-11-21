@@ -10,7 +10,7 @@
 
     const currentPageHandler = (navTab: NavTab) => {
         if (navTab.content === null) {
-            if ($page.url.pathname === navTab.slug) {
+            if ($page.url.pathname === navTab.slug || `${$page.url.pathname}${$page.url.search}` === navTab.slug) {
                 return true;
             } else {
                 return false;
@@ -18,7 +18,7 @@
         } else if (navTab.content.length > 0) {
             let tabActive: boolean = false;
             navTab.content.map((tab) => {
-                if (tab.slug === $page.url.pathname) {
+                if (tab.slug === $page.url.pathname || `${$page.url.pathname}${$page.url.search}` === tab.slug) {
                     tabActive = true;
                 };
             });
@@ -94,7 +94,7 @@
                         <a href={subTab.slug}>
                             <li 
                                 class="nav_tab"
-                                style={subTab.slug === $page.url.pathname ? "text-decoration: underline;" : "text-decoration: none;"}
+                                style={subTab.slug === $page.url.pathname || `${$page.url.pathname}${$page.url.search}` === subTab.slug ? "text-decoration: underline;" : "text-decoration: none;"}
                             >
                                 {subTab.label}
                             </li>

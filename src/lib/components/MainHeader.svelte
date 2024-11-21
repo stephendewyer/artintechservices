@@ -54,7 +54,7 @@
 
     handleScroll();
 
-}} ></svelte:window>
+}} />
 
 <header class={showNav ? "nav_bar_visible" : "nav_bar_hidden"}>
     <ul class="main_nav_tabs" >

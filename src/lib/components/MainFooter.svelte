@@ -42,9 +42,17 @@
     
     $: footerNavTabsRight = nav_data.slice((nav_data.length/2), nav_data.length);
 
+    $: console.log(`${$page.url.pathname}${$page.url.search}`)
+
     const currentPageHandler = (navTab: NavTab) => {
         if (navTab.content === null) {
-            if ($page.url.pathname === navTab.slug) {
+            if (
+                (
+                    $page.url.pathname === navTab.slug
+                ) || (
+                    `${$page.url.pathname}${$page.url.search}` === navTab.slug
+                )
+            ) {
                 return true;
             } else {
                 return false;
@@ -52,7 +60,14 @@
         } else if (navTab.content.length > 0) {
             let tabActive: boolean = false;
             navTab.content.map((tab) => {
-                if (tab.slug === $page.url.pathname) {
+                if (
+                        (
+                            tab.slug === $page.url.pathname
+                        ) ||
+                        (
+                            `${$page.url.pathname}${$page.url.search}` === tab.slug
+                        )
+                    ) {
                     tabActive = true;
                 };
             });
@@ -154,7 +169,7 @@
                                     </a>
                                 </li>
                                 {#each footerNavTab.content as footerNavTabSub, index}
-                                    <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                                    <li aria-current={$page.url.pathname === footerNavTabSub.slug || `${$page.url.pathname}${$page.url.search}` === footerNavTabSub.slug ? "page" : undefined}>
                                         <a 
                                             href={footerNavTabSub.slug} 
                                             class="nav_link"
@@ -206,7 +221,7 @@
                                     </a>
                                 </li>
                                 {#each footerNavTab.content as footerNavTabSub, index}
-                                    <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                                    <li aria-current={$page.url.pathname === footerNavTabSub.slug || `${$page.url.pathname}${$page.url.search}` === footerNavTabSub.slug  ? "page" : undefined}>
                                         <a 
                                             href={footerNavTabSub.slug} 
                                             class="nav_link"
@@ -258,7 +273,7 @@
                                 </a>
                             </li>
                             {#each footerNavTab.content as footerNavTabSub, index}
-                                <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                                <li aria-current={$page.url.pathname === footerNavTabSub.slug || `${$page.url.pathname}${$page.url.search}` === footerNavTabSub.slug ? "page" : undefined}>
                                     <a 
                                         href={footerNavTabSub.slug} 
                                         class="nav_link"
@@ -317,7 +332,7 @@
                                 </a> 
                             </li>
                             {#each footerNavTab.content as footerNavTabSub, index}
-                                <li aria-current={$page.url.pathname === footerNavTabSub.slug ? "page" : undefined}>
+                                <li aria-current={$page.url.pathname === footerNavTabSub.slug || `${$page.url.pathname}${$page.url.search}` === footerNavTabSub.slug ? "page" : undefined}>
                                     <a 
                                         href={footerNavTabSub.slug} 
                                         class="nav_link"
