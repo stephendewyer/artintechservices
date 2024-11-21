@@ -45,7 +45,7 @@
 </script>
 
 <ul class="accordion_container">
-    {#if item.content !== null}
+    {#if (item.content !== null) && (item.label !== "services")}
         <li 
             on:click={() => handle01Click(item)}
             on:keyup={() => handle01Click(item)}
@@ -112,7 +112,7 @@
                 {/each}
             </ul>
         </div>
-    {:else if item.content === null}
+    {:else if (item.content === null) || (item.label === "services")}
         <a 
             href={item.slug}
             on:click={() => handle01Click(item)}
