@@ -263,10 +263,6 @@
         shoppingCartContainerYPosition = shoppingCartContainerElement.getBoundingClientRect().top + window.scrollY;
     };
 
-    // afterUpdate(() => {
-
-    // })
-
     // handle tabsFixed
     $: if (innerWidth > 720) {
         if (y > tabsContainerTopYPosition && y < (tabsContainerTopYPosition + (tabsContainerHeight - tabsHeight))) {
