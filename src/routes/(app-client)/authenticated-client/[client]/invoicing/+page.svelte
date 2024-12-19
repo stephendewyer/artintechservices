@@ -271,21 +271,14 @@
     {#if pendingClientFinancials}
         <LoadingSpinner />
     {:else}
-    <div class="total_amount_due_container">
-        <table>
-            <tbody>
-                <tr>
-                    <td>
-                        total amount due:
-                    </td>
-                    <td>
-                        {(totalAmountDue / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-        
+        <p class="total_amount_due_container">
+            <span class="amount_due_heading">
+                total amount due: 
+            </span>
+            <span class="amount_due_number">
+                {(totalAmountDue / 100).toLocaleString("en-US", {style:"currency", currency:"USD"})}
+            </span>
+        </p>
         <h2>
             invoices
         </h2>
@@ -445,6 +438,7 @@
 
     .total_amount_due_container {
         width: 100%;
+        text-align: center;
     }
 
     .table_container {
@@ -472,10 +466,27 @@
         max-width: 60rem;
     }
 
+    .amount_due_heading {
+        font-size: 1.75rem;
+    }
+
+    .amount_due_number {
+        font-size: 1.75rem;
+        font-weight: 600;
+    }
+
     @media screen and (max-width: 1440px) {
 
         .invoices_table {
             min-width: 60rem;
+        }
+
+        .amount_due_heading {
+            font-size: 1.5rem;
+        }
+
+        .amount_due_number {
+            font-size: 1.5rem;
         }
 
     }
@@ -484,11 +495,20 @@
         .invoices_table {
             min-width: 60rem;
         }
+
+        .amount_due_heading {
+            font-size: 1.25rem;
+        }
+
+        .amount_due_number {
+            font-size: 1.25rem;
+        }
     }
 
     @media screen and (max-width: 720px) {
         .invoicing_page {
             padding: 0 1rem 1rem 1rem;
         }
+
     }
 </style>

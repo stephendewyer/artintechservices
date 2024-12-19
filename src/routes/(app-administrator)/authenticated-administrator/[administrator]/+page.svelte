@@ -533,6 +533,11 @@
                 {/if}
             {/if}
         </div>
+        <div class="reset_password_section">
+            <h2>
+                reset password
+            </h2>
+        </div>
     {/if}
 </div>
 

@@ -1,28 +1,25 @@
 <script lang="ts">
-    import { onDestroy } from "svelte";
     import { fade } from 'svelte/transition';
 
-    export let panel_data: ProcessPanel[] | [null];
-
-    onDestroy(() => {
-        panel_data = [null];
-    });
+    export let panel_data: ProcessPanel[];
 
 </script>
 <div 
     in:fade={{ delay: 250, duration: 300 }}
     class="process_panel"
 >
-    <div class="process_info">
-        {#each panel_data as processData, index}
-            <div class="image_container">
-                {@html processData?.imageSrc}
-            </div>
-            <p class="process_paragraph">
-                {processData?.paragraph}
-            </p>
-        {/each}
-    </div>
+    {#key panel_data}
+        <div class="process_info">
+            {#each panel_data as processData, index}
+                <div class="image_container">
+                    {@html processData?.imageSrc}
+                </div>
+                <p class="process_paragraph">
+                    {processData?.paragraph}
+                </p>
+            {/each}
+        </div>
+    {/key}
 </div>
 <style>
 

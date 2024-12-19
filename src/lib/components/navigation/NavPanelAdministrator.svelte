@@ -209,23 +209,6 @@
                 </span>
             </a>
         </li>
-        <li
-            aria-current={(
-                $page.url.pathname === "/authenticated-administrator/administrator/account"
-            ) ? "page" : undefined} 
-        >
-            <a 
-                href="/authenticated-administrator/administrator/account"
-                class="administrator_nav_panel_tab"
-                >
-                <div class="nav_icon">
-                    {@html settingsIcon}
-                </div>
-                <span class="label">
-                    account
-                </span>
-            </a>
-        </li>
     </ul>
 </nav>
 
