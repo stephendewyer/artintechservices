@@ -460,7 +460,7 @@
     .tabs_fixed {
         position: fixed;
         top: 0;
-        background-color: #FFECEC;
+        background-color: #F9E4CD;
     }
 
     .tabs_absolute {
@@ -469,7 +469,7 @@
         bottom: 0;
         left: 0;
         right:0;
-        background-color: #FFECEC;
+        background-color: #F9E4CD;
         z-index: 2;
     }
 
@@ -628,7 +628,6 @@
             top: 0;
             left: 1rem;
             right: 1rem;
-            background-color: #FFECEC;
         }
     }
 

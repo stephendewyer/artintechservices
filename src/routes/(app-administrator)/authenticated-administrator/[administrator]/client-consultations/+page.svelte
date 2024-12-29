@@ -5,7 +5,83 @@
     import Panel from "$lib/components/tabPanelConsultations/Panel.svelte";
     import Tabs from "$lib/components/tabPanelConsultations/Tabs.svelte";
     import { v4 as uuidv4 } from 'uuid';
-    import ConsultationsIcon from "$lib/images/icons/consultation_icon.svg?raw"
+    import ConsultationsIcon from "$lib/images/icons/consultation_icon.svg?raw";
+    import { onMount } from "svelte";
+
+    let pendingConsultationsAllClients: boolean = false;
+
+    let getConsultationsAllClientsSuccess: boolean = false;
+
+    let allClientConsultations: any[] = [];
+
+    let consultationsRequested: any[] = [];
+
+    let consultationsScheduled: any[] = [];
+
+    let consultationsCompleted: any[] = [];
+
+    // get the consultations
+    const getAllClientConsultations = async (
+        allClientConsultations: any[],
+        consultationsRequested: any[],
+        consultationsScheduled: any[],
+        consultationsCompleted: any[]
+    ) => {
+
+        pendingConsultationsAllClients = true;
+
+        try {
+            
+            const response = await fetch("/authenticated-administrator/api/getAllClientConsultations", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            });
+
+            allClientConsultations = [...await response.json()];
+            // console.log(allClientConsultations);
+
+            if (response.ok) {
+                pendingConsultationsAllClients = false;
+                getConsultationsAllClientsSuccess = true;
+                
+                allClientConsultations.forEach((consultation, index) => {
+                    if (consultation.status === "requested") {
+                        consultationsRequested = [...consultationsRequested, consultation];
+                    } else if (consultation.status === "scheduled") {
+                        consultationsScheduled = [...consultationsScheduled, consultation];
+                    } else if (consultation.status === "completed") {
+                        consultationsCompleted = [...consultationsCompleted, consultation];;
+                    }
+                });
+
+            } else if (!response.ok) {
+                pendingConsultationsAllClients = false;
+                getConsultationsAllClientsSuccess = false;
+            };
+        } catch(err) {
+            console.log(err);
+        };
+
+        return {
+            allClientConsultations,
+            consultationsRequested,
+            consultationsScheduled,
+            consultationsCompleted
+        };
+
+    };
+
+    onMount(() => {
+        getAllClientConsultations(
+            allClientConsultations,
+            consultationsRequested,
+            consultationsScheduled,
+            consultationsCompleted
+        );
+    });
+
     let searchInputValue: string = "";
     let searchInputValueChange: boolean = false;
 
@@ -18,7 +94,7 @@
             label: "all",
             tabImageSrc: "",
             panel: ConsultationsPanel,
-            data: []
+            data: [...allClientConsultations]
         },
         {
             id: uuidv4(),
@@ -26,7 +102,7 @@
             label: "requested",
             tabImageSrc: "",
             panel: ConsultationsPanel,
-            data: []
+            data: [...consultationsRequested]
         },
         {
             id: uuidv4(),
@@ -34,7 +110,7 @@
             label: "scheduled",
             tabImageSrc: "",
             panel: ConsultationsPanel,
-            data: []
+            data: [...consultationsScheduled]
         },
         {
             id: uuidv4(),
@@ -42,7 +118,7 @@
             label: "completed",
             tabImageSrc: "",
             panel: ConsultationsPanel,
-            data: []
+            data: [...consultationsCompleted]
         },
     ];
 
@@ -68,7 +144,7 @@
             bind:searchInputValue
             bind:searchInputValueChange
         >  
-            client | subject | invoice ID
+            client | subject | consultation ID
         </SearchInput>
     </div>
     <h2>

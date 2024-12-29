@@ -326,7 +326,7 @@
 
         #client_nav_panel {
             width: 100%;
-            background-color:#FFECEC;
+            background-color:#F9E4CD;
         }
 
         .client_nav_panel_tabs {

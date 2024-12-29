@@ -90,7 +90,7 @@
 		bottom: 0;
 		left: 0;
 		right: 0;
-		background: rgb(255,236,236);
-		background: linear-gradient(0deg, rgba(255,236,236,1) 0%, rgba(255,236,236,0.75) 65%, rgba(255,236,236,0) 100%);
+		background: rgb(249,228,205);
+		background: linear-gradient(0deg, rgba(249,228,205,1) 0%, rgba(249,228,205,0.75) 65%, rgba(249,228,205,0) 100%);
 	}
 </style>

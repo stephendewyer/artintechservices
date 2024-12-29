@@ -1,7 +1,7 @@
 <script lang="ts">
-    import MeatBalls from "$lib/images/icons/meaballs.svg?raw";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
+    import Meatballs from "../buttons/Meatballls.svelte";
 
     export let service_data;
 
@@ -20,13 +20,10 @@
     type="button"
 >
     <div id="service_card_front" class={flipCard ? "service_card_front_active" : "service_card_front_inactive"}>
-        <button 
-            class="meatballs"
-            on:click={() => flipCard = true}
-            on:keyup={() => flipCard = true}
-        >
-            {@html MeatBalls}
-        </button>
+        <Meatballs 
+            bind:clicked={flipCard}
+            hovered={flipCard}
+        />
         <div class="label_and_image">
             <div class="service_image">
                 {@html service_data.tabImageSrc}
@@ -111,19 +108,6 @@
         transform: translateY(-100%);
     }
 
-    .meatballs {
-        position: absolute;
-        width: 2.5rem;
-        top: 0;
-        right: 0;
-        margin: 1rem;
-        fill: #838B6A;
-        background: none;
-        border: none;
-        padding: 0;
-        cursor: pointer;
-    }
-
     .close_button {
         display: none;
     }
@@ -172,11 +156,6 @@
         .skills > li {
             font-size: 1.25rem;
         }
-
-        .meatballs {
-            width: 2rem;
-            margin: 1rem;
-        }
     }
 
     @media screen and (max-width: 1080px) {
@@ -204,11 +183,6 @@
 
         .skills > li {
             font-size: 1rem;
-        }
-
-        .meatballs {
-            width: 2rem;
-            margin: 0.5rem;
         }
 
         .close_button {

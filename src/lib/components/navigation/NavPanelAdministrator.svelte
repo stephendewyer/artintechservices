@@ -326,7 +326,7 @@
 
         #administrator_nav_panel {
             width: 100%;
-            background-color:#FFECEC;
+            background-color:#F9E4CD;
         }
 
         .administrator_nav_panel_tabs {
