@@ -7,6 +7,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import ConsultationsIcon from "$lib/images/icons/consultation_icon.svg?raw";
     import { onMount } from "svelte";
+    import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
     let pendingConsultationsAllClients: boolean = false;
 
@@ -21,12 +22,7 @@
     let consultationsCompleted: any[] = [];
 
     // get the consultations
-    const getAllClientConsultations = async (
-        allClientConsultations: any[],
-        consultationsRequested: any[],
-        consultationsScheduled: any[],
-        consultationsCompleted: any[]
-    ) => {
+    const getAllClientConsultations = async () => {
 
         pendingConsultationsAllClients = true;
 
@@ -39,15 +35,15 @@
                 }
             });
 
-            allClientConsultations = [...await response.json()];
-            // console.log(allClientConsultations);
+            allClientConsultations = await response.json();
+            console.log(allClientConsultations);
 
             if (response.ok) {
                 pendingConsultationsAllClients = false;
                 getConsultationsAllClientsSuccess = true;
                 
                 allClientConsultations.forEach((consultation, index) => {
-                    if (consultation.status === "requested") {
+                    if (consultation.status === "requested" || consultation.status === null) {
                         consultationsRequested = [...consultationsRequested, consultation];
                     } else if (consultation.status === "scheduled") {
                         consultationsScheduled = [...consultationsScheduled, consultation];
@@ -55,6 +51,8 @@
                         consultationsCompleted = [...consultationsCompleted, consultation];;
                     }
                 });
+
+                console.log("requested consultations: ", consultationsRequested)
 
             } else if (!response.ok) {
                 pendingConsultationsAllClients = false;
@@ -64,22 +62,11 @@
             console.log(err);
         };
 
-        return {
-            allClientConsultations,
-            consultationsRequested,
-            consultationsScheduled,
-            consultationsCompleted
-        };
-
     };
 
     onMount(() => {
-        getAllClientConsultations(
-            allClientConsultations,
-            consultationsRequested,
-            consultationsScheduled,
-            consultationsCompleted
-        );
+        getAllClientConsultations();
+        
     });
 
     let searchInputValue: string = "";
@@ -150,18 +137,24 @@
     <h2>
         consultations
     </h2>
-    <div class="tabs">
-        <Tabs 
-            tabPanels={tabPanelsConsultations} 
-            bind:activeTab={activeTabConsultations}
-        />
-    </div>
-    <div class="panel">
-        <Panel 
-            tabPanels={tabPanelsConsultations} 
-            bind:activeTab={activeTabConsultations}
-        />
-    </div>
+    {#if pendingConsultationsAllClients}
+        <LoadingSpinner />
+    {:else if !pendingConsultationsAllClients && getConsultationsAllClientsSuccess}
+        <div class="tabs">
+            <Tabs 
+                tabPanels={tabPanelsConsultations} 
+                bind:activeTab={activeTabConsultations}
+            />
+        </div>
+        <div class="panel">
+            <Panel 
+                tabPanels={tabPanelsConsultations} 
+                bind:activeTab={activeTabConsultations}
+            />
+        </div>
+    {:else if !pendingConsultationsAllClients && !getConsultationsAllClientsSuccess}
+        failed to load consultations
+    {/if}
 </section>
 <style>
     .client_consultations {

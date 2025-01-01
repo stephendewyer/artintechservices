@@ -14,7 +14,6 @@
 <style>
 
     .meatballs {
-        position: absolute;
         width: 2.5rem;
         top: 0;
         right: 0;

@@ -33,13 +33,13 @@
                         consultation ID
                     </th>
                     <th>
+                        topic
+                    </th>
+                    <th>
                         time
                     </th>
                     <th>
                         date
-                    </th>
-                    <th>
-                        topic
                     </th>
                     <th>
                         status
@@ -57,26 +57,35 @@
                             {consultation.request_ID}
                         </td>
                         <td>
-                            {ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}
+                            {#if (consultation.consultation_topic !== null)}
+                                {#if consultation.consultation_topic.split(" ").length > 5}
+                                    {consultation.consultation_topic.split(" ").slice(0, 5).join(" ")}...
+                                {:else}
+                                    {consultation.consultation_topic}
+                                {/if}
+                            {/if}
+                        </td>
+                        <td>
+                            {#if consultation.consultation_time}
+                                {ConvertTimeToStandard(consultation.consultation_time)} 
+                            {/if}
+                            {#if consultation.time_zone}
+                                {consultation.time_zone}
+                            {/if}
                         </td>
                         <td>
                             {new Date(consultation.consultation_date).toUTCString().slice(0, 16)}
                         </td>
                         <td>
-                            {#if (consultation.consultation_topic.split(" ").length > 5)}
-                                {consultation.consultation_topic.split(" ").slice(0, 5).join(" ")}...
-                            {:else}
-                                {consultation.consultation_topic}
-                            {/if}
-                        </td>
-                        <td>
-                            {`${consultation.name_first} ${consultation.name_last}}`}
-                        </td>
-                        <td>
                             {consultation.status}
                         </td>
                         <td>
-                            <Meatballs />
+                            {`${consultation.name_first} ${consultation.name_last}`}
+                        </td>
+                        <td>
+                            <ActionButtonTertiary>
+                                consultation
+                                </ActionButtonTertiary>
                         </td>
                     </tr>
                 {/each}
@@ -101,7 +110,9 @@
     .consultations_table {
         width: 100%;
     }
-
+    table > tbody > tr > td {
+        font-size: 1.15rem;
+    }
 
     @media screen and (max-width: 1440px) {
         table > tbody > tr > td {

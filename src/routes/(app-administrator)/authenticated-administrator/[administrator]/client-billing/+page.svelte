@@ -7,6 +7,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import InvoicesPanel from "$lib/components/tabPanelInvoices/InvoicesPanel.svelte";
     import { onMount } from "svelte";
+  import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
     let searchInputValue: string = "";
 
@@ -36,7 +37,7 @@
             });
 
             allClientInvoices = [...await response.json()];
-            console.log(allClientInvoices);
+            // console.log(allClientInvoices);
 
             if (response.ok) {
 
@@ -122,18 +123,24 @@
     <h2>
         invoices
     </h2>
-    <div class="tabs">
-        <Tabs 
-            tabPanels={tabPanelsInvoices} 
-            bind:activeTab={activeTabInvoices}
-        />
-    </div>
-    <div class="panel">
-        <Panel 
-            tabPanels={tabPanelsInvoices} 
-            bind:activeTab={activeTabInvoices}
-        />
-    </div>
+    {#if pendingInvoicesAllClients}
+        <LoadingSpinner />
+    {:else if !pendingInvoicesAllClients && getInvoicesAllClientsSuccess}
+        <div class="tabs">
+            <Tabs 
+                tabPanels={tabPanelsInvoices} 
+                bind:activeTab={activeTabInvoices}
+            />
+        </div>
+        <div class="panel">
+            <Panel 
+                tabPanels={tabPanelsInvoices} 
+                bind:activeTab={activeTabInvoices}
+            />
+        </div>
+    {:else if (!pendingInvoicesAllClients && !getInvoicesAllClientsSuccess)}
+        failed to load invoices
+    {/if}
 </section>
 
 <style>
