@@ -314,7 +314,7 @@
 </script>
 <svelte:head>
 	<title>Art in Tech Services - request to start a project</title>
-	<meta name="description" content="request to start a project" />
+	<meta name="description" content="request to start a project page" />
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>

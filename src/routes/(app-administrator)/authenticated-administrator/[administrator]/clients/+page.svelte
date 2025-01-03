@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import SearchInput from "$lib/components/inputs/SearchInput.svelte";
     import ClientsIcon from "$lib/images/icons/clients.svg?raw";
     import { onMount } from "svelte";
@@ -62,6 +65,14 @@
     $: paginatedClients = clients.slice(firstPageIndexClients, lastPageIndexClients);
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - clients</title>
+	<meta name="description" content="clients page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
+
 <section class="clients_page">
     <div class="clients_heading">
         <h1>

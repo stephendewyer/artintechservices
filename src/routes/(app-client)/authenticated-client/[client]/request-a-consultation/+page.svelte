@@ -154,7 +154,7 @@
 </script>
 <svelte:head>
 	<title>Art in Tech Services - request a consultation</title>
-	<meta name="description" content="request a consultation" />
+	<meta name="description" content="request a consultation page" />
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>

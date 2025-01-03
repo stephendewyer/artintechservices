@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import SearchInput from "$lib/components/inputs/SearchInput.svelte";
     import ConsultationsPanel from "$lib/components/tabPanelConsultations/ConsultationsPanel.svelte";
@@ -110,6 +113,14 @@
     ];
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - clients' consultations</title>
+	<meta name="description" content="clients' consultations page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
+
 <section class="client_consultations">
     <div class="client_consultations_heading">
         <h1>

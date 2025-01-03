@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import LoadingSpinner from '$lib/components/loadingSpinners/LoadingSpinner.svelte';
     import { onMount } from 'svelte';
     import ProfilePhotoDefault from "$lib/images/default/default_profile_photo.jpg";
@@ -123,6 +126,14 @@
     ];
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - client</title>
+	<meta name="description" content="client page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
+
 <section class="client_profile">
     <h1>
         client profile

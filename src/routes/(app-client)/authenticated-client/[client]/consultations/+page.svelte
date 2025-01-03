@@ -1,13 +1,13 @@
 <script lang="ts">
-
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import Tabs from "$lib/components/tabPanelClient/Tabs.svelte";
     import Panel from "$lib/components/tabPanelClient/Panel.svelte";
-    import Calendar from "$lib/images/icons/calendar.svg?raw";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import PanelConsultations from "$lib/components/tabPanelClient/ConsultationsPanel.svelte";
     import { v4 as uuidv4 } from 'uuid';
     import { onMount } from "svelte";
-    import { page } from "$app/stores";
     import ConsultationIcon from "$lib/images/icons/process/process_01.svg?raw";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
@@ -129,6 +129,13 @@
         </div>
     {/if}
 </section>
+
+<svelte:head>
+	<title>Art in Tech Services - my consultations</title>
+	<meta name="description" content="my consultations page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
 
 <style>
 

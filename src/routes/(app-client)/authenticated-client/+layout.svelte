@@ -9,6 +9,7 @@
     let clientEmail = $page.data.streamed.user?.email;
     let clientPageElement: HTMLElement;
     let clientPageTopYPosition: number = 0;
+    let navPanelContainerHeight: number = 0;
     let navPanelWidth: number = 0;
     let navPanelHeight: number = 0;
     let navPanelTopYPosition: number = 0;
@@ -36,10 +37,8 @@
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;   
+        navPanelContainerHeight = navPanelContainerElement.getBoundingClientRect().height;
         $ClientPageWidthStore = innerWidth - navPanelWidth;
-        // console.log("navPanelContainerElement.getBoundingClientRect().bottom: ", navPanelContainerElement.getBoundingClientRect().bottom )
-        // console.log("y + innerHeight: ", y + innerHeight);
-        // console.log("( y + innerHeight) < navPanelBottomYPosition: ", ( y + innerHeight) < navPanelBottomYPosition )     
     });
 
     // IMPORTANT! Page layout changes after getting page data.  User afterUpdate to get correct values after page data loads
@@ -47,6 +46,7 @@
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;   
+        navPanelContainerHeight = navPanelContainerElement.getBoundingClientRect().height;
         $ClientPageWidthStore = innerWidth - navPanelWidth;
     })
 
@@ -54,6 +54,7 @@
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;
+        navPanelContainerHeight = navPanelContainerElement.getBoundingClientRect().height;
         $ClientPageWidthStore = innerWidth - navPanelWidth;
     };
     
@@ -61,6 +62,7 @@
         navPanelContainerTopYPosition = navPanelContainerElement.getBoundingClientRect().top + window.scrollY;
         clientPageTopYPosition = clientPageElement.getBoundingClientRect().top + window.scrollY;
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;
+        navPanelContainerHeight = navPanelContainerElement.getBoundingClientRect().height;
         $ClientPageWidthStore = innerWidth - navPanelWidth;
     };
 
@@ -74,36 +76,46 @@
         )
     ) {
         navPanelRelative = true;
+        navPanelFixed = false;
+        navPanelAbsolute = false;
     } else  {
         navPanelRelative = false;
     };
-    
-    // handle absolute position
 
-    $: if (
-        (innerWidth > 720) && (
-            ( navPanelHeight < clientPageHeight ) && 
-            ( navPanelTopYPosition >= ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) )
+    // handle tabsFixed
+    $: if (innerWidth > 720) {
+        if (y > navPanelContainerTopYPosition && y < (navPanelContainerTopYPosition + (navPanelContainerHeight - navPanelHeight))) {
+            navPanelFixed = true;
+        } else {
+            navPanelFixed = false;
+        }
+    } else if (innerWidth <= 720) {
+        if (y > navPanelContainerTopYPosition && y < (navPanelContainerTopYPosition + (navPanelContainerHeight - navPanelHeight))) {
+            navPanelFixed = true;
+        } else {
+            navPanelFixed = false;
+        };
+    };
+
+    // handle tabsAbsolute
+    $: if (innerWidth > 720) {
+        if (y >= (navPanelContainerTopYPosition + (navPanelContainerHeight - navPanelHeight))) {
+            navPanelAbsolute = true;
+        } else {
+            navPanelAbsolute = false;
+        };
+    } else if ( 
+        (innerWidth > 720) && ( 
+            navPanelHeight < clientPageHeight 
+        ) && ( 
+            navPanelTopYPosition < ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) 
+        ) && (
+            ( y < ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) )
         )
     ) {
-        navPanelAbsolute = true;
-    } else if ( (innerWidth > 720) && ( navPanelHeight < clientPageHeight ) && ( navPanelTopYPosition < ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) ) ) {
         navPanelAbsolute = false;
-    };
+    }; 
 
-    // handle fixed position
-    
-    $: if (
-        (innerWidth > 720) && (
-            ( navPanelHeight < clientPageHeight ) && 
-            ( y > navPanelContainerTopYPosition) && 
-            ( navPanelTopYPosition < ( navPanelContainerTopYPosition + ( clientPageHeight - navPanelHeight ) ) )
-        )
-    ) {
-        navPanelFixed = true;
-    } else {
-        navPanelFixed = false;
-    };
 
     // handle mobile fixed position
 
@@ -140,6 +152,7 @@
             class="nav_panel_container" 
             style={innerWidth > 720 ? `min-width: ${navPanelWidth}px;` : "min-width: 100%;"}
             bind:this={navPanelContainerElement}
+            bind:clientHeight={navPanelContainerHeight}
         >
             <NavPanelClient 
                 bind:width={navPanelWidth}
@@ -159,7 +172,7 @@
             bind:clientHeight={clientPageHeight}
             bind:clientWidth={clientPageWidth}
             bind:this={clientPageElement}
-            style={mobileNavPanelFixed ? `padding-bottom: ${navPanelHeight};` : ""}
+            style={mobileNavPanelFixed ? `padding-bottom: ${navPanelHeight}px;` : ""}
         >
             <slot />
         </div>

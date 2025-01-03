@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import Tabs from "$lib/components/tabPanelClient/Tabs.svelte";
     import Panel from "$lib/components/tabPanelClient/Panel.svelte";
     import Project from "$lib/images/icons/project.svg?raw";
@@ -6,7 +9,6 @@
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { v4 as uuidv4 } from 'uuid';
     import PanelProjects from "$lib/components/tabPanelClient/ProjectsPanel.svelte";
-    import { page } from "$app/stores";
     import { onMount } from "svelte";
 
     const clientEmail = $page.data.streamed.user?.email;
@@ -89,6 +91,13 @@
     ];
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - my projects</title>
+	<meta name="description" content="my projects page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
 
 <section class="projects_section">
     <h1 class="section_header">

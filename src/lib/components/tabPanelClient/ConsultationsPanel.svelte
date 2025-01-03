@@ -48,11 +48,26 @@
 
     .consultations {
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        display: grid;
         gap: 1rem;
-        padding: 1rem 0;
+        padding: 0 0 1rem 0;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    @media screen and (max-width: 1080px) {
+        .consultations {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .consultations {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 0.5rem;
+            padding: 1rem 0;
+        }
+        
     }
 
 </style>

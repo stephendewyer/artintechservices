@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import MessagesIcon from "$lib/images/icons/email_icon.svg?raw";
     import SearchInput from "$lib/components/inputs/SearchInput.svelte";
     import DateInput from "$lib/components/inputs/DateInput.svelte";
@@ -57,6 +60,14 @@
 
     
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - messages</title>
+	<meta name="description" content="messages page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
+
 <section class="messages_page">
     <div class="messages_heading">
         <h1>messages</h1>

@@ -51,7 +51,7 @@
 
     .project_card {
         position: relative;
-        width: 32%;
+        width: 100%;
         height: 20rem;
         transition: box-shadow 0.2s linear;
         cursor: pointer;
@@ -108,21 +108,5 @@
         justify-content: center;
         background: rgb(255,255,255, 0.75);
     }
-
-    @media screen and (max-width: 1440px) {
-
-    }
-
-    @media screen and (max-width: 1080px) {
-        .project_card {
-            width: 48%;
-        }
-    }
-
-    @media screen and (max-width: 720px) {
-        .project_card {
-            width: 100%;
-        }
-    }
-
+    
 </style>

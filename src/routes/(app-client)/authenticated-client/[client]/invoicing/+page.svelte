@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import { onMount } from "svelte";
     import { PUBLIC_STRIPEPUBLISHABLEKey } from '$env/static/public';
     import { loadStripe, type Stripe, type StripeElements } from '@stripe/stripe-js';
@@ -6,7 +9,6 @@
     import PaymentMethodCard from "$lib/components/cards/PaymentMethodCard.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import AddItemButton from "$lib/components/buttons/AddItemButton.svelte";
-    import { page } from "$app/stores";
     import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
     import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
     import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
@@ -258,6 +260,13 @@
     let innerWidth: number = 0;
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - my invoices</title>
+	<meta name="description" content="my invoices page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
 
 <svelte:window bind:innerWidth />
 

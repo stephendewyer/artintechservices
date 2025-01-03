@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import InvoicingIcon from "$lib/images/icons/billing.svg?raw";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import SearchInput from "$lib/components/inputs/SearchInput.svelte";
@@ -7,7 +10,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import InvoicesPanel from "$lib/components/tabPanelInvoices/InvoicesPanel.svelte";
     import { onMount } from "svelte";
-  import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
+    import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
 
     let searchInputValue: string = "";
 
@@ -95,6 +98,13 @@
     ];
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - clients' invoices</title>
+	<meta name="description" content="clients' invoices page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
 
 <section class="billing_page">
     <div class="billing_heading">

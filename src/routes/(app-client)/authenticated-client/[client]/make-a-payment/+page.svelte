@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import { PUBLIC_STRIPEPUBLISHABLEKey } from '$env/static/public';
     import { loadStripe, type PaymentIntentResult, type Stripe, type StripeElements } from '@stripe/stripe-js';
     import { Elements, LinkAuthenticationElement, PaymentElement, Address } from 'svelte-stripe';
@@ -14,7 +17,6 @@
     import PendingFlashMessage from '$lib/components/flashMessages/PendingFlashMessage.svelte';
     import SuccessFlashMessage from '$lib/components/flashMessages/SuccessFlashMessage.svelte';
     import ErrorFlashMessage from '$lib/components/flashMessages/ErrorFlashMessage.svelte';
-    import { page } from "$app/stores";
     import { PromptStore } from '$lib/stores/PromptStore.js';
     import { goto } from '$app/navigation';
     import BackButton from '$lib/components/buttons/BackButton.svelte';
@@ -249,6 +251,14 @@
     };
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - make a payment</title>
+	<meta name="description" content="make a payment page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
+
 <section class="make_a_payment">
     <div class="back_button_container">
         <a href="/authenticated-client/client/invoicing">

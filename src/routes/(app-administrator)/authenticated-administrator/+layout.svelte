@@ -40,9 +40,6 @@
         navPanelBottomYPosition = navPanelContainerElement.getBoundingClientRect().bottom + window.scrollY;   
         navPanelContainerHeight = navPanelContainerElement.getBoundingClientRect().height;
         $AdministratorPageWidthStore = innerWidth - navPanelWidth;
-        // console.log("navPanelContainerElement.getBoundingClientRect().bottom: ", navPanelContainerElement.getBoundingClientRect().bottom )
-        // console.log("y + innerHeight: ", y + innerHeight);
-        // console.log("( y + innerHeight) < navPanelBottomYPosition: ", ( y + innerHeight) < navPanelBottomYPosition )     
     });
 
     // IMPORTANT! Page layout changes after getting page data.  User afterUpdate to get correct values after page data loads

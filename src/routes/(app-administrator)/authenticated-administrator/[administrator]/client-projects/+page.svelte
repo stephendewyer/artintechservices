@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import ProjectIcon from "$lib/images/icons/project.svg?raw"
     import ProjectsPanel from "$lib/components/tabPanelProjects/ProjectsPanel.svelte";
     import Tabs from "$lib/components/tabPanelProjects/Tabs.svelte";
@@ -49,6 +52,14 @@
     ];
 
 </script>
+
+<svelte:head>
+	<title>Art in Tech Services - clients' projects</title>
+	<meta name="description" content="clients' projects page" />
+	<meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
+
 <section class="client_projects">
     <div class="client_projects_heading">
         <h1>

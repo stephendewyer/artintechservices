@@ -39,19 +39,19 @@
     <div class="background_image_container">
         <img src={Clouds} alt="fluffly clouds" class="background_image"/>
     </div>
-    <div class="meatballs_container">
-        <div 
-            class="meatballs"
-            style={cardHovered ? "fill: #d79679;": "fill: #36261E;"}
-        >
-            {@html Meatballs}
-        </div>
-    </div>
     <div class="consultation_card_content">
         <div class="consultation_icon">
             {@html ConsultationIcon}
         </div>
         <div class="consultation_info">
+            <div class="meatballs_container">
+                <div 
+                    class="meatballs"
+                    style={cardHovered ? "fill: #d79679;": "fill: #36261E;"}
+                >
+                    {@html Meatballs}
+                </div>
+            </div>
             <h4 style="margin: 0;" class="date">{new Date(consultation.consultation_date).toUTCString().slice(0, 16)}</h4>
             <h5 style="margin: 0;" class="time">{ConvertTimeToStandard(consultation.consultation_time)} {consultation.time_zone}</h5>
             <p style="margin: 0;">{topicShortened}{#if includeDotDotDot}...{/if}</p>
@@ -60,11 +60,11 @@
 </a>
 <style>
     .consultation_card_container {
-        width: 32%;
+        width: 100%;
         padding: 1rem;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row;
+        width: 100%;
         gap: 0.5rem;
         cursor: pointer;
         border-radius: 1rem;
@@ -88,8 +88,7 @@
     }
 
     .meatballs_container {
-        position: absolute;
-        right: 2rem;
+        position: relative;
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -104,7 +103,8 @@
     .consultation_card_content {
         position: relative;
         display: flex;
-        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
     }
 
     .consultation_info {
@@ -118,8 +118,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 100%;
-        height: 16rem;
+        min-width: 4rem;
         fill: #3D3832;
     }
 
@@ -134,29 +133,15 @@
     }
     @media screen and (max-width: 1440px) {
         .consultation_icon {
-            height: 16rem;
+            min-width: 3.5rem;
         }
 
     }
 
     @media screen and (max-width: 1080px) {
-        .consultation_card_container {
-            width: 48%;
-        }
-        .consultation_card_content {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            width: 100%;
-        }
-
-        .consultation_info {
-            width: 50%;
-        }
 
         .consultation_icon {
-            height: 15rem;
-            width: 50%;
+            min-width: 3rem;
         }
 
         .date {
@@ -171,10 +156,6 @@
     @media screen and (max-width: 720px) {
         .consultation_card_container {
             width: 100%;
-        }
-
-        .consultation_icon {
-            height: auto;
         }
 
         .date {

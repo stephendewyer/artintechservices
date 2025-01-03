@@ -284,14 +284,14 @@
             tabsAbsolute = true;
         } else {
             tabsAbsolute = false;
-        }
+        };
     } else if (innerWidth <= 720) {
         if (y >= (tabsContainerTopYPosition + (tabPanelHeight - tabsHeight))) {
             tabsAbsolute = true;
         } else {
             tabsAbsolute = false;
-        }
-    }    
+        };
+    }; 
 
     // handle shoppingCartFixed
 

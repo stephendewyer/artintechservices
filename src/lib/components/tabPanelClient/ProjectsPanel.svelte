@@ -51,9 +51,27 @@
 
     .projects_container {
         width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+    @media screen and (max-width: 1440px) {
+
+    }
+
+    @media screen and (max-width: 1080px) {
+        .projects_container {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+    }
+
+    @media screen and (max-width: 720px) {
+        .projects_container {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 0.5rem;
+        }
     }
     
 </style>

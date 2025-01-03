@@ -175,8 +175,8 @@
 </script>
 
 <svelte:head>
-	<title>Art in Tech Services - project</title>
-	<meta name="description" content="project" />
+	<title>Art in Tech Services - my project</title>
+	<meta name="description" content="my project page" />
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
