@@ -1,6 +1,7 @@
 <script lang="ts">
     import SettingsIcon from "$lib/images/icons/settings_icon.svg?raw";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
+    import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
@@ -13,26 +14,26 @@
     let emailIsValid: boolean = true;
     let emailInputValue: string = "";
 
-    // after submit
+    // after reset password submit
 
-	let responseItem: ResponseObj = {
+	let responseChangePasswordItem: ResponseObj = {
         success: "",
         error: "",
         status: null
     };
 
-    $: if((responseItem.success) || (responseItem.error)) {
+    $: if((responseChangePasswordItem.success) || (responseChangePasswordItem.error)) {
         setTimeout(() => {
-            responseItem.success = "";
-            responseItem.error = "";
-            status: null;
+            responseChangePasswordItem.success = "";
+            responseChangePasswordItem.error = "";
+            responseChangePasswordItem.status = null;
         }, 4000)
     };
 
-    const sendEmail = async (
+    const resetPassword = async (
         email: string
     ) => {
-        const response = await fetch("/api/authentication/resetPassword/resetPasswordClient", {
+        const response = await fetch("/authenticated-client/api/resetPassword", {
             method: "POST",
             body: JSON.stringify({
                 email
@@ -41,22 +42,21 @@
                 "Content-Type": "application/json"
             }
         });
-        responseItem = await response.json();
-        // console.log(responseItem);
-        return responseItem;
+        responseChangePasswordItem = await response.json();
+        return responseChangePasswordItem;
     };
 
-    let pending: boolean = false;
+    let pendingResetPassword: boolean = false;
 
-    const sendEmailHandler = async () => {
-        pending = true;
+    const resetPasswordHandler = async () => {
+        pendingResetPassword = true;
         try {
-            await sendEmail(
+            await resetPassword(
                 emailInputValue
             );
-            if (responseItem.success) {
+            if (responseChangePasswordItem.success) {
                 emailInputValue = "";
-            } else if (responseItem.error) {
+            } else if (responseChangePasswordItem.error) {
                 if ((emailInputValue === "") || (!emailInputValue.includes('@'))) {
                     emailIsValid = false;
                 };
@@ -66,9 +66,34 @@
         };
     };
 
-    $: if ((responseItem.error) || (responseItem.success)) {
-        pending = false;
+    $: if ((responseChangePasswordItem.error) || (responseChangePasswordItem.success)) {
+        pendingResetPassword = false;
     };
+
+    // after change email submit
+
+    let responseChangeEmailItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    $: if((responseChangeEmailItem.success) || (responseChangeEmailItem.error)) {
+        setTimeout(() => {
+            responseChangeEmailItem.success = "";
+            responseChangeEmailItem.error = "";
+            responseChangeEmailItem.status = null;
+        }, 4000)
+    };
+
+    const changeEmailHandler = async () => {
+
+    };
+
+    const deleteAccountHandler = async () => {
+
+    };
+
 </script>
 
 <svelte:head>
@@ -85,9 +110,89 @@
             {@html SettingsIcon}
         </div>
     </div>
-    <h2>reset password</h2>
-    <h2>delete account</h2>
-
+    <form 
+        on:submit|preventDefault={resetPasswordHandler}
+        class="form"
+    >
+        <h2>
+            reset password
+        </h2>
+        <div class="input_row">
+            <EmailInput
+                bind:isValid={emailIsValid}
+                placeholder="myEmail@myDomain.com"
+                inputID="client_email"
+                inputName="client_email"
+                bind:emailInputValue={emailInputValue}
+                inputLabel={true}
+                required={true}
+            >
+                email
+            </EmailInput>
+        </div>
+        <div class="buttons_container">
+            <SubmitButton02
+                disable={false}
+            >
+                send reset email
+            </SubmitButton02>
+        </div>
+        {#if (pendingResetPassword)}
+            <PendingFlashMessage >
+                please wait while we validate your data
+            </PendingFlashMessage>
+        {:else if (responseChangePasswordItem.error)}
+            <ErrorFlashMessage >
+                {responseChangePasswordItem.error}
+            </ErrorFlashMessage>
+        {:else if (responseChangePasswordItem.success)}
+            <SuccessFlashMessage>
+                {responseChangePasswordItem.success}
+            </SuccessFlashMessage>
+        {/if}
+    </form>
+    <form 
+        on:submit|preventDefault={changeEmailHandler}
+        class="form"
+    >
+        <h2>
+            change email
+        </h2>
+        <div class="input_row">
+            <EmailInput
+                bind:isValid={emailIsValid}
+                placeholder="myEmail@myDomain.com"
+                inputID="client_email"
+                inputName="client_email"
+                bind:emailInputValue={emailInputValue}
+                inputLabel={true}
+                required={true}
+            >
+                email
+            </EmailInput>
+        </div>
+        <div class="buttons_container">
+            <SubmitButton02
+                disable={false}
+            >
+                send reset email
+            </SubmitButton02>
+        </div>
+    </form>
+    <form 
+        on:submit|preventDefault={deleteAccountHandler}
+        class="form"
+    >
+        <h2>delete account</h2>
+        <p style="padding: 0; margin: 0;">
+            Do you want to permanently delete your account?
+        </p>
+        <SubmitButton02
+            disable={false}
+        >
+            permanently delete my account
+        </SubmitButton02>
+    </form>
 </section>
 
 <style>
@@ -108,5 +213,21 @@
 
     .settings_icon {
         width: 6rem;
+    }
+
+    .form {
+        width: 32rem;
+    }
+
+    .input_row {
+        width: 100%;
+    }
+
+    .delete_account {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        padding: 0 0 2rem 0;
     }
 </style>

@@ -189,7 +189,7 @@
                 style={`transform: translate(0, ${(debouncedY/2)}px)`}
                 class="intro_paragraph"
             >
-                providing creative digital services to help businesses and communities
+                combining art with state-of-the-art technology to create software that helps businesses and communities
             </h1>
         </div>
     </section>

@@ -119,18 +119,6 @@
     }
 
 
-    @media screen and (max-width: 1440px) {
-        table > tbody > tr > td {
-            font-size: 1rem;
-        }
-    }
-
-    @media screen and (max-width: 1080px) {
-        table > tbody > tr > td {
-            font-size: 0.95rem;
-        }
-    }
-
     @media screen and (max-width: 720px) {
 
         .invoices_table_container {
@@ -145,10 +133,5 @@
             min-width: 60rem;
             padding: 1rem;
         }
-
-        table > tbody > tr > td {
-            font-size: 0.85rem;
-        }
-
     }
 </style>

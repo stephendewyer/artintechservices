@@ -286,7 +286,7 @@
 </script>
 
 <svelte:head>
-	<title>Art in Tech Services - {clientProfileData?.name_first} {clientProfileData?.name_last} profile</title>
+	<title>Art in Tech Services - client profile</title>
 	<meta name="description" content="client portal" />
 	<meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
