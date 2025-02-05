@@ -165,7 +165,7 @@
 </script>
 <svelte:window on:scroll={handleScroll}/>
 <svelte:head>
-    <title>Art in Tech Services - providing creative digital services to help businesses and communities</title>
+    <title>Art in Tech Services - combining art with state-of-the-art technology to create software that helps businesses and communities</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN}/>
@@ -189,7 +189,7 @@
                 style={`transform: translate(0, ${(debouncedY/2)}px)`}
                 class="intro_paragraph"
             >
-                combining art with state-of-the-art technology to create software that helps businesses and communities
+                combining art with state-of-the-art digital technology to produce creative software for businesses and communities
             </h1>
         </div>
     </section>

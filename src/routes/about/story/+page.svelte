@@ -80,7 +80,7 @@
         <div class="story_section">
             <h2>mission</h2>
             <p class="paragraph">
-                Art in Tech Services provides state-of-the-art digital services to create groundbreaking digital products using advancements in art and digital technology.  Our services improve human experiences of technology.
+                Art in Tech Services brings together art and state-of-the-art digital technology to produce creative software that improves human experiences of technology.
             </p>
         </div>
         <div class="story_section">
@@ -122,7 +122,7 @@
                     <img src={USMap} alt="map of U.S. showing Art in Tech Services headquarters location" />
                 </div>
                 <p class="paragraph_container">
-                    Art in Tech Services works across the United States and is moving its headquarters to Tucson, Arizona.
+                    Art in Tech Services works across the United States and is based in Tucson, Arizona.
                 </p>    
             </div>
         </div>
