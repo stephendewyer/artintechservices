@@ -4,18 +4,20 @@
 
     export let service_data;
 
+    let innerWidth: number = 0;
+
     let flipCard: boolean = false;
 
 </script> 
-
+<svelte:window bind:innerWidth /> 
 <button 
     class="service_card"
-    on:mouseover={() => flipCard = true}
-    on:mouseenter={() => flipCard = true}
-    on:mouseleave={() => flipCard = false}
-    on:mouseout={() => flipCard = false}
-    on:focus={() => flipCard = true}
-    on:blur={() => flipCard = false}
+    on:mouseover={() => innerWidth > 720 ? flipCard = true : flipCard = flipCard}
+    on:mouseenter={() => innerWidth > 720 ? flipCard = true : flipCard = flipCard}
+    on:mouseleave={() => innerWidth > 720 ? flipCard = false : flipCard = flipCard}
+    on:mouseout={() => innerWidth > 720 ? flipCard = false : flipCard = flipCard}
+    on:focus={() => innerWidth > 720 ? flipCard = true : flipCard = flipCard}
+    on:blur={() => innerWidth > 720 ? flipCard = false : flipCard = flipCard}
     type="button"
 >
     <div id="service_card_front" class={flipCard ? "service_card_front_active" : "service_card_front_inactive"}>
@@ -160,7 +162,6 @@
         fill: #2D3530;
         transition: transform 0.3s linear;
         cursor: pointer;
-        pointer-events: none;
     }
 
     .arrow_active {
@@ -195,11 +196,7 @@
             width: 18rem;
             height: 18rem;
             padding: 0.5rem;
-            pointer-events: none;
-        }
 
-        #arrow {
-            pointer-events:all;
         }
 
         .service_image {
