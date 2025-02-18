@@ -6,7 +6,7 @@
 
     let flipCard: boolean = false;
 
-</script>
+</script> 
 
 <button 
     class="service_card"
@@ -45,7 +45,14 @@
         {/each}
     </div>
     <div class="arrow_container">
-        <div id="arrow" class={flipCard ? "arrow_active" : "arrow_inactive"}>
+        <div 
+            id="arrow" 
+            class={flipCard ? "arrow_active" : "arrow_inactive"}
+            on:click={() => flipCard = !flipCard}
+            on:keyup={() => flipCard = !flipCard}
+            role="button"
+            tabindex={service_data.index}
+        >
             {@html NavArrow}
         </div>
     </div>
@@ -152,6 +159,8 @@
         width: 2rem;
         fill: #2D3530;
         transition: transform 0.3s linear;
+        cursor: pointer;
+        pointer-events: none;
     }
 
     .arrow_active {
@@ -186,6 +195,11 @@
             width: 18rem;
             height: 18rem;
             padding: 0.5rem;
+            pointer-events: none;
+        }
+
+        #arrow {
+            pointer-events:all;
         }
 
         .service_image {
