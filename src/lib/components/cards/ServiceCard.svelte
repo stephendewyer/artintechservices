@@ -50,8 +50,9 @@
         <div 
             id="arrow" 
             class={flipCard ? "arrow_active" : "arrow_inactive"}
-            on:click={() => flipCard = !flipCard}
-            on:keyup={() => flipCard = !flipCard}
+            style={innerWidth > 720 ? "" : "cursor: pointer;"}
+            on:click={() => innerWidth <= 720 ? flipCard = !flipCard : flipCard = flipCard}
+            on:keyup={() => innerWidth <= 720 ? flipCard = !flipCard : flipCard = flipCard}
             role="button"
             tabindex={service_data.index}
         >
@@ -161,7 +162,6 @@
         width: 2rem;
         fill: #2D3530;
         transition: transform 0.3s linear;
-        cursor: pointer;
     }
 
     .arrow_active {
