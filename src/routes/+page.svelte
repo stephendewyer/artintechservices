@@ -356,7 +356,7 @@
     .intro_banner {
         position: relative;
         width: 100%;
-        height: 60rem;
+        height: 100vh;
         overflow: hidden;
         background-color: #443F3B;
     }
@@ -523,10 +523,6 @@
 
     @media screen and (max-width: 1440px) {
 
-        .intro_banner {
-            height: 42rem;
-        }
-
         .saguaro_cactus {
             padding-top: 4rem;
         }
@@ -541,10 +537,6 @@
     }
 
     @media screen and (max-width: 1080px) {
-
-        .intro_banner {
-            height: 34rem;
-        }
 
         .intro_paragraph {
             padding: 0.375rem 0.75rem;
@@ -564,11 +556,6 @@
     }
 
     @media screen and (max-width: 720px) {
-
-        .intro_banner {
-            padding: 0;
-            height: 24rem;
-        }
 
         .saguaro_cactus {
             padding-top: 1rem;

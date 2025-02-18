@@ -1,7 +1,6 @@
 <script lang="ts">
-    import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
-    import Meatballs from "../buttons/Meatballls.svelte";
+    import NavArrow from "$lib/images/arrows/nav_arrow.svg?raw";
 
     export let service_data;
 
@@ -20,10 +19,6 @@
     type="button"
 >
     <div id="service_card_front" class={flipCard ? "service_card_front_active" : "service_card_front_inactive"}>
-        <Meatballs 
-            bind:clicked={flipCard}
-            hovered={flipCard}
-        />
         <div class="label_and_image">
             <div class="service_image">
                 {@html service_data.tabImageSrc}
@@ -34,13 +29,6 @@
         </div>    
     </div>
     <div id="service_card_back" class={flipCard ? "service_card_back_inactive" : "service_card_back_active"}>
-        <button 
-            class="close_button"
-            on:click={() => flipCard = false}
-            on:keyup={() => flipCard = false}
-        >
-            {@html CloseIcon}
-        </button>
         {#each service_data.data as serviceData, index}
             <ul class="skills">
                 {#each serviceData.skills as skill, index}
@@ -55,6 +43,11 @@
                 </ActionButtonSecondary>
             </a>
         {/each}
+    </div>
+    <div class="arrow_container">
+        <div id="arrow" class={flipCard ? "arrow_active" : "arrow_inactive"}>
+            {@html NavArrow}
+        </div>
     </div>
 </button>
 
@@ -108,10 +101,6 @@
         transform: translateY(-100%);
     }
 
-    .close_button {
-        display: none;
-    }
-
     .label_and_image {
         display: flex;
         flex-direction: row;
@@ -145,6 +134,32 @@
 
     .skills > li {
         font-size: 1.5rem;
+    }
+
+    .arrow_container {
+        position: absolute;
+        top: 0.5rem;
+        left: 0;
+        right: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #arrow {
+        position: relative;
+        width: 2rem;
+        fill: #2D3530;
+        transition: transform 0.3s linear;
+    }
+
+    .arrow_active {
+        transform: rotateX(0);
+    }
+
+    .arrow_inactive {
+        transform: rotateX(180deg);
     }
 
     @media screen and (max-width: 1920px) {
@@ -185,18 +200,5 @@
             font-size: 1rem;
         }
 
-        .close_button {
-            display: block;
-            position: absolute;
-            width: 2rem;
-            top: 0;
-            right: 0;
-            margin: 0.5rem;
-            fill: #838B6A;
-            background: none;
-            border: none;
-            padding: 0;
-            cursor: pointer;
-        }
     }
 </style>
