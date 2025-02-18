@@ -269,6 +269,7 @@
         flex-direction: column;
         justify-content: center;
         left: auto;
+        pointer-events: none;
     }
 
     .arrow_button_next_services {
@@ -280,6 +281,7 @@
         flex-direction: column;
         justify-content: center;
         left: auto;
+        pointer-events: none;
     }
 
     @media screen and (max-width: 1440px) {

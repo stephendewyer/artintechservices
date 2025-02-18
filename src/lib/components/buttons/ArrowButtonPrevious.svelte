@@ -36,6 +36,7 @@
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
+        pointer-events: all;
         margin: 0;
         transition: opacity 0.2s linear, box-shadow 0.2s linear;
     }

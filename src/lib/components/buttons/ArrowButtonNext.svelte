@@ -37,6 +37,7 @@
         flex-direction: column;
         justify-content: center;
         cursor: pointer;
+        pointer-events: all;
     }
 
     #arrow_right_button:hover {
