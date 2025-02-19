@@ -8,8 +8,8 @@
 
 </script>
 <svelte:head>
-    <title>Art in Tech Services - stephen garrett dewyer</title>
-    <meta name="description" content="stephen garrett dewyer" />
+    <title>Art in Tech Services - Stephen Garrett Dewyer</title>
+    <meta name="description" content="Stephen Garrett Dewyer" />
     <meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
@@ -17,7 +17,7 @@
 <div class="page">
     <div class="profile_container">
         <h1>
-            stephen dewyer
+            Stephen Dewyer
         </h1>
         <h2>
             Founding Director, Full-stack Web Developer and UX Designer
@@ -29,7 +29,7 @@
                     biography
                 </h3>
                 <p class="column_section">
-                    stephen runs and directs Art in Tech Services, which he launched in the spring of 2021. 
+                    Stephen runs and directs Art in Tech Services, which he launched in the spring of 2021. 
                     He is an artist, UX designer, software web developer and Founder, UX Designer and Full-stack Web Developer of a non-profit organization called Public Arts Commission.  
                     From 2013-2017, stephen led an award-winning journal of art and culture(s) in Detroit, Michigan called ∞ mile (Infinite Mile LLC).<br /><br />
                     In his solo work, stephen makes environmentally-responsive installations as a part of performances that use digital technology.

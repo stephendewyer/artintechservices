@@ -24,7 +24,7 @@
         alt="profile of stephen dewyer"
     />
     <div class="profile_photo_overlay">
-        <h3 class="team_member_name">stephen dewyer</h3>
+        <h3 class="team_member_name">Stephen Dewyer</h3>
         <h4 class="team_member_title">Founding Director, Full-stack Web Developer and UX Designer</h4>
         <div class="team_member_button">
             <ActionButtonSecondary hovered={cardHovered}>
