@@ -303,29 +303,28 @@
         <h2 class="heading_02">
             why choose us?
         </h2>
-        <h3 class="work_with_us_intro">Work with us to get:</h3>
         <ol class="why_choose_us_paragraphs">
-            <li>
+            <li class="why_choose_us_reason">
                 <h4>Superior digital design capabilities</h4>
                 We offer superior digital design because we combine the best of art and technology.  We understand human desire and state-of-the-art digital technology.  
             </li>
-            <li>
+            <li class="why_choose_us_reason">
                 <h4>State-of-the-art digital technologies</h4>
                 We use state-of-the-art digital technologies and are relentless in our pursuit to advance digital technology.  We&#39;re not only great people with whom to work, we also have superior technology chops.  Is your organization slow to adapt?  Work with us and we will get you up to speed.
             </li>
-            <li>
+            <li class="why_choose_us_reason">
                 <h4>Creative problem solving</h4>
                 We&#39;ll help provide digital solutions to problems you know you had in addition to helping you discover new and valuable ways to help your business and community.  We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities. 
             </li>
-            <li>
+            <li class="why_choose_us_reason">
                 <h4>Investing in the United States</h4>
                 We&#39;re committed to making a positive impact.  We do not outsource our work, which is a large reason we can guarantee the finest quality work.  We do all our work in-house from the United States.  We invest in training our staff in state-of-the-art technologies.  Working with us means you are working with a reliable partner who can guarantee quality far into the future.
             </li>
-            <li>
+            <li class="why_choose_us_reason">
                 <h4>World-class expertise</h4>
                 Working with us means working with some of the top experts in art and digital technology in the world.  We can guarantee superior quality of our products because of the quality of our staff, many of whom are nationally and internationally recognized for their work.
             </li>
-            <li>
+            <li class="why_choose_us_reason">
                 <h4>Technology serving humans (not <span style="font-style: italic;">vice versa</span>)</h4>
                 We&#39;re not a typical digital technology company.  We&#39;re on a mission to make digital technology work better for humans.
             </li>
@@ -458,16 +457,25 @@
         padding: 0 0.5rem;
     }
 
-    @media screen and (max-width: 1080px) {
+    .why_choose_us_section {
+        width: 100%;
+        max-width: 1920px;
+        margin: 0 auto;
+    }
 
-        .login_helpers_container {
-            flex-direction: column;
-        }
+    .why_choose_us_paragraphs {
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        column-gap: 1rem;
+        row-gap: 1rem;
+        width: 100%;
+        list-style: none;
+        margin: 0;
+        padding: 1rem;
+    }
 
-        .login_helpers_column {
-            width: 100%;
-            gap: 0.5rem;
-        }
+    .why_choose_us_reason {
+        width: 100%;
     }
 
     .services_section {
@@ -481,25 +489,6 @@
         width: 100%;
         object-fit: cover;
         object-position: center;
-    }
-
-    .why_choose_us_section {
-        width: 100%;
-        max-width: 40rem;
-        margin: 0 auto;
-        padding: 0 1rem;
-    }
-
-    .work_with_us_intro {
-        padding: 0 0 1rem 0;
-    }
-
-    .why_choose_us_paragraphs {
-        width: 100%;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
     }
 
     .testimonials_section {
@@ -527,16 +516,25 @@
             padding-top: 4rem;
         }
 
-        .work_with_us_intro {
-            padding: 0 0 0.75rem 0;
+        .why_choose_us_paragraphs {
+            gap: 0.75rem;
         }
 
         .why_choose_us_paragraphs {
-            gap: 0.75rem;
+            grid-template-columns: auto auto auto;
         }
     }
 
     @media screen and (max-width: 1080px) {
+
+        .login_helpers_container {
+            flex-direction: column;
+        }
+
+        .login_helpers_column {
+            width: 100%;
+            gap: 0.5rem;
+        }
 
         .intro_paragraph {
             padding: 0.375rem 0.75rem;
@@ -546,12 +544,8 @@
             padding-top: 8rem;
         }
 
-        .work_with_us_intro {
-            padding: 0 0 0.5rem 0;
-        }
-
         .why_choose_us_paragraphs {
-            gap: 0.5rem;
+            grid-template-columns: auto auto;
         }
     }
 
@@ -575,10 +569,13 @@
 
         .why_choose_us_paragraphs {
             width: 100%;
-            max-width: 40rem;
-            margin: 0;
-            padding: 0 1rem;
+            grid-template-columns: auto;
         }
+
+        .why_choose_us_reason {
+            padding: 0;
+        }
+
     }
     
 </style>
