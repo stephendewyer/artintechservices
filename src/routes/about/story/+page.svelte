@@ -11,6 +11,7 @@
     import USMap from "$lib/images/maps/Tucson,_AZ.svg"
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import ContextSamplesSlider from "$lib/components/sliders/SliderContext.svelte";
+    import AboutBanner from "$lib/images/about_banner/about_banner.jpg";
 
     let player: Player;
 
@@ -43,7 +44,13 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 <div class="page">
-    <h1 style="padding-bottom: 1rem;">story</h1>
+    <div class="about_banner_container">
+        <img class="about_banner" src={AboutBanner} alt="seed filled with fluffy clouds in desert" />
+        <h1 class="story_headline">
+            creating software that improves human experiences of technology by using art with state-of-the-art digital technology
+        </h1>
+    </div>
+    <h2 style="padding: 1rem;">story</h2>
     <div class="video_container">
         <video 
             class="video-js"
@@ -186,6 +193,31 @@
     </div>
 </div>
 <style>
+
+    .about_banner_container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+
+    .about_banner {
+        position: relative;
+        object-fit: cover;
+        width: 100%;
+        height: 100%
+    }
+
+    .story_headline {
+        position: absolute;
+        padding: 1rem;
+        width: 100%;
+        max-width: 80rem;
+        background: rgb(244,254,242, 0.75);
+    }
+
     .video_container {
         max-width: 1920px;
         width: 100%;
@@ -249,15 +281,6 @@
         width: 100%;
     }
 
-    table > tr {
-        height: auto;
-        padding: 0;
-    }
-
-    table > tr > td {
-        padding: 1rem;
-    }
-
     table tr:nth-child(odd) {
         background-color: #F2F9F2;
     }
@@ -291,6 +314,12 @@
     }
 
     @media screen and (max-width: 1440px) {
+
+        .story_headline {
+            width: auto;
+            margin: 1rem;
+        }
+
         .paragraph_container {
             font-size: 1.4rem;
         }
@@ -305,6 +334,7 @@
     }
 
     @media screen and (max-width: 1080px) {
+
         .paragraph_container {
             font-size: 1.3rem;
         }
@@ -319,6 +349,10 @@
     }
 
     @media screen and (max-width: 720px) {
+
+        .about_banner_container {
+            height: 20rem;
+        }
 
         .story_image_and_paragraph {
             display: flex;
