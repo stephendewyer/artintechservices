@@ -27,13 +27,13 @@ declare global {
         last_login: Date;
         client_information_ID: number;
         company: string;
-        phone_number: string;
+        phone_number: E164Number | string | number | null;
         URL: string;
         street_address: string;
         street_address_02: string;
         city: string;
         state: string;
-        zip_code: number;
+        zip_code: string | number | null;
         Stripe_customer_ID: string;
         image_ID: number;
         image_URL: string;
@@ -49,11 +49,12 @@ declare global {
 		email: string;
 		name_first: string;
 		name_last: string;
-		phone_number: string;
+		phone_number: E164Number | string | number | null;
 		state: string;
 		street_address: string;
 		street_address_02: string;
-		zip_code: number;
+		zip_code: string | number | null;
+		URL: string;
 	}
 
 	interface ClientProfileAdminView {
@@ -74,7 +75,7 @@ declare global {
 		name_first: string;
 		name_last: string;
 		payment_methods: any[];
-		phone_number: string;
+		phone_number: E164Number | string | number | null;
 		previous_login: Date;
 		image_URL: string;
 		profile_image_ID: number;
@@ -85,7 +86,7 @@ declare global {
 		street_address_02: string;
 		total_amount_due: number;
 		user_ID: number;
-		zip_code: number;
+		zip_code: string | number | null;
 	}
 
 	interface ClientProfileWithInvoices {
@@ -97,13 +98,13 @@ declare global {
         last_login: Date;
         client_information_ID: number;
         company: string;
-        phone_number: string;
+        phone_number: E164Number | string | number | null;
         URL: string;
         street_address: string;
         street_address_02: string;
         city: string;
         state: string;
-        zip_code: number;
+        zip_code: string | number | null;
         Stripe_customer_ID: string;
         image_ID: number;
         image_URL: string;
@@ -123,12 +124,12 @@ declare global {
 		name_first: string;
 		name_last: string;
 		administrator_information_ID: number;
-		phone_number: string;
+		phone_number: E164Number | string | number | null;
 		street_address: string;
 		street_address_02: string;
 		city: string;
 		state: string;
-		zip_code: number;
+		zip_code: string | number | null;
 		image_ID: number;
 		image_URL: string;
 		alt_text: string;

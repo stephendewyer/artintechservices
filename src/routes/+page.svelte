@@ -235,7 +235,7 @@
                     inputID="client_password"
                     inputName="client_password"
                     inputLabel={true}
-                    bind:passwordInputValue={passwordInputValue}
+                    bind:value={passwordInputValue}
                     required={true}
                     passwordInputErrorMessage="password required"
                 >

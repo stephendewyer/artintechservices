@@ -116,7 +116,7 @@
                 inputID="voter_password"
                 inputName="voter_password"
                 inputLabel={true}
-                bind:passwordInputValue={passwordInputValue}
+                bind:value={passwordInputValue}
                 required={true}
                 passwordInputErrorMessage="password required"
                 passwordsMatch={passwordsMatch}
@@ -133,7 +133,7 @@
                 inputID="voter_password_reentered"
                 inputName="voter_password_reentered"
                 inputLabel={true}
-                bind:passwordInputValue={passwordReenteredInputValue}
+                bind:value={passwordReenteredInputValue}
                 required={true}
                 passwordInputErrorMessage="re-entered password required"
                 passwordsMatch={passwordsMatch}

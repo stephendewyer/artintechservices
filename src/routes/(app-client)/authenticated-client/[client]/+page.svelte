@@ -34,14 +34,14 @@
     let nameFirstInputValue: string = "";
     let nameLastInputValue: string = "";
     let emailInputValue: string = "";
-    let phoneInputValue: E164Number | null = null;
+    let phoneInputValue: string | number | null = null;
     let companyInputValue: string = "";
     let URLInputValue: string = "";
     let streetAddressInputValue: string = "";
     let streetAddress02InputValue: string = "";
     let cityInputValue: string = "";
     let stateInputValue: string = "";
-    let zipCodeInputValue: number | null | string = null;
+    let zipCodeInputValue: string | number | null = null;
     let countryInputValue: string = "";
 
     let image_ID: number | null = null;
@@ -62,7 +62,6 @@
         });
 
         clientProfileData = await response.json();
-        // console.log(clientProfileData);
 
         if (response.ok) {
             if (clientProfileData.street_address) {
@@ -104,7 +103,22 @@
 
     let getClientContactInformationSuccess: boolean | null = null;
 
-    let clientContactInformation: any;
+    let clientContactInformation: ClientContactInformation;
+
+    $: clientContactInformation = {
+        name_first: nameFirstInputValue,
+        name_last: nameLastInputValue,
+        company: companyInputValue,
+        phone_number: phoneInputValue,
+        email: emailInputValue,
+        URL: URLInputValue,
+        street_address: streetAddressInputValue,
+        street_address_02: streetAddress02InputValue,
+        city: cityInputValue,
+        state: stateInputValue,
+        zip_code: zipCodeInputValue,
+        country: countryInputValue
+    };
 
     const getClientContactInformation = async () => {
         pendingClientContactInformation = true;
@@ -298,31 +312,15 @@
         <h1>
             welcome, {clientProfileData?.name_first} {clientProfileData?.name_last}!
         </h1>
-        <div class="profile_photo_and_dates">
-            <table class="dates">
-                <colgroup>
-                    <col style="width: 30%" />
-                    <col style="width: 70%" />
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td>
-                            last login:
-                        </td>
-                        <td>
-                            {new Date(clientProfileData?.last_login).toUTCString()}
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            account created:
-                        </td>
-                        <td>
-                            {new Date(clientProfileData?.date_created).toUTCString()}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <ul class="dates">
+            <li>
+                <span class="date_heading">last login:</span> {new Date(clientProfileData?.last_login).toUTCString()}
+            </li>
+            <li>
+                <span class="date_heading">account created:</span> {new Date(clientProfileData?.date_created).toUTCString()}
+            </li>
+        </ul>
+        <div class="profile_photo_and_contact_details">
             <div class="profile_photo_section">
                 <h2>
                     profile photo
@@ -394,160 +392,153 @@
                     </div>
                 {/if}
             </div>
-        </div>
-        <div class="contact_details_section">
-            <h2>
-                contact details
-            </h2>
-            {#if (!contactInfoAdded && !addContactDetails && !editContactDetailsClicked)}
-                <AddItemButton
-                    bind:addItemClicked={addContactDetails}
-                >
+            <div class="contact_details_section">
+                <h2>
                     contact details
-                </AddItemButton>
-            {:else if (addContactDetails && !contactInfoAdded && !editContactDetailsClicked)}
-                {#if (pendingClientContactInformation)}
-                    <LoadingSpinner />
-                {:else if (!pendingClientContactInformation)}
-                    <ClientContactInfoForm 
-                        values={clientProfileData}
-                        bind:contactValuesSaved={contactValuesSaved}
-                        bind:cancelClicked={cancelClicked}
-                    />
+                </h2>
+                {#if (!contactInfoAdded && !addContactDetails && !editContactDetailsClicked)}
+                    <AddItemButton
+                        bind:addItemClicked={addContactDetails}
+                    >
+                        contact details
+                    </AddItemButton>
+                {:else if (addContactDetails && !contactInfoAdded && !editContactDetailsClicked)}
+                    {#if (pendingClientContactInformation)}
+                        <LoadingSpinner />
+                    {:else if (!pendingClientContactInformation)}
+                        <ClientContactInfoForm 
+                            values={clientContactInformation}
+                            bind:contactValuesSaved={contactValuesSaved}
+                            bind:cancelClicked={cancelClicked}
+                        />
+                    {/if}
+                {:else if (contactInfoAdded && !addContactDetails)}
+                    {#if (pendingClientContactInformation)}
+                        <LoadingSpinner />
+                    {:else if (!pendingClientContactInformation && editContactDetailsClicked && !addContactDetails)}
+                        <ClientContactInfoForm 
+                            values={clientContactInformation} 
+                            bind:contactValuesSaved={contactValuesSaved}
+                            bind:cancelClicked={cancelClicked}
+                        />
+                    {:else if (!pendingClientContactInformation && !editContactDetailsClicked && !addContactDetails)}
+                        <div class="contact_info_tables">
+                            <table class="contact_details">
+                                <colgroup>
+                                    <col style="width: 30%" />
+                                    <col style="width: 70%" />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            first name:
+                                        </td>
+                                        <td>
+                                            {nameFirstInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            last name:
+                                        </td>
+                                        <td>
+                                            {nameLastInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            company:
+                                        </td>
+                                        <td>
+                                            {companyInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            phone:
+                                        </td>
+                                        <td>
+                                            {phoneInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            email:
+                                        </td>
+                                        <td>
+                                            {emailInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            URL:
+                                        </td>
+                                        <td>
+                                            <a href={URLInputValue} target="_blank">
+                                                {URLInputValue}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            street address:
+                                        </td>
+                                        <td>
+                                            {streetAddressInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            apartment/unit:
+                                        </td>
+                                        <td>
+                                            {streetAddress02InputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            city:
+                                        </td>
+                                        <td>
+                                            {cityInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            state:
+                                        </td>
+                                        <td>
+                                            {stateInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            zip code:
+                                        </td>
+                                        <td>
+                                            {zipCodeInputValue}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            country:
+                                        </td>
+                                        <td>
+                                            {countryInputValue}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+    
+                        <EditButton bind:editClicked={editContactDetailsClicked}>
+                            edit
+                        </EditButton>
+                    {/if}
                 {/if}
-            {:else if (contactInfoAdded && !addContactDetails)}
-                {#if (pendingClientContactInformation)}
-                    <LoadingSpinner />
-                {:else if (!pendingClientContactInformation && editContactDetailsClicked && !addContactDetails)}
-                    <ClientContactInfoForm 
-                        values={clientProfileData} 
-                        bind:contactValuesSaved={contactValuesSaved}
-                        bind:cancelClicked={cancelClicked}
-                    />
-                {:else if (!pendingClientContactInformation && !editContactDetailsClicked && !addContactDetails)}
-                    <div class="contact_info_tables">
-                        <table class="contact_details">
-                            <colgroup>
-                                <col style="width: 30%" />
-                                <col style="width: 70%" />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        first name:
-                                    </td>
-                                    <td>
-                                        {nameFirstInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        last name:
-                                    </td>
-                                    <td>
-                                        {nameLastInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        company:
-                                    </td>
-                                    <td>
-                                        {companyInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        phone:
-                                    </td>
-                                    <td>
-                                        {phoneInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        email:
-                                    </td>
-                                    <td>
-                                        {emailInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        URL:
-                                    </td>
-                                    <td>
-                                        <a href={URLInputValue} target="_blank">
-                                            {URLInputValue}
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="contact_details">
-                            <colgroup>
-                                <col style="width: 30%" />
-                                <col style="width: 70%" />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        street address:
-                                    </td>
-                                    <td>
-                                        {streetAddressInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        apartment/unit:
-                                    </td>
-                                    <td>
-                                        {streetAddress02InputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        city:
-                                    </td>
-                                    <td>
-                                        {cityInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        state:
-                                    </td>
-                                    <td>
-                                        {stateInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        zip code:
-                                    </td>
-                                    <td>
-                                        {zipCodeInputValue}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        country:
-                                    </td>
-                                    <td>
-                                        {countryInputValue}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <EditButton bind:editClicked={editContactDetailsClicked}>
-                        edit
-                    </EditButton>
-                {/if}
-            {/if}
+            </div>
         </div>
+        
     {/if}
 </div>
 
@@ -563,26 +554,22 @@
         padding: 0 1rem 1rem 1rem;
     }
 
-    .profile_photo_and_dates {
+    .profile_photo_and_contact_details {
         position: relative;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 1rem;
-        align-items: center;
-        justify-content: space-evenly;
         width: 100%;
     }
 
     .dates {
-        max-width: 40rem;
-        width: 100%;
-        box-shadow:
-            0 1px 1px hsl(0deg 0% 0% / 0.075),
-            0 2px 2px hsl(0deg 0% 0% / 0.075),
-            0 4px 4px hsl(0deg 0% 0% / 0.075),
-            0 8px 8px hsl(0deg 0% 0% / 0.075),
-            0 16px 16px hsl(0deg 0% 0% / 0.075)
-        ;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .date_heading {
+        font-weight: bold;
     }
 
     .profile_photo_section {
@@ -637,18 +624,13 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-        
-    }
-
-    .contact_info_tables {
-        display: flex;
-        display: flex;
-        align-items: flex-start;
+        width: 100%;
         gap: 1rem;
     }
 
     .contact_details {
+        max-width: 40rem;
+        width: 100%;
         box-shadow:
             0 1px 1px hsl(0deg 0% 0% / 0.075),
             0 2px 2px hsl(0deg 0% 0% / 0.075),

@@ -13,7 +13,7 @@
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import Countries from "$lib/data/countries.json";
 
-    export let values: ClientProfile;
+    export let values: ClientContactInformation;
     export let contactValuesSaved: boolean = false;
     export let cancelClicked: boolean = false;
 
@@ -27,7 +27,7 @@
     let emailInputValue: string = values.email;
 
     let phoneIsValid: boolean = true;
-    let phoneInputValue: E164Number = values.phone_number;
+    let phoneInputValue: any = values.phone_number;
 
     let URLisValid: boolean = true;
     let URLInputValue: string = values.URL;
@@ -48,7 +48,7 @@
     let stateInputValue: string = values.state;
 
     let zipCodeIsValid: boolean = true;
-    let zipCodeInputValue: number = values.zip_code;
+    let zipCodeInputValue: any = values.zip_code;
 
     let countryIsValid: boolean = true;
     let countryInputValue: string = values.country;
@@ -74,14 +74,14 @@
         nameFirstInputValue: string,
         nameLastInputValue: string,
         emailInputValue: string,
-        phoneInputValue: E164Number | null,
+        phoneInputValue: E164Number | string | number | null,
         companyInputValue: string,
         URLInputValue: string,
         streetAddressInputValue: string,
         streetAddress02InputValue: string,
         cityInputValue: string,
         stateInputValue: string,
-        zipCodeInputValue: number | null,
+        zipCodeInputValue: string | number | null,
         countryInputValue: string
     ) => {
         const response = await fetch("/authenticated-client/api/submitClientContactInfo", {
@@ -400,6 +400,11 @@
 {/key}
 
 <style>
+
+    form {
+        width: 100%;
+        max-width: 60rem;
+    }
 
     .buttons_container {
         display: flex;

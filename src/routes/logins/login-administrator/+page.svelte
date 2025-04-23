@@ -116,7 +116,7 @@
                 inputID="administrator_password"
                 inputName="administrator_password"
                 inputLabel={true}
-                bind:passwordInputValue={passwordInputValue}
+                bind:value={passwordInputValue}
                 required={true}
                 passwordInputErrorMessage="password required"
             >
