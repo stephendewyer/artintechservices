@@ -21,8 +21,6 @@
 
     const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
-    $: console.log(value)
-
     const passwordInputValueChangedHandler = (event: any) => {
 
         inputValueChanged = true;
