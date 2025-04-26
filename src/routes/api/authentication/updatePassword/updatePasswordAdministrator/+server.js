@@ -13,12 +13,35 @@ export async function PATCH({request}) {
 
     const {password, passwordReentered, email, } = data;
 
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
     if (
         !password ||
         !passwordReentered ||
         !email
     ) {
         return new Response(JSON.stringify({error: "missing form input data"}), {status: 422});
+
+    } else if (password.split("").length < 7 || password.split("").length > 14) {
+
+        return new Response(JSON.stringify({error: "password must have a minimum of 7 characters and maximum of 14 characters"}), {status: 422});
+
+    } else if (!/\d/.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one number"}), {status: 422});
+
+    } else if (!specialChars.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one special character"}), {status: 422});
+
+    } else if (!/[A-Z]/.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one capital letter"}), {status: 422});
+
+    } else if (!/[a-z]/.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one lower-case letter"}), {status: 422});
+
     };
 
     if (

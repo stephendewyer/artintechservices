@@ -1,5 +1,5 @@
 <script lang="ts">
-    import InputErrorMessage from "$lib/components/errorMessages/InputErrorMessage.svelte";
+    import InputErrorMessage from "../../errorMessages/InputErrorMessage.svelte";
     import ClosedEye from "$lib/images/icons/closed_eye_icon.svg?raw";
     import OpenEye from "$lib/images/icons/open_eye_icon.svg?raw";
     export let value: string = "";

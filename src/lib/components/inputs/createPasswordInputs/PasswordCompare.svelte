@@ -1,5 +1,6 @@
 <script lang="ts">
-    import PasswordInput from './PasswordInput.svelte';
+    import PasswordInput from '$lib/components/inputs/createPasswordInputs/PasswordInput.svelte';
+    import ReenterPasswordInput from './ReenterPasswordInput.svelte';
     import PasswordsMismatchMessage from '$lib/components/errorMessages/PasswordsMismatchMessage.svelte';
     import PasswordsMatchMessage from '$lib/components/successMessages/PasswordsMatchMessage.svelte';
 
@@ -127,7 +128,7 @@
             </PasswordInput>
         </div>
         <div class="password_input">
-            <PasswordInput 
+            <ReenterPasswordInput 
                 isValid={passwordReenteredIsValid}
                 placeholder="myPassword"
                 inputID="voter_password_reentered"
@@ -141,7 +142,7 @@
                 bind:passwordInputTouched={passwordReenteredInputTouched}
             >
                 <slot name="re-entered_password_label" />
-            </PasswordInput>
+            </ReenterPasswordInput>
         </div>
     </div>
     <div class="passwords_check_container">

@@ -7,7 +7,7 @@
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import PasswordCompare from "$lib/components/inputs/PasswordCompare.svelte";
+    import PasswordCompare from "$lib/components/inputs//createPasswordInputs/PasswordCompare.svelte";
     import TextInput from "$lib/components/inputs/TextInput.svelte";
     import { goto } from "$app/navigation";
 
@@ -183,6 +183,18 @@
                 email*
             </EmailInput>
         </div>
+        <h4>create password</h4>
+        <ul>
+            <li>
+                password must have at least 7 characters and 14 or less characters
+            </li>
+            <li>
+                password must have at least one number and one special character
+            </li>
+            <li>
+                password must have at least one capitalized letter and one lower case letter
+            </li>
+        </ul>
         <div class="input_row">
             <PasswordCompare
                 bind:passwordInputValue

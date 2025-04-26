@@ -23,6 +23,8 @@ export async function POST({request}) {
     const password = data.passwordInputValue;
     const passwordReentered = data.passwordReenteredInputValue;
 
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
     if (
         !nameFirst ||
         !nameLast ||
@@ -30,11 +32,37 @@ export async function POST({request}) {
         !password ||
         !passwordReentered
     ) {
+
         return new Response(JSON.stringify({error: "missing form data!"}), {status: 422});
+
     } else if (!email.includes('@')) {
+
         return new Response(JSON.stringify({error: "missing an @ symbol in email address!"}), {status: 422});
+
+    }  else if (password.split("").length < 7 || password.split("").length > 14) {
+
+        return new Response(JSON.stringify({error: "password must have a minimum of 7 characters and maximum of 14 characters"}), {status: 422});
+
+    } else if (!/\d/.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one number"}), {status: 422});
+
+    } else if (!specialChars.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one special character"}), {status: 422});
+
+    } else if (!/[A-Z]/.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one capital letter"}), {status: 422});
+
+    } else if (!/[a-z]/.test(password)) {
+
+        return new Response(JSON.stringify({error: "password must have at least one lower-case letter"}), {status: 422});
+
     } else if (password !== passwordReentered) {
+
         return new Response(JSON.stringify({error: "passwords do not match!"}), {status: 422});
+
     };
 
     const hashedPassword = await hashPassword(password);

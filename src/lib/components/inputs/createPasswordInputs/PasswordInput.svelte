@@ -19,35 +19,145 @@
 
     export let passwordInputTouched: boolean = false;
 
+    const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
+
+    $: console.log(value)
+
     const passwordInputValueChangedHandler = (event: any) => {
+
         inputValueChanged = true;
+
         if (required) {
-            if (event.target.value === "") {
-                isValid = false;
-            } else if (event.target.value !== "") {
-                isValid = true;
-            }
+
+            if (!passwordInputTouched) {
+
+                if (event.target.value === "") {
+
+                    isValid = false;
+
+                } else if (event.target.value !== "") {
+
+                    isValid = true;
+
+                };
+
+            } else if (passwordInputTouched) {
+
+                if (event.target.value === "") {
+
+                    isValid = false;
+
+                } else if (event.target.value !== "") {
+
+                    if (event.target.value.split("").length < 7 || event.target.value.split("").length > 14) {
+
+                        isValid = false;
+
+                    } else if (!/\d/.test(event.target.value)) {
+
+                        isValid = false;
+
+                    } else if (!specialChars.test(event.target.value)) {
+
+                        isValid = false;
+
+                    } else if (!/[A-Z]/.test(event.target.value)) {
+
+                        isValid = false;
+
+                    } else if (!/[a-z]/.test(event.target.value)) {
+
+                        isValid = false;
+
+                    } else {
+
+                        isValid = true;
+
+                    };
+
+                };
+
+            };
         }
     }
 
     const passwordInputFocusChangedHandler = (event: any) => {
+
         if (passwordInputTouched) {
+
             if (event.target.value === "") {
+
                 isValid = false;
+
             } else if (event.target.value !== "") {
-                isValid = true;
-            }
-        }
+
+                if (event.target.value.split("").length < 7 || event.target.value.split("").length > 14) {
+
+                    isValid = false;
+
+                } else if (!/\d/.test(event.target.value)) {
+
+                    isValid = false;
+
+                } else if (!specialChars.test(event.target.value)) {
+
+                    isValid = false;
+
+                } else if (!/[A-Z]/.test(event.target.value)) {
+
+                    isValid = false;
+
+                } else if (!/[a-z]/.test(event.target.value)) {
+
+                    isValid = false;
+
+                } else {
+
+                    isValid = true;
+
+                };
+
+            };
+
+        };
     }
 
     const passwordInputBlurChangedHandler = (event: any) => {
         passwordInputTouched = true;
         if (event.target.value === "") {
+
             isValid = false;
+
         } else if (event.target.value !== "") {
-            isValid = true;
-        }
-    }
+
+            if (event.target.value.split("").length < 7 || event.target.value.split("").length > 14) {
+
+                isValid = false;
+
+            } else if (!/\d/.test(event.target.value)) {
+
+                isValid = false;
+
+            } else if (!specialChars.test(event.target.value)) {
+
+                isValid = false;
+
+            } else if (!/[A-Z]/.test(event.target.value)) {
+
+                isValid = false;
+
+            } else if (!/[a-z]/.test(event.target.value)) {
+
+                isValid = false;
+
+            } else {
+
+                isValid = true;
+
+            };
+
+        };
+    };
 
     $: if (passwordsMatch === false) {
         passwordMatchValidation = false;
@@ -57,8 +167,30 @@
 
     $: if (!isValid) {
         if (value === "") {
+
             errorMessage = passwordInputErrorMessage;
-        }
+
+        } else if (value.split("").length < 7 || value.split("").length > 14) {
+
+            errorMessage = "password must have a minimum of 7 characters and maximum of 14 characters";
+
+        } else if (!/\d/.test(value)) {
+
+            errorMessage = "password must have at least one number";
+
+        } else if (!specialChars.test(value)) {
+
+            errorMessage = "password must have at least one special character";
+
+        } else if (!/[A-Z]/.test(value)) {
+
+            errorMessage = "password must have at least one capital letter";
+
+        } else if (!/[a-z]/.test(value)) {
+
+            errorMessage = "password must have at least one lower-case letter";
+
+        };
     };
 
     const handleInput = (event: any) => {
