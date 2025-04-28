@@ -24,6 +24,7 @@
     import { goto } from "$app/navigation";
     import CloseButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import BackButton from "$lib/components/buttons/BackButton.svelte";
+    import TextInput from "$lib/components/inputs/TextInput.svelte";
 
     export let data;
 
@@ -101,6 +102,7 @@
         };
     });
 
+    let projectName: string = "";
     let aboutProject: string = "";
     let projectStartDate: string = "";
     let projectEndDate: string = "";
@@ -120,6 +122,7 @@
     let videography: boolean = false;
     let visualDesign: boolean = false;
 
+    let projectNameIsValid: boolean = true;
     let aboutProjectIsValid: boolean = true;
     let projectStartDateIsValid: boolean = true;
     let projectEndDateIsValid: boolean = true;
@@ -157,6 +160,7 @@
         userExperienceDesign: boolean,
         videography: boolean,
         visualDesign: boolean,
+        projectName: string,
         aboutProject: string,
         projectStartDate: string,
         projectEndDate: string,
@@ -180,6 +184,7 @@
                 userExperienceDesign,
                 videography,
                 visualDesign,
+                projectName,
                 aboutProject,
                 projectStartDate,
                 projectEndDate,
@@ -213,6 +218,7 @@
                 userExperienceDesign,
                 videography,
                 visualDesign,
+                projectName,
                 aboutProject,
                 projectStartDate,
                 projectEndDate,
@@ -233,6 +239,7 @@
                 userExperienceDesign = false;
                 videography = false;
                 visualDesign = false;
+                projectName = "";
                 aboutProject = "";
                 projectStartDate = "";
                 projectEndDate = "";
@@ -246,6 +253,12 @@
             };
 
             if (responseItem.error) {
+
+                if (projectName === "") {
+                    projectNameIsValid = false;
+                } else if (projectName !== "") {
+                    projectNameIsValid = true;
+                };
 
                 if (aboutProject === "") {
                     aboutProjectIsValid = false;
@@ -366,6 +379,20 @@
         <h2>
             about your project
         </h2> 
+        <div class="inputs_row">
+            <TextInput
+                placeholder="new web app for my company"
+                inputID="project_name"
+                inputName="project_name"
+                inputLabel={true}
+                bind:textInputValue={projectName}
+                bind:isValid={projectNameIsValid}
+                textInputErrorMessage="project name required"
+                required={true}
+            >
+                what is your project name?*
+            </TextInput>
+        </div>
         <div class="inputs_row">
             <TextArea
                 placeholder="I want a web application to ..."

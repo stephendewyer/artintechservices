@@ -63,6 +63,7 @@ export async function POST({request}) {
     const userExperienceDesign = data.userExperienceDesign ? 1 : 0;
     const videography = data.videography ? 1 : 0;
     const visualDesign = data.visual_design ? 1 : 0;
+    const projectName = data.projectName;
     const aboutProject = data.aboutProject;
     const projectStartDate = data.projectStartDate;
     const projectEndDate = data.projectEndDate;
@@ -81,6 +82,7 @@ export async function POST({request}) {
     const deleteDocument = data.deleteDocument;
 
     if (
+        !projectName ||
         !aboutProject ||
         !projectStartDate ||
         !projectEndDate ||
@@ -357,6 +359,7 @@ export async function POST({request}) {
             SET
                 image_ID = ${imageID},
                 document_ID = ${documentID},
+                project_name = "${htmlEntities(projectName)}",
                 project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
@@ -376,6 +379,7 @@ export async function POST({request}) {
         updateProjectStatement = `UPDATE start_project_requests_client 
             SET
                 document_ID = ${documentID},
+                project_name = "${htmlEntities(projectName)}",
                 project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
@@ -395,6 +399,7 @@ export async function POST({request}) {
         updateProjectStatement = `UPDATE start_project_requests_client 
             SET
                 image_ID = ${imageID},
+                project_name = "${htmlEntities(projectName)}",
                 project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
@@ -413,6 +418,7 @@ export async function POST({request}) {
     } else if (!addDocumentID && !addImageID) {
         updateProjectStatement = `UPDATE start_project_requests_client 
             SET
+                project_name = "${htmlEntities(projectName)}",
                 project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
@@ -457,6 +463,7 @@ export async function POST({request}) {
             -  first name: ${clientNameFirst}<br />
             -  last name: ${clientNameLast}<br />
             -  email: ${userEmail}<br />
+            -  project name: ${projectName}</br>
             -  about project: ${aboutProject}<br />
             -  project start date: ${projectStartDate}<br />
             -  project end date: ${projectEndDate}<br />
@@ -488,6 +495,7 @@ export async function POST({request}) {
         -  first name: ${clientNameFirst}<br />
         -  last name: ${clientNameLast}<br />
         -  email: ${userEmail}<br />
+        -  project name: ${projectName}</br>
         -  about project: ${aboutProject}<br />
         -  project start date: ${projectStartDate}<br />
         -  project end date: ${projectEndDate}<br />

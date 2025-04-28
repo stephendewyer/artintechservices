@@ -12,6 +12,7 @@
     import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import Countries from "$lib/data/countries.json";
+    import CloseButton from "../buttons/CloseButton.svelte";
 
     export let values: ClientContactInformation;
     export let contactValuesSaved: boolean = false;
@@ -196,6 +197,9 @@
 </script>
 {#key values}
     <form class="form" on:submit|preventDefault={submitClientContactInfoHandler}>
+        <div class="close_button_container">
+            <CloseButton bind:closeButtonClicked={cancelClicked}/>
+        </div>
         <h4 class="indicates_required_heading">*indicates required</h4>
         <div class="inputs_row">
             <div class="input_column">
@@ -379,9 +383,6 @@
             <SubmitButton>
                 save
             </SubmitButton>
-            <CancelButton bind:cancelClicked={cancelClicked}>
-                cancel
-            </CancelButton>
         </div>
     </form>
     {#if (pending)}
@@ -404,6 +405,7 @@
     form {
         width: 100%;
         max-width: 60rem;
+        position: relative;
     }
 
     .buttons_container {
@@ -411,6 +413,12 @@
         gap: 1rem;
         flex-direction: column;
         align-items: center;
+    }
+
+    .close_button_container {
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 
 </style>

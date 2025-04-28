@@ -107,19 +107,4 @@
         width: 6rem;
     }
 
-    .form {
-        width: 32rem;
-    }
-
-    .input_row {
-        width: 100%;
-    }
-
-    .delete_account {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        align-items: center;
-        padding: 0 0 2rem 0;
-    }
 </style>

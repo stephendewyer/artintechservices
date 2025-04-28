@@ -350,8 +350,8 @@
                                 </div>
                             </div>
                         {/if}
-                        <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
-                        <p class="constraints">* maximum file size: 2MB</p>
+                        <p class="constraints"><span style="font-weight: bold;">* file formats accepted: </span>JPG, PNG, GIF, jpg, png, gif</p>
+                        <p class="constraints"><span style="font-weight: bold;">* maximum file size: </span>2MB</p>
                         <SubmitButton02 disable={!imageFileInputValue}>
                             upload image
                         </SubmitButton02>
@@ -596,7 +596,7 @@
         justify-content: flex-start;
         gap: 1rem;
         width: 20rem;
-        height: 20rem;
+        height: 100%;
     }
 
     .profile_photo {
@@ -688,6 +688,14 @@
     }
 
     @media screen and (max-width: 1080px) {
+        .profile_photo_section { 
+            width: 100%;
+        }
+
+        .profile_photo_and_contact_details {
+            flex-direction: column;
+            align-items: center;
+        }
 
         table > tbody > tr > td {
             font-size: 1rem;
@@ -698,8 +706,8 @@
 
     @media screen and (max-width: 720px) {
 
-        .contact_info_tables {
-            flex-direction: column;
+        .profile_photo_and_action_button { 
+            width: 100%;
         }
 
     }

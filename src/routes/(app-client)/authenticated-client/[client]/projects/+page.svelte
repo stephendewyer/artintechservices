@@ -145,7 +145,7 @@
     }
 
     .heading_icon_container {
-        width: 12rem;
+        width: 6rem;
     }
 
     .projects {

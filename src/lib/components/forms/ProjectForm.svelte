@@ -22,6 +22,7 @@
     import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
     import { goto } from "$app/navigation";
+    import TextInput from "../inputs/TextInput.svelte";
 
     export let data;
 
@@ -34,6 +35,7 @@
     const userEmail: string | undefined | null = data.streamed.user?.email;
 
     let projectID: number | null = (project?.project_ID) ? project?.project_ID : null;
+    let projectName: string = (project?.project_name) ? project.project_name : "";
     let aboutProject: string = (project?.project_info) ? project.project_info : "";
     let projectStartDate: string = (project?.project_start_date) ? ConvertDateInputFormat(new Date(project.project_start_date)) : "";
     let projectEndDate: string = (project?.project_end_date) ? ConvertDateInputFormat(new Date(project.project_end_date)) : "";
@@ -41,12 +43,12 @@
     let imageFileInputValue: string = "";
     let imageID: number | null = (project?.image_ID) ? project.image_ID : null;
 
-    console.log("imageID: ", imageID);
+    // console.log("imageID: ", imageID);
     
     let image: any = (project?.image_URL) ? project.image_URL : "";
     let imagePublicID: string = (project?.image_public_ID) ? project.image_public_ID : "";
 
-    console.log("imagePublicID: ", imagePublicID);
+    // console.log("imagePublicID: ", imagePublicID);
 
     let documentID: number | null = (project?.document_ID) ? project.document_ID : null;
     let documentFileInputValue: string = "";
@@ -63,6 +65,7 @@
     let videography: boolean = false;
     let visualDesign: boolean = false;
 
+    let projectNameIsValid: boolean = true;
     let aboutProjectIsValid: boolean = true;
     let projectStartDateIsValid: boolean = true;
     let projectEndDateIsValid: boolean = true;
@@ -74,7 +77,7 @@
         service: string;
         image: string;
         requested: boolean;
-    }
+    };
 
     const services: Service[] = [
         {
@@ -175,6 +178,7 @@
         userExperienceDesign: boolean,
         videography: boolean,
         visualDesign: boolean,
+        projectName: string,
         aboutProject: string,
         projectStartDate: string,
         projectEndDate: string,
@@ -204,6 +208,7 @@
                 userExperienceDesign,
                 videography,
                 visualDesign,
+                projectName,
                 aboutProject,
                 projectStartDate,
                 projectEndDate,
@@ -244,6 +249,7 @@
                 userExperienceDesign,
                 videography,
                 visualDesign,
+                projectName,
                 aboutProject,
                 projectStartDate,
                 projectEndDate,
@@ -267,6 +273,12 @@
             };
 
             if (responseItem.error) {
+
+                if (projectName === "") {
+                    projectNameIsValid = false;
+                } else if (projectName !== "") {
+                    projectNameIsValid = true;
+                };
 
                 if (aboutProject === "") {
                     aboutProjectIsValid = false;
@@ -336,11 +348,11 @@
         documentInputFiles = null;
         documentFileInputValue = "";
         cancelDocumentUpload = false;
-    }
+    };
 
     $: if (document) {
         deleteDocument = false;
-    }
+    };
 
 </script>
 <div class="project_form">
@@ -372,6 +384,20 @@
         <h2>
             about your project
         </h2> 
+        <div class="inputs_row">
+            <TextInput
+                placeholder="new web app for my company"
+                inputID="project_name"
+                inputName="project_name"
+                inputLabel={true}
+                bind:textInputValue={projectName}
+                bind:isValid={projectNameIsValid}
+                textInputErrorMessage="project name required"
+                required={true}
+            >
+                what is your project name?*
+            </TextInput>
+        </div>
         <div class="inputs_row">
             <TextArea
                 placeholder="I want a web application to ..."

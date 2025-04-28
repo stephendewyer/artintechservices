@@ -141,7 +141,7 @@
     }
 
     .messages_icon {
-        width: 12rem;
+        width: 6rem;
     }
 
     .search_all_messages_form {
