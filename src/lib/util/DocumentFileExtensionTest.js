@@ -4,17 +4,17 @@ export const DocumentFileExtensionTest = (/** @type {null | string} */ fileName)
  
     if (fileName === null) {
 
-        return "false";
+        return false;
 
     };
 
     if (regex.test(fileName) === true) {
 
-        return "true";
+        return true;
 
     } else {
 
-        return "false";
+        return false;
 
     };
     

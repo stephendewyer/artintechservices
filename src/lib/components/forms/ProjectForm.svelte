@@ -23,6 +23,7 @@
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
     import { goto } from "$app/navigation";
     import TextInput from "../inputs/TextInput.svelte";
+  import CloseButton from "../buttons/CloseButton.svelte";
 
     export let data;
 
@@ -153,18 +154,14 @@
         } else if (requestedService.service === "visual design") {
             visualDesign = requestedService.requested;
         };
-    });
-
-    $: if (documentFileInputValue !== "") {
-        documentFileName = documentFileInputValue.split(`\\`)[2];
-    };
+    });    
 
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
             responseItem.success = "";
             responseItem.error = "";
             status: null;
-        }, 4000)
+        }, 4000);
     };
 
     const updateStartProjectRequest = async (
@@ -324,24 +321,12 @@
 
     let documentInputFiles: FileList | null = null;
 
-    let cancelDocumentUpload: boolean = false;
-
-    $: if (cancelDocumentUpload) {
-        documentInputElement.value = "";
-        deleteDocument = true;
-        document = null;
-        documentInputFiles = null;
-        documentFileInputValue = "";
-        cancelDocumentUpload = false;
-    };
-
-    $: if (document) {
-        deleteDocument = false;
-    };
-
 </script>
 <div class="project_form">
     <form class="form" on:submit|preventDefault={updateClientProjectRequestHandler} >
+        <div class="close_button_container">
+            <CloseButton bind:closeButtonClicked={cancelEditProject} />
+        </div>
         <h4 class="indicates_required_heading">*indicates required</h4>
         <h2>
             requested services
@@ -471,35 +456,12 @@
                     bind:files={documentInputFiles}
                     bind:documentFileInputElement={documentInputElement}
                     bind:isValid={documentFileIsValid}
+                    bind:deleteDocument
                     required={false}
                     documentFileInputErrorMessage="document file required"
                 >
                     document file
                 </DocumentFileInput>
-                {#if (document)}
-                    <div class="project_document_container">
-                        <div class="document_icon_and_label">
-                            <div class="document_icon">
-                                {@html DocumentIcon}
-                            </div>
-                            <p class="document_label">
-                                {documentFileName}
-                            </p>
-                        </div>
-                        <p class="document_label">
-                            {#if (documentFileName)}
-                                {documentFileName}
-                            {:else if (!documentFileName)}
-                                {document}
-                            {/if}
-                        </p>
-                        <div class="cancel_button_container">
-                            <CancelSubmitButton bind:closeButtonClicked={cancelDocumentUpload} />
-                        </div>
-                    </div>
-                {/if}
-                <p class="constraints">* file formats accepted: PDF, pdf</p>
-                <p class="constraints">* maximum file size: 2MB</p>
             </div>
         </div>
         <p>
@@ -513,9 +475,6 @@
                     update project
                 {/if}
             </SubmitButton02>
-            <CancelButton bind:cancelClicked={cancelEditProject}>
-                cancel
-            </CancelButton>
         </div>
     </form>
     {#if (pending)}
@@ -536,6 +495,10 @@
 
     .project_form {
         width: 100%;
+    }
+
+    .form {
+        padding: 0;
     }
 
     .services {
@@ -572,46 +535,17 @@
         font-size: 1rem;
     }
 
-    .constraints {
-        padding: 0;
-        margin: 0;
-    }
-
-    
-    .project_document_container {
-        position: relative;
-        padding: 1rem;
-    }
-
-    .document_icon_and_label {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-        width: 100%;
-    }
-
-    .document_icon {
-        width: 20%;
-    }
-
-    .document_label {
-        width: 80%;
-        word-wrap: break-word;
-    }
-
-    .cancel_button_container {
-        position: absolute;
-        right: 1rem;
-        top: 1rem;
-    }
-
     .buttons_container {
         display: flex;
         gap: 1rem;
         flex-direction: column;
         align-items: center;
+    }
+
+    .close_button_container {
+        position: absolute;
+        right: 0;
+        top: 0;
     }
 
     @media screen and (max-width: 1440px) {
@@ -624,11 +558,6 @@
         .service_icon {
             width: 3.5rem;
             min-width: 3.5rem;
-        }
-
-        .cancel_button_container {
-            right: 0.75rem;
-            top: 0.75rem;
         }
     }
 
@@ -655,10 +584,6 @@
             gap: 1rem;
         }
 
-        .cancel_button_container {
-            right: 0.5rem;
-            top: 0.5rem;
-        }
     }
 
     @media screen and (max-width: 720px) {
@@ -694,11 +619,6 @@
 
         .service_label {
             font-size: 0.9rem;
-        }
-
-        .cancel_button_container {
-            right: 0.25rem;
-            top: 0.25rem;
         }
         
     }

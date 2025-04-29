@@ -8,7 +8,7 @@
     export let inputLabel: boolean;
     export let files: FileList | null = null;
     export let imageFileInputValue: string = ""; 
-    export let image: any;
+    export let image: string | ArrayBuffer | null | undefined | any;
     export let isValid: boolean;
     export let imageFileInputErrorMessage: string = "";
     export let required: boolean;
@@ -21,7 +21,6 @@
     const imageFileChangedHandler = () => {
 
         image = "";
-
         if (required) {
             if (imageFileInputValue === "") {
                 isValid = false;
@@ -34,7 +33,7 @@
             if (imageFile.size > 2000000) {
                 isValid = false;
                 imageFileInputErrorMessage = "images cannot exceed 2MB in size!";
-            } else if (ImageFileExtensionTest(files[0].type) === "false") {
+            } else if (!ImageFileExtensionTest(files[0].type)) {
                 isValid = false;
                 imageFileInputErrorMessage = "invalid file type";
             } else {
@@ -53,10 +52,9 @@
     let cancelImageUpload: boolean = false;
 
     $: if (cancelImageUpload) {
+        imageFileInputElement.value = "";
         imageFileInputValue = "";
         deleteImage = true;
-        imageFile = null;
-        imageFileInputValue = "";
         image = null;
         cancelImageUpload = false;
     };
@@ -96,8 +94,8 @@
             </div>
         </div>
     {/if}
-    <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
-    <p class="constraints">* maximum file size: 2MB</p>
+    <p class="constraints"><span style="font-weight: bold">* file formats accepted:</span> JPG, PNG, GIF, jpg, png, gif</p>
+    <p class="constraints"><span style="font-weight: bold">* maximum file size:</span> 2MB</p>
 </div>
  
 <style>

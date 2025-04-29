@@ -16,13 +16,11 @@
     import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
     import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
     import DocumentFileInput from "$lib/components/inputs/DocumentFileInput.svelte";
-    import DocumentIcon from "$lib/images/icons/document.svg?raw";
     import DateInput from "$lib/components/inputs/DateInput.svelte";
     import TextArea from "$lib/components/inputs/TextArea.svelte";
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import { goto } from "$app/navigation";
-    import CloseButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import BackButton from "$lib/components/buttons/BackButton.svelte";
     import TextInput from "$lib/components/inputs/TextInput.svelte";
 
@@ -137,10 +135,6 @@
     };
 
     let valueChanged = false;
-
-    $: if (documentFileInputValue !== "") {
-        documentFileName = documentFileInputValue.split(`\\`)[2];
-    };
 
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
@@ -300,29 +294,9 @@
 
     let imageInputFiles: FileList | null = null;
 
-    let cancelImageUpload: boolean = false;
-
-    $: if (cancelImageUpload) {
-        imageInputElement.value = "";
-        image = null;
-        imageInputFiles = null;
-        imageFileInputValue = "";
-        cancelImageUpload = false;
-    };
-
     let documentInputElement: HTMLInputElement;
 
     let documentInputFiles: FileList | null = null;
-
-    let cancelDocumentUpload: boolean = false;
-
-    $: if (cancelDocumentUpload) {
-        documentInputElement.value = "";
-        document = null;
-        documentInputFiles = null;
-        documentFileInputValue = "";
-        cancelDocumentUpload = false;
-    };
 
 </script>
 <svelte:head>
@@ -485,23 +459,6 @@
                 >
                     document file
                 </DocumentFileInput>
-                {#if (document)}
-                    <div class="project_document_container">
-                        <div class="document_icon_and_label">
-                            <div class="document_icon">
-                                {@html DocumentIcon}
-                            </div>
-                            <p class="document_label">
-                                {documentFileName}
-                            </p>
-                        </div>
-                        <div class="cancel_button_container">
-                            <CloseButton bind:closeButtonClicked={cancelDocumentUpload} />
-                        </div>
-                    </div>
-                {/if}
-                <p class="constraints">* file formats accepted: PDF, pdf</p>
-                <p class="constraints">* maximum file size: 2MB</p>
             </div>
         </div>
         <p>

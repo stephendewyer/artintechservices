@@ -103,7 +103,7 @@ export async function POST({request}) {
 
         if (imageFile.size >  2000000) {
             return new Response(JSON.stringify({error: "image file cannot exceed 2MB"}), {status: 422});
-        }
+        };
 
         // delete the image associated with the action from Cloudinary 
         try {

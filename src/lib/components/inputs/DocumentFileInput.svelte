@@ -1,82 +1,68 @@
 <script lang="ts">
     import InputErrorMessage from '$lib/components/errorMessages/InputErrorMessage.svelte';
     import { DocumentFileExtensionTest } from "$lib/util/DocumentFileExtensionTest";
+    import CloseButton from '$lib/components/buttons/CloseButton.svelte';
+    import DocumentIcon from "$lib/images/icons/document.svg?raw";
     export let placeholder: string;
     export let inputID: string;
     export let inputName: string;
     export let inputLabel: boolean;
     export let documentFileInputValue: string; 
     export let document: any;
-    export let isValid: boolean;
+    export let isValid: boolean = true;
     export let documentFileInputErrorMessage: string = "";
     export let required: boolean;
     export let documentFileInputElement: HTMLInputElement;
     export let files: FileList | null = null;
+    export let deleteDocument: boolean = false;
+
+    let cancelDocumentUpload: boolean = false;
 
     let documentFile: File | null = null;
+    
+    let documentFileName: string = document ? document : "";
 
     const documentFileChangedHandler = () => {
 
         document = "";
 
-        if (files !== null) {
-            documentFile = files[0];
-        }
+        documentFileName = documentFileInputValue.split(`\\`)[2];
 
         if (required) {
             if (documentFileInputValue === "") {
                 isValid = false;
-            }
-        } else if (
-            (files !== null) && 
-            (files[0].size >  2000000)
-        ) {
-            isValid = false;
-        } else if (
-            (files !== null) && 
-            (DocumentFileExtensionTest(files[0].type) === "false")
-        ) {
-            isValid = false;
-        }
-
-        const fileReader = new FileReader();
-
-        if (
-            (files !== null) && 
-            (DocumentFileExtensionTest(files[0].type) === "true") 
-        ) {
-            isValid = true;
-            documentFileInputErrorMessage = "";
-            fileReader.onload = (e) => {
-                // the file's text will be printed here;
-                document = e.target?.result;
-            }
-            fileReader.readAsDataURL(files[0]);
-        }
-    }
-
-    $: if (!isValid) {
-        if (required) {
-            if (documentFileInputValue === "") {
                 documentFileInputErrorMessage = "document required!";
-            }
-        } else if (
-            (files !== null) &&
-            (files[0].size >  2000000)
-        ) {
-            documentFileInputErrorMessage = "document cannot exceed 2MB in size!";
-        } else if (
-            (files !== null) && 
-            (DocumentFileExtensionTest(files[0].type) === "false")
-        ) {
-            documentFileInputErrorMessage = "invalid file type";
-        } else if (
-            (files !== null) && 
-            (DocumentFileExtensionTest(files[0].type) === "false")
-        ) {
-            documentFileInputErrorMessage = "invalid file type";
-        }
-    }
+            };
+        };
+
+        if (files !== null) {
+            documentFile = files[0];
+            if (documentFile.size > 2000000) {
+                isValid = false;
+                documentFileInputErrorMessage = "document cannot exceed 2MB in size!";
+            } else if (!DocumentFileExtensionTest(files[0].type)) {
+                isValid = false;
+                documentFileInputErrorMessage = "invalid file type";
+            } else {
+                const fileReader = new FileReader();
+                isValid = true;
+                documentFileInputErrorMessage = "";
+                fileReader.onload = (e) => {
+                    // the file's text will be printed here;
+                    document = e.target?.result;
+                };
+                fileReader.readAsDataURL(files[0]);
+            };
+        };        
+    };
+
+    $: if (cancelDocumentUpload) {
+        documentFileInputElement.value = "";
+        document = null;
+        documentFileInputValue = "";
+        deleteDocument = true;
+        cancelDocumentUpload = false;
+    };
 
 </script>
 
@@ -98,12 +84,30 @@
         bind:files={files}
         bind:value={documentFileInputValue}
         on:change={documentFileChangedHandler}
+        style={document ? "display: none" : ""}
     />
-    {#if ((required) && (!isValid))}
+    {#if (!isValid)}
         <InputErrorMessage>
             {documentFileInputErrorMessage}
         </InputErrorMessage>
     {/if}
+    {#if (document)}
+        <div class="project_document_container">
+            <div class="document_icon_and_label">
+                <div class="document_icon">
+                    {@html DocumentIcon}
+                </div>
+                <p class="document_label">
+                    {documentFileName}
+                </p>
+            </div>
+            <div class="cancel_button_container">
+                <CloseButton bind:closeButtonClicked={cancelDocumentUpload} />
+            </div>
+        </div>
+    {/if}
+    <p class="constraints"><span style="font-weight: bold">* file formats accepted: </span>PDF, pdf</p>
+    <p class="constraints"><span style="font-weight: bold">* maximum file size: </span>2MB</p>
 </div>
  
 <style>
@@ -171,6 +175,38 @@
         opacity: 50%; /* Firefox */
     }
 
+    .cancel_button_container {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
+    .project_document_container {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .document_icon_and_label {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
+        width: 100%;
+    }
+
+    .document_icon {
+        width: 4rem;
+        min-width: 4rem;
+    }
+
+    .document_label {
+        word-wrap: break-word;
+        width: 80%;
+        margin: 0;
+        padding: 0 4rem 0 0 ;
+    }
+
     @media (max-width: 1440px) {
 
         input {
@@ -186,6 +222,32 @@
         .input_label {
             padding: 0 0 0.4rem 0;
         }
+
+        .document_icon {
+            width: 3rem;
+            min-width: 3rem;
+        }
+
+        .cancel_button_container {
+            right: 0.75rem;
+            top: 0.75rem;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        .cancel_button_container {
+            right: 0.5rem;
+            top: 0.5rem;
+        }
+
+        .document_icon {
+            width: 2rem;
+            min-width: 2rem;
+        }
+
+        .document_label {
+            margin-right: 2.5rem;
+        }
     }
 
     @media (max-width: 720px) {
@@ -199,6 +261,16 @@
 
         .input_label {
             padding: 0 0 0.3rem 0;
+        }
+
+
+        .document_label {
+            margin-right: 2.5rem;
+        }
+
+        .cancel_button_container {
+            right: 0.25rem;
+            top: 0.25rem;
         }
     }
 
