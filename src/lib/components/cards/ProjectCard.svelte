@@ -1,9 +1,18 @@
 <script lang="ts">
     import Meatballs from "$lib/images/icons/meaballs.svg?raw";
-    export let project: Project;
-    const projectInfoArray = project.project_info.split(" ");
-    const projectInfoShortened = projectInfoArray.slice(0, 5).join(" ");
     import DefaultProjectImage from "$lib/images/projects/Port_Mansfield_pier.jpg";
+    export let project: Project;
+
+    let projectInfo: string = "";
+    let projectInfoShortened: boolean = false;
+
+    if (project.project_info.split(" ").length >= 8) {
+        projectInfo = project.project_info.split(" ").slice(0, 8).join(" ");
+        projectInfoShortened = true;
+    } else {
+        projectInfo = project.project_info;
+        projectInfoShortened = false;
+    };
 
     let cardHovered: boolean = false;
 
@@ -42,8 +51,9 @@
             </div>
         </div>
         <div class="project_text">
-            <h4 style="margin: 0;">{projectInfoShortened}...</h4>
-            <p style="margin: 0;">created {new Date(project.date_created).toUTCString().slice(0, 16)}</p>
+            <h4>{project.project_name}</h4>
+            <p style="margin: 0; font-weight: bold;">{projectInfo}{#if projectInfoShortened}...{/if}</p>
+            <p style="margin: 0;">created on {new Date(project.date_created).toUTCString().slice(0, 16)}</p>
         </div>
     </div>
 </a>

@@ -49,9 +49,13 @@
     .consultations {
         width: 100%;
         display: grid;
-        gap: 1rem;
-        padding: 0 0 1rem 0;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    @media screen and (max-width: 1440px) {
+        .consultations {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
     }
 
     @media screen and (max-width: 1080px) {

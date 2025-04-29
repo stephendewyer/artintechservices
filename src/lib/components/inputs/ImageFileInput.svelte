@@ -1,6 +1,7 @@
 <script lang="ts">
     import InputErrorMessage from '$lib/components/errorMessages/InputErrorMessage.svelte';
     import { ImageFileExtensionTest } from "$lib/util/ImageFileExtensionTest";
+    import CancelSubmitButton from '../buttons/CancelSubmitButton.svelte';
     export let placeholder: string;
     export let inputID: string;
     export let inputName: string;
@@ -11,6 +12,7 @@
     export let isValid: boolean;
     export let imageFileInputErrorMessage: string = "";
     export let required: boolean;
+    export let deleteImage: boolean = false;
 
     export let imageFileInputElement: HTMLInputElement;
 
@@ -20,58 +22,44 @@
 
         image = "";
 
-        if (files !== null) {
-            imageFile = files[0];
-        }
-
         if (required) {
             if (imageFileInputValue === "") {
                 isValid = false;
-            }
-        } else if (
-            (files !== null) && 
-            (files[0].size > 2000000)
-        ) {
-            isValid = false;
-        } else if (
-            (files !== null) && 
-            (ImageFileExtensionTest(files[0].type) === "false")
-        ) {
-            isValid = false;
-        }
-
-        const fileReader = new FileReader();
-
-        if (
-            (files !== null) && (ImageFileExtensionTest(files[0].type) === "true") 
-        ) {
-            isValid = true;
-            imageFileInputErrorMessage = "";
-            fileReader.onload = (e) => {
-                // the file's text will be printed here;
-                image = e.target?.result;
-            }
-            fileReader.readAsDataURL(files[0]);
-        }
-    }
-
-    $: if (!isValid) {
-        if (required) {
-            if (imageFileInputValue === "") {
                 imageFileInputErrorMessage = "image required!";
-            } else if (
-                (files !== null) && 
-                (files[0].size > 2000000)
-            ) {
+            };
+        };
+
+        if (files !== null) {
+            imageFile = files[0];
+            if (imageFile.size > 2000000) {
+                isValid = false;
                 imageFileInputErrorMessage = "images cannot exceed 2MB in size!";
-            } else if (
-                (files !== null) && 
-                (ImageFileExtensionTest(files[0].type) === "false")
-            ) {
+            } else if (ImageFileExtensionTest(files[0].type) === "false") {
+                isValid = false;
                 imageFileInputErrorMessage = "invalid file type";
-            }
-        }
-    }
+            } else {
+                const fileReader = new FileReader();
+                isValid = true;
+                imageFileInputErrorMessage = "";
+                fileReader.onload = (e) => {
+                    // the file's text will be printed here;
+                    image = e.target?.result;
+                };
+                fileReader.readAsDataURL(files[0]);
+            };
+        };
+    };
+
+    let cancelImageUpload: boolean = false;
+
+    $: if (cancelImageUpload) {
+        imageFileInputValue = "";
+        deleteImage = true;
+        imageFile = null;
+        imageFileInputValue = "";
+        image = null;
+        cancelImageUpload = false;
+    };
 
 </script>
 
@@ -93,12 +81,23 @@
         bind:value={imageFileInputValue}
         bind:files={files}
         on:change={imageFileChangedHandler}
+        style={image ? "display: none" : ""}
     />
-    {#if ((required) && (!isValid))}
+    {#if (!isValid)}
         <InputErrorMessage>
             {imageFileInputErrorMessage}
         </InputErrorMessage>
     {/if}
+    {#if (image)}
+        <div class="project_image_container">
+            <img src={image} alt="project"/>
+            <div class="cancel_button_container">
+                <CancelSubmitButton bind:closeButtonClicked={cancelImageUpload} />
+            </div>
+        </div>
+    {/if}
+    <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
+    <p class="constraints">* maximum file size: 2MB</p>
 </div>
  
 <style>
@@ -165,6 +164,17 @@
         opacity: 50%; /* Firefox */
     }
 
+    .project_image_container {
+        position: relative;
+        padding: 1rem;
+    }
+
+    .cancel_button_container {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+    }
+
     @media (max-width: 1440px) {
 
         input {
@@ -180,6 +190,18 @@
         .input_label {
             padding: 0 0 0.4rem 0;
         }
+
+        .cancel_button_container {
+            right: 0.75rem;
+            top: 0.75rem;
+        }
+    }
+
+    @media screen and (max-width: 1080px) {
+        .cancel_button_container {
+            right: 0.5rem;
+            top: 0.5rem;
+        }
     }
 
     @media (max-width: 720px) {
@@ -194,6 +216,11 @@
 
         .input_label {
             padding: 0 0 0.3rem 0;
+        }
+
+        .cancel_button_container {
+            right: 0.25rem;
+            top: 0.25rem;
         }
     }
 

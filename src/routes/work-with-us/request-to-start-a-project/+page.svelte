@@ -619,16 +619,6 @@
                 >
                     image file
                 </ImageFileInput>
-                {#if (image)}
-                    <div class="project_image_container">
-                        <img src={image} alt="project"/>
-                        <div class="cancel_button_container">
-                            <CloseButton bind:closeButtonClicked={cancelImageUpload} />
-                        </div>
-                    </div>
-                {/if}
-                <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
-                <p class="constraints">* maximum file size: 2MB</p>
             </div>
             <div class="input_column">
                 <DocumentFileInput

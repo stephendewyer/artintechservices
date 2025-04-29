@@ -595,7 +595,8 @@
         align-items: flex-end;
         justify-content: flex-start;
         gap: 1rem;
-        width: 20rem;
+        width: 100%;
+        max-width: 40rem;
         height: 100%;
     }
 

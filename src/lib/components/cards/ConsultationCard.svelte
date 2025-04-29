@@ -13,17 +13,17 @@
 
     if (topicArray.length > topicArray.slice(0, 5).length) {
         includeDotDotDot = true;
-    }
+    };
 
     let cardHovered: boolean = false;
 
     const cardHoveredHandler = () => {
         cardHovered = true;
-    }
+    };
 
     const cardExitedHandler = () => {
         cardHovered = false;
-    }
+    };
 
 </script>
 <a 

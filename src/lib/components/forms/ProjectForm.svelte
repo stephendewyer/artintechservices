@@ -126,7 +126,7 @@
         success: "",
         error: "",
         status: null
-    }
+    };
 
     let valueChanged: boolean = false;
 
@@ -269,7 +269,7 @@
 
             if (responseItem.success) {
                 projectUpdated = true;
-                goto("/authenticated-client/client");
+                goto(`/authenticated-client/client/project?id=${project?.project_ID}`);
             };
 
             if (responseItem.error) {
@@ -319,21 +319,6 @@
     let imageInputElement: HTMLInputElement;
 
     let imageInputFiles: FileList | null = null;
-
-    let cancelImageUpload: boolean = false;
-
-    $: if (cancelImageUpload) {
-        imageInputElement.value = "";
-        deleteImage = true;
-        imageInputFiles = null;
-        imageFileInputValue = "";
-        image = null;
-        cancelImageUpload = false;
-    }
-
-    // $: if (image) {
-    //     deleteImage = false;
-    // }
 
     let documentInputElement: HTMLInputElement;
 
@@ -468,21 +453,12 @@
                     bind:files={imageInputFiles}
                     bind:imageFileInputElement={imageInputElement}
                     bind:isValid={imageFileIsValid}
+                    bind:deleteImage
                     required={false}
                     imageFileInputErrorMessage="image file required"
                 >
                     image file
                 </ImageFileInput>
-                {#if (image)}
-                    <div class="project_image_container">
-                        <img src={image} alt="project"/>
-                        <div class="cancel_button_container">
-                            <CancelSubmitButton bind:closeButtonClicked={cancelImageUpload} />
-                        </div>
-                    </div>
-                {/if}
-                <p class="constraints">* file formats accepted: JPG, PNG, GIF, jpg, png, gif</p>
-                <p class="constraints">* maximum file size: 2MB</p>
             </div>
             <div class="input_column">
                 <DocumentFileInput
@@ -601,11 +577,7 @@
         margin: 0;
     }
 
-    .project_image_container {
-        position: relative;
-        padding: 1rem;
-    }
-
+    
     .project_document_container {
         position: relative;
         padding: 1rem;

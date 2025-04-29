@@ -67,7 +67,7 @@
         deleteResponse = await response.json();
 
         if (deleteResponse.success) {
-            goto("/authenticated-client/client");
+            goto("/authenticated-client/client/consultations");
         } else if (deleteResponse.error) {
             console.log("consultation failed to delete");
         };
@@ -146,46 +146,48 @@
                     <col class="left_table_column"/>
                     <col class="right_table_column"/>
                 </colgroup>
-                <tr>
-                    <td>
-                        date:
-                    </td>
-                    <td>
-                        {consultationDate}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        time:
-                    </td>
-                    <td>
-                        {ConvertTimeToStandard(consultation?.consultation_time)} {consultation?.time_zone}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        status:
-                    </td>
-                    <td>
-                        {consultation?.status}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        reason:
-                    </td>
-                    <td>
-                        {consultation?.consultation_reason}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        creation date:
-                    </td>
-                    <td>
-                        {consultationRequestCreatedDate}
-                    </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>
+                            date:
+                        </td>
+                        <td>
+                            {consultationDate}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            time:
+                        </td>
+                        <td>
+                            {ConvertTimeToStandard(consultation?.consultation_time)} {consultation?.time_zone}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            status:
+                        </td>
+                        <td>
+                            {consultation?.status}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            reason:
+                        </td>
+                        <td>
+                            {consultation?.consultation_reason}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            creation date:
+                        </td>
+                        <td>
+                            {consultationRequestCreatedDate}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             {#if (consultation?.status === "requested")}
                 <div class="buttons_container">

@@ -41,23 +41,23 @@
 </div>
 
 <style>
-    .projects {
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
 
     .projects_container {
         width: 100%;
+    }
+    .projects {
+        width: 100%;
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 1rem;
     }
 
     @media screen and (max-width: 1440px) {
 
+        .projects {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        
     }
 
     @media screen and (max-width: 1080px) {

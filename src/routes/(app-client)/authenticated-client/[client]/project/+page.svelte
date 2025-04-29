@@ -89,7 +89,7 @@
     interface DeleteItem {
         message: string;
         data: number;
-    }
+    };
 
     const deleteProjectHandler = async (project: Project | undefined) => {
 
@@ -120,7 +120,7 @@
         deleteResponse = await response.json();
 
         if (deleteResponse.success) {
-            goto("/authenticated-client/client");
+            goto("/authenticated-client/client/projects");
         } else if (deleteResponse.error) {
             console.log("project failed to delete");
         };
@@ -184,7 +184,7 @@
 <section class="project">
     <div class="back_button_container">
         <a 
-            href="/authenticated-client/client" 
+            href="/authenticated-client/client/projects" 
             
         >
             <BackButton>
@@ -192,22 +192,30 @@
             </BackButton>
         </a>
     </div>
-    <img 
-        class="project_banner" 
-        src={(project?.image_URL) ? project?.image_URL : DefaultProjectImage} 
-        alt={(project?.image_alt_text) ? project?.image_alt_text : "phases of the moon"}
-    />
     <h1>project</h1>
     {#if pendingProjectUpdate}
         <LoadingSpinner />
     {:else if !pendingProjectUpdate}
         {#if !editProject}
+        <img 
+            class="project_banner" 
+            src={(project?.image_URL) ? project?.image_URL : DefaultProjectImage} 
+            alt={(project?.image_alt_text) ? project?.image_alt_text : "phases of the moon"}
+        />
             <table class="project_info">
                 <colgroup>
                     <col class="left_table_column" />
                     <col class="right_table_column" />
                 </colgroup>
                 <tbody>
+                    <tr>
+                        <td>
+                            name:
+                        </td>
+                        <td>
+                            {project?.project_name}
+                        </td>
+                    </tr>
                     <tr>
                         <td>
                             services:
@@ -292,6 +300,7 @@
                 project={project} 
                 data={data}
                 bind:cancelEditProject={editProject}
+                bind:projectUpdated
             />
         {/if}
     {/if}
