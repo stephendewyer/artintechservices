@@ -3,50 +3,112 @@
     export let paymentMethod;
     export let deleteClicked: boolean = false;
 
-    console.log(paymentMethod)
-
 </script>
 
 <li class="payment_method_card">
-    <h4>
-        {paymentMethod.type}
-    </h4>
-    {#if (paymentMethod.type === "us_bank_account")}
-        <li>
-            {paymentMethod.us_bank_account.bank_name}
-        </li>
-        <li>
-            ...{paymentMethod.us_bank_account.last4}
-        </li>
-    {:else if (paymentMethod.type === "card")}
-        <li>
-            {paymentMethod.card.brand}
-        </li>
-        <li>
-            ...{paymentMethod.card.last4}
-        </li>
-        <li>
-            expires: {paymentMethod.card.exp_month}/{paymentMethod.card.exp_year}
-        </li>
-    {/if}
-    <p>
-        added: {new Date(paymentMethod.created * 1000).toUTCString().slice(0, 16)}
-    </p>
-    <div class="buttons_container">
+    <div class="payment_method_header">
+        <h3>
+            method
+        </h3>
         <DeleteButton bind:clicked={deleteClicked}>
             delete
         </DeleteButton>
     </div>
+    {#if (paymentMethod.type === "us_bank_account")}
+        <table>
+            <colgroup>
+                <col style="width: 40%" />
+                <col style="width: 60%" />
+            </colgroup>
+            <tbody style="box-shadow: none;">
+                <tr>
+                    <td>
+                        type: 
+                    </td>
+                    <td>
+                        {paymentMethod.type}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        bank name: 
+                    </td>
+                    <td>
+                        {paymentMethod.us_bank_account.bank_name}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        account: 
+                    </td>
+                    <td>
+                        ...{paymentMethod.us_bank_account.last4}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {:else if (paymentMethod.type === "card")}
+        <table >
+            <colgroup>
+                <col style="width: 40%" />
+                <col style="width: 60%" />
+            </colgroup>
+            <tbody style="box-shadow: none;">
+                <tr>
+                    <td>
+                        type: 
+                    </td>
+                    <td>
+                        {paymentMethod.type}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        brand: 
+                    </td>
+                    <td>
+                        {paymentMethod.card.brand}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        account: 
+                    </td>
+                    <td>
+                        ...{paymentMethod.card.last4}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        expiration: 
+                    </td>
+                    <td>
+                        {paymentMethod.card.exp_month}/{paymentMethod.card.exp_year}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        added: 
+                    </td>
+                    <td>
+                        {new Date(paymentMethod.created * 1000).toUTCString().slice(0, 16)}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    {/if}
 </li>
 
 <style>
     .payment_method_card {
+        position: relative;
         display: flex;
         list-style: none;
         flex-direction: column;
-        width: 20rem;
+        width: 100%;
+        max-width: 32rem;
         margin: 0 auto;
-        padding: 1rem;
+        padding: 1rem 0;
         border-radius: 1rem;
         box-shadow:
             0 1px 1px hsl(0deg 0% 0% / 0.075),
@@ -57,10 +119,11 @@
         ;
     }
 
-    .buttons_container {
+    .payment_method_header {
         display: flex;
         flex-direction: row;
-        width: 100%;
-        justify-content: flex-end;
+        justify-content: space-between;
+        padding: 1rem;
     }
+
 </style>

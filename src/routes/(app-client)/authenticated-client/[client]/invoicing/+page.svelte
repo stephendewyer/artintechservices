@@ -21,7 +21,7 @@
     import ActionButtonTertiary from "$lib/components/buttons/ActionButtonTertiary.svelte";
     import { ClientPageWidthStore } from "$lib/stores/ClientPageWidthStore";
 
-    $: console.log("$clientPageWidthStore: ", $ClientPageWidthStore);
+    // $: console.log("$clientPageWidthStore: ", $ClientPageWidthStore);
 
     let clientEmail = $page.data.streamed.user?.email;
 
@@ -53,7 +53,9 @@
 
     let pendingSubmitPaymentHandler: null | boolean = null;
 
-    let stripeCustomerID: string;
+    let stripeCustomerID: string = "";
+
+    // $: console.log(stripeCustomerID);
 
     let clientFinancials: any = {};
 
@@ -86,12 +88,12 @@
             });
 
             clientFinancials = {...await response.json()};
-            console.log(clientFinancials)
+            // console.log("clientFinancials: ", clientFinancials)
 
             if (response.ok) {
                 totalAmountDue = clientFinancials.totalAmountDue
                 balance = clientFinancials.billing.data[0]?.balance !== undefined ? clientFinancials.billing.data[0].balance : "";
-                stripeCustomerID = clientFinancials.contact_information?.Stripe_customer_ID;
+                stripeCustomerID = clientFinancials.billing.data[0]?.id;
                 clientInvoices = [...clientFinancials.invoices.data];
                 paymentMethods = clientFinancials.payment_methods;
                 pendingClientFinancials = false;
@@ -299,9 +301,6 @@
                             invoice
                         </th>
                         <th>
-                            date created
-                        </th>
-                        <th>
                             due date
                         </th>
                         <th>
@@ -309,9 +308,6 @@
                         </th>
                         <th>
                             status
-                        </th>
-                        <th>
-                            details
                         </th>
                         <th>
                             action
@@ -323,9 +319,6 @@
                                 {++index}
                             </td>
                             <td>
-                                {new Date(invoice.created * 1000).toUTCString().slice(0, 16)}
-                            </td>
-                            <td>
                                 {new Date(invoice.due_date * 1000).toUTCString().slice(0, 16)}
                             </td>
                             <td>
@@ -333,11 +326,6 @@
                             </td>
                             <td>
                                 {invoice.status}
-                            </td>
-                            <td>
-                                {#each invoice.lines.data as invoiceLineItem, index}
-                                    {invoiceLineItem.description}
-                                {/each}
                             </td>
                             <td>
                                 {#if (!invoice.paid)}
@@ -358,15 +346,17 @@
         <section class="section_even">
         </section>
         <h3>
-            billing information
+            payment method
         </h3>
         {#if (paymentMethods?.data?.length > 0)}
+        <div class="payment_methods">
             {#each paymentMethods.data as paymentMethod, index}
                 <PaymentMethodCard 
                     paymentMethod={paymentMethod} 
                     bind:deleteClicked={deletePaymentMethodClicked}
                 />
             {/each}
+        </div>
         {:else if !addPaymentMethod && (paymentMethods?.data?.length === 0)}
             <AddItemButton bind:addItemClicked={addPaymentMethodClickHandler}>
                 Add payment method
@@ -460,8 +450,7 @@
 
     .invoices_table {
         position: relative;
-        width: 100%;
-        min-width: 100%;
+        min-width: 60rem;
     }
 
     form {
@@ -484,11 +473,14 @@
         font-weight: 600;
     }
 
-    @media screen and (max-width: 1440px) {
+    .payment_methods {
+        width: 100%;
+        max-width: 80rem;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
 
-        .invoices_table {
-            min-width: 60rem;
-        }
+    @media screen and (max-width: 1440px) {
 
         .amount_due_heading {
             font-size: 1.5rem;
@@ -496,6 +488,13 @@
 
         .amount_due_number {
             font-size: 1.5rem;
+        }
+
+        .payment_methods {
+            width: 100%;
+            max-width: 80rem;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
     }
@@ -517,6 +516,10 @@
     @media screen and (max-width: 720px) {
         .invoicing_page {
             padding: 0 1rem 1rem 1rem;
+        }
+
+        .payment_methods {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
         }
 
     }
