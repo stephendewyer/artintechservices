@@ -371,29 +371,9 @@
 
     let imageInputFiles: FileList | null = null;
 
-    let cancelImageUpload: boolean = false;
-
-    $: if (cancelImageUpload) {
-        imageInputElement.value = "";
-        image = null;
-        imageInputFiles = null;
-        imageFileInputValue = "";
-        cancelImageUpload = false;
-    }
-
     let documentInputElement: HTMLInputElement;
 
     let documentInputFiles: FileList | null = null;
-
-    let cancelDocumentUpload: boolean = false;
-
-    $: if (cancelDocumentUpload) {
-        documentInputElement.value = "";
-        document = null;
-        documentInputFiles = null;
-        documentFileInputValue = "";
-        cancelDocumentUpload = false;
-    }
 
 </script>
 <svelte:head>
@@ -635,25 +615,7 @@
                     documentFileInputErrorMessage="document file required"
                 >
                     document file
-                </DocumentFileInput>
-                <p class="constraints">* file formats accepted: PDF, pdf</p>
-                <p class="constraints">* maximum file size: 2MB</p>
-                {#if (document)}
-                    <div class="project_document_container">
-                        <div class="document_icon_and_label">
-                            <div class="document_icon">
-                                {@html DocumentIcon}
-                            </div>
-                            <p class="document_label">
-                                {documentFileName}
-                            </p>
-                        </div>
-                        <div class="cancel_button_container">
-                            <CloseButton bind:closeButtonClicked={cancelDocumentUpload} />
-                        </div>
-                    </div>
-                {/if}
-                
+                </DocumentFileInput>                
             </div>
         </div>
         <p>
