@@ -42,8 +42,6 @@
     
     $: footerNavTabsRight = nav_data.slice((nav_data.length/2), nav_data.length);
 
-    $: console.log(`${$page.url.pathname}${$page.url.search}`)
-
     const currentPageHandler = (navTab: NavTab) => {
         if (navTab.content === null) {
             if (

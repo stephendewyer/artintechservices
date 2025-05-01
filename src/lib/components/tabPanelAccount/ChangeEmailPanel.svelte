@@ -1,8 +1,14 @@
 <script lang="ts">
+  import { page } from "$app/stores";
     import SubmitButton02 from "../buttons/SubmitButton02.svelte";
+    import ErrorFlashMessage from "../flashMessages/ErrorFlashMessage.svelte";
+    import PendingFlashMessage from "../flashMessages/PendingFlashMessage.svelte";
+    import SuccessFlashMessage from "../flashMessages/SuccessFlashMessage.svelte";
     import EmailInput from "../inputs/EmailInput.svelte";
 
     export let panel_data;
+
+    const sessionEmail = $page.data.streamed.user?.email;
     
     // after change email submit
 
@@ -21,17 +27,19 @@
             responseChangeEmailItem.success = "";
             responseChangeEmailItem.error = "";
             responseChangeEmailItem.status = null;
-        }, 4000)
+        }, 4000);
     };
 
     const sendEmailUpdateEmail = async (
-        email: string,
+        sessionEmail: string | null | undefined,
+        emailInputValue: string,
         name: string
     ) => {
         const response = await fetch("/authenticated-client/api/sendEmailUpdateEmail", {
             method: "POST",
             body: JSON.stringify({
-                email,
+                sessionEmail,
+                emailInputValue,
                 name
             }),
             headers: {
@@ -49,6 +57,7 @@
         pendingEmailUpdateEmail = true;
         try {
             await sendEmailUpdateEmail(
+                sessionEmail,
                 emailInputValue,
                 panel_data[0].name
             );
@@ -77,9 +86,9 @@
         change email address
     </h2>
     <p>
-        <span>current email: {panel_data[0].userEmail}</span>
+        <span style="font-weight: bold">current email: </span>{panel_data[0].userEmail}
     </p>
-    <p>Please submit the email address you want to use on your account.  A verification +link to change the email address associated with your account will send to the email address you submit.</p>
+    <p>Please submit the email address you want to use on your account.  A verification link to change the email address associated with your account will send to the email address you submit.</p>
     <div class="input_row">
         <EmailInput
             bind:isValid={emailIsValid}
@@ -100,6 +109,19 @@
             send verification link
         </SubmitButton02>
     </div>
+    {#if (pendingEmailUpdateEmail)}
+        <PendingFlashMessage >
+            please wait while we validate your data
+        </PendingFlashMessage>
+    {:else if (responseChangeEmailItem.error)}
+        <ErrorFlashMessage >
+            {responseChangeEmailItem.error}
+        </ErrorFlashMessage>
+    {:else if (responseChangeEmailItem.success)}
+        <SuccessFlashMessage>
+            {responseChangeEmailItem.success}
+        </SuccessFlashMessage>
+    {/if}
 </form>
 <style>
     

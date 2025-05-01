@@ -239,18 +239,6 @@
         width: 100%;
     }
 
-    table > tr {
-        height: auto;
-        padding: 0;
-    }
-
-    table > tr > td {
-        font-size: 1.25rem;
-        padding: 1rem;
-        overflow-wrap: break-word;
-        hyphens: auto;
-    }
-
     table tr:nth-child(odd) {
         background-color: #F2F9F2;
     }
@@ -267,20 +255,6 @@
 
     .right_table_column {
         width: 75%;
-    }
-
-    @media screen and (max-width: 1440px) {
-        table > tr > td {
-            font-size: 1.175rem;
-            padding: 1rem;
-        }
-    }
-
-    @media screen and (max-width: 1080px) {
-        table > tr > td {
-            font-size: 1rem;
-            padding: 0.5rem;
-        }
     }
 
     @media screen and (max-width: 720px) {

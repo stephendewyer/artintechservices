@@ -10,8 +10,7 @@
     import ChangeEmailPanel from "$lib/components/tabPanelAccount/ChangeEmailPanel.svelte";
     import ResetPasswordPanel from "$lib/components/tabPanelAccount/ResetPasswordPanel.svelte";  
 
-    const nameFirst: string | undefined | null = $page.data.streamed?.name_first;
-    const nameLast: string | undefined | null = $page.data.streamed?.name_last
+    const fullName: string | undefined | null = `${$page.data.streamed?.name_first} ${$page.data.streamed?.name_last}`;
     const email: string | undefined | null = $page.data.streamed?.user.email;
     
     let activeTab: number = 0;
@@ -26,7 +25,7 @@
             data: [
                 {
                     userEmail: email,
-                    name: `${nameFirst} ${nameLast}`
+                    name: fullName
                 }
             ]
         },
@@ -39,7 +38,7 @@
             data: [
                 {
                     userEmail: email,
-                    name: `${nameFirst} ${nameLast}`
+                    name: fullName
                 }
             ]
         },
@@ -52,7 +51,7 @@
             data: [
                 {
                     userEmail: email,
-                    name: `${nameFirst} ${nameLast}`
+                    name: fullName
                 }
             ]
         },

@@ -327,6 +327,9 @@
                 </h2>
                 {#if changeImageClicked}
                     <form on:submit|preventDefault={uploadImageSubmitHandler} class="upload_profile_photo_form">
+                        <div class="close_button_container">
+                            <CloseButton bind:closeButtonClicked={changeImageClicked}/>
+                        </div>
                         <ImageFileInput
                             inputLabel={true}
                             bind:imageFileInputValue={imageFileInputValue}
@@ -342,22 +345,9 @@
                         >
                             select
                         </ImageFileInput>
-                        {#if (image)}
-                            <div class="project_image_container">
-                                <img src={image} alt="project"/>
-                                <div class="cancel_button_container">
-                                    <CloseButton bind:closeButtonClicked={cancelImageUpload} />
-                                </div>
-                            </div>
-                        {/if}
-                        <p class="constraints"><span style="font-weight: bold;">* file formats accepted: </span>JPG, PNG, GIF, jpg, png, gif</p>
-                        <p class="constraints"><span style="font-weight: bold;">* maximum file size: </span>2MB</p>
                         <SubmitButton02 disable={!imageFileInputValue}>
                             upload image
-                        </SubmitButton02>
-                        <CancelButton bind:cancelClicked={cancelImageSelect}>
-                            cancel
-                        </CancelButton>    
+                        </SubmitButton02>   
                     </form>
                     {#if (pendingImageUpload)}
                         <PendingFlashMessage >
@@ -582,10 +572,13 @@
     }
 
     .upload_profile_photo_form {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 1rem;
         align-items: center;
+        margin: 0;
+        padding: 2rem 0 0 0;
     }
 
     .profile_photo_and_action_button {
@@ -663,22 +656,10 @@
         background-color: #F2F9F2;
     }
 
-    .project_image_container {
-        position: relative;
-        width: 20rem;
-        height: 20rem;
-    }
-
-    .project_image_container > img  {
-        object-fit: cover;
-        width: 100%;
-        height: 100%;
-    }
-
-    .cancel_button_container {
+    .close_button_container {
         position: absolute;
-        right: 1rem;
-        top: 1rem;
+        right: 0;
+        top: 0;
     }
 
     @media screen and (max-width: 1440px) {

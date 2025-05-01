@@ -116,7 +116,6 @@
         navPanelAbsolute = false;
     }; 
 
-
     // handle mobile fixed position
 
     let innerHeight: number = 0;

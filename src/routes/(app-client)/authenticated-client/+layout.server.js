@@ -28,7 +28,7 @@ export const load = async (event) => {
     .then(([rows]) => {
       if (JSON.parse(JSON.stringify(rows)).length > 0) {
         nameFirst = JSON.parse(JSON.stringify(rows))[0].name_first ? JSON.parse(JSON.stringify(rows))[0].name_first : null;
-        nameLast = JSON.parse(JSON.stringify(rows))[0].name_first ? JSON.parse(JSON.stringify(rows))[0].name_first : null;
+        nameLast = JSON.parse(JSON.stringify(rows))[0].name_last ? JSON.parse(JSON.stringify(rows))[0].name_last : null;
         clientProfileImageID = JSON.parse(JSON.stringify(rows))[0].image_ID ? JSON.parse(JSON.stringify(rows))[0].image_ID : null;
         clientProfileImageURL = JSON.parse(JSON.stringify(rows))[0].image_URL ? JSON.parse(JSON.stringify(rows))[0].image_URL : "";
       };
@@ -37,6 +37,8 @@ export const load = async (event) => {
     .catch(error => {
         throw error;
     });
+
+    res.end();
 
   // get the profile image if any
   return {
