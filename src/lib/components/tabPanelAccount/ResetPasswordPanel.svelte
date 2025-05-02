@@ -48,7 +48,7 @@
         pendingResetPassword = true;
         try {
             await resetPassword(
-                emailInputValue
+                panel_data[0].userEmail
             );
             if (responseChangePasswordItem.success) {
                 emailInputValue = "";

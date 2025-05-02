@@ -11,14 +11,14 @@ export async function PATCH({request}) {
 
     const data = await request.json();
 
-    const {password, passwordReentered, email, } = data;
+    const {password, passwordReentered, sessionEmail, } = data;
 
     const specialChars = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
 
     if (
         !password ||
         !passwordReentered ||
-        !email
+        !sessionEmail
     ) {
 
         return new Response(JSON.stringify({error: "missing form input data"}), {status: 422});
@@ -51,39 +51,20 @@ export async function PATCH({request}) {
         return new Response(JSON.stringify({error: "passwords do not match"}), {status: 422});
     };
 
-    // connect to the database
-
-    let res = await mysqlConnection();
-
-    const searchEmailQuery = `SELECT * FROM clients WHERE email = '${email}';`;
-
-    /**
-     * @type {string | any[]}
-     */
-    let clientWithEmailID = [];
-
-    await res.query(searchEmailQuery)
-    .then(([ rows ]) => {
-        clientWithEmailID = JSON.parse(JSON.stringify(rows));
-    })
-    .catch(error => {
-        throw error;
-    });
-
-    if (clientWithEmailID.length === 0) {
-        return new Response(JSON.stringify({error: "no client found with email"}), {status: 422});
-    };
-    
     // hash the password
 
     const hashedPassword = await hashPassword(password);
+
+    // connect to the database
+
+    let res = await mysqlConnection();
 
     // update the password in the database
 
     const passwordUpdateStatement = `UPDATE clients
     SET 
         password = "${hashedPassword}"
-    WHERE email = "${email}";`
+    WHERE email = "${sessionEmail}";`
 
     await res.query(passwordUpdateStatement)
     .then(() => {
@@ -99,10 +80,10 @@ export async function PATCH({request}) {
 
     sgMail.setApiKey(SENDGRIDAPIKey)
     const msg = {
-        to: email,
+        to: sessionEmail,
         from: 'sdewyer@artintechservices.com',
         subject: 'password update',
-        html: `<p>Hi ${email},<p>
+        html: `<p>Hi ${sessionEmail},<p>
         <p>Your Art in Tech Services client password has been updated.</p>
         <p>Kind regards,</p>
         <p>Art in Tech Services</p>
