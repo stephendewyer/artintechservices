@@ -61,7 +61,9 @@ export const POST = async ({request}) => {
 
     if (customer_invoices.data.length > 0) {
         customer_invoices.data.forEach((invoice, index) => {
-            totalAmountDue = totalAmountDue + (invoice.amount_due - invoice.amount_paid);
+            if (invoice.status === "open") {
+                totalAmountDue = totalAmountDue + (invoice.amount_due - invoice.amount_paid);
+            };
         });
     };
     // get the customer payment methods if any

@@ -1,53 +1,72 @@
 <script lang="ts">
-    import CloseButtonSmall from "../buttons/CloseButtonSmall.svelte";
     import ProfilePhotoDefault from "$lib/images/default/default_profile_photo.jpg";
+    import OpenedButton from "../buttons/OpenedButton.svelte";
+    import { page } from "$app/stores";
 
-    export let contact: Contact;
-    export let selected: boolean = false;
-    export let closeContactClicked: boolean = false;
-    export let selectedContactID: number | null = null;
+    export let message: MessageWithContact;
+    export let selectedMessageID: number | null = null;
+
+    const sessionEmail = $page.data.streamed.user?.email;
+
+    let opened: boolean = false;
 
     const clickCardHandler = () => {
-        if (
-            selected === false && 
-            closeContactClicked === false && 
-            selectedContactID !== contact.ID
-        ) {
-            selected = true;
-            selectedContactID = contact.ID;
-        } else {
-            closeContactClicked = false;
+        selectedMessageID = message.message_ID;
+
+        if (!message.opened) {
+            // update the message in database to show opened
+
+            let updateMessageOpenedResponse;
+            const updateMessageOpened = async (messageID: number | null, sessionEmail: string) => {
+                const response = await fetch("/authenticated-client/api/updateMessageOpened", {
+                    method: "PATCH",
+                    body: JSON.stringify({
+                        messageID,
+                        sessionEmail
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                updateMessageOpenedResponse = await response.json();
+                return updateMessageOpenedResponse;
+            };
+
+            try {
+                updateMessageOpened(message.message_ID, sessionEmail)
+            } catch(error) {
+                console.log(error);
+            };
         };
-        
+
     };
 
-    $: if (closeContactClicked) {
-        selected = false;
-        selectedContactID = null;
+    $: if (message.opened || message.message_ID === selectedMessageID) {
+        opened = true;
+    } else if (!message.opened) {
+        opened = false;
     };
 
 </script>
 
 <button class="contact_card" on:click={clickCardHandler}>
     <div class="profile_photo_container">
-        <img src={contact.image_URL ? contact.image_URL : ProfilePhotoDefault} alt="contact profile"/>
+        <img src={message.contact.image_URL ? message.contact.image_URL : ProfilePhotoDefault} alt="contact profile"/>
     </div>
     <div class="profile_message_name_and_history">
         <h4 class="profile_name">
-            {`${contact.name_first} ${contact.name_last}`}
+            <span style="font-weight: normal">from: </span>{`${message.contact.name_first} ${message.contact.name_last}`}
         </h4>
         <p class="date_sent">
-            role: <span style="font-weight: bold">{contact.role}</span>
+            subject: <span style="font-weight: bold">{message.subject.length > 15 ? `${message.subject.slice(-14, message.subject.length)}...` : message.subject}</span>
         </p>
         <p class="date_sent">
-            {`${contact?.city}, ${contact?.state}`}
+            date sent: <span style="font-weight: bold">{new Date(message.date_sent).toUTCString()}</span>
         </p>
     </div>
-    {#if selected}
-        <div class="close_button_container">
-            <CloseButtonSmall bind:closeButtonClicked={closeContactClicked} />
-        </div>
-    {/if}
+    <div class="close_button_container">
+        <OpenedButton bind:opened />
+    </div>
 </button>
 
 <style>

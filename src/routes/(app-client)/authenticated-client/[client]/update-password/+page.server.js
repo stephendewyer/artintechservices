@@ -38,10 +38,10 @@ export const load = async (/** @type {{ locals: { auth: () => any; }; }} */ even
         throw redirect(303, "/authenticated-client/client/update-password/incorrect-reset-password-token");
     };
 
-    // if (resetTokenExpiration <= Date.now()) {
-    //     console.log("reset password token expired");
-    //     throw redirect(303, "/authenticated-client/client/update-password/reset-password-token-expired");
-    // };
+    if (resetTokenExpiration <= Date.now()) {
+        console.log("reset password token expired");
+        throw redirect(303, "/authenticated-client/client/update-password/reset-password-token-expired");
+    };
 
     // Token is valid.  
 

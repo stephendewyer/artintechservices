@@ -304,6 +304,65 @@ declare global {
         paragraph: string;
     }
 
+	interface Message {
+		message_ID: number;
+		client_sender_ID: number | null;
+		client_recipient_ID: number | null;
+		administrator_sender_ID: number | null;
+		administrator_recipient_ID: number | null;
+		sender_role: string;
+		receiver_role: string;
+		date_created: string;
+		date_sent: string | null;
+		subject: string;
+		body: string;
+		document_attachment_ID: number | null;
+		document_attachment_URL: string | null;
+		document_attachment_public_ID: string | null;
+		image_attachment_ID: number | null;
+		image_attachment_URL: string | null;
+		image_attachment_public_ID: string | null;
+		status: string;
+		conversation_ID: number;
+		opened: number | null;
+	}
+
+	interface Contact {
+		ID: number; 
+		email: string; 
+        name_first: string;
+		name_last: string;
+		city: string | null;
+		state: string | null;
+		profile_image_ID: number | null;
+		role: string;
+		image_URL: string | null;
+		public_ID: string | null;
+	}
+
+	interface MessageWithContact {
+		message_ID: number;
+		client_sender_ID: number | null;
+		client_recipient_ID: number | null;
+		administrator_sender_ID: number | null;
+		administrator_recipient_ID: number | null;
+		sender_role: string;
+		receiver_role: string;
+		date_created: string;
+		date_sent: string | number | Date;
+		subject: string;
+		body: string;
+		document_attachment_ID: number | null;
+		document_attachment_URL: string | null;
+		document_attachment_public_ID: string | null;
+		image_attachment_ID: number | null;
+		image_attachment_URL: string | null;
+		image_attachment_public_ID: string | null;
+		status: string;
+		conversation_ID: number;
+		opened: number | null;
+		contact: Contact;
+	}
 }
 
 export {};

@@ -3,7 +3,11 @@
     export let attachDocumentClicked: boolean = false;
 
 </script>
-<button class="attach_document_button">
+<button 
+    class="attach_document_button" 
+    type="button"
+    on:click={() => attachDocumentClicked = !attachDocumentClicked}
+>
     <div class="paper_clip_container">
         {@html PaperClip}
     </div>

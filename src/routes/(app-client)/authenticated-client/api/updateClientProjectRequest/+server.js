@@ -434,7 +434,7 @@ export async function POST({request}) {
             WHERE
                 project_ID = ${projectID}
         `;
-    }
+    };
 
     await res.query(updateProjectStatement)
     .then(() => {

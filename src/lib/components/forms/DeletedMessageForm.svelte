@@ -4,7 +4,7 @@
     import SuccessFlashMessage from "../flashMessages/SuccessFlashMessage.svelte";
     import AttachmentImage from "$lib/images/projects/Port_Mansfield_pier.jpg"
     import DocumentFileButton from "../buttons/DocumentFileButton.svelte";
-    import SendMessageForm from "./SendMessageForm.svelte";
+    import SendMessageForm from "./CreateMessageForm.svelte";
 
     let subjectIsValid: boolean = true;
     let subjectInputValue: string = "";

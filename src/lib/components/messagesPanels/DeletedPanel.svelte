@@ -3,6 +3,8 @@
     import ContactCard from "../cards/ContactCard.svelte";
     import SentMessageForm from "../forms/SentMessageForm.svelte";
 
+    export let panel_data;
+
     let searchContactInputValue: string = "";
     let searchContactValueChange: boolean = false;
 

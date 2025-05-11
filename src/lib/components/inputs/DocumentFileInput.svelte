@@ -20,7 +20,7 @@
 
     let documentFile: File | null = null;
     
-    let documentFileName: string = document ? document : "";
+    let documentFileName: string = document ? documentFileInputValue.split(`\\`)[2] : "";
 
     const documentFileChangedHandler = () => {
 
@@ -62,6 +62,8 @@
         documentFileInputValue = "";
         deleteDocument = true;
         cancelDocumentUpload = false;
+    } else {
+        deleteDocument = false;
     };
 
 </script>
@@ -98,7 +100,7 @@
                     {@html DocumentIcon}
                 </div>
                 <p class="document_label">
-                    {documentFileName}
+                    {documentFileName.length > 15 ? `...${documentFileName.slice(-15, documentFileName.length)}` : documentFileName}
                 </p>
             </div>
             <div class="cancel_button_container">
@@ -106,8 +108,8 @@
             </div>
         </div>
     {/if}
-    <p class="constraints"><span style="font-weight: bold">* file formats accepted: </span>PDF, pdf</p>
-    <p class="constraints"><span style="font-weight: bold">* maximum file size: </span>2MB</p>
+    <p class="constraints">* file formats accepted: <span style="font-weight: bold">PDF, pdf</span></p>
+    <p class="constraints">* maximum file size: <span style="font-weight: bold">2MB</span></p>
 </div>
  
 <style>
@@ -203,6 +205,7 @@
     .document_label {
         word-wrap: break-word;
         width: 80%;
+        max-width: 12rem;
         margin: 0;
         padding: 0 4rem 0 0 ;
     }

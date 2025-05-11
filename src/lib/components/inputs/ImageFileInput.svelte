@@ -57,6 +57,8 @@
         deleteImage = true;
         image = null;
         cancelImageUpload = false;
+    } else {
+        deleteImage = false;
     };
 
 </script>
@@ -94,8 +96,8 @@
             </div>
         </div>
     {/if}
-    <p class="constraints"><span style="font-weight: bold">* file formats accepted:</span> JPG, PNG, GIF, jpg, png, gif</p>
-    <p class="constraints"><span style="font-weight: bold">* maximum file size:</span> 2MB</p>
+    <p class="constraints">* file formats accepted: <span style="font-weight: bold">JPG, PNG, GIF, jpg, png, gif</span></p>
+    <p class="constraints">* maximum file size: <span style="font-weight: bold">2MB</span></p>
 </div>
  
 <style>

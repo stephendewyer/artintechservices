@@ -13,17 +13,14 @@
     import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
     import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
     import DocumentFileInput from "$lib/components/inputs/DocumentFileInput.svelte";
-    import DocumentIcon from "$lib/images/icons/document.svg?raw";
     import DateInput from "$lib/components/inputs/DateInput.svelte";
     import TextArea from "$lib/components/inputs/TextArea.svelte";
     import NumberInput from "$lib/components/inputs/NumberInput.svelte";
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
-    import CancelSubmitButton from "$lib/components/buttons/CancelSubmitButton.svelte";
     import { ConvertDateInputFormat } from "$lib/util/convertDateInputFormat";
     import { goto } from "$app/navigation";
     import TextInput from "../inputs/TextInput.svelte";
-  import CloseButton from "../buttons/CloseButton.svelte";
+    import CloseButton from "../buttons/CloseButton.svelte";
 
     export let data;
 

@@ -4,7 +4,7 @@
   
   <div class="container">
     <h1>
-        The change email token associated with your account has expired. Send another email to create a new change email token.
+        The delete account token associated with your account expired.  Send another email to create a new token.
     </h1>
     <a href="/authenticated-client/client/account">
         <ActionButtonSecondary>

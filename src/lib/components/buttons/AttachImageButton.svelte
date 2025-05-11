@@ -3,7 +3,11 @@
     export let attachImageClicked: boolean = false;
 
 </script>
-<button class="attach_image_button">
+<button 
+    class="attach_image_button"
+    type="button"
+    on:click={() => attachImageClicked = !attachImageClicked}
+>
     <div class="paper_clip_container">
         {@html PaperClip}
     </div>

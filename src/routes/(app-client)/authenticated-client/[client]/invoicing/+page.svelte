@@ -328,7 +328,7 @@
                                 {invoice.status}
                             </td>
                             <td>
-                                {#if (!invoice.paid)}
+                                {#if (invoice.status === "open")}
                                     <a href={`/authenticated-client/client/make-a-payment?invoice-ID=${invoice.id}&client-email=${clientEmail}`}>
                                         <ActionButtonTertiary parentControlled={false}>
                                             pay invoice

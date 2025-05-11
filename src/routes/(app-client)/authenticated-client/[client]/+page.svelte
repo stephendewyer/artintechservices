@@ -4,7 +4,6 @@
     import { page } from "$app/stores";
     import EditButton from "$lib/components/buttons/EditButton.svelte";
     import { onMount } from "svelte";
-    import type { E164Number } from 'svelte-tel-input/types';
     import ClientContactInfoForm from "$lib/components/forms/ClientContactInfoForm.svelte";
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import AddItemButton from "$lib/components/buttons/AddItemButton.svelte";
@@ -12,7 +11,6 @@
     import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
     import CloseButton from "$lib/components/buttons/CloseButton.svelte";
     import SubmitButton02 from "$lib/components/buttons/SubmitButton02.svelte";
-    import CancelButton from "$lib/components/buttons/CancelButton.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";

@@ -1,6 +1,6 @@
 <script lang="ts">
     import DocumentIcon from "$lib/images/icons/document.svg?raw";
-    export let documentURL: string = "";
+    export let documentURL: string | null = "";
 </script>
 <a href={documentURL} target="_blank" class="document_button_container">
     <button class="document_button">
@@ -8,7 +8,7 @@
             {@html DocumentIcon}
         </div>
         <p class="label">
-            {documentURL.split("/")[documentURL.split("/").length - 1]}
+            {documentURL?.split("/")[documentURL.split("/").length - 1]}
         </p>
     </button> 
 </a>

@@ -4,7 +4,9 @@
     import SuccessFlashMessage from "../flashMessages/SuccessFlashMessage.svelte";
     import AttachmentImage from "$lib/images/projects/Port_Mansfield_pier.jpg"
     import DocumentFileButton from "../buttons/DocumentFileButton.svelte";
-    import SendMessageForm from "./SendMessageForm.svelte";
+    import SendMessageForm from "./CreateMessageForm.svelte";
+
+    export let message: MessageWithContact;
 
     let subjectIsValid: boolean = true;
     let subjectInputValue: string = "";
@@ -36,27 +38,25 @@
 <form class="received_message_form">
     <div class="received_message">
         <p class="date">
-            yesterday, 23 September 2024
+            {new Date(message.date_sent).toUTCString()}
         </p>
-        <p class="label">
-            subject
-        </p>
-        <p class="message_paragraphs">
-            Lorem ipsum odor amet, consectetuer adipiscing elit. Tortor quis sagittis ullamcorper auctor, dictum fringilla neque.
-        </p>
-        <p class="label">
-            message
+        <p class="subject">
+            <span style="font-weight: 600">subject: </span>{message.subject}
         </p>
         <p class="message_paragraphs">
-            Lorem ipsum odor amet, consectetuer adipiscing elit. Vivamus facilisi condimentum pellentesque neque risus eget pharetra orci. Vestibulum ante torquent leo nam purus curabitur ad porttitor. Interdum morbi dis dictumst auctor eget magna lacinia vestibulum. Feugiat vitae ad fringilla platea dictum suspendisse ullamcorper. Varius aliquet nunc dolor curabitur mi praesent! Odio euismod torquent ligula tempor egestas facilisis elementum elementum.<br/><br/>
-            Ullamcorper dis fusce congue praesent hendrerit condimentum. Habitant id iaculis accumsan lacinia a. Proin tincidunt dapibus urna congue blandit primis. Consectetur tempus molestie facilisi blandit cursus metus lacus tempor. Magnis iaculis mus tempus inceptos ut integer. Donec non aliquet suscipit elit vivamus aliquet diam. Enim porta id suspendisse finibus risus ligula. Bibendum duis fermentum congue potenti libero.
+            <span class="subject" style="font-weight: 600">message: </span><br/>
+            {message.body}
         </p>
         <div class="attachments">
             <div class="image_attachment">
-                <img src={AttachmentImage} alt="attachment" />
+                {#if message.image_attachment_ID}
+                    <img src={message.image_attachment_URL} alt="attachment" />
+                {/if}
             </div>
             <div class="document_attachment">
-                <DocumentFileButton documentURL={"/file name/test"} />
+                {#if message.document_attachment_ID}
+                    <DocumentFileButton documentURL={message.document_attachment_URL} />
+                {/if}
             </div>
         </div>
     </div>
@@ -83,7 +83,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 0.5rem;
+        width: 100%;
     }
 
     .received_message {
@@ -93,6 +94,7 @@
         flex-direction: column;
         align-items: center;
         gap: 1rem;
+        width: 100%;
     }
 
     .date {
@@ -106,11 +108,10 @@
         margin: 0;
     }
 
-    .label {
+    .subject {
         font-size: 1.4rem;
-        font-weight: 600;
         color: #1C2226;
-        padding: 0 0 0.5rem 0;
+        padding: 0;
         width: 100%;
         margin: 0;
     }
@@ -118,6 +119,7 @@
     .message_paragraphs {
         padding: 0;
         margin: 0;
+        width: 100%;
     }
 
     .attachments {
@@ -149,10 +151,7 @@
     }
 
     @media screen and (max-width: 1440px) {
-        .label {
-            font-size: 1.2rem;
-            padding: 0 0 0.4rem 0;
-        }
+
 
         .date {
             font-size: 0.9rem;
@@ -160,10 +159,6 @@
     }
 
     @media screen and (max-width: 720px) {
-        .label {
-            font-size: 1rem;
-            padding: 0 0 0.3rem 0;
-        }
 
         .date {
             font-size: 0.8rem;

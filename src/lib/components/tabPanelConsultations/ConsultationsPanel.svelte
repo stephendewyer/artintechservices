@@ -1,13 +1,11 @@
 <script lang="ts">
     import ActionButtonTertiary from "../buttons/ActionButtonTertiary.svelte";
-    import DeleteButton from "../buttons/DeleteButton.svelte";
     import Pagination from "../pagination/Pagination.svelte";
-    import Meatballs from "../buttons/Meatballls.svelte";
     import { ConvertTimeToStandard } from "$lib/util/convertTimeToStandard";
 
     export let panel_data;
 
-    console.log(panel_data)
+    // console.log(panel_data)
 
     let consultationsCurrentPage: number = 1;
 

@@ -1,16 +1,65 @@
 <script lang="ts">
     import SearchInput from "../inputs/SearchInput.svelte";
     import ContactCard from "../cards/ContactCard.svelte";
-    import SendMessageForm from "../forms/SendMessageForm.svelte";
+    import CreateMessageForm from "../forms/CreateMessageForm.svelte";
+    import { onMount } from "svelte";
+    import LoadingSpinner from "../loadingSpinners/LoadingSpinner.svelte";
 
     let searchContactInputValue: string = "";
     let searchContactValueChange: boolean = false;
+
+    // get administrators' contact information
+
+    let pendingAdministratorsContactInfo: boolean = false;
+
+    let getAdministratorsContactInfoSuccess: boolean = false;
+
+    let administratorsContactInfo: Contact[] = [];
+
+    const getAdministratorsContactInfo = async () => {
+
+        pendingAdministratorsContactInfo = true;
+
+        try {
+
+            const response = await fetch("/authenticated-client/api/getAdministratorsContactInfo");
+
+            administratorsContactInfo = [...await response.json()];
+
+            if (response.ok) {
+                pendingAdministratorsContactInfo = false;
+                getAdministratorsContactInfoSuccess = true;
+            } else if (!response.ok) {
+                pendingAdministratorsContactInfo = false;
+                getAdministratorsContactInfoSuccess = false;
+            };
+        } catch(err) {
+            pendingAdministratorsContactInfo = false;
+            getAdministratorsContactInfoSuccess = false;
+            console.log(err);
+        };
+        
+    };
+
+    onMount(() => {
+        getAdministratorsContactInfo();
+    });
+
+    let selectedContactID: number | null = null;
+
+    let selectedContact: Contact;
+
+    $: administratorsContactInfo.forEach((administratorContact => {
+        if (administratorContact.ID === selectedContactID) {
+            selectedContact = administratorContact;
+        };
+    }));
 
 </script>
 <section class="create_message">
     <div class="search_and_select_contact">
         <form class="search_and_select_contact_form">
-            <SearchInput
+            <!-- <SearchInput
                 placeholder="firstname lastname"
                 inputID="contact_or_subject_search"
                 inputName="contact_or_subject_search"
@@ -19,21 +68,23 @@
                 bind:searchInputValueChange={searchContactValueChange}
             >
                 contact
-            </SearchInput>
-            <ul class="selected_contacts">
-                <li>
-                    <ContactCard />
-                </li>
-            </ul>
-            <ul class="contacts_in_search">
-                <li>
-                    <ContactCard />
-                </li>
-            </ul>
+            </SearchInput> -->
+            <h3 style="text-align: center">contacts</h3>
+            {#if pendingAdministratorsContactInfo}
+                <LoadingSpinner />
+            {:else}
+                <ul class="selected_contacts">
+                    {#each administratorsContactInfo as administrator, index}
+                        <li class={ selectedContactID === administrator.ID ? "contact_active" : "contact_inactive"}>
+                            <ContactCard contact={administrator} bind:selectedContactID={selectedContactID} />
+                        </li>
+                    {/each}
+                </ul>
+            {/if}
         </form>
     </div>
     <div class="send_message_form_container">
-        <SendMessageForm reply={false} forward={false}/>
+        <CreateMessageForm reply={false} forward={false} contact={selectedContact}/>
     </div>
 </section>
 <style>
@@ -57,7 +108,7 @@
     .search_and_select_contact_form {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .selected_contacts {
@@ -65,6 +116,9 @@
         list-style: none;
         padding: 0;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .selected_contacts > li {
@@ -72,7 +126,7 @@
         padding: 0 0 0 1rem;
     }
 
-    .selected_contacts > li::before {
+    .contact_active::before {
         --size: 6px;
 		content: '';
 		position: absolute;
@@ -84,16 +138,6 @@
 		overflow: visible;
     }
 
-    .contacts_in_search {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .contacts_in_search > li {
-        position: relative;
-        padding: 0 0 0 1rem;
-    }
 
     @media screen and (max-width: 720px) {
         .create_message {
