@@ -15,6 +15,8 @@
     import { v4 as uuidv4 } from 'uuid';
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import { onMount } from "svelte";
+    import { MessagesStore } from "$lib/stores/MessagesStore";
+    import { UpdateMessagesStore } from "$lib/stores/UpdateMessagesStore";
 
     const sessionEmail = $page.data.streamed.user?.email;
 
@@ -50,22 +52,29 @@
         if (response.ok) {
             pendingGetClientMessages = false;
             getClientMessagesSuccess = true;
+            clientMessages = [];
             clientMessages = await response.json();
-            clientMessages.forEach((message) => {
+            console.log(clientMessages);
+            sentMessages = [];
+            receivedMessages = [];
+            draftMessages = [];
+            deletedMessages = [];
+            $MessagesStore = [];
+            $MessagesStore = [...clientMessages];
+            $MessagesStore.forEach((message: Message) => {
                 if (message.status === "sent" && message.receiver_role === "administrator") {
                     sentMessages = [...sentMessages, message];
                 } else if (message.status === "sent" && message.receiver_role === "client") {
                     receivedMessages = [...receivedMessages, message];
-                } else if (message.status === "draft") {
+                } else if (message.status === "saved") {
                     draftMessages = [...draftMessages, message];
                 } else if (message.status === "deleted") {
                     deletedMessages = [...deletedMessages, message];
                 };
             });
-
-            // parse data into categories
-
-            return clientMessages;
+            console.log(draftMessages)
+            // update the MessagesStore
+            return $MessagesStore;
         } else {
             pendingGetClientMessages = false;
             getClientMessagesSuccess = false;
@@ -76,6 +85,11 @@
     onMount(() => {
         getClientMessages(sessionEmail);
     });
+
+    $: if ($UpdateMessagesStore === true) {
+        getClientMessages(sessionEmail);
+        $UpdateMessagesStore = false;
+    };
 
     $: tabPanelsMessages = [
         {

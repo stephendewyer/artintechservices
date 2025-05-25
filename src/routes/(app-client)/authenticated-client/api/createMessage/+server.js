@@ -20,7 +20,9 @@ export async function POST({request}) {
     };
 
     const data = await request.json();
-
+    
+    const conversationID = data.conversationID;
+    const replyToMessageID = data.replyToMessageID;
     const sessionEmail = data.sessionEmail;
     const contact = data.contact;
     const subjectInputValue = data.subjectInputValue;

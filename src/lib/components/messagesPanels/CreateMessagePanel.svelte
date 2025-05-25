@@ -47,7 +47,7 @@
 
     let selectedContactID: number | null = null;
 
-    let selectedContact: Contact;
+    let selectedContact: Contact | null = null;
 
     $: administratorsContactInfo.forEach((administratorContact => {
         if (administratorContact.ID === selectedContactID) {
@@ -76,7 +76,10 @@
                 <ul class="selected_contacts">
                     {#each administratorsContactInfo as administrator, index}
                         <li class={ selectedContactID === administrator.ID ? "contact_active" : "contact_inactive"}>
-                            <ContactCard contact={administrator} bind:selectedContactID={selectedContactID} />
+                            <ContactCard 
+                                contact={administrator} 
+                                bind:selectedContactID={selectedContactID} 
+                            />
                         </li>
                     {/each}
                 </ul>
@@ -84,7 +87,11 @@
         </form>
     </div>
     <div class="send_message_form_container">
-        <CreateMessageForm reply={false} forward={false} contact={selectedContact}/>
+        <CreateMessageForm 
+            reply={false} 
+            bind:contact={selectedContact}
+            bind:selectedContactID
+        />
     </div>
 </section>
 <style>

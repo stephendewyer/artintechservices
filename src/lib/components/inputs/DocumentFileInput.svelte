@@ -21,6 +21,14 @@
     let documentFile: File | null = null;
     
     let documentFileName: string = document ? documentFileInputValue.split(`\\`)[2] : "";
+    
+    if (document && !documentFileInputValue) {
+        documentFileName = document;
+    } else if (document && documentFileInputValue) {
+        documentFileName = documentFileInputValue.split(`\\`)[2];
+    } else {
+        documentFileName = "";
+    };
 
     const documentFileChangedHandler = () => {
 
@@ -100,7 +108,7 @@
                     {@html DocumentIcon}
                 </div>
                 <p class="document_label">
-                    {documentFileName.length > 15 ? `...${documentFileName.slice(-15, documentFileName.length)}` : documentFileName}
+                    {documentFileName?.length > 15 ? `...${documentFileName.slice(-15, documentFileName.length)}` : documentFileName}
                 </p>
             </div>
             <div class="cancel_button_container">

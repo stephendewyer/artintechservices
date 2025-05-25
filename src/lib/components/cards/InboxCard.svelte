@@ -2,6 +2,7 @@
     import ProfilePhotoDefault from "$lib/images/default/default_profile_photo.jpg";
     import OpenedButton from "../buttons/OpenedButton.svelte";
     import { page } from "$app/stores";
+    import { MessagesStore } from "$lib/stores/MessagesStore";
 
     export let message: MessageWithContact;
     export let selectedMessageID: number | null = null;
@@ -29,6 +30,15 @@
                     }
                 });
                 updateMessageOpenedResponse = await response.json();
+
+                if (updateMessageOpenedResponse.ok) {
+                    // update the message opened as opened in $MessagesStore
+                    $MessagesStore.forEach((message: Message, index: number) => {
+                        if (message.message_ID === selectedMessageID) {
+                            $MessagesStore[index].opened = 1;
+                        };
+                    });
+                };
                 return updateMessageOpenedResponse;
             };
 
@@ -58,7 +68,7 @@
             <span style="font-weight: normal">from: </span>{`${message.contact.name_first} ${message.contact.name_last}`}
         </h4>
         <p class="date_sent">
-            subject: <span style="font-weight: bold">{message.subject.length > 15 ? `${message.subject.slice(-14, message.subject.length)}...` : message.subject}</span>
+            subject: <span style="font-weight: bold">{message.subject.length > 15 ? `${message.subject.slice(0, 14)}...` : message.subject}</span>
         </p>
         <p class="date_sent">
             date sent: <span style="font-weight: bold">{new Date(message.date_sent).toUTCString()}</span>

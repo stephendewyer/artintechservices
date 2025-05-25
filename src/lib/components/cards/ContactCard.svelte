@@ -6,19 +6,48 @@
     export let selected: boolean = false;
     export let closeContactClicked: boolean = false;
     export let selectedContactID: number | null = null;
+    export let disableClose: boolean = false;
+    export let messageID: number | null = null;
+    export let selectedMessageID: number | null = null;
 
     const clickCardHandler = () => {
-        if (
-            selected === false && 
-            closeContactClicked === false && 
-            selectedContactID !== contact.ID
-        ) {
-            selected = true;
-            selectedContactID = contact.ID;
-        } else {
-            closeContactClicked = false;
-        };
+
+        // handle if no message saved
+
+        if (messageID === null) {
+            if (
+                selected === false && 
+                closeContactClicked === false && 
+                selectedContactID !== contact.ID
+            ) {
+                selected = true;
+                selectedContactID = contact.ID;
+                selectedMessageID = messageID;
+            } else {
+                closeContactClicked = false;
+            };
+        } else if (messageID) {
+            // handle if message saved
+            selected = false;
+            
+            if (
+                selected === false && 
+                closeContactClicked === false && 
+                selectedMessageID !== messageID
+            ) {
+                selected = true;
+                selectedContactID = contact.ID;
+                selectedMessageID = messageID;
+            } else {
+                closeContactClicked = false;
+            };
+
+        }; 
         
+    };
+
+    $: if (selectedContactID === null) {
+        selected = false;
     };
 
     $: if (closeContactClicked) {
@@ -43,7 +72,7 @@
             {`${contact?.city}, ${contact?.state}`}
         </p>
     </div>
-    {#if selected}
+    {#if selected && !disableClose}
         <div class="close_button_container">
             <CloseButtonSmall bind:closeButtonClicked={closeContactClicked} />
         </div>

@@ -1,38 +1,9 @@
 <script lang="ts">
-    import PendingFlashMessage from "../flashMessages/PendingFlashMessage.svelte";
-    import ErrorFlashMessage from "../flashMessages/ErrorFlashMessage.svelte";
-    import SuccessFlashMessage from "../flashMessages/SuccessFlashMessage.svelte";
-    import AttachmentImage from "$lib/images/projects/Port_Mansfield_pier.jpg"
     import DocumentFileButton from "../buttons/DocumentFileButton.svelte";
     import SendMessageForm from "./CreateMessageForm.svelte";
 
     export let message: MessageWithContact;
 
-    let subjectIsValid: boolean = true;
-    let subjectInputValue: string = "";
-
-    let messageInputValue: string = "";
-    let messageIsValid: boolean = true;
-
-    // after submit
-	let responseItem: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
-    let pendingMessageSent: boolean = false;
-
-    $: if((responseItem.success) || (responseItem.error)) {
-        setTimeout(() => {
-            responseItem.success = "";
-            responseItem.error = "";
-            status: null;
-        }, 4000);
-    };
-
-    let attachDocumentClicked: boolean = false;
-    let attachImageClicked: boolean = false;
 </script>
 
 <form class="received_message_form">
@@ -61,22 +32,14 @@
         </div>
     </div>
     <div class="reply">
-        <SendMessageForm reply={true} forward={false}/>
+        <SendMessageForm 
+            reply={true} 
+            forward={false} 
+            replyToMessageID={message.message_ID}
+            conversationID={message.conversation_ID}
+        />
     </div>
 </form>
-{#if (pendingMessageSent)}
-    <PendingFlashMessage >
-        please wait while we validate your data
-    </PendingFlashMessage>
-{:else if (responseItem.error)}
-    <ErrorFlashMessage >
-        {responseItem.error}
-    </ErrorFlashMessage>
-{:else if (responseItem.success)}
-    <SuccessFlashMessage>
-        {responseItem.success}
-    </SuccessFlashMessage>
-{/if}
 
 <style>
     .received_message_form {

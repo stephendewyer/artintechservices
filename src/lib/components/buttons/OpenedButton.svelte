@@ -1,6 +1,8 @@
 <script lang="ts">
     import ClosedEye from "$lib/images/icons/closed_eye_icon.svg?raw";
     import OpenEye from "$lib/images/icons/open_eye_icon.svg?raw";
+    import OpenedMail from "$lib/images/icons/open_mail_icon.svg?raw";
+    import UnopenedMail from "$lib/images/icons/email_icon.svg?raw";
 
     export let opened: boolean = false;
 
@@ -12,9 +14,9 @@
     type="button"
 >
     {#if (opened)}
-        {@html OpenEye}
+        {@html OpenedMail}
     {:else}
-        {@html ClosedEye}
+        {@html UnopenedMail}
     {/if}
 </button>
 

@@ -79,14 +79,12 @@ export const POST = async ({request}) => {
         if (administrators.length > 0) {
             administrators.forEach((administrator) => {
                 if (administrator.ID === message.administrator_recipient_ID || administrator.ID === message.administrator_sender_ID) {
-                    messageWithContact = {...message, contact: administrator}
+                    messageWithContact = {...message, contact: {...administrator, role: "administrator"}}
                 };
             });
         };
         return messageWithContact;
     });
-
-    console.log(messagesWithContacts)
 
     res.end();
 

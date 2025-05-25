@@ -313,7 +313,7 @@ declare global {
 		sender_role: string;
 		receiver_role: string;
 		date_created: string;
-		date_sent: string | null;
+		date_sent: string | number | Date;
 		subject: string;
 		body: string;
 		document_attachment_ID: number | null;

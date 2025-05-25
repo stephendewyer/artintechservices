@@ -19,6 +19,8 @@ export async function POST({request}) {
 
     const data = await request.json();
 
+    const conversationID = data.conversationID;
+    const replyToMessageID = data.replyToMessageID;
     const messageID = data.messageID;
     const sessionEmail = data.sessionEmail;
     const contact = data.contact;
@@ -39,23 +41,75 @@ export async function POST({request}) {
         return new Response(JSON.stringify({error: "missing required form information"}), {status: 422});
     };
 
-    let clientID;
+    console.log(sessionEmail);
 
-    const selectClientQuery = `SELECT user_ID
-        FROM clients
-        WHERE email = "${sessionEmail}"`;
-    
+    let clientID = null;
+    let senderID = null;
+    let senderRole = "";
+    let receiverRole = "";
+
+    // if no reply to message, just get the client ID
+    // if replying to a message and no conversation ID, get the sender ID and role from message receiving a response
+    // if replying to a message and conversation ID, get the sender ID, role and conversation ID from message receiving a response
+
     let res = await mysqlConnection();
 
-    await res.query(selectClientQuery)
-    .then(([rows]) => {
-        clientID = JSON.parse(JSON.stringify(rows))[0].user_ID;
-    })
-    .catch(error => {
-        throw error;
-    });
+    if (!replyToMessageID) {
+        const selectClientQuery = `SELECT user_ID
+            FROM clients
+            WHERE email = "${sessionEmail}";
+        `;
+        
+        await res.query(selectClientQuery)
+        .then(([rows]) => {
+            clientID = JSON.parse(JSON.stringify(rows))[0].user_ID;
+        })
+        .catch(error => {
+            throw error;
+        });
 
-    // upload image to Cloudinary
+        console.log("clientID: ", clientID)
+    } else if (replyToMessageID && !conversationID) {
+        const selectConversation = `SELECT 
+                client_recipient_ID, 
+                administrator_sender_ID, 
+                sender_role, 
+                recipient_role
+            FROM messages
+            WHERE message_ID = ${messageID};
+        `;
+        await res.query(selectConversation)
+        .then(([rows]) => {
+            clientID = JSON.parse(JSON.stringify(rows))[0].client_recipient_ID;
+            senderID = JSON.parse(JSON.stringify(rows))[0].administrator_sender_ID;
+            senderRole = JSON.parse(JSON.stringify(rows))[0].sender_role;
+            receiverRole = JSON.parse(JSON.stringify(rows))[0].receiver_role;
+        })
+        .catch(error => {
+            throw error;
+        });
+    } else if (replyToMessageID && conversationID) {
+        const selectConversation = `SELECT 
+                client_recipient_ID, 
+                administrator_sender_ID, 
+                sender_role, 
+                recipient_role,
+            FROM messages
+            WHERE message_ID = ${messageID};
+        `;
+        await res.query(selectConversation)
+        .then(([rows]) => {
+            clientID = JSON.parse(JSON.stringify(rows))[0].client_recipient_ID;
+            senderID = JSON.parse(JSON.stringify(rows))[0].administrator_sender_ID;
+            senderRole = JSON.parse(JSON.stringify(rows))[0].sender_role;
+            receiverRole = JSON.parse(JSON.stringify(rows))[0].receiver_role;
+        })
+        .catch(error => {
+            throw error;
+        });
+    };    
+
+    // upload image to Cloudinary if any
 
     let uploadedImageURL = "";
     let uploadedImagePublicID = "";
@@ -163,7 +217,7 @@ export async function POST({request}) {
 
         // delete the image foreign key from messages row using message_ID
 
-        const deleteImageIDFromMessageRow = `UPDATE messages SET image_ID = NULL WHERE message_ID=${messageID}`;
+        const deleteImageIDFromMessageRow = `UPDATE messages SET image_attachment_ID = NULL WHERE message_ID=${messageID}`;
 
         await res.query(deleteImageIDFromMessageRow)
         .then(() => {
@@ -292,7 +346,7 @@ export async function POST({request}) {
 
         // delete the document foreign key from messages row using message_ID
 
-        const deleteDocumentIDFromMessagesRow = `UPDATE messages SET document_ID = NULL WHERE message_ID=${messageID}`;
+        const deleteDocumentIDFromMessagesRow = `UPDATE messages SET document_attachment_ID = NULL WHERE message_ID=${messageID}`;
 
         await res.query(deleteDocumentIDFromMessagesRow)
         .then(() => {
@@ -316,7 +370,7 @@ export async function POST({request}) {
 
     };
 
-    // if no message_ID, insert into messages
+    // if saving message for the first time
 
     if (!messageID) {
 
@@ -325,7 +379,6 @@ export async function POST({request}) {
             administrator_recipient_ID,
             sender_role,
             receiver_role,
-            date_sent,
             subject,
             body,
             document_attachment_ID,
@@ -336,7 +389,6 @@ export async function POST({request}) {
             ${contact.ID},
             "client",
             "${contact.role}",
-            "${Date.now()}",
             "${htmlEntities(subjectInputValue)}",
             "${htmlEntities(messageInputValue)}",
             ${documentID},
@@ -354,6 +406,7 @@ export async function POST({request}) {
         });
 
     } else if (messageID) {
+        // if saving message that already has been saved
         let updateMessageStatement = "";
 
         if (addDocumentID && addImageID) {
@@ -363,7 +416,6 @@ export async function POST({request}) {
                     administrator_recipient_ID=${contact.ID},
                     sender_role="client",
                     receiver_role="${contact.role}",
-                    date_sent="${Date.now()}",
                     subject="${htmlEntities(subjectInputValue)}",
                     body="${htmlEntities(messageInputValue)}",
                     document_attachment_ID=${documentID},
@@ -379,7 +431,6 @@ export async function POST({request}) {
                     administrator_recipient_ID=${contact.ID},
                     sender_role="client",
                     receiver_role="${contact.role}",
-                    date_sent="${Date.now()}",
                     subject="${htmlEntities(subjectInputValue)}",
                     body="${htmlEntities(messageInputValue)}",
                     document_attachment_ID=${documentID},
@@ -394,7 +445,6 @@ export async function POST({request}) {
                     administrator_recipient_ID=${contact.ID},
                     sender_role="client",
                     receiver_role="${contact.role}",
-                    date_sent="${Date.now()}",
                     subject="${htmlEntities(subjectInputValue)}",
                     body="${htmlEntities(messageInputValue)}",
                     image_attachment_ID=${imageID},
@@ -409,7 +459,6 @@ export async function POST({request}) {
                     administrator_recipient_ID=${contact.ID},
                     sender_role="client",
                     receiver_role="${contact.role}",
-                    date_sent="${Date.now()}",
                     subject="${htmlEntities(subjectInputValue)}",
                     body="${htmlEntities(messageInputValue)}",
                     status="saved"
