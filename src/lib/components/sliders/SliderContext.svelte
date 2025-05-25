@@ -6,6 +6,7 @@
     import ArrowButtonPrevious from "$lib/components/buttons/ArrowButtonPrevious.svelte";
     import Terravision from "$lib/images/context/context_02.jpg";
     import LeVoyageDansLaLune from "$lib/images/context/context_01.jpg";
+    import MorrisTelegraph from "$lib/images/context/context_03.jpg";
 
     import { onDestroy } from 'svelte';
     
@@ -28,6 +29,12 @@
             imageSrc: Terravision,
             alt: "Terravision, a 3D mapping software developed in 1993 by the German company ART+COM in Berlin",
             paragraph: "Terravision, a 3D mapping software developed in 1993 by the German company ART+COM in Berlin.  Terravision was a prequel to Google Earth."
+        },
+        {
+            index: 3,
+            imageSrc: MorrisTelegraph,
+            alt: "Artist Samuel Morse invented Morse telegraph and Morse code.",
+            paragraph: "Artist Samuel Morse invented Morse telegraph and Morse code."
         }
     ];
 
