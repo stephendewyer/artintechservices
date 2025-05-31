@@ -29,10 +29,10 @@
 
 </script>
 
-<section class="inbox">
+<section class="drafts">
     <div class="search_and_select_messages">
         <h3 style="text-align: center">drafts</h3>
-        <ul class="inbox_cards">
+        <ul class="drafts_cards">
             {#each sortedMessages as message, index}
                 <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
                     <ContactCard 
@@ -62,7 +62,7 @@
 </section>
 <style>
 
-    .inbox {
+    .drafts {
         width: 100%;
         display: flex;
         flex-direction: row;
@@ -80,9 +80,8 @@
     .received_message_form_container {
         width: 100%;
     }
-    
 
-    .inbox_cards {
+    .drafts_cards {
         position: relative;
         list-style: none;
         padding: 0;
@@ -90,9 +89,11 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        max-height: 40rem;
+        overflow: auto;
     }
 
-    .inbox_cards > li {
+    .drafts_cards > li {
         position: relative;
         padding: 0 0 0 1rem;
     }
@@ -111,8 +112,12 @@
 
 
     @media screen and (max-width: 1080px) {
-        .inbox {
+        .drafts {
             flex-direction: column;
+        }
+
+        .drafts_cards {
+            max-height: 15rem;
         }
 
          .search_and_select_messages {

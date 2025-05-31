@@ -145,14 +145,20 @@
 		overflow: visible;
     }
 
-
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 1080px) {
         .create_message {
             flex-direction: column;
         }
 
-        .search_and_select_contact {
+        .selected_contacts {
+            height: auto;
+            max-height: 15rem;
+            overflow: auto;
+        }
+
+         .search_and_select_contact {
             width: 100%;
+            max-width: 100%;
         }
     }
 

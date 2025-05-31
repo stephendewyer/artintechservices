@@ -142,6 +142,8 @@
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
+        max-height: 40rem;
+        overflow: auto;
     }
 
     .inbox_cards > li {
@@ -170,6 +172,10 @@
          .search_and_select_messages {
             width: 100%;
             max-width: 100%;
+        }
+
+        .inbox_cards {
+            max-height: 15rem;
         }
     }
 

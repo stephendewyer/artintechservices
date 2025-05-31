@@ -5,6 +5,7 @@
 
 </script>
 <button 
+    type="button"
     class="delete_button"
     on:click={() => clicked = true}
     on:keyup={() => clicked = true}

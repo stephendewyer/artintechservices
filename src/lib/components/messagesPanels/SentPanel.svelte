@@ -1,41 +1,43 @@
 <script lang="ts">
-    import SearchInput from "../inputs/SearchInput.svelte";
-    import ContactCard from "../cards/ContactCard.svelte";
+    // import SearchInput from "../inputs/SearchInput.svelte";
+    import SentCard from "../cards/SentCard.svelte";
     import SentMessageForm from "../forms/SentMessageForm.svelte";
 
     export let panel_data;
+    // console.log("panel_data: ", panel_data);
 
-    let searchContactInputValue: string = "";
-    let searchContactValueChange: boolean = false;
+    // let searchContactInputValue: string = "";
+    // let searchContactValueChange: boolean = false;
+    // order received message from latest to earliest times sent
+
+    const sortedMessages: MessageWithContact[] = panel_data.sort((a: any, b: any) => a.date_sent - b.date_sent);
+
+    let selectedMessageID: number | null = sortedMessages[0].message_ID;
 
 </script>
+
 <section class="inbox">
-    <div class="search_and_select_contact">
-        <form class="search_and_select_contact_form">
-            <SearchInput
-                placeholder="firstname lastname"
-                inputID="contact_or_subject_search"
-                inputName="contact_or_subject_search"
-                inputLabel={true}
-                bind:searchInputValue={searchContactInputValue}
-                bind:searchInputValueChange={searchContactValueChange}
-            >
-                recipients
-            </SearchInput>
-            <ul class="selected_contacts">
-                <li>
-                    <ContactCard />
+    <div class="search_and_select_messages">
+        <h3 style="text-align: center">conversations</h3>
+        <ul class="inbox_cards">
+            {#each sortedMessages as message, index}
+                <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
+                    <SentCard 
+                        message={message} 
+                        bind:selectedMessageID
+                    />
                 </li>
-            </ul>
-            <ul class="contacts_in_search">
-                <li>
-                    <ContactCard />
-                </li>
-            </ul>
-        </form>
+            {/each}
+        </ul>
     </div>
     <div class="received_message_form_container">
-        <SentMessageForm deletedMessage={false}/>
+        {#each sortedMessages as message, index}
+            {#if message.message_ID === selectedMessageID}
+                {#key message}
+                    <SentMessageForm message={message} />
+                {/key}
+            {/if}
+        {/each}
     </div>
 </section>
 <style>
@@ -47,34 +49,38 @@
         gap: 1rem;
     }
 
-    .search_and_select_contact {
+    .search_and_select_messages {
         width: 50%;
         max-width: 30rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .received_message_form_container {
         width: 100%;
     }
     
-    .search_and_select_contact_form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
 
-    .selected_contacts {
+    .inbox_cards {
         position: relative;
         list-style: none;
         padding: 0;
         margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        height: auto;
+        max-height: 40rem;
+        overflow: auto;
     }
 
-    .selected_contacts > li {
+    .inbox_cards > li {
         position: relative;
         padding: 0 0 0 1rem;
     }
 
-    .selected_contacts > li::before {
+    .message_active::before {
         --size: 6px;
 		content: '';
 		position: absolute;
@@ -86,25 +92,21 @@
 		overflow: visible;
     }
 
-    .contacts_in_search {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-    .contacts_in_search > li {
-        position: relative;
-        padding: 0 0 0 1rem;
-    }
-
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 1080px) {
         .inbox {
             flex-direction: column;
         }
 
-        .search_and_select_contact {
+
+        .inbox_cards {
+            max-height: 15rem;
+        }
+
+         .search_and_select_messages {
             width: 100%;
+            max-width: 100%;
         }
     }
+
 
 </style>

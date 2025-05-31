@@ -9,7 +9,6 @@
     import Tabs from "$lib/components/tabPanelClient/Tabs.svelte";
     import Panel from "$lib/components/tabPanelClient/Panel.svelte";
     import SentMessagesPanel from "$lib/components/messagesPanels/SentPanel.svelte";
-    import DeletedPanel from "$lib/components/messagesPanels/DeletedPanel.svelte";
     import CreateMessagePanel from "$lib/components/messagesPanels/CreateMessagePanel.svelte";
     import InboxPanel from "$lib/components/messagesPanels/InboxPanel.svelte";
     import { v4 as uuidv4 } from 'uuid';
@@ -33,7 +32,6 @@
     let sentMessages: Message[] = [];
     let receivedMessages: Message[] = [];
     let draftMessages: Message[] = [];
-    let deletedMessages: Message[] = [];
 
     const getClientMessages = async (sessionEmail: string) => {
 
@@ -58,7 +56,6 @@
             sentMessages = [];
             receivedMessages = [];
             draftMessages = [];
-            deletedMessages = [];
             $MessagesStore = [];
             $MessagesStore = [...clientMessages];
             $MessagesStore.forEach((message: Message) => {
@@ -68,12 +65,8 @@
                     receivedMessages = [...receivedMessages, message];
                 } else if (message.status === "saved") {
                     draftMessages = [...draftMessages, message];
-                } else if (message.status === "deleted") {
-                    deletedMessages = [...deletedMessages, message];
                 };
             });
-            console.log(draftMessages)
-            // update the MessagesStore
             return $MessagesStore;
         } else {
             pendingGetClientMessages = false;
@@ -123,14 +116,6 @@
             tabImageSrc: "",
             panel: DraftsPanel,
             data: [...draftMessages]
-        },
-        {
-            id: uuidv4(),
-            index: 4,
-            label: "deleted",
-            tabImageSrc: "",
-            panel: DeletedPanel,
-            data: [...deletedMessages]
         },
     ];
 

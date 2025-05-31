@@ -37,11 +37,9 @@ export async function POST({request}) {
     const documentFileInputValue = data.documentFileInputValue;
     const deleteDocument = data.deleteDocument;
 
-    if (!sessionEmail || !contact || !subjectInputValue || !messageInputValue) {
+    if (!sessionEmail || !contact ) {
         return new Response(JSON.stringify({error: "missing required form information"}), {status: 422});
     };
-
-    console.log(sessionEmail);
 
     let clientID = null;
     let senderID = null;

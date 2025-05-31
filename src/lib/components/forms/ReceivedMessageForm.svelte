@@ -34,9 +34,9 @@
     <div class="reply">
         <SendMessageForm 
             reply={true} 
-            forward={false} 
             replyToMessageID={message.message_ID}
             conversationID={message.conversation_ID}
+            selectedContactID={message.administrator_sender_ID}
         />
     </div>
 </form>

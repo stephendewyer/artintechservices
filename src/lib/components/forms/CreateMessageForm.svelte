@@ -15,6 +15,10 @@
     import { onMount } from "svelte";
     import LoadingSpinner from "../loadingSpinners/LoadingSpinner.svelte";
     import { UpdateMessagesStore } from "$lib/stores/UpdateMessagesStore";
+  import DeleteButton from "../buttons/DeleteButton.svelte";
+  import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
+  import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
+  import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
 
     export let selectedContactID: number | null = null;
     export let contact: Contact | null = null;
@@ -350,11 +354,72 @@
         disableSaveButton = true;
     };
 
+    interface DeleteItem {
+        message: string;
+        data: number;
+    };
+
+    const deleteMessageHandler = async (message: Message | null) => {
+
+        $ModalOpenStore = true;
+
+        const messageData: DeleteItem | any = {
+            message: "message draft",
+            data: message?.message_ID
+        };
+
+        $DeleteConfirmationStore = messageData;
+
+    };
+
+    const ConfirmedDeleteMessage = async (message: Message | null) => {
+
+        const response = await fetch("/authenticated-client/api/deleteDraftMessage", {
+            method: "DELETE",
+            body: JSON.stringify({
+                message
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        let deleteResponse;
+        deleteResponse = await response.json();
+
+        if (deleteResponse.success) {
+            // update messages
+        } else if (deleteResponse.error) {
+            console.log("draft message failed to delete");
+        };
+    };
+
+    let deleteMessageClicked: boolean = false;
+
+    $: if (deleteMessageClicked) {
+        // prompt user to confirm delete
+        deleteMessageHandler(message);
+        deleteMessageClicked = false;
+    };
+
+    $: if ($DeleteConfirmedStore === true) {
+        ConfirmedDeleteMessage(message);
+        $DeleteConfirmedStore = false;
+    };
+
 </script>
+
 {#if pendingGetMessage}
     <LoadingSpinner />
 {:else}
     <form class="send_message_form" on:submit|preventDefault={handleSendMessageSubmit}> 
+        {#if message?.status === "saved"}
+            <div class="delete_button_container">
+                <DeleteButton bind:clicked={deleteMessageClicked}>
+                    delete
+                </DeleteButton>
+            </div>
+        {/if}
         <h3>{#if reply}reply{:else}create{/if}</h3>
     
         <TextInput
@@ -468,6 +533,7 @@
 
 <style>
     .send_message_form {
+        position: relative;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -508,6 +574,12 @@
     .input_container_toggle {
         width: 100%;
         padding: 2rem 0 0 0;
+    }
+
+    .delete_button_container {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
     }
 
     @media screen and (max-width: 1080px) {
