@@ -8,7 +8,6 @@
     import Tabs from "$lib/components/tabPanelAdministrator/Tabs.svelte";
     import Panel from "$lib/components/tabPanelAdministrator/Panel.svelte";
     import SentMessagesPanel from "$lib/components/messagesPanels/SentPanel.svelte";
-    import DeletedPanel from "$lib/components/messagesPanels/DeletedPanel.svelte";
     import CreateMessagePanel from "$lib/components/messagesPanels/CreateMessagePanel.svelte";
     import InboxPanel from "$lib/components/messagesPanels/InboxPanel.svelte";
     import { v4 as uuidv4 } from 'uuid';
@@ -41,14 +40,6 @@
             label: "sent",
             tabImageSrc: "",
             panel: SentMessagesPanel,
-            data: []
-        },
-        {
-            id: uuidv4(),
-            index: 4,
-            label: "deleted",
-            tabImageSrc: "",
-            panel: DeletedPanel,
             data: []
         },
     ];
