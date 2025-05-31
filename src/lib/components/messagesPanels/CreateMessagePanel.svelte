@@ -100,6 +100,7 @@
         width: 100%;
         display: flex;
         flex-direction: row;
+        justify-content: center;
         gap: 1rem;
     }
 
@@ -110,6 +111,7 @@
 
     .send_message_form_container {
         width: 100%;
+        max-width: 60rem;
     }
     
     .search_and_select_contact_form {

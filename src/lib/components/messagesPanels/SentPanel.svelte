@@ -46,6 +46,7 @@
         width: 100%;
         display: flex;
         flex-direction: row;
+        justify-content: center;
         gap: 1rem;
     }
 
@@ -59,6 +60,7 @@
 
     .received_message_form_container {
         width: 100%;
+        max-width: 60rem;
     }
     
 
