@@ -9,15 +9,25 @@
 <form class="received_message_form">
     <div class="received_message">
         <p class="date">
-            {new Date(message.date_sent).toUTCString()}
+            {`${new Date(message.date_sent).toUTCString().split(',')[0]}., ${new Date(message.date_sent).toLocaleString().split(',')[0]}, ${new Date(message.date_sent).toLocaleString().split(',')[1].slice(1,13)}`}
         </p>
         <p class="subject">
-            <span style="font-weight: 600">subject: </span>{message.subject}
+            <span class="heading">
+                subject: 
+            </span><br />
+            {message.subject}
         </p>
         <p class="message_paragraphs">
-            <span class="subject" style="font-weight: 600">message: </span><br/>
+            <span class="heading">
+                message: 
+            </span><br/>
             {message.body}
         </p>
+        {#if message.image_attachment_ID || message.document_attachment_ID}
+            <div class="heading" style="text-align: left; width: 100%;">
+                attachments: 
+            </div>
+        {/if}
         <div class="attachments">
             <div class="image_attachment">
                 {#if message.image_attachment_ID}
@@ -111,6 +121,11 @@
     .reply {
         background-color: #FFF3ED;
         width: 100%;
+    }
+
+    .heading {
+        font-weight: 600;
+        font-size: 1rem;
     }
 
     @media screen and (max-width: 1440px) {

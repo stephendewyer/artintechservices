@@ -24,7 +24,7 @@
     .toggle_password_visibility_button {
         position: relative;
         height: 100%;
-        width: 3.5rem;
+        width: 2.5rem;
         padding: 0.25rem;
         display: flex;
         flex-direction: column;

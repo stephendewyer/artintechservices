@@ -8,7 +8,7 @@
 
     let opened: boolean = message.opened === 1 ? true : false;
 
-    console.log(message.opened)
+    console.log(message)
 
     const clickCardHandler = () => {
         selectedMessageID = message.message_ID;
@@ -24,11 +24,20 @@
         <h4 class="profile_name">
             <span style="font-weight: normal">from: </span>{`${message.contact.name_first} ${message.contact.name_last}`}
         </h4>
-        <p class="date_sent">
-            subject: <span style="font-weight: bold">{message.subject.length > 15 ? `${message.subject.slice(0, 14)}...` : message.subject}</span>
+        <p class="subject">
+            subject: <span style="font-weight: bold">{message.subject.length > 8 ? `${message.subject.slice(0, 8)}...` : message.subject}</span>
         </p>
         <p class="date_sent">
-            date sent: <span style="font-weight: bold">{new Date(message.date_sent).toUTCString()}</span>
+            date sent: 
+            <span style="font-weight: bold">
+                {`${new Date(message.date_sent).toUTCString().split(',')[0]}., ${new Date(message.date_sent).toLocaleString().split(',')[0]}`}
+            </span>
+        </p>
+         <p class="date_sent">
+            time sent: 
+            <span style="font-weight: bold">
+                {new Date(message.date_sent).toLocaleString().split(',')[1].slice(1,13)}
+            </span>
         </p>
     </div>
     <div class="close_button_container">
@@ -95,12 +104,20 @@
         text-align: left;
     }
 
-    .date_sent {
+    .subject {
         text-align: left;
         padding: 0;
         margin: 0;
         font-size: 1rem;
     }
+
+    .date_sent {
+        text-align: left;
+        padding: 0;
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
     .close_button_container {
         position: absolute;
         right: 0.5rem;
@@ -129,13 +146,17 @@
         }
 
         .date_sent {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
     }
 
     @media screen and (max-width: 1080px) {
         .profile_name {
             font-size: 1rem;
+        }
+
+        .subject {
+            font-size: 0.9rem;
         }
 
         .date_sent {

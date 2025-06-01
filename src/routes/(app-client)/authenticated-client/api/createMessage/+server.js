@@ -160,7 +160,7 @@ export async function POST({request}) {
         });
     };
 
-    const insertProjectStatement = `INSERT INTO messages (
+    const insertMessageStatement = `INSERT INTO messages (
         client_sender_ID,
         administrator_recipient_ID,
         sender_role,
@@ -176,7 +176,7 @@ export async function POST({request}) {
         ${contact.ID},
         "client",
         "${contact.role}",
-        "${Date.now()}",
+        NOW(),
         "${htmlEntities(subjectInputValue)}",
         "${htmlEntities(messageInputValue)}",
         ${documentID},
@@ -184,7 +184,7 @@ export async function POST({request}) {
         "sent"
     )`;
 
-    await res.query(insertProjectStatement)
+    await res.query(insertMessageStatement)
     .then(() => {
         console.log(`message saved in the database`)
     })

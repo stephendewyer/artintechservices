@@ -2,25 +2,23 @@
     import DocumentIcon from "$lib/images/icons/document.svg?raw";
     export let documentURL: string | null = "";
 </script>
-<a href={documentURL} target="_blank" class="document_button_container">
-    <button class="document_button">
-        <div class="icon_container">
-            {@html DocumentIcon}
-        </div>
-        <p class="label">
-            {documentURL?.split("/")[documentURL.split("/").length - 1]}
-        </p>
-    </button> 
+<a 
+    href={`${documentURL}`} 
+    target="_blank" 
+    class="document_button"
+>
+    <div class="icon_container">
+        {@html DocumentIcon}
+    </div>
+    <p class="label">
+        {documentURL?.split("/")[documentURL.split("/").length - 1]}
+    </p>
 </a>
 
 <style>
 
-    .document_button_container {
-        display: inline-flex;
-    }
-
     .document_button {
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
         align-items: center;
         gap: 0.5rem;

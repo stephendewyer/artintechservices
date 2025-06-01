@@ -10,35 +10,39 @@
     // let searchContactValueChange: boolean = false;
     // order received message from latest to earliest times sent
 
-    const sortedMessages: MessageWithContact[] = panel_data.sort((a: any, b: any) => a.date_sent - b.date_sent);
+    const sortedMessages: MessageWithContact[] = panel_data.length > 0 ? panel_data.sort((a: any, b: any) => a.date_sent - b.date_sent) : [];
 
-    let selectedMessageID: number | null = sortedMessages[0].message_ID;
+    let selectedMessageID: number | null = panel_data.length > 0 ? sortedMessages[0].message_ID : null;
 
 </script>
 
 <section class="inbox">
-    <div class="search_and_select_messages">
-        <h3 style="text-align: center">conversations</h3>
-        <ul class="inbox_cards">
+    {#if panel_data.length > 0}
+        <div class="search_and_select_messages">
+            <h3 style="text-align: center">conversations</h3>
+            <ul class="inbox_cards">
+                {#each sortedMessages as message, index}
+                    <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
+                        <SentCard 
+                            message={message} 
+                            bind:selectedMessageID
+                        />
+                    </li>
+                {/each}
+            </ul>
+        </div>
+        <div class="received_message_form_container">
             {#each sortedMessages as message, index}
-                <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
-                    <SentCard 
-                        message={message} 
-                        bind:selectedMessageID
-                    />
-                </li>
+                {#if message.message_ID === selectedMessageID}
+                    {#key message}
+                        <SentMessageForm message={message} />
+                    {/key}
+                {/if}
             {/each}
-        </ul>
-    </div>
-    <div class="received_message_form_container">
-        {#each sortedMessages as message, index}
-            {#if message.message_ID === selectedMessageID}
-                {#key message}
-                    <SentMessageForm message={message} />
-                {/key}
-            {/if}
-        {/each}
-    </div>
+        </div>
+    {:else}
+        no sent messages
+    {/if}
 </section>
 <style>
 

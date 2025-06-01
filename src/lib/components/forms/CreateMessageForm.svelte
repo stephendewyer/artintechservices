@@ -15,10 +15,10 @@
     import { onMount } from "svelte";
     import LoadingSpinner from "../loadingSpinners/LoadingSpinner.svelte";
     import { UpdateMessagesStore } from "$lib/stores/UpdateMessagesStore";
-  import DeleteButton from "../buttons/DeleteButton.svelte";
-  import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
-  import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
-  import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
+    import DeleteButton from "../buttons/DeleteButton.svelte";
+    import { ModalOpenStore } from "$lib/stores/ModalOpenStore";
+    import { DeleteConfirmationStore } from "$lib/stores/DeleteConfirmationStore";
+    import { DeleteConfirmedStore } from "$lib/stores/DeleteConfirmedStore";
 
     export let selectedContactID: number | null = null;
     export let contact: Contact | null = null;
@@ -207,6 +207,8 @@
             );
 
             if (responseItem.success) {
+                // update the messages
+                $UpdateMessagesStore = true;
                 // deactive selected contact card
                 selectedContactID = null;
                 contact = null;
@@ -389,6 +391,7 @@
 
         if (deleteResponse.success) {
             // update messages
+            $UpdateMessagesStore = true;
         } else if (deleteResponse.error) {
             console.log("draft message failed to delete");
         };

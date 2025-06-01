@@ -30,35 +30,39 @@
 </script>
 
 <section class="drafts">
-    <div class="search_and_select_messages">
-        <h3 style="text-align: center">drafts</h3>
-        <ul class="drafts_cards">
+    {#if panel_data.length > 0}
+        <div class="search_and_select_messages">
+            <h3 style="text-align: center">drafts</h3>
+            <ul class="drafts_cards">
+                {#each sortedMessages as message, index}
+                    <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
+                        <ContactCard 
+                            contact={message.contact} 
+                            bind:selectedMessageID
+                            messageID={message.message_ID}
+                            disableClose={true}
+                        />
+                    </li>
+                {/each}
+            </ul>
+        </div>
+        <div class="received_message_form_container">
             {#each sortedMessages as message, index}
-                <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
-                    <ContactCard 
-                        contact={message.contact} 
-                        bind:selectedMessageID
-                        messageID={message.message_ID}
-                        disableClose={true}
-                    />
-                </li>
+                {#if message.message_ID === selectedMessageID}
+                    {#key message}
+                        <CreateMessageForm 
+                            message={message}
+                            reply={false} 
+                            selectedContactID={selectedContact.ID}
+                            contact={message.contact}
+                        />
+                    {/key}
+                {/if}
             {/each}
-        </ul>
-    </div>
-    <div class="received_message_form_container">
-        {#each sortedMessages as message, index}
-            {#if message.message_ID === selectedMessageID}
-                {#key message}
-                    <CreateMessageForm 
-                        message={message}
-                        reply={false} 
-                        selectedContactID={selectedContact.ID}
-                        contact={message.contact}
-                    />
-                {/key}
-            {/if}
-        {/each}
-    </div>
+        </div>
+    {:else}
+        no draft messages
+    {/if}
 </section>
 <style>
 
