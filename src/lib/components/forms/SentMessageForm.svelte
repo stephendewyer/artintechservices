@@ -22,7 +22,7 @@
             </span><br/>
             {message.body}
         </p>
-        <span class="heading"style="text-align: left; width: 100%;">
+        <span class="heading" style="text-align: left; width: 100%;">
             attachments: 
         </span><br/>
         <div class="attachments">
