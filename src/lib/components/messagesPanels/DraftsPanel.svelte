@@ -1,10 +1,12 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import ContactCard from "../cards/ContactCard.svelte";
+    import DraftsCard from "../cards/DraftsCard.svelte";
     // import SearchInput from "../inputs/SearchInput.svelte";
     import CreateMessageForm from "../forms/CreateMessageForm.svelte";
 
     export let panel_data;
+
+    console.log(panel_data)
 
     // order saved messages from latest to earliest times sent
 
@@ -36,10 +38,11 @@
             <ul class="drafts_cards">
                 {#each sortedMessages as message, index}
                     <li class={ selectedMessageID === message.message_ID ? "message_active" : "message_inactive"} >
-                        <ContactCard 
+                        <DraftsCard 
                             contact={message.contact} 
                             bind:selectedMessageID
                             messageID={message.message_ID}
+                            subject={message.subject}
                             disableClose={true}
                         />
                     </li>

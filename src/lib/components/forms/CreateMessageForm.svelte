@@ -27,6 +27,8 @@
     export let conversationID: number | null = null;
     export let message: Message | null = null;
 
+    let messagesStatus: string | null = message?.status ? message.status : null;
+
     const sessionEmail = $page.data.streamed.user?.email;
 
     let subjectIsValid: boolean = true;
@@ -149,7 +151,8 @@
         document: any,
         documentFileInputValue: string,
         documentPublicID: string | null,
-        deleteDocument: boolean
+        deleteDocument: boolean,
+        messageStatus: string | null
     ) => {	
         const response = await fetch("/authenticated-client/api/createMessage", {
 
@@ -171,7 +174,8 @@
                 document,
                 documentFileInputValue,
                 documentPublicID,
-                deleteDocument
+                deleteDocument,
+                messageStatus
             }),
             headers: {
                 'Content-Type': 'application/json',
@@ -203,7 +207,8 @@
                 document,
                 documentFileInputValue,
                 documentPublicID,
-                deleteDocument
+                deleteDocument,
+                messagesStatus
             );
 
             if (responseItem.success) {
