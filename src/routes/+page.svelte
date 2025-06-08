@@ -9,7 +9,6 @@
     import ManageAccount from "$lib/images/manage_account/reduced/wood_doors.jpg";
     import SaguaroCactus from "$lib/images/cactus/saguaro_cactus_cropped.png";
     import WaterfallGalaxy from "$lib/images/services_background/services_background.jpg";
-    import { onMount } from "svelte";
     import ScrollableCaseStudies from "$lib/components/scrollables/ScrollableCaseStudies.svelte";
     import ScrollableServices from "$lib/components/scrollables/ScrollableServices.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
@@ -23,6 +22,12 @@
     import ConsultationIcon from "$lib/images/icons/consultation_icon.svg?raw";
     import ProjectIcon from "$lib/images/icons/project.svg?raw";
     import ManageAccountIcon from "$lib/images/icons/manage_account_solid.svg?raw";
+    import videojs from "video.js";
+    import "video.js/dist/video-js.min.css";
+    import type Player from "video.js/dist/types/player";
+    import { onDestroy, onMount } from "svelte";
+    import ArtInTechServicesClientPortalVideo from "$lib/videos/Art_in_Tech_Services_client_portal_overview.mp4";
+    import ArtInTechServicesClientPortalPosterImage from "$lib/videos/Art_in_Tech_Services_client_portal_overview.jpg";
 
     const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
@@ -162,6 +167,18 @@
         pending = false;
     };
 
+    let player: Player;
+
+    onMount(() => {
+        player = videojs("player", {fluid: true});
+    });
+
+    onDestroy(() => {
+        if (player) {
+            player.dispose();
+        };
+    });
+
 </script>
 <svelte:window on:scroll={handleScroll}/>
 <svelte:head>
@@ -197,24 +214,21 @@
         <h2 class="heading_02">
             login client
         </h2>
+         <div class="video_container">
+            <video 
+                class="video-js"
+                controls 
+                id="player"
+                muted={true}
+                autoplay={true}
+                poster={ArtInTechServicesClientPortalPosterImage}
+                loop={true}
+            >
+                <track kind="captions">
+                <source src={ArtInTechServicesClientPortalVideo} type="video/mp4"/>
+            </video>
+        </div>
         <form class="form" on:submit|preventDefault={loginClientHandler}>
-            <ul class="client_portal_actions_list">
-                <li>
-                    schedule and keep track of consultations
-                </li>
-                <li>
-                    start and keep track of projects
-                </li>
-                <li>
-                    send and receive secure messages
-                </li>
-                <li>
-                    handle invoices and make secure payments
-                </li>
-                <li>
-                    handle personal account details
-                </li>
-            </ul>
             <div class="input_row">
                 <EmailInput
                     bind:isValid={emailIsValid}
@@ -371,6 +385,12 @@
         will-change: transform;
     }
 
+    .video_container {
+        width: 100%;
+        max-width: 60rem;
+        padding: 0 0 1rem 0;
+    }
+
     .intro_paragraph_container {
         position: absolute;
         top: 0;
@@ -415,10 +435,6 @@
     .heading_02 {
         text-align: center;
         padding: 1rem;
-    }
-
-    .client_portal_actions_list {
-        margin: 0;
     }
 
     .login_client_section {
