@@ -358,10 +358,6 @@
 
     @media screen and (max-width: 720px) {
 
-        .about_banner_container {
-            height: 20rem;
-        }
-
         .story_image_and_paragraph {
             display: flex;
             flex-direction: column;
@@ -382,7 +378,7 @@
         }
 
         table {
-            padding: 0 1rem;;
+            padding: 0 1rem;
         }
 
         .table_paragraph {
