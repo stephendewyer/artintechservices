@@ -1,8 +1,8 @@
 <script lang="ts">
     import videojs from "video.js";
     import "video.js/dist/video-js.min.css";
-    import { onDestroy, onMount } from "svelte";
     import type Player from "video.js/dist/types/player";
+    import { onDestroy, onMount } from "svelte";
     import AboutVideo from "$lib/videos/expertise_video_web.mp4";
     import AboutVideoPoster from "$lib/videos/expertise_video_poster_video.jpg";
     import { PUBLIC_DOMAIN } from "$env/static/public";
@@ -43,27 +43,53 @@
     <meta property="og:image" content={BannerImage} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
-<div class="page">
+<div class="about_page">
     <div class="about_banner_container">
         <img class="about_banner" src={AboutBanner} alt="seed filled with fluffy clouds in desert" />
         <h1 class="story_headline">
             creating software that improves human experiences of technology by using art with state-of-the-art digital technology
         </h1>
     </div>
-    <h2 style="padding: 1rem;">story</h2>
-    <div class="video_container">
-        <video 
-            class="video-js"
-            controls 
-            id="player"
-            muted={true}
-            autoplay={true}
-            poster={AboutVideoPoster}
-            loop={true}
-        >
-            <track kind="captions">
-            <source src={AboutVideo} type="video/mp4"/>
-        </video>
+    <div class="story_section">
+        <h2>history</h2>
+        <div class="video_container">
+            <video 
+                class="video-js"
+                controls 
+                id="player"
+                muted={true}
+                autoplay={true}
+                poster={AboutVideoPoster}
+                loop={true}
+            >
+                <track kind="captions">
+                <source src={AboutVideo} type="video/mp4"/>
+            </video>
+        </div>
+        <table>
+            <colgroup>
+                <col class="left_column">
+                <col class="right_column">
+            </colgroup>
+            <tbody>
+                <tr>
+                    <td class="table_paragraph">
+                        2021
+                    </td>
+                    <td class="table_paragraph">
+                        Art in Tech Services Inc. launches
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_paragraph">
+                        2024
+                    </td>
+                    <td class="table_paragraph">
+                        begin research and development in AI applications
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="story_sections">
         <div class="story_section_02">
@@ -89,33 +115,6 @@
             <p class="paragraph">
                 Art in Tech Services brings together art and state-of-the-art digital technology to produce creative software that improves human experiences of technology.
             </p>
-        </div>
-        <div class="story_section">
-            <h2>history</h2>
-            <table>
-                <colgroup>
-                    <col class="left_column">
-                    <col class="right_column">
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td class="table_paragraph">
-                            2021
-                        </td>
-                        <td class="table_paragraph">
-                            Art in Tech Services Inc. launches
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="table_paragraph">
-                            2024
-                        </td>
-                        <td class="table_paragraph">
-                            begin research and development in AI applications
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
         <div class="process">
 
@@ -194,8 +193,17 @@
 </div>
 <style>
 
+    .about_page {
+        position: relative;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .about_banner_container {
         width: 100%;
+        height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -219,7 +227,7 @@
     }
 
     .video_container {
-        max-width: 1920px;
+        max-width: 60rem;
         width: 100%;
         margin: 0 auto;
     }
@@ -371,6 +379,10 @@
 
         .paragraph {
             font-size: 1.15rem;
+        }
+
+        table {
+            padding: 0 1rem;;
         }
 
         .table_paragraph {
