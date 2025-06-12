@@ -116,8 +116,12 @@
                 Art in Tech Services brings together art and state-of-the-art digital technology to produce creative software that improves human experiences of technology.
             </p>
         </div>
-        <div class="process">
-
+        <div class="story_section">
+            <h2>who we serve</h2>
+            <p class="paragraph">
+                We make custom software for clients who want to better serve their communities.  We make original software to improve the lives of users.
+            </p>
+            
         </div>
         <div class="story_section_02">
             <h2>
