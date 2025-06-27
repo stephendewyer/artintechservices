@@ -131,7 +131,7 @@
                         </tr>
                         <tr>
                             <td>
-                                data visalization
+                                data visualization
                             </td>
                             <td>
                                 D3.js

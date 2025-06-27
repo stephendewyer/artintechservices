@@ -138,7 +138,7 @@
     <div class="case_study_nav_tabs">
         <a href="/case-studies/moveable-farm-web-app" class="next_and_previous_button_link">
             <PreviousButton>
-                moveable farm web appp
+                moveable farm web app
             </PreviousButton>
         </a>
         <a href="/case-studies/Joyfoodly-website" class="next_and_previous_button_link">

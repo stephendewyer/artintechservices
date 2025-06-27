@@ -150,7 +150,7 @@
     <form class="form" on:submit|preventDefault={sendMessageHandler}> 
         <h1>contact</h1>
         <h2>how can we help you?</h2>
-        <h4 class="indicates_required_heading">indicates requred*</h4>
+        <h4 class="indicates_required_heading">indicates required*</h4>
         <div class="inputs_row">
             <div class="input_column">
                 <TextInput 
