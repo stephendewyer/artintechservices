@@ -319,8 +319,12 @@
         </h2>
         <ol class="why_choose_us_paragraphs">
             <li class="why_choose_us_reason">
+                <h4>Envisioning solutions to real-world problems</h4>
+                Our team brings award-winning expertise in envisioning software that solves real-world problems.  We are able to define the problem to solve by seeing how your product will fit into the bigger picture.
+            </li>
+            <li class="why_choose_us_reason">
                 <h4>Superior digital design capabilities</h4>
-                We offer superior digital design because we combine the best of art and technology.  We understand human desire and state-of-the-art digital technology.  
+                We offer superior digital design because we know how to design for humans using the best of art and technology. 
             </li>
             <li class="why_choose_us_reason">
                 <h4>State-of-the-art digital technologies</h4>
