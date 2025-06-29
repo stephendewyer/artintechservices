@@ -332,7 +332,7 @@
             </li>
             <li class="why_choose_us_reason">
                 <h4>Creative problem solving</h4>
-                We&#39;ll help provide digital solutions to problems you know you had in addition to helping you discover new and valuable ways to help your business and community.  We offer unmatched value by creating the digital products that help our clients transform to produce greater value for their communities. 
+                Have a difficult problem to solve?  We think outside the box to find solutions to difficult problems.
             </li>
             <li class="why_choose_us_reason">
                 <h4>Investing in the United States</h4>
