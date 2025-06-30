@@ -332,7 +332,7 @@
             </li>
             <li class="why_choose_us_reason">
                 <h4>Creative problem solving</h4>
-                Have a difficult problem to solve?  We think outside the box to find solutions to difficult problems.
+                Have a difficult problem to solve?  We think outside the box to find solutions to difficult problems.  
             </li>
             <li class="why_choose_us_reason">
                 <h4>Investing in the United States</h4>
@@ -345,6 +345,10 @@
             <li class="why_choose_us_reason">
                 <h4>Technology serving humans (not <span style="font-style: italic;">vice versa</span>)</h4>
                 We&#39;re not a typical digital technology company.  We&#39;re on a mission to make digital technology work better for humans.
+            </li>
+            <li class="why_choose_us_reason">
+                <h4>Real innovation comes from seeing people as who they are and not as just a number</h4>
+                Big Tech (i.e. the FAANG companies) sees people as numbers.  We see people for who they are: human beings.  For that reason, our innovations are focused on bringing greater value to the communities we serve and not just shareholders, which, in turn, keeps our focus on innovating instead of wealth extraction.
             </li>
         </ol>
     </section>
