@@ -221,6 +221,7 @@
                     skills: [
                         "custom 3D objects",
                         "3D data visualization",
+                        "interactive 3D graphics (forthcoming)",
                     ],
                     imageSrc: null,
                     imageAlt: null,

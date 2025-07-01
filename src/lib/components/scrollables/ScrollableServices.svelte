@@ -152,6 +152,7 @@
                     skills: [
                         "custom 3D objects",
                         "3D data visualization",
+                        "interactive 3D graphics (forthcoming)",
                     ],
                     pathname: "/services?service=3D-animation"
                 }
