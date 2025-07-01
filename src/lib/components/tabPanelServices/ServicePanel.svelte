@@ -143,8 +143,9 @@
                         class="video-js"
                         controls 
                         id="player"
-                        muted={false}
-                        autoplay={false}
+                        muted={true}
+                        autoplay={true}
+                        loop={true}
                         poster={serviceData.videoPoster}
                     >
                         <track kind="captions">

@@ -11,6 +11,7 @@
     import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
     import CardService from "$lib/components/cards/ServiceCard.svelte";
+    import ThreeDAnimationIcon from "$lib/images/icons/services/3D_animation.svg?raw";
 
     const serviceCards: ServiceCard[] = [
         {
@@ -138,6 +139,21 @@
                         "art direction"
                     ],
                     pathname: "/services?service=visual-design"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 8,
+            label: "3D animation",
+            tabImageSrc: ThreeDAnimationIcon,
+            data: [
+                {
+                    skills: [
+                        "custom 3D objects",
+                        "3D data visualization",
+                    ],
+                    pathname: "/services?service=3D-animation"
                 }
             ]
         }

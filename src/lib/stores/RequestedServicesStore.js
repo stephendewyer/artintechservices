@@ -32,5 +32,9 @@ export const RequestedServicesStore = writable([
     {
         service: "visual design",
         requested: false
+    },
+    {
+        service: "3D animation",
+        requested: false
     }
 ]);

@@ -89,6 +89,13 @@
                 "expandable": false,
                 "slug": "/services?service=brand-identity-design",
                 "content": null
+            },
+            {
+                "id": 2.9,
+                "label": "3D animation",
+                "expandable": false,
+                "slug": "/services?service=3D-animation",
+                "content": null
             }
         ]
     },

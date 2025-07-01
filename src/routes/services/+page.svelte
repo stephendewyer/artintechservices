@@ -7,6 +7,7 @@
     import { v4 as uuidv4 } from 'uuid';
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
     import ServicePanel from "$lib/components/tabPanelServices/ServicePanel.svelte";
+    import ThreeDAnimation from "$lib/images/icons/services/3D_animation.svg?raw";
     import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
     import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
     import DataVisualization from "$lib/images/icons/services/data_visualization_icon.svg?raw";
@@ -28,6 +29,8 @@
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
     import { afterUpdate, onMount } from "svelte";
+    import ThreeDBasketVideo from "$lib/videos/3D_basket_animation.mp4";
+    import ThreeDBasketPoster from "$lib/videos/3D_animated_basket_still.jpg";
 
     const servicesTabPanels: TabPanel[] = [
         {
@@ -203,6 +206,27 @@
                     videoSrc: null,
                     videoPoster: null,
                     search: "?service=visual-design"
+                }
+            ]
+        },
+        {
+            id: uuidv4(),
+            index: 8,
+            label: "3D animation",
+            tabImageSrc: ThreeDAnimation,
+            panel: ServicePanel,
+            data: [
+                {
+                    paragraph: "Our expertise in 3D animation includes:",
+                    skills: [
+                        "custom 3D objects",
+                        "3D data visualization",
+                    ],
+                    imageSrc: null,
+                    imageAlt: null,
+                    videoSrc: ThreeDBasketVideo,
+                    videoPoster: ThreeDBasketPoster,
+                    search: "?service=3D-animation"
                 }
             ]
         }
