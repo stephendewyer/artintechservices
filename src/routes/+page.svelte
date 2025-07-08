@@ -435,7 +435,7 @@
     .intro_paragraph {
         background: rgb(244,254,242, 0.75);
         padding: 0.5rem 1rem;
-        max-width: 80rem;
+        max-width: 40rem;
         width: auto;
         text-align: left;
     }
