@@ -226,8 +226,11 @@
         position: absolute;
         padding: 1rem;
         width: 100%;
-        max-width: 80rem;
-        background: rgb(244,254,242, 0.75);
+        max-width: 40rem;
+        background: rgb(244,254,242, 0.25);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+        backdrop-filter: blur(10px);
     }
 
     .video_container {
