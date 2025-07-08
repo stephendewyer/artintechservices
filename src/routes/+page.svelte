@@ -206,9 +206,14 @@
                 style={`transform: translate(0, ${(debouncedY/2)}px)`}
                 class="intro_paragraph"
             >
-                combining art with state-of-the-art digital technology to produce creative software for businesses and communities
+                creative software that combines art and state-of-the-art technology
             </h1>
         </div>
+    </section>
+    <section class="second_paragraph_section">
+        <h2>
+            Our software focuses on the human impact of technological advancements to help organizations better serve communities.
+        </h2>
     </section>
     <section class="login_client_section">
         <h2 class="heading_02">
@@ -534,6 +539,20 @@
         gap: 1rem;
     }
 
+    .second_paragraph_section {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .second_paragraph_section > h2 {
+        width: 100%;
+        max-width: 40rem;
+        font-size: 2rem;
+        padding: 5rem 1rem;
+    }
+
     @media screen and (max-width: 1440px) {
 
         .saguaro_cactus {
@@ -546,6 +565,10 @@
 
         .why_choose_us_paragraphs {
             grid-template-columns: auto auto auto;
+        }
+
+        .second_paragraph_section > h2 {
+            font-size: 1.75rem;
         }
     }
 
@@ -570,6 +593,10 @@
 
         .why_choose_us_paragraphs {
             grid-template-columns: auto auto;
+        }
+
+        .second_paragraph_section > h2 {
+            font-size: 1.5rem;
         }
     }
 
@@ -598,6 +625,10 @@
 
         .why_choose_us_reason {
             padding: 0;
+        }
+
+        .second_paragraph_section > h2 {
+            font-size: 1.25rem;
         }
 
     }
