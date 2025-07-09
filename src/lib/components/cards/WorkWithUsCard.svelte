@@ -1,7 +1,22 @@
 <script lang="ts">
     import ActionButtonTertiary from "$lib/components/buttons/ActionButtonTertiary.svelte";
     export let card: HowToWorkWithUsCard;
+    import videojs from "video.js";
+    import "video.js/dist/video-js.min.css";
+    import type Player from "video.js/dist/types/player";
+    import { onDestroy, onMount } from "svelte";
 
+    let player: Player;
+
+    onMount(() => {
+        player = videojs("player", {fluid: true});
+    });
+
+    onDestroy(() => {
+        if (player) {
+            player.dispose();
+        };
+    });
 </script>
 
 <div class="card_container">
@@ -13,31 +28,47 @@
         />
     </div>
     <div class="card_info_container">
-        <div 
-            class="card_info"
-        >
-            <div class="card_icon_and_heading">
-                <div class="icon_container">
-                    {@html card.icon}
+        <div class="card_info">
+            {#if card.video !== null}
+                <div class="video_container">
+                    <video 
+                        class="video-js"
+                        controls 
+                        id="player"
+                        muted={true}
+                        autoplay={true}
+                        poster={card.video_poster}
+                        loop={true}
+                    >
+                        <track kind="captions">
+                        <source src={card.video} type="video/mp4"/>
+                    </video>
                 </div>
-                <h3 style="text-align: center;">
-                    {card.header}
-                </h3>
+            {/if}
+            <div class="card_paragraphs">
+                <div class="card_icon_and_heading">
+                    <div class="icon_container">
+                        {@html card.icon}
+                    </div>
+                    <h3 style="text-align: center;">
+                        {card.header}
+                    </h3>
+                </div>
+                
+                <p>
+                    {card.paragraph}
+                </p>
+                {#each card.pathname as path, index}
+                    <a href={path.path}>
+                        <ActionButtonTertiary parentControlled={false} >
+                            {path.label}
+                        </ActionButtonTertiary>
+                    </a>
+                    {#if (card.pathname.length > 1) && (index !== (card.pathname.length - 1))}
+                        or 
+                    {/if}
+                {/each}
             </div>
-            
-            <p>
-                {card.paragraph}
-            </p>
-            {#each card.pathname as path, index}
-                <a href={path.path}>
-                    <ActionButtonTertiary parentControlled={false} >
-                        {path.label}
-                    </ActionButtonTertiary>
-                </a>
-                {#if (card.pathname.length > 1) && (index !== (card.pathname.length - 1))}
-                    or 
-                {/if}
-            {/each}
         </div>
     </div>
 </div>
@@ -45,7 +76,6 @@
 <style>
 
     .card_container {
-        height: 28rem;
         width: 100%;
         position: relative;
     }
@@ -87,31 +117,29 @@
     }
 
     .card_info {
-        padding: 1rem;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-start;
         background: rgb(255,255,255, 0.75);
         height: 100%;
+        gap: 1rem;
     }
 
-    @media screen and (max-width: 1440px) {
-        .card_container {
-            height: 24rem;
-        }
+    .video_container {
+        width: 100%;
     }
 
-    @media screen and (max-width: 1080px) {
-        .card_container {
-            height: 20rem;
-        }
+    .card_paragraphs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        width: 100%;
     }
 
     @media screen and (max-width: 720px) {
-        .card_container {
-            height: 16rem;
-        }
 
         .icon_container {
             width: 3rem;

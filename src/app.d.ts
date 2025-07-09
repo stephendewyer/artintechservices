@@ -296,6 +296,8 @@ declare global {
 	}
 
 	interface HowToWorkWithUsCard {
+		video: string | null;
+		video_poster: string | null;
         image: string;
 		icon: string;
         pathname: Pathname[];

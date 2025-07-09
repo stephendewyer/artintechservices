@@ -22,15 +22,14 @@
     import ConsultationIcon from "$lib/images/icons/consultation_icon.svg?raw";
     import ProjectIcon from "$lib/images/icons/project.svg?raw";
     import ManageAccountIcon from "$lib/images/icons/manage_account_solid.svg?raw";
-    import videojs from "video.js";
-    import "video.js/dist/video-js.min.css";
-    import type Player from "video.js/dist/types/player";
-    import { onDestroy, onMount } from "svelte";
+    import { onMount } from "svelte";
     import ArtInTechServicesClientPortalVideo from "$lib/videos/Art_in_Tech_Services_client_portal_overview.mp4";
     import ArtInTechServicesClientPortalPosterImage from "$lib/videos/Art_in_Tech_Services_client_portal_overview.jpg";
 
     const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
         {
+            video: null,
+            video_poster: null,
             image: Consultation,
             icon: ConsultationIcon,
             altText: "fluffly clouds",
@@ -44,6 +43,8 @@
             ]
         },
         {
+            video: null,
+            video_poster: null,
             image: StartProject,
             icon: ProjectIcon,
             altText: "ocean pier",
@@ -57,6 +58,8 @@
             ]
         },
         {
+            video: ArtInTechServicesClientPortalVideo,
+            video_poster: ArtInTechServicesClientPortalPosterImage,
             image: ManageAccount,
             icon: ManageAccountIcon,
             altText: "locked doors",
@@ -77,8 +80,32 @@
 
     let introVisible: boolean = false;
 
+    let loginClientHeight: number = 0;
+
+    let clientLoginElement: HTMLElement;
+
+    let clientLoginInnerElement: HTMLElement;
+
+    let scrolledY: number = 0;
+
+    let innerHeight: number = 0;
+
+    let innerWidth: number = 0;
+
+    let loginClientBottomYPosition: number = 0;
+
+    const windowResizeHandler = () => {
+        loginClientBottomYPosition = clientLoginElement.getBoundingClientRect().bottom + scrolledY;
+        if ((innerHeight + scrolledY) < loginClientBottomYPosition) {
+            clientLoginFixed = true;
+        } else if ((innerHeight + scrolledY) >= loginClientBottomYPosition) {
+            clientLoginFixed = false;
+        };
+    };
+
     onMount(() => {
         setTimeout(() => introVisible = true, 300);
+        loginClientBottomYPosition = clientLoginElement.getBoundingClientRect().bottom + scrolledY;
     });
 
     let debouncedY: number = 0;
@@ -88,8 +115,15 @@
         timeout = setTimeout(() => debouncedY = v, 40);
     };
 
+    let clientLoginFixed: boolean = true;
+
     const handleScroll = () => {
         debounce(window.scrollY);
+        if ((innerHeight + scrolledY) < loginClientBottomYPosition) {
+            clientLoginFixed = true;
+        } else if ((innerHeight + scrolledY) >= loginClientBottomYPosition) {
+            clientLoginFixed = false;
+        };
     };
     
     // receive form data from server
@@ -167,22 +201,16 @@
         pending = false;
     };
 
-    let player: Player;
-
-    onMount(() => {
-        player = videojs("player", {fluid: true});
-    });
-
-    onDestroy(() => {
-        if (player) {
-            player.dispose();
-        };
-    });
-
 </script>
-<svelte:window on:scroll={handleScroll}/>
+<svelte:window 
+    on:scroll={handleScroll}
+    bind:scrollY={scrolledY}
+    on:resize={windowResizeHandler}
+    bind:innerHeight
+    bind:innerWidth
+/>
 <svelte:head>
-    <title>Art in Tech Services - combining art with state-of-the-art technology to create software that helps businesses and communities</title>
+    <title>Art in Tech Services - creative software that combines art and state-of-the-art technology</title>
     <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN}/>
@@ -214,96 +242,6 @@
         <h2>
             Our software focuses on the human impact of technological advancements to help organizations better serve communities.
         </h2>
-    </section>
-    <section class="login_client_section">
-        <h2 class="heading_02">
-            login client
-        </h2>
-         <div class="video_container">
-            <video 
-                class="video-js"
-                controls 
-                id="player"
-                muted={true}
-                autoplay={true}
-                poster={ArtInTechServicesClientPortalPosterImage}
-                loop={true}
-            >
-                <track kind="captions">
-                <source src={ArtInTechServicesClientPortalVideo} type="video/mp4"/>
-            </video>
-        </div>
-        <form class="form" on:submit|preventDefault={loginClientHandler}>
-            <div class="input_row">
-                <EmailInput
-                    bind:isValid={emailIsValid}
-                    placeholder="myEmail@myDomain.com"
-                    inputID="client_email"
-                    inputName="client_email"
-                    bind:emailInputValue={emailInputValue}
-                    inputLabel={true}
-                    required={true}
-                >
-                    email:
-                </EmailInput>
-            </div>
-            <div class="input_row">
-                <PasswordInput
-                    bind:isValid={passwordIsValid}
-                    placeholder="myPassword"
-                    inputID="client_password"
-                    inputName="client_password"
-                    inputLabel={true}
-                    bind:value={passwordInputValue}
-                    required={true}
-                    passwordInputErrorMessage="password required"
-                >
-                    password:
-                </PasswordInput>
-            </div>
-            <div class="buttons_container">
-                <SubmitButton 
-                    disable={false}
-                >
-                    login
-                </SubmitButton>
-            </div>
-        </form>
-        {#if (pending)}
-            <PendingFlashMessage >
-                please wait while we validate your credentials
-            </PendingFlashMessage>
-        {:else if (responseItem.error)}
-            <ErrorFlashMessage >
-                {responseItem.error}
-            </ErrorFlashMessage>
-        {:else if (responseItem.success)}
-            <SuccessFlashMessage>
-                {responseItem.success}
-            </SuccessFlashMessage>
-        {/if}
-        <div class="login_helpers_container">
-            <div class="login_helpers_column">
-                <h4 class="login_helper_prompt">
-                    don't have an account?
-                </h4>
-                <a href="/create-a-client-account">
-                    <ActionButtonSecondary>
-                        create a free account
-                    </ActionButtonSecondary>
-                </a>
-            </div>
-            <div class="login_helpers_column">
-                <h4 class="login_helper_prompt">
-                    forgot your password?
-                </h4>
-                <a href="/reset-client-password">
-                    <ActionButtonSecondary>
-                        reset password
-                    </ActionButtonSecondary>
-                </a>
-            </div>
-        </div>
     </section>
     <section>
         <h2 class="heading_02">
@@ -375,6 +313,93 @@
             {/each}
         </div>
     </section>
+    <section 
+        class="client_login_container"
+        style={`height: ${loginClientHeight}px;`}
+        bind:this={clientLoginElement}
+    >
+        <div 
+            id="login_client_section"
+            class={clientLoginFixed && innerWidth > 720 ? "login_client_section_fixed" : "login_client_section_absolute"}
+            bind:clientHeight={loginClientHeight}
+            bind:this={clientLoginInnerElement}
+        >
+            <h2 class="login_heading">
+                login client
+            </h2>
+            <form class="form" on:submit|preventDefault={loginClientHandler}>
+                <div class="input_row">
+                    <EmailInput
+                        bind:isValid={emailIsValid}
+                        placeholder="myEmail@myDomain.com"
+                        inputID="client_email"
+                        inputName="client_email"
+                        bind:emailInputValue={emailInputValue}
+                        inputLabel={true}
+                        required={true}
+                    >
+                        email:
+                    </EmailInput>
+                </div>
+                <div class="input_row">
+                    <PasswordInput
+                        bind:isValid={passwordIsValid}
+                        placeholder="myPassword"
+                        inputID="client_password"
+                        inputName="client_password"
+                        inputLabel={true}
+                        bind:value={passwordInputValue}
+                        required={true}
+                        passwordInputErrorMessage="password required"
+                    >
+                        password:
+                    </PasswordInput>
+                </div>
+                <div class="buttons_container">
+                    <SubmitButton 
+                        disable={false}
+                    >
+                        login
+                    </SubmitButton>
+                </div>
+            </form>
+            {#if (pending)}
+                <PendingFlashMessage >
+                    please wait while we validate your credentials
+                </PendingFlashMessage>
+            {:else if (responseItem.error)}
+                <ErrorFlashMessage >
+                    {responseItem.error}
+                </ErrorFlashMessage>
+            {:else if (responseItem.success)}
+                <SuccessFlashMessage>
+                    {responseItem.success}
+                </SuccessFlashMessage>
+            {/if}
+            <div class="login_helpers_container">
+                <div class="login_helpers_column">
+                    <h4 class="login_helper_prompt">
+                        don't have an account?
+                    </h4>
+                    <a href="/create-a-client-account">
+                        <ActionButtonSecondary>
+                            create a free account
+                        </ActionButtonSecondary>
+                    </a>
+                </div>
+                <div class="login_helpers_column">
+                    <h4 class="login_helper_prompt">
+                        forgot your password?
+                    </h4>
+                    <a href="/reset-client-password">
+                        <ActionButtonSecondary>
+                            reset password
+                        </ActionButtonSecondary>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 
 <style>
@@ -396,12 +421,6 @@
         object-position: top;
         display: flex;
         will-change: transform;
-    }
-
-    .video_container {
-        width: 100%;
-        max-width: 60rem;
-        padding: 0 0 1rem 0;
     }
 
     .intro_paragraph_container {
@@ -453,11 +472,48 @@
         padding: 1rem;
     }
 
-    .login_client_section {
+    .client_login_container {
+        position: relative;
+        z-index: 4;
+        width: 100%;        
+    }
+
+    #login_client_section {
+        width: 100%;
+        max-width: 40rem;
+        background-color: #F9E4CD;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
+        padding: 1rem;
+        box-shadow:
+            0 1px 1px hsl(0deg 0% 0% / 0.075),
+            0 2px 2px hsl(0deg 0% 0% / 0.075),
+            0 4px 4px hsl(0deg 0% 0% / 0.075),
+            0 8px 8px hsl(0deg 0% 0% / 0.075),
+            0 16px 16px hsl(0deg 0% 0% / 0.075)
+        ;
+    }
+
+    .login_client_section_fixed {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: auto;
+        right: 0;
+    }
+
+    .login_client_section_absolute {
+        position: absolute;
+        top: auto;
+        bottom: 0;
+        left: auto;
+        right: 0;
+    }
+
+    .login_heading {
+        font-size: 1.5rem;
     }
 
     .input_row {
@@ -471,7 +527,6 @@
         gap: 1rem;
         justify-content: center;
         width: 100%;
-        padding: 0 0 0.5rem 0;
     }
 
     .login_helpers_column {
@@ -480,13 +535,13 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .login_helper_prompt {
+        font-size: 1.175rem;
         text-align: center;
         width: 100%;
-        padding: 0 0.5rem;
     }
 
     .why_choose_us_section {
@@ -537,8 +592,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-evenly;
-        align-items: center;
-        padding: 1rem 1rem 4rem 1rem;
+        padding: 1rem;
         gap: 1rem;
     }
 
@@ -573,17 +627,21 @@
         .second_paragraph_section > h2 {
             font-size: 1.75rem;
         }
+
+        .login_heading {
+            font-size: 1.35rem;
+        }
+
     }
 
     @media screen and (max-width: 1080px) {
 
-        .login_helpers_container {
-            flex-direction: column;
-        }
-
         .login_helpers_column {
             width: 100%;
-            gap: 0.5rem;
+        }
+
+        .login_heading {
+            font-size: 1.25rem;
         }
 
         .intro_paragraph {
@@ -613,6 +671,10 @@
         .intro_paragraph {
             padding: 0.25rem 0.5rem ;
             max-width: 100%;
+        }
+
+        .login_helpers_container {
+            flex-direction: column;
         }
 
         .actions {
