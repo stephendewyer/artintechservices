@@ -61,6 +61,7 @@
                 autoplay={true}
                 poster={AboutVideoPoster}
                 loop={true}
+                playsinline={true}
             >
                 <track kind="captions">
                 <source src={AboutVideo} type="video/mp4"/>

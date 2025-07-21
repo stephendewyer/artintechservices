@@ -146,6 +146,7 @@
                         muted={true}
                         autoplay={true}
                         loop={true}
+                        playsinline={true}
                         poster={serviceData.videoPoster}
                     >
                         <track kind="captions">

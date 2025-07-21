@@ -37,6 +37,7 @@
                         id="player"
                         muted={true}
                         autoplay={true}
+                        playsinline={true}
                         poster={card.video_poster}
                         loop={true}
                     >
