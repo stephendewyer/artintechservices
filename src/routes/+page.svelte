@@ -80,32 +80,14 @@
 
     let introVisible: boolean = false;
 
-    let loginClientHeight: number = 0;
-
-    let clientLoginElement: HTMLElement;
-
-    let clientLoginInnerElement: HTMLElement;
-
     let scrolledY: number = 0;
 
     let innerHeight: number = 0;
 
     let innerWidth: number = 0;
 
-    let loginClientBottomYPosition: number = 0;
-
-    const windowResizeHandler = () => {
-        loginClientBottomYPosition = clientLoginElement.getBoundingClientRect().bottom + scrolledY;
-        if ((innerHeight + scrolledY) < loginClientBottomYPosition) {
-            clientLoginFixed = true;
-        } else if ((innerHeight + scrolledY) >= loginClientBottomYPosition) {
-            clientLoginFixed = false;
-        };
-    };
-
     onMount(() => {
         setTimeout(() => introVisible = true, 300);
-        loginClientBottomYPosition = clientLoginElement.getBoundingClientRect().bottom + scrolledY;
     });
 
     let debouncedY: number = 0;
@@ -114,16 +96,8 @@
         let timeout: ReturnType<typeof setTimeout>;
         timeout = setTimeout(() => debouncedY = v, 40);
     };
-
-    let clientLoginFixed: boolean = true;
-
     const handleScroll = () => {
         debounce(window.scrollY);
-        if ((innerHeight + scrolledY) < loginClientBottomYPosition) {
-            clientLoginFixed = true;
-        } else if ((innerHeight + scrolledY) >= loginClientBottomYPosition) {
-            clientLoginFixed = false;
-        };
     };
     
     // receive form data from server
@@ -205,7 +179,6 @@
 <svelte:window 
     on:scroll={handleScroll}
     bind:scrollY={scrolledY}
-    on:resize={windowResizeHandler}
     bind:innerHeight
     bind:innerWidth
 />
@@ -242,6 +215,82 @@
         <h2>
             Our software focuses on the human impact of technological advancements to help organizations better serve communities.
         </h2>
+    </section>
+    <section id="login_client_section" >
+        <h2 class="login_heading">
+            login client
+        </h2>
+        <form class="form" on:submit|preventDefault={loginClientHandler}>
+            <div class="input_row">
+                <EmailInput
+                    bind:isValid={emailIsValid}
+                    placeholder="myEmail@myDomain.com"
+                    inputID="client_email"
+                    inputName="client_email"
+                    bind:emailInputValue={emailInputValue}
+                    inputLabel={true}
+                    required={true}
+                >
+                    email:
+                </EmailInput>
+            </div>
+            <div class="input_row">
+                <PasswordInput
+                    bind:isValid={passwordIsValid}
+                    placeholder="myPassword"
+                    inputID="client_password"
+                    inputName="client_password"
+                    inputLabel={true}
+                    bind:value={passwordInputValue}
+                    required={true}
+                    passwordInputErrorMessage="password required"
+                >
+                    password:
+                </PasswordInput>
+            </div>
+            <div class="buttons_container">
+                <SubmitButton 
+                    disable={false}
+                >
+                    login
+                </SubmitButton>
+            </div>
+        </form>
+        {#if (pending)}
+            <PendingFlashMessage >
+                please wait while we validate your credentials
+            </PendingFlashMessage>
+        {:else if (responseItem.error)}
+            <ErrorFlashMessage >
+                {responseItem.error}
+            </ErrorFlashMessage>
+        {:else if (responseItem.success)}
+            <SuccessFlashMessage>
+                {responseItem.success}
+            </SuccessFlashMessage>
+        {/if}
+        <div class="login_helpers_container">
+            <div class="login_helpers_column">
+                <h4 class="login_helper_prompt">
+                    don't have an account?
+                </h4>
+                <a href="/create-a-client-account">
+                    <ActionButtonSecondary>
+                        create a free account
+                    </ActionButtonSecondary>
+                </a>
+            </div>
+            <div class="login_helpers_column">
+                <h4 class="login_helper_prompt">
+                    forgot your password?
+                </h4>
+                <a href="/reset-client-password">
+                    <ActionButtonSecondary>
+                        reset password
+                    </ActionButtonSecondary>
+                </a>
+            </div>
+        </div>
     </section>
     <section>
         <h2 class="heading_02">
@@ -311,93 +360,6 @@
                     card={howToWorkWithUs}
                 />
             {/each}
-        </div>
-    </section>
-    <section 
-        class="client_login_container"
-        style={`height: ${loginClientHeight}px;`}
-        bind:this={clientLoginElement}
-    >
-        <div 
-            id="login_client_section"
-            class={clientLoginFixed && innerWidth > 720 ? "login_client_section_fixed" : "login_client_section_absolute"}
-            bind:clientHeight={loginClientHeight}
-            bind:this={clientLoginInnerElement}
-        >
-            <h2 class="login_heading">
-                login client
-            </h2>
-            <form class="form" on:submit|preventDefault={loginClientHandler}>
-                <div class="input_row">
-                    <EmailInput
-                        bind:isValid={emailIsValid}
-                        placeholder="myEmail@myDomain.com"
-                        inputID="client_email"
-                        inputName="client_email"
-                        bind:emailInputValue={emailInputValue}
-                        inputLabel={true}
-                        required={true}
-                    >
-                        email:
-                    </EmailInput>
-                </div>
-                <div class="input_row">
-                    <PasswordInput
-                        bind:isValid={passwordIsValid}
-                        placeholder="myPassword"
-                        inputID="client_password"
-                        inputName="client_password"
-                        inputLabel={true}
-                        bind:value={passwordInputValue}
-                        required={true}
-                        passwordInputErrorMessage="password required"
-                    >
-                        password:
-                    </PasswordInput>
-                </div>
-                <div class="buttons_container">
-                    <SubmitButton 
-                        disable={false}
-                    >
-                        login
-                    </SubmitButton>
-                </div>
-            </form>
-            {#if (pending)}
-                <PendingFlashMessage >
-                    please wait while we validate your credentials
-                </PendingFlashMessage>
-            {:else if (responseItem.error)}
-                <ErrorFlashMessage >
-                    {responseItem.error}
-                </ErrorFlashMessage>
-            {:else if (responseItem.success)}
-                <SuccessFlashMessage>
-                    {responseItem.success}
-                </SuccessFlashMessage>
-            {/if}
-            <div class="login_helpers_container">
-                <div class="login_helpers_column">
-                    <h4 class="login_helper_prompt">
-                        don't have an account?
-                    </h4>
-                    <a href="/create-a-client-account">
-                        <ActionButtonSecondary>
-                            create a free account
-                        </ActionButtonSecondary>
-                    </a>
-                </div>
-                <div class="login_helpers_column">
-                    <h4 class="login_helper_prompt">
-                        forgot your password?
-                    </h4>
-                    <a href="/reset-client-password">
-                        <ActionButtonSecondary>
-                            reset password
-                        </ActionButtonSecondary>
-                    </a>
-                </div>
-            </div>
         </div>
     </section>
 </div>
@@ -472,44 +434,13 @@
         padding: 1rem;
     }
 
-    .client_login_container {
-        position: relative;
-        z-index: 4;
-        width: 100%;        
-    }
-
     #login_client_section {
         width: 100%;
-        max-width: 40rem;
         background-color: #F9E4CD;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
         align-items: center;
-        padding: 1rem;
-        box-shadow:
-            0 1px 1px hsl(0deg 0% 0% / 0.075),
-            0 2px 2px hsl(0deg 0% 0% / 0.075),
-            0 4px 4px hsl(0deg 0% 0% / 0.075),
-            0 8px 8px hsl(0deg 0% 0% / 0.075),
-            0 16px 16px hsl(0deg 0% 0% / 0.075)
-        ;
-    }
 
-    .login_client_section_fixed {
-        position: fixed;
-        top: auto;
-        bottom: 0;
-        left: auto;
-        right: 0;
-    }
-
-    .login_client_section_absolute {
-        position: absolute;
-        top: auto;
-        bottom: 0;
-        left: auto;
-        right: 0;
     }
 
     .login_heading {
