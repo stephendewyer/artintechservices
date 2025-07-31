@@ -8,6 +8,7 @@
     import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
     import type { User } from "@auth/sveltekit";
     import LogoutButtonFooter from "./buttons/LogoutButtonFooter.svelte";
+    import LocalFirstArizonaProudMember from "$lib/images/Local_First_Arizona/LFA+Proud+Member+Digital+Graphic+Light.png";
 
     export let footerHeight;
 
@@ -355,6 +356,13 @@
             logout
         </LogoutButtonFooter>
     {/if}
+    <div class="affiliations">
+        <div class="local_first_arizona_proud_member">
+            <a href="https://localfirstaz.com/" target="_blank" aria-label="link to Local First Arizona">
+                <img src={LocalFirstArizonaProudMember} alt="Local First Arizona Proud Member" />
+            </a>
+        </div>
+    </div>
     <div class="social_media_links">
         <a 
             href="https://twitter.com/artintechservi3" 
@@ -469,6 +477,10 @@
 
     .logo:hover {
         fill: #CFF5F8;
+    }
+
+    .local_first_arizona_proud_member {
+        width: 14rem;
     }
 
     .footer_nav_heading {
