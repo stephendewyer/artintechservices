@@ -142,7 +142,6 @@
     .case_study_banner {
         width: 100%;
         max-width: 1920px;
-
         position: relative;
     }
 

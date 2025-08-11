@@ -96,6 +96,7 @@
         let timeout: ReturnType<typeof setTimeout>;
         timeout = setTimeout(() => debouncedY = v, 40);
     };
+    
     const handleScroll = () => {
         debounce(window.scrollY);
     };
