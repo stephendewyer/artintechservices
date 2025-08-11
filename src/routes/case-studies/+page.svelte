@@ -16,7 +16,7 @@
             id: uuidv4(),
             index: 0,
             label: "moveable farm web app",
-            paragraph: "A web application to buy directly from local farmers.",
+            paragraph: "A web platform to develop stronger and more sustainable agriculture for better cooking, eating and drinking.",
             imageBackgroundSrc: MoveableFarmWebAppBanner,
             imageBackgroundAlt: "moveable farm banner",
             imageForegroundSrc: MoveableFarmDesktopAndMobilePrototypes,
