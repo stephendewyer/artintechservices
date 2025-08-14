@@ -92,7 +92,7 @@
                         <h2 class="label">
                             {tab.label}
                         </h2>
-                        {#if index !== tabPanels.length -1}
+                        {#if index !== tabPanels.length - 1}
                             <div class="arrow_container">
                                 {@html tab.tabImageSrc}
                             </div> 
