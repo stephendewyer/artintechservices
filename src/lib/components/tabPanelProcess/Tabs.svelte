@@ -92,9 +92,11 @@
                         <h2 class="label">
                             {tab.label}
                         </h2>
-                        <div class="arrow_container">
-                            {@html tab.tabImageSrc}
-                        </div> 
+                        {#if index !== tabPanels.length -1}
+                            <div class="arrow_container">
+                                {@html tab.tabImageSrc}
+                            </div> 
+                        {/if}
                     </div>
                 </li>
             {/each}

@@ -29,23 +29,6 @@
     </div>
     <div class="card_info_container">
         <div class="card_info">
-            {#if card.video !== null}
-                <div class="video_container">
-                    <video 
-                        class="video-js"
-                        controls 
-                        id="player"
-                        muted={true}
-                        autoplay={true}
-                        playsinline={true}
-                        poster={card.video_poster}
-                        loop={true}
-                    >
-                        <track kind="captions">
-                        <source src={card.video} type="video/mp4"/>
-                    </video>
-                </div>
-            {/if}
             <div class="card_paragraphs">
                 <div class="card_icon_and_heading">
                     <div class="icon_container">
@@ -70,6 +53,23 @@
                     {/if}
                 {/each}
             </div>
+            {#if card.video !== null}
+                <div class="video_container">
+                    <video 
+                        class="video-js"
+                        controls 
+                        id="player"
+                        muted={true}
+                        autoplay={true}
+                        playsinline={true}
+                        poster={card.video_poster}
+                        loop={true}
+                    >
+                        <track kind="captions">
+                        <source src={card.video} type="video/mp4"/>
+                    </video>
+                </div>
+            {/if}
         </div>
     </div>
 </div>

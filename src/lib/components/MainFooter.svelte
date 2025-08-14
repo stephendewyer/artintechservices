@@ -453,6 +453,7 @@
         flex-direction: row;
         justify-content: space-around;
         width: 50%;
+        gap: 1rem;
     }
 
     .nav_column {

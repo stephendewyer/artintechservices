@@ -151,6 +151,10 @@
 
 <style>
 
+    h1 { 
+        padding: 0 0 1rem 0;
+    }
+
     .case_study_banner {
         width: 100%;
         max-width: 1920px;

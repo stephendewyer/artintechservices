@@ -9,20 +9,20 @@
 </script>
 
 <svelte:head>
-    <title>Art in Tech Services - moveable farm web app</title>
-    <meta name="description" content="moveable farm web app" />
+    <title>Art in Tech Services - Moveable Farm web platform</title>
+    <meta name="description" content="Moveable Farm web platform" />
     <meta property="og:image" content={moveableFarmWebAppBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
 <div class="page">
     <h1>
-        moveable farm web app
+        Moveable Farm web platform
     </h1>
     <div class="case_study_banner">
-        <img src={moveableFarmWebAppBanner} alt="moveable farm web app banner" />
+        <img src={moveableFarmWebAppBanner} alt="Moveable Farm web platform banner" />
         <div class="moveable_farm_prototypes">
-            <img src={moveableFarmPrototypes} alt="moveable farm desktop and mobile prototypes" />    
+            <img src={moveableFarmPrototypes} alt="Moveable Farm desktop and mobile prototypes" />    
         </div>
         <h2 class="forthcoming">
             forthcoming!
@@ -65,7 +65,7 @@
                         client:
                     </td>
                     <td>
-                        moveable farm
+                        Moveable Farm
                     </td>
                 </tr>
                 <tr>
@@ -138,6 +138,10 @@
 </div>
 
 <style>
+
+    h1 { 
+        padding: 0 0 1rem 0;
+    }
 
     .case_study_banner {
         width: 100%;
