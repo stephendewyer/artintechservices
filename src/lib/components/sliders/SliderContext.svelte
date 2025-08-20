@@ -306,7 +306,7 @@
         }
 
         .slide_container {
-            padding: 0 3rem;
+            padding: 0;
         }
 
         .arrows {
