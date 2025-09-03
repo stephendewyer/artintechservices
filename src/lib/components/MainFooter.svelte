@@ -356,13 +356,6 @@
             logout
         </LogoutButtonFooter>
     {/if}
-    <div class="affiliations">
-        <div class="local_first_arizona_proud_member">
-            <a href="https://localfirstaz.com/" target="_blank" aria-label="link to Local First Arizona">
-                <img src={LocalFirstArizonaProudMember} alt="Local First Arizona Proud Member" />
-            </a>
-        </div>
-    </div>
     <div class="social_media_links">
         <a 
             href="https://twitter.com/artintechservi3" 
@@ -479,11 +472,7 @@
     .logo:hover {
         fill: #CFF5F8;
     }
-
-    .local_first_arizona_proud_member {
-        width: 14rem;
-    }
-
+    
     .footer_nav_heading {
         color: #FAE6D8;
         font-size: 1.25rem;
