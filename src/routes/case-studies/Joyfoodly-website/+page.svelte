@@ -46,6 +46,7 @@
             autoplay={true}
             poster={JoyfoodlyDemoPoster}
             loop={true}
+            playsinline={true}
         >
             <track kind="captions">
             <source src={JoyfoodlyDemoVideo} type="video/mp4"/>

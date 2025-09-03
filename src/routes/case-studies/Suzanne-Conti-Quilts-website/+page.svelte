@@ -46,6 +46,7 @@
             autoplay={true}
             poster={SuzanneContiQuiltsDemoPoster}
             loop={true}
+            playsinline={true}
         >
             <track kind="captions">
             <source src={SuzanneContiQuiltsDemoVideo} type="video/mp4"/>
