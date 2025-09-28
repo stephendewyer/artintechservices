@@ -204,17 +204,14 @@
             class="intro_paragraph_container"
             style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
         >
-            <h1 
-                style={`transform: translate(0, ${(debouncedY/2)}px)`}
-                class="intro_paragraph"
-            >
-                creative software that combines art and state-of-the-art technology
+            <h1 class="intro_paragraph">
+                custom and original software using art to imagine creative solutions that improve human experiences for businesses and communities
             </h1>
         </div>
     </section>
     <section class="second_paragraph_section">
         <h2>
-            Our software focuses on the human impact of technological advancements to help organizations better serve communities.
+            helping organizations better serve communities by focusing on the human impact of technology
         </h2>
     </section>
     <section id="login_client_section" >
@@ -388,16 +385,16 @@
 
     .intro_paragraph_container {
         position: absolute;
-        top: 0;
+        top: auto;
         bottom: 0;
-        left: 0;
+        left: auto;
         right: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        padding: 1rem;
         transition: opacity 0.2s linear;
+        width: 35%;
     }
 
     .saguaro_cactus_container {
@@ -420,14 +417,11 @@
     }
 
     .intro_paragraph {
-        background: rgb(244,254,242, 0.5);
-        -webkit-backdrop-filter: blur(10px);
-        box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
-        backdrop-filter: blur(10px);
-        padding: 0.5rem 1rem;
-        max-width: 40rem;
-        width: auto;
+        background: #FFCE78;
+        padding: 1rem 2rem;
+        width: 100%;
         text-align: left;
+        font-size: 4rem;
     }
 
     .heading_02 {

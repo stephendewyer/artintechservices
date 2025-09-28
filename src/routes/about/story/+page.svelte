@@ -47,7 +47,7 @@
     <div class="about_banner_container">
         <img class="about_banner" src={AboutBanner} alt="seed filled with fluffy clouds in desert" />
         <h1 class="story_headline">
-            creating software that improves human experiences of technology by using art with state-of-the-art digital technology
+            custom and original software that improves human experiences by developing imaginative solutions to human problems using state-of-the-art technology
         </h1>
     </div>
     <div class="story_section">
@@ -114,13 +114,13 @@
         <div class="story_section">
             <h2>mission</h2>
             <p class="paragraph">
-                Art in Tech Services brings together art and state-of-the-art digital technology to produce creative software that improves human experiences of technology.
+                Art in Tech Services helps organizations better serve communities by developing imaginative software solutions to human problems using state-of-the-art technology.
             </p>
         </div>
         <div class="story_section">
             <h2>who we serve</h2>
             <p class="paragraph">
-                We make custom software for clients who want to better serve their communities.  We make original software to improve the lives of users.
+                We make custom software for clients who want to better serve their communities.  We make original software to better serve commmunities.
             </p>
             
         </div>
