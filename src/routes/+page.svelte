@@ -394,7 +394,7 @@
         justify-content: center;
         align-items: center;
         transition: opacity 0.2s linear;
-        width: 35%;
+        width: 40%;
     }
 
     .saguaro_cactus_container {
@@ -542,6 +542,14 @@
             padding-top: 4rem;
         }
 
+        .intro_paragraph_container {
+            width: 40%;
+        }
+
+        .intro_paragraph {
+            font-size: 3rem;
+        }
+
         .why_choose_us_paragraphs {
             gap: 0.75rem;
         }
@@ -552,6 +560,7 @@
 
         .second_paragraph_section > h2 {
             font-size: 1.75rem;
+            padding: 3.5rem 1rem;
         }
 
         .login_heading {
@@ -567,11 +576,12 @@
         }
 
         .login_heading {
-            font-size: 1.25rem;
+            font-size: 2rem;
         }
 
         .intro_paragraph {
-            padding: 0.375rem 0.75rem;
+            font-size: 2rem;
+            padding: 0.5rem 1rem;
         }
 
         .saguaro_cactus {
@@ -584,6 +594,7 @@
 
         .second_paragraph_section > h2 {
             font-size: 1.5rem;
+            padding: 2rem 1rem;
         }
     }
 
@@ -594,9 +605,14 @@
             margin-left: 50%;
         }
 
+        .intro_paragraph_container {
+            left: 0;
+            right: auto;
+            width: 50%;
+        }
+
         .intro_paragraph {
-            padding: 0.25rem 0.5rem ;
-            max-width: 100%;
+            font-size: 1.25rem;
         }
 
         .login_helpers_container {
