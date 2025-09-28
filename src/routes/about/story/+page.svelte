@@ -47,7 +47,7 @@
     <div class="about_banner_container">
         <img class="about_banner" src={AboutBanner} alt="seed filled with fluffy clouds in desert" />
         <h1 class="story_headline">
-            custom and original software that improves human experiences by developing imaginative solutions to human problems using state-of-the-art technology
+            developing imaginative software solutions to human problems using state-of-the-art technology
         </h1>
     </div>
     <div class="story_section">

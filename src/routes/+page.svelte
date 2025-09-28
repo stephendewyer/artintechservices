@@ -205,7 +205,7 @@
             style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
         >
             <h1 class="intro_paragraph">
-                custom and original software using art to imagine creative solutions that improve human experiences for businesses and communities
+                custom and original software with art and state-of-the-art technology
             </h1>
         </div>
     </section>
@@ -612,7 +612,7 @@
         }
 
         .intro_paragraph {
-            font-size: 1.25rem;
+            font-size: 1.5rem;
         }
 
         .login_helpers_container {
