@@ -125,7 +125,7 @@
         "id": 4,
         "label": "about",
         "expandable": true,
-        "slug": "#",
+        "slug": "/about",
         "content": [
             {
                 "id": 4.1,

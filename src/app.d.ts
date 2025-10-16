@@ -189,6 +189,14 @@ declare global {
 		button: typeof SvelteComponent<any> | null;
 	};
 
+	interface AboutPanel {
+		heading: string;
+		buttonText: string;
+		buttonLink: string;
+		imageSrc: string;
+		imageAlt: string;
+	}
+
 	interface TabPanel {
         id: string;
 		index: number;
@@ -196,7 +204,7 @@ declare global {
 		tabImageSrc: string;
 		panel: typeof SvelteComponent<any>;
 		data: any[
-			ServicePanelData | ProcessPanel
+			ServicePanelData | ProcessPanel | AboutPanel
 		];
     }
 

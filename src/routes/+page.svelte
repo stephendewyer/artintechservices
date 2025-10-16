@@ -205,13 +205,13 @@
             style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
         >
             <h1 class="intro_paragraph">
-                custom and original software with art and state-of-the-art technology
+                artfully crafting software using state-of-the-art technology
             </h1>
         </div>
     </section>
     <section class="second_paragraph_section">
         <h2>
-            helping organizations better serve communities by focusing on the human impact of technology
+            we help organizations better serve communities by focusing on the human impact of technology
         </h2>
     </section>
     <section id="login_client_section" >

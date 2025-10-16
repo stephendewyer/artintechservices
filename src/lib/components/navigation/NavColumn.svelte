@@ -16,17 +16,29 @@
                 return false;
             };
         } else if (navTab.content.length > 0) {
-            let tabActive: boolean = false;
-            navTab.content.map((tab) => {
-                if (tab.slug === $page.url.pathname || `${$page.url.pathname}${$page.url.search}` === tab.slug) {
-                    tabActive = true;
-                };
-            });
-            if (tabActive) {
+            if ($page.url.pathname === navTab.slug || `${$page.url.pathname}${$page.url.search}` === navTab.slug) {
                 return true;
             } else {
-                return false;
+                let collapsibleTabActive: boolean = false;
+                navTab.content.map((tab) => {
+                    if (
+                        tab.slug === $page.url.pathname || 
+                        `${$page.url.pathname}${$page.url.search}` === tab.slug ||
+                        `/${$page.url.pathname.split("/")[1]}` === `/${tab.slug.split("/")[1]}`
+                    ) {
+                        return collapsibleTabActive = true;
+                    } else {
+                        return collapsibleTabActive = false;
+                    };
+                });
+                if (collapsibleTabActive) {
+                    return true; 
+                } {
+                    return false;
+                };
             };
+        } else {
+            return false;
         };
     };
 
