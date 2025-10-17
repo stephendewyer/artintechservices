@@ -184,8 +184,8 @@
     bind:innerWidth
 />
 <svelte:head>
-    <title>Art in Tech Services - creative software that combines art and state-of-the-art technology</title>
-    <meta name="description" content="creating digital products optimized to improve human experiences of technology by using advancements in art and digital technology" />
+    <title>Art in Tech Services - artfully crafting software using state-of-the-art technology</title>
+    <meta name="description" content="Art in Tech Services develops imaginative software solutions to human problems using state-of-the-art technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN}/>
 </svelte:head>

@@ -112,16 +112,7 @@
 
 </script>
 <div class="slide_carousel_container">
-    <div class="arrows">
-        <ArrowButtonPrevious
-            bind:arrowPrevClicked={scrollPreviousClicked}
-            prevBtnEnabled={prevBtnEnabled}
-        />
-        <ArrowButtonNext
-            bind:arrowNextClicked={scrollNextClicked}
-            nextBtnEnabled={nextBtnEnabled}
-        />
-    </div>
+    
     <div class="slide_container">
         <div 
             use:EmblaCarouselSvelte="{{ options, plugins }}"
@@ -159,6 +150,16 @@
             >
             </button>
         {/each}
+    </div>
+    <div class="arrows">
+        <ArrowButtonPrevious
+            bind:arrowPrevClicked={scrollPreviousClicked}
+            prevBtnEnabled={prevBtnEnabled}
+        />
+        <ArrowButtonNext
+            bind:arrowNextClicked={scrollNextClicked}
+            nextBtnEnabled={nextBtnEnabled}
+        />
     </div>
 </div>
 
@@ -227,6 +228,7 @@
         padding: 20px 0;
         margin: 0 auto;
         background: transparent;
+        pointer-events: none;
     }
 
     .embla__container {
@@ -305,11 +307,12 @@
         }
 
         .slide_container {
-            padding: 0 3rem;
+            padding: 0;
         }
 
         .arrows {
             padding: 0rem;
+            align-items: flex-end;
         }
 
         .embla__dots {

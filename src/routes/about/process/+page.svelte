@@ -28,7 +28,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We provide a consultation to help plan your project for success.  During your initial consultation, we will discuss with you the problems you want to solve and your project goals.",
+                    paragraph: "We provide a consultation to help plan your project for success. During your initial consultation, we will discuss with you the problems you want to solve and your project goals.  Initial consultations usually last with 20 minutes to an hour and can happen via in-person meeting, phone or video.",
                     button: ActionButtonSecondary,
                     imageSrc: Consultation,
                     imageAlt: "mug on a table with steam"
@@ -43,7 +43,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We research to find the problems that need solving",
+                    paragraph: "From the consultation, we will research the exact problems to solve using a variety of methods that could include empathizing with the user, conducting user interviews, creating user personas, studying user data and researching the market and user context.  We may require a contract for extensive research.",
                     button: null,
                     imageSrc: Research,
                     imageAlt: "magnifying glass with eye"
@@ -58,7 +58,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We define the problem to solve.",
+                    paragraph: "Using the information we gathered from the consultation and our research, we will write a contract that specifies the project scope, goals and timeline.  The contract helps clearly set project expectations for everyone.  We do our best to avoid any surprises that might happen between the consultation and delivery of a contract.  ",
                     button: null,
                     imageSrc: Define,
                     imageAlt: "target"
@@ -73,7 +73,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We create designs for possible solutions.",
+                    paragraph: "After the contract has been signed, we brainstorm possible solutions using a variety of designs.  We work with you to select design solutions that work best for your project.",
                     button: null,
                     imageSrc: Ideation,
                     imageAlt: "ideation"
@@ -88,7 +88,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We create prototypes to test using a mutually agreeable design.",
+                    paragraph: "The prototypes are tested in high-fidelity scenarios to determine if they are suitable for the project.  We can make changes much quicker to the prototypes than live code.",
                     button: null,
                     imageSrc: Prototype,
                     imageAlt: "prototype cube"
@@ -103,7 +103,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We test the prototypes.",
+                    paragraph: "After designs have been selected, we prototype your designs to allow us to test your designs in high-fidelity scenarios.",
                     button: null,
                     imageSrc: Test,
                     imageAlt: "checkmark"
@@ -118,7 +118,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We build your digital product based on the prototypes.",
+                    paragraph: "Once the prototypes are approved, we build software using the prototype designs.  We test the code using a variety of methods to determine browser compatibility, accessibility, speed and to find any bugs. ",
                     button: null,
                     imageSrc: Build,
                     imageAlt: "hands at a keyboard coding"
@@ -133,7 +133,7 @@
             panel: ProcessPanel,
             data: [
                 {
-                    paragraph: "We deliver your product.",
+                    paragraph: "After the software is built, we deliver the software, which typically involves deploying the software onto a server and sometimes server setup.  We iterate and test throughout the process in order to ensure the software delivery is a success.  We communicate throughout the process to ensure the arrival of software is on time and meeting requirements.",
                     button: null,
                     imageSrc: Deliver,
                     imageAlt: "delivering a checkmark"
