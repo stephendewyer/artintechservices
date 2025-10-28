@@ -2,8 +2,8 @@
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import { page } from "$app/stores";
-    import MoveableFarmWebAppBanner from "$lib/images/case_studies/moveable_farm_web_app/reduced/grass.jpg";
-    import SuzanneContiQuiltsBanner from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_North_Carolina_01.jpg";
+    import TucsonFarmersMarket from "$lib/images/case_studies/moveable_farm_web_app/Tucson_farmers_market.jpeg";
+    import SuzanneContiQuiltsBanner from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/Suzanne_Conti_North_Carolina_01.jpg";
     import JoyfoodlyBanner from "$lib/images/case_studies/Joyfoodly_website/reduced/Joyfoodly_recipe.jpg";
     import MoveableFarmDesktopAndMobilePrototypes from "$lib/images/case_studies/moveable_farm_web_app/reduced/moveable_farm_prototypes.png";
     import SuzanneContiQuiltsDesktopAndMobilePrototypes from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_Quilts_prototypes.png";
@@ -17,7 +17,7 @@
             index: 0,
             label: "moveable farm web app",
             paragraph: "A web platform to develop stronger and more sustainable agriculture for better cooking, eating and drinking.",
-            imageBackgroundSrc: MoveableFarmWebAppBanner,
+            imageBackgroundSrc: TucsonFarmersMarket,
             imageBackgroundAlt: "moveable farm banner",
             imageForegroundSrc: MoveableFarmDesktopAndMobilePrototypes,
             imageForegroundAlt: "moveable farm desktop and mobile prototypes",
@@ -25,7 +25,7 @@
         },
         {
             id: uuidv4(),
-            index: 0,
+            index: 1,
             label: "Suzanne Conti Quilts website",
             paragraph: "An interactive collection of quilts by a prolific quilter and her ancestors.",
             imageBackgroundSrc: SuzanneContiQuiltsBanner,
@@ -36,7 +36,7 @@
         },
         {
             id: uuidv4(),
-            index: 0,
+            index: 2,
             label: "Joyfoodly website",
             paragraph: "A website for a culinary education company helping busy families prepare nutritious food.",
             imageBackgroundSrc: JoyfoodlyBanner,

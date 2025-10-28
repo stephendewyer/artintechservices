@@ -30,9 +30,8 @@
         color: #838b6a;
         fill: #838b6a;
         background: rgb(244,254,242);
-        background: linear-gradient(90deg, rgba(244,254,242,1) 0%, rgba(244,254,242,1) 65%, rgba(244,254,242,0) 100%);
         border-radius: 50%;
-        border: none;
+        border: 2px solid #838b6a;
         flex-direction: column;
         justify-content: center;
         cursor: pointer;

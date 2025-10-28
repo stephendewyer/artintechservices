@@ -78,7 +78,7 @@
     <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
 </svelte:head>
 
-<div class="page">
+<div class="page" style="padding: 0 0 2rem 0;">
     <form 
         on:submit|preventDefault={sendEmailHandler}
         class="form"

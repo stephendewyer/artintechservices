@@ -34,11 +34,4 @@
         }
     }
 
-    @media screen and (max-width: 750px) {
-        
-        .logo {
-            min-width: 8rem;
-        }
-
-    }
 </style>

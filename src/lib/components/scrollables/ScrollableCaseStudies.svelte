@@ -2,8 +2,8 @@
     import ArrowButtonNext from "$lib/components/buttons/ArrowButtonNext.svelte";
     import ArrowButtonPrevious from "$lib/components/buttons/ArrowButtonPrevious.svelte";
     import CaseStudyCardElement from "$lib/components/cards/CaseStudyCard.svelte";
-    import MoveableFarmWebAppBanner from "$lib/images/case_studies/moveable_farm_web_app/reduced/grass.jpg";
-    import SuzanneContiQuiltsBanner from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_North_Carolina_01.jpg";
+    import TucsonFarmersMarket from "$lib/images/case_studies/moveable_farm_web_app/Tucson_farmers_market.jpeg"
+    import SuzanneContiQuiltsBanner from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/Suzanne_Conti_North_Carolina_01.jpg";
     import JoyfoodlyBanner from "$lib/images/case_studies/Joyfoodly_website/reduced/Joyfoodly_recipe.jpg";
     import MoveableFarmDesktopAndMobilePrototypes from "$lib/images/case_studies/moveable_farm_web_app/reduced/moveable_farm_prototypes.png";
     import SuzanneContiQuiltsDesktopAndMobilePrototypes from "$lib/images/case_studies/Suzanne_Conti_Quilts_website/reduced/Suzanne_Conti_Quilts_prototypes.png";
@@ -16,7 +16,7 @@
             index: 0,
             label: "moveable farm web app",
             paragraph: "A web platform to develop stronger and more sustainable agriculture for better cooking, eating and drinking.",
-            imageBackgroundSrc: MoveableFarmWebAppBanner,
+            imageBackgroundSrc: TucsonFarmersMarket,
             imageBackgroundAlt: "moveable farm banner",
             imageForegroundSrc: MoveableFarmDesktopAndMobilePrototypes,
             imageForegroundAlt: "moveable farm desktop and mobile prototypes",
@@ -150,8 +150,6 @@
     .case_studies_container {
         position: relative;
         width: 100%;
-        max-width: 1440px;
-        margin: 0 auto;
         overflow-x: auto;
         scroll-behavior: smooth;
     }

@@ -70,19 +70,13 @@
         on:mouseleave={() => exitPanelHandler()}
         on:mouseout={() => exitPanelHandler()}
         on:blur={() => exitPanelHandler()}
-        class="nav_column" 
-        style={(mainNavTab.label !== "login") ? "width: 20%;" : "width: auto;"}
+        class="nav_column"
     >
         <a href={mainNavTab.slug}>
             <li 
                 class="nav_tab"
                 aria-current={tabIsActive ? "page" : undefined}
             >
-                {#if (mainNavTab.label === "login")}
-                    <div class="login_icon">
-                        {@html LoginIcon}
-                    </div>
-                {/if}
                 {mainNavTab.label}
                 <div 
                     class="arrow"
@@ -118,15 +112,19 @@
     </ul>
 {:else if (mainNavTab.content === null)}
     <ul
-        class="nav_column" 
-        style={(mainNavTab.label !== "login") ? "width: 20%;" : "width: auto;"}
+        class={(mainNavTab.label !== "login") ? "nav_column" : "nav_column_login"}
     >
         <a href={mainNavTab.slug}>
             <li 
                 class="nav_tab"
                 aria-current={tabIsActive ? "page" : undefined}
             >
-                {mainNavTab.label}
+                {#if (mainNavTab.label === "login")}
+                    <div class="login_icon">
+                        {@html LoginIcon}
+                    </div>
+                {/if}
+                    {mainNavTab.label}
             </li>
         </a>
     </ul>
@@ -169,6 +167,17 @@
         position: relative;
         display: flex;
         flex-direction: column;
+        width: 20%;
+    }
+
+    .nav_column_login {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: 12rem;
     }
 
     .content_inner > a {
@@ -263,12 +272,23 @@
             font-size: 1.3rem;
         }
 
+
+        .nav_column_login {
+            font-size: 1.3rem;
+            width: 10rem;
+        }
+
     }
 
     @media all and (max-width: 1400px) {
         
         .nav_tab {
             font-size: 1.2rem;
+        }
+
+        .nav_column_login {
+            font-size: 1.2rem;
+            width: 8rem;
         }
 
     }
@@ -279,13 +299,10 @@
             font-size: 1rem;
         }
 
-    }
-
-    @media all and (max-width: 800px) {
-
-        .nav_tab {
+        .nav_column_login {
             font-size: 1rem;
         }
-        
+
     }
+
 </style>

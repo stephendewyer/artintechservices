@@ -58,9 +58,8 @@
         background: none;
         border: none;
         width: 100%;
-        max-width: 32rem;
-        min-width: 24rem;
-        height: 36rem;
+        min-width: 48rem;
+        height: 100vh;
         cursor: pointer;
         display: flex;
         flex-direction: column;
@@ -95,7 +94,7 @@
     .case_study_info_container {
         position: relative;
         background-color: rgb(244,254,242, 0.75);
-        width: 100%;
+        width: 50%;
         height: 100%;
         padding: 1rem;
         display: flex;
@@ -106,7 +105,7 @@
 
     .case_study_prototypes_container {
         width: 100%;
-        height: 50%;
+        height: auto;
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
@@ -120,15 +119,12 @@
     .case_study_info {
         position: relative;
         width: 100%;
-        height: 50%;
     }
 
     @media screen and (max-width: 1440px) {
 
         #case_study_card_container {
-            min-width: 22rem;
-            max-width: 28rem;
-            height: 32rem;
+            min-width: 42rem;
         }
 
     }
@@ -136,18 +132,14 @@
     @media screen and (max-width: 1080px) {
 
         #case_study_card_container {
-            min-width: 20rem;
-            max-width: 24rem;
-            height: 28rem;
+            min-width: 38rem;
         }
 
     }
 
     @media screen and (max-width: 720px) {
         #case_study_card_container {
-            min-width: 18rem;
-            max-width: 100%;
-            height: 24rem;
+            min-width: 100vw;
         }
     }
 

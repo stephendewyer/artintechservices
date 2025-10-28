@@ -1,16 +1,13 @@
 <script lang="ts">
-    import { PUBLIC_DOMAIN } from "$env/static/public";
-    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
-    import { page } from "$app/stores";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { signIn } from "@auth/sveltekit/client";
     import { goto } from '$app/navigation';
+    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
 
     let emailInputValue: string = "";
     let emailIsValid: boolean = true;
@@ -87,15 +84,7 @@
 
 </script>
 
-<svelte:head>
-	<title>Art in Tech Services - login administrator</title>
-	<meta name="description" content="login administrator" />
-	<meta property="og:image" content={BannerImage} />
-    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
-</svelte:head>
-<div class="page">
-    <form class="form" on:submit|preventDefault={loginAdministratorHandler}>
-        <h1>login administrator</h1>
+<form class="form" on:submit|preventDefault={loginAdministratorHandler}>
         <div class="input_row">
             <EmailInput
                 bind:isValid={emailIsValid}
@@ -156,9 +145,8 @@
             </a>
         </div>
     </div>
-</div>
 
-<style>
+    <style>
 
     .input_row {
         width: 100%;
@@ -171,7 +159,6 @@
         gap: 1rem;
         justify-content: center;
         width: 100%;
-        padding: 0 0 2rem 0;
     }
 
     .login_helpers_column {
@@ -180,13 +167,13 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .login_helper_prompt {
+        font-size: 1.175rem;
         text-align: center;
         width: 100%;
-        padding: 0 0.5rem;
     }
 
     @media screen and (max-width: 1080px) {

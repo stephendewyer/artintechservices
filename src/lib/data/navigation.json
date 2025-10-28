@@ -103,20 +103,27 @@
         "id": 3,
         "label": "work with us",
         "expandable": true,
-        "slug": "#",
+        "slug": "/how-to-work-with-us",
         "content": [
+            {
+                "id": 3.1,
+                "label": "how to work with us",
+                "expandable": false,
+                "slug": "/how-to-work-with-us",
+                "content": null
+            },
             {
                 "id": 3.1,
                 "label": "request a consultation",
                 "expandable": false,
-                "slug": "/work-with-us/request-a-consultation",
+                "slug": "/how-to-work-with-us/request-a-consultation",
                 "content": null
             },
             {
                 "id": 3.2,
                 "label": "request to start a project",
                 "expandable": false,
-                "slug": "/work-with-us/request-to-start-a-project",
+                "slug": "/how-to-work-with-us/request-to-start-a-project",
                 "content": null
             }
         ]
@@ -129,20 +136,27 @@
         "content": [
             {
                 "id": 4.1,
+                "label": "company",
+                "expandable": false,
+                "slug": "/about",
+                "content": null
+            },
+            {
+                "id": 4.2,
                 "label": "story",
                 "expandable": false,
                 "slug": "/about/story",
                 "content": null
             },
             {
-                "id": 4.2,
+                "id": 4.3,
                 "label": "process",
                 "expandable": false,
                 "slug": "/about/process",
                 "content": null
             },
             {
-                "id": 4.2,
+                "id": 4.4,
                 "label": "team",
                 "expandable": false,
                 "slug": "/about/team",
@@ -167,23 +181,8 @@
     {
         "id": 6,
         "label": "login",
-        "expandable": true,
-        "slug": "#",
-        "content": [
-            {
-                "id": 6.1,
-                "label": "client",
-                "expandable": false,
-                "slug": "/logins/login-client",
-                "content": null
-            },
-            {
-                "id": 6.2,
-                "label": "administrator",
-                "expandable": false,
-                "slug": "/logins/login-administrator",
-                "content": null
-            }
-        ]
+        "expandable": false,
+        "slug": "/login",
+        "content": null
     }
 ]

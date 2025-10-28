@@ -3,10 +3,6 @@
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import SliderTestimonials from "$lib/components/sliders/SliderTestimonials.svelte";
     import { PUBLIC_DOMAIN } from "$env/static/public";
-    import WorkWithUsCard from "$lib/components/cards/WorkWithUsCard.svelte";
-    import Consultation from "$lib/images/consultation/white-fluffy-clouds.jpg";
-    import StartProject from "$lib/images/projects/Port_Mansfield_pier.jpg";
-    import ManageAccount from "$lib/images/manage_account/reduced/wood_doors.jpg";
     import SaguaroCactus from "$lib/images/cactus/saguaro_cactus_cropped.png";
     import WaterfallGalaxy from "$lib/images/services_background/services_background.jpg";
     import ScrollableCaseStudies from "$lib/components/scrollables/ScrollableCaseStudies.svelte";
@@ -19,64 +15,9 @@
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     import { signIn } from "@auth/sveltekit/client";
-    import ConsultationIcon from "$lib/images/icons/consultation_icon.svg?raw";
-    import ProjectIcon from "$lib/images/icons/project.svg?raw";
-    import ManageAccountIcon from "$lib/images/icons/manage_account_solid.svg?raw";
-    import { onMount } from "svelte";
-    import ArtInTechServicesClientPortalVideo from "$lib/videos/Art_in_Tech_Services_client_portal_overview.mp4";
-    import ArtInTechServicesClientPortalPosterImage from "$lib/videos/Art_in_Tech_Services_client_portal_overview.jpg";
+    import LoginClient from "$lib/components/logins/LoginClient.svelte";
 
-    const howToWorkWithUsCards: HowToWorkWithUsCard[] = [
-        {
-            video: null,
-            video_poster: null,
-            image: Consultation,
-            icon: ConsultationIcon,
-            altText: "fluffly clouds",
-            header: "FREE consultations",
-            paragraph: "We discuss with you your project to help plan for success.",
-            pathname: [
-                {
-                    path: "/work-with-us/request-a-consultation",
-                    label: "request a consultation"
-                }
-            ]
-        },
-        {
-            video: null,
-            video_poster: null,
-            image: StartProject,
-            icon: ProjectIcon,
-            altText: "ocean pier",
-            header: "start a project",
-            paragraph: "We provide the services to deliver your project to meet or exceed your expectations.",
-            pathname: [
-                {
-                    path: "/work-with-us/request-to-start-a-project",
-                    label: "request to start a project"
-                }
-            ]
-        },
-        {
-            video: ArtInTechServicesClientPortalVideo,
-            video_poster: ArtInTechServicesClientPortalPosterImage,
-            image: ManageAccount,
-            icon: ManageAccountIcon,
-            altText: "locked doors",
-            header: "manage account",
-            paragraph: "Keep your projects organized, view and schedule your consultations, update your account and make payments.",
-            pathname: [
-                {
-                    path: "/logins/login-client",
-                    label: "client login"
-                },
-                {
-                    path: "/create-a-client-account",
-                    label: "create free client account"
-                }                
-            ]
-        },
-    ];
+    import { onMount } from "svelte";
 
     let introVisible: boolean = false;
 
@@ -101,81 +42,6 @@
         debounce(window.scrollY);
     };
     
-    // receive form data from server
-
-    let emailInputValue: string = "";
-    let emailIsValid: boolean = true;
-
-    let passwordInputValue: string = "";
-    let passwordIsValid: boolean = true;
-
-    let responseItem: ResponseObj = {
-        success: "",
-        error: "",
-        status: null
-    };
-
-    $: if((responseItem.success) || (responseItem.error)) {
-        setTimeout(() => {
-            responseItem.success = "";
-            responseItem.error = "";
-            status: null;
-        }, 4000)
-    };
-
-    const loginClient = async (
-        email: string,
-        password: string
-    ) => {
-        const response = await fetch("/api/authentication/signInClient", {
-            method: "POST",
-            body: JSON.stringify({
-                email,
-                password
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-        responseItem = await response.json();
-        return responseItem;
-    };
-
-    const loginClientHandler = async () => {
-        pending = true;
-        try {
-            await loginClient(emailInputValue, passwordInputValue);
-            if (responseItem.success) {
-                try {
-                    await signIn("credentials", {
-                        providerId: "client-login",
-                        email: emailInputValue,
-                        password: passwordInputValue,
-                        redirect: true,
-                        callbackUrl: "/authenticated-client/client"
-                    });
-                } catch (error) {
-                    console.log(error);
-                };
-            } else if (responseItem.error) {
-                if ((emailInputValue === "") || (!emailInputValue.includes('@'))) {
-                    emailIsValid = false;
-                };
-                if (passwordInputValue === "") {
-                    passwordIsValid = false;
-                };
-            };
-        } catch (error) {
-            console.log(error);
-        };
-    };
-
-    let pending: boolean = false;
-
-    $: if((responseItem.success) || (responseItem.error)) {
-        pending = false;
-    };
-
 </script>
 <svelte:window 
     on:scroll={handleScroll}
@@ -200,95 +66,28 @@
         <div class="saguaro_cactus_container">
             <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
         </div>
-        <div 
-            class="intro_paragraph_container"
-            style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
-        >
-            <h1 class="intro_paragraph">
+        <div class="banner_text">
+            <h1 class="intro_paragraph" style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}>
                 artfully crafting software using state-of-the-art technology
             </h1>
+            <a href="/how-to-work-with-us/request-a-consultation">
+                <ActionButtonSecondary>
+                    schedule a consultation
+                </ActionButtonSecondary>
+            </a>
         </div>
+        
     </section>
     <section class="second_paragraph_section">
         <h2>
-            we help organizations better serve communities by focusing on the human impact of technology
+            we help organizations use technology to better serve communities by creating software that humans enjoy
         </h2>
     </section>
     <section id="login_client_section" >
         <h2 class="login_heading">
             login client
         </h2>
-        <form class="form" on:submit|preventDefault={loginClientHandler}>
-            <div class="input_row">
-                <EmailInput
-                    bind:isValid={emailIsValid}
-                    placeholder="myEmail@myDomain.com"
-                    inputID="client_email"
-                    inputName="client_email"
-                    bind:emailInputValue={emailInputValue}
-                    inputLabel={true}
-                    required={true}
-                >
-                    email:
-                </EmailInput>
-            </div>
-            <div class="input_row">
-                <PasswordInput
-                    bind:isValid={passwordIsValid}
-                    placeholder="myPassword"
-                    inputID="client_password"
-                    inputName="client_password"
-                    inputLabel={true}
-                    bind:value={passwordInputValue}
-                    required={true}
-                    passwordInputErrorMessage="password required"
-                >
-                    password:
-                </PasswordInput>
-            </div>
-            <div class="buttons_container">
-                <SubmitButton 
-                    disable={false}
-                >
-                    login
-                </SubmitButton>
-            </div>
-        </form>
-        {#if (pending)}
-            <PendingFlashMessage >
-                please wait while we validate your credentials
-            </PendingFlashMessage>
-        {:else if (responseItem.error)}
-            <ErrorFlashMessage >
-                {responseItem.error}
-            </ErrorFlashMessage>
-        {:else if (responseItem.success)}
-            <SuccessFlashMessage>
-                {responseItem.success}
-            </SuccessFlashMessage>
-        {/if}
-        <div class="login_helpers_container">
-            <div class="login_helpers_column">
-                <h4 class="login_helper_prompt">
-                    don't have an account?
-                </h4>
-                <a href="/create-a-client-account">
-                    <ActionButtonSecondary>
-                        create a free account
-                    </ActionButtonSecondary>
-                </a>
-            </div>
-            <div class="login_helpers_column">
-                <h4 class="login_helper_prompt">
-                    forgot your password?
-                </h4>
-                <a href="/reset-client-password">
-                    <ActionButtonSecondary>
-                        reset password
-                    </ActionButtonSecondary>
-                </a>
-            </div>
-        </div>
+        <LoginClient />
     </section>
     <section>
         <h2 class="heading_02">
@@ -348,17 +147,18 @@
         </h2>
         <SliderTestimonials />
     </section>
-    <section>
+    <section class="how_to_work_with_us">
         <h2 class="heading_02">
             how to work with us
         </h2>
-        <div class="actions">
-            {#each howToWorkWithUsCards as howToWorkWithUs, index}
-                <WorkWithUsCard 
-                    card={howToWorkWithUs}
-                />
-            {/each}
-        </div>
+        <h3 class="actions">
+            We’re currently open to new collaborations.
+        </h3>
+        <a href="/how-to-work-with-us/request-a-consultation">
+            <ActionButtonSecondary>
+                learn ways to work with us
+            </ActionButtonSecondary>
+        </a>
     </section>
 </div>
 
@@ -383,7 +183,7 @@
         will-change: transform;
     }
 
-    .intro_paragraph_container {
+    .banner_text {
         position: absolute;
         top: auto;
         bottom: 0;
@@ -392,9 +192,10 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        align-items: center;
-        transition: opacity 0.2s linear;
+        align-items: flex-start;
         width: 40%;
+        padding: 1rem 0;
+        gap: 1rem;
     }
 
     .saguaro_cactus_container {
@@ -418,8 +219,9 @@
 
     .intro_paragraph {
         background: #FFCE78;
-        padding: 1rem 2rem;
         width: 100%;
+        transition: opacity 0.2s linear;
+        padding: 1rem 2rem;
         text-align: left;
         font-size: 4rem;
     }
@@ -440,34 +242,6 @@
 
     .login_heading {
         font-size: 1.5rem;
-    }
-
-    .input_row {
-        width: 100%;
-        max-width: 28rem;
-    }
-
-    .login_helpers_container {
-        display: flex;
-        flex-direction: row;
-        gap: 1rem;
-        justify-content: center;
-        width: 100%;
-    }
-
-    .login_helpers_column {
-        width: auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .login_helper_prompt {
-        font-size: 1.175rem;
-        text-align: center;
-        width: 100%;
     }
 
     .why_choose_us_section {
@@ -536,13 +310,21 @@
         padding: 5rem 1rem;
     }
 
+    .how_to_work_with_us {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        padding: 0 0 2rem 0;
+    }
+
     @media screen and (max-width: 1440px) {
 
         .saguaro_cactus {
             padding-top: 4rem;
         }
 
-        .intro_paragraph_container {
+        .banner_text {
             width: 40%;
         }
 
@@ -570,10 +352,6 @@
     }
 
     @media screen and (max-width: 1080px) {
-
-        .login_helpers_column {
-            width: 100%;
-        }
 
         .login_heading {
             font-size: 2rem;
@@ -605,7 +383,7 @@
             margin-left: 50%;
         }
 
-        .intro_paragraph_container {
+        .banner_text {
             left: 0;
             right: auto;
             width: 50%;
@@ -613,10 +391,6 @@
 
         .intro_paragraph {
             font-size: 1.5rem;
-        }
-
-        .login_helpers_container {
-            flex-direction: column;
         }
 
         .actions {
