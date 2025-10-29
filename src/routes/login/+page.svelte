@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { PUBLIC_DOMAIN } from "$env/static/public";
+    import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
+    import { page } from "$app/stores";
     import Tabs from "$lib/components/tabPanelLogins/Tabs.svelte";
     import Panel from "$lib/components/tabPanelLogins/Panel.svelte";
     import { v4 as uuidv4 } from 'uuid';
@@ -30,6 +33,13 @@
 
 
 </script>
+
+<svelte:head>
+    <title>Art in Tech Services - login</title>
+    <meta name="description" content="login" />
+    <meta property="og:image" content={BannerImage} />
+    <meta property="og:url" content={PUBLIC_DOMAIN+$page.url.pathname}/>
+</svelte:head>
 
 <div class="page">
     <div class="login_section">

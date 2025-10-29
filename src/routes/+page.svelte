@@ -154,7 +154,7 @@
         <h3 class="actions">
             We’re currently open to new collaborations.
         </h3>
-        <a href="/how-to-work-with-us/request-a-consultation">
+        <a href="/how-to-work-with-us">
             <ActionButtonSecondary>
                 learn ways to work with us
             </ActionButtonSecondary>

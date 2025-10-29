@@ -139,7 +139,7 @@
 
     @media screen and (max-width: 720px) {
         #case_study_card_container {
-            min-width: 100vw;
+            min-width: 100%;
         }
     }
 
