@@ -54,7 +54,6 @@
     });
 
     onDestroy(() => {
-        panel_data = [];
         if (player) {
             player.dispose();
         };
@@ -128,49 +127,51 @@
         class="service_info"
         style={innerWidth >= 720 && (checkboxAbsolute || checkboxFixed) ? `padding-top: ${checkboxContainerHeight}px;` : ""}
     >
-        {#each panel_data as serviceData, index}
-            <div class="image_container">
-                {#if serviceData.imageSrc}
-                    <img 
-                        fetchpriority="high" 
-                        loading="eager"
-                        src={serviceData?.imageSrc} 
-                        alt={serviceData?.imageAlt} 
-                    />
-                {/if}
-                {#if serviceData.videoSrc}
-                    <video 
-                        class="video-js"
-                        controls 
-                        id="player"
-                        muted={true}
-                        autoplay={true}
-                        loop={true}
-                        playsinline={true}
-                        poster={serviceData.videoPoster}
-                    >
-                        <track kind="captions">
-                        <source src={serviceData.videoSrc} type="video/mp4"/>
-                    </video>
-                {/if}
-            </div>
-            <div class="panel_paragraphs">
-                <p>
-                    {serviceData?.paragraph}
-                </p>
-                <table>
-                    <tbody>
-                        {#each serviceData?.skills as skill, index}
-                        <tr>
-                            <td class="skill">
-                                {skill}
-                            </td>
-                        </tr>
-                        {/each}
-                    </tbody>
-                </table>  
-            </div>
-        {/each}
+        {#key panel_data}
+            {#each panel_data as serviceData, index}
+                <div class="image_container">
+                    {#if serviceData.imageSrc}
+                        <img 
+                            fetchpriority="high" 
+                            loading="eager"
+                            src={serviceData?.imageSrc} 
+                            alt={serviceData?.imageAlt} 
+                        />
+                    {/if}
+                    {#if serviceData.videoSrc}
+                        <video 
+                            class="video-js"
+                            controls 
+                            id="player"
+                            muted={true}
+                            autoplay={true}
+                            loop={true}
+                            playsinline={true}
+                            poster={serviceData.videoPoster}
+                        >
+                            <track kind="captions">
+                            <source src={serviceData.videoSrc} type="video/mp4"/>
+                        </video>
+                    {/if}
+                </div>
+                <div class="panel_paragraphs">
+                    <p>
+                        {serviceData?.paragraph}
+                    </p>
+                    <table>
+                        <tbody>
+                            {#each serviceData?.skills as skill, index}
+                            <tr>
+                                <td class="skill">
+                                    {skill}
+                                </td>
+                            </tr>
+                            {/each}
+                        </tbody>
+                    </table>  
+                </div>
+            {/each}
+        {/key}
     </div>
 </div>
 <style>

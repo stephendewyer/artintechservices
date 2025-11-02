@@ -6,13 +6,8 @@
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import Checkbox from "$lib/components/inputs/Checkbox.svelte";
-    import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
-    import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
-    import DataVisualization from "$lib/images/icons/services/data_visualization_icon.svg?raw";
-    import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
     import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
     import UserExperienceDesign from "$lib/images/icons/services/UX_design.svg?raw";
-    import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
     import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
     import DocumentFileInput from "$lib/components/inputs/DocumentFileInput.svelte";
@@ -28,78 +23,6 @@
 
     const userEmail: string | undefined | null = data.streamed.user?.email;
 
-    interface Service {
-        service: string;
-        image: string;
-        requested: boolean;
-
-    };
-
-    const services: Service[] = [
-        {
-            service: "artificial intelligence",
-            image: ArtificialIntelligence,
-            requested: false
-        },
-        {
-            service: "brand identity design",
-            image: BrandIdentityDesign,
-            requested: false
-        },
-        {
-            service: "data visualization",
-            image: DataVisualization,
-            requested: false
-        },
-        {
-            service: "photography",
-            image: Photography,
-            requested: false
-        },
-        {
-            service: "software development",
-            image: SoftwareDevelopment,
-            requested: false
-        },
-        {
-            service: "user experience design",
-            image: UserExperienceDesign,
-            requested: false
-        },
-        {
-            service: "videography",
-            image: Videography,
-            requested: false
-        },
-        {
-            service: "visual design",
-            image: VisualDesign,
-            requested: false
-        }
-    ];
-
-    $: services;
-
-    $: services.forEach(requestedService => {
-        if (requestedService.service === "artificial intelligence") {
-            artificialIntelligence = requestedService.requested;
-        } else if (requestedService.service === "brand identity design") {
-            brandIdentityDesign = requestedService.requested;
-        } else if (requestedService.service === "data visualization") {
-            dataVisualization = requestedService.requested;
-        } else if (requestedService.service === "photography") {
-            photography = requestedService.requested;
-        } else if (requestedService.service === "software development") {
-            softwareDevelopment = requestedService.requested;
-        } else if (requestedService.service === "user experience design") {
-            userExperienceDesign = requestedService.requested;
-        } else if (requestedService.service === "videography") {
-            videography = requestedService.requested;
-        } else if (requestedService.service === "visual design") {
-            visualDesign = requestedService.requested;
-        };
-    });
-
     let projectName: string = "";
     let aboutProject: string = "";
     let projectStartDate: string = "";
@@ -111,14 +34,9 @@
     let documentFileName: string = "";
     let document: any;
 
-    let artificialIntelligence: boolean = false;
-    let brandIdentityDesign: boolean = false;
-    let dataVisualization: boolean = false;
-    let photography: boolean = false;
-    let softwareDevelopment: boolean = false;
+    let webDevelopment: boolean = false;
     let userExperienceDesign: boolean = false;
-    let videography: boolean = false;
-    let visualDesign: boolean = false;
+    let artDirection: boolean = false;
 
     let projectNameIsValid: boolean = true;
     let aboutProjectIsValid: boolean = true;
@@ -127,6 +45,43 @@
     let imageFileIsValid: boolean = true;
     let documentFileIsValid: boolean = true;
     let projectBudgetIsValid: boolean = true;
+
+    interface Service {
+        service: string;
+        image: string;
+        requested: boolean;
+
+    };
+
+    const services: Service[] = [
+        {
+            service: "web development",
+            image: SoftwareDevelopment,
+            requested: false
+        },
+        {
+            service: "user experience design",
+            image: UserExperienceDesign,
+            requested: false
+        },
+        {
+            service: "art direction",
+            image: VisualDesign,
+            requested: false
+        }
+    ];
+
+    $: services;
+
+    $: services.forEach(requestedService => {
+        if (requestedService.service === "web development") {
+            webDevelopment = requestedService.requested;
+        } else if (requestedService.service === "user experience design") {
+            userExperienceDesign = requestedService.requested;
+        } else if (requestedService.service === "art direction") {
+            artDirection = requestedService.requested;
+        };
+    });
 
     let responseItem: ResponseObj = {
         success: "",
@@ -146,14 +101,9 @@
 
     const createStartProjectRequest = async (
         userEmail: string | null | undefined,
-        artificialIntelligence: boolean,
-        brandIdentityDesign: boolean,
-        dataVisualization: boolean,
-        photography: boolean,
-        softwareDevelopment: boolean,
+        webDevelopment: boolean,
         userExperienceDesign: boolean,
-        videography: boolean,
-        visualDesign: boolean,
+        artDirection: boolean,
         projectName: string,
         aboutProject: string,
         projectStartDate: string,
@@ -170,14 +120,9 @@
             method: 'POST',
             body: JSON.stringify({
                 userEmail,
-                artificialIntelligence,
-                brandIdentityDesign,
-                dataVisualization,
-                photography,
-                softwareDevelopment,
+                webDevelopment,
                 userExperienceDesign,
-                videography,
-                visualDesign,
+                artDirection,
                 projectName,
                 aboutProject,
                 projectStartDate,
@@ -204,14 +149,9 @@
 
             await createStartProjectRequest(
                 userEmail,
-                artificialIntelligence,
-                brandIdentityDesign,
-                dataVisualization,
-                photography,
-                softwareDevelopment,
+                webDevelopment,
                 userExperienceDesign,
-                videography,
-                visualDesign,
+                artDirection,
                 projectName,
                 aboutProject,
                 projectStartDate,
@@ -225,14 +165,9 @@
             );
 
             if (responseItem.success) {
-                artificialIntelligence = false;
-                brandIdentityDesign = false;
-                dataVisualization = false;
-                photography = false;
-                softwareDevelopment = false;
+                webDevelopment = false;
                 userExperienceDesign = false;
-                videography = false;
-                visualDesign = false;
+                artDirection = false;
                 projectName = "";
                 aboutProject = "";
                 projectStartDate = "";

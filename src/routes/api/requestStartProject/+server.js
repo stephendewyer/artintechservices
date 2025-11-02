@@ -23,14 +23,9 @@ export async function POST({request}) {
 
     const data = await request.json();
 
-    const artificialIntelligence = data.artificialIntelligence ? 1 : 0;
-    const brandIdentityDesign = data.brandIdentityDesign ? 1 : 0;
-    const dataVisualization = data.dataVisualization ? 1 : 0;
-    const photography = data.photography ? 1 : 0;
-    const softwareDevelopment = data.softwareDevelopment ? 1 : 0;
+    const webDevelopment = data.webDevelopment ? 1 : 0;
     const userExperienceDesign = data.userExperienceDesign ? 1 : 0;
-    const videography = data.videography ? 1 : 0;
-    const visualDesign = data.visual_design ? 1 : 0;
+    const artDirection = data.artDirection ? 1 : 0;
     const nameFirst = data.nameFirst;
     const nameLast = data.nameLast;
     const email = data.email;
@@ -175,14 +170,9 @@ export async function POST({request}) {
         project_start_date,
         project_end_date,
         project_budget,
-        artificial_intelligence,
-        brand_identity_design,
-        data_visualization,
-        photography,
         software_development,
         user_experience_design,
-        videography,
-        visual_design,
+        art_direction,
         status,
         project_name
     ) VALUES (
@@ -198,14 +188,9 @@ export async function POST({request}) {
         "${projectStartDate}",
         "${projectEndDate}",
         "${projectBudget}",
-        "${artificialIntelligence}",
-        "${brandIdentityDesign}",
-        "${dataVisualization}",
-        "${photography}",
-        "${softwareDevelopment}",
+        "${webDevelopment}",
         "${userExperienceDesign}",
-        "${videography}",
-        "${visualDesign}",
+        "${artDirection}",
         "requested",
         "${htmlEntities(nameProject)}"
     )`;
@@ -245,14 +230,9 @@ export async function POST({request}) {
             -  project start date: ${projectStartDate}<br />
             -  project end date: ${projectEndDate}<br />
             -  project budget: ${projectBudget}<br />
-            -  artificial intelligence: ${artificialIntelligence ? "yes" : "no"}<br />
-            -  brand identity design: ${brandIdentityDesign ? "yes" : "no"}<br />
-            -  data visualization: ${dataVisualization ? "yes" : "no"}<br />
-            -  photography: ${photography ? "yes" : "no"}<br />
-            -  software development: ${softwareDevelopment ? "yes" : "no"}<br />
+            -  web development: ${webDevelopment ? "yes" : "no"}<br />
             -  user experience design: ${userExperienceDesign ? "yes" : "no"}<br />
-            -  videography: ${videography ? "yes" : "no"}<br />
-            -  visual design: ${visualDesign ? "yes" : "no"}<br />
+            -  art direction: ${artDirection ? "yes" : "no"}<br />
             <br />
             Best,<br /><br />
             stephen dewyer<br />
@@ -281,14 +261,9 @@ export async function POST({request}) {
         -  project start date: ${projectStartDate}<br />
         -  project end date: ${projectEndDate}<br />
         -  project budget: ${projectBudget}<br />
-        -  artificial intelligence: ${artificialIntelligence ? "yes" : "no"}<br />
-        -  brand identity design: ${brandIdentityDesign ? "yes" : "no"}<br />
-        -  data visualization: ${dataVisualization ? "yes" : "no"}<br />
-        -  photography: ${photography ? "yes" : "no"}<br />
-        -  software development: ${softwareDevelopment ? "yes" : "no"}<br />
+        -  software development: ${webDevelopment ? "yes" : "no"}<br />
         -  user experience design: ${userExperienceDesign ? "yes" : "no"}<br />
-        -  videography: ${videography ? "yes" : "no"}<br />
-        -  visual design: ${visualDesign ? "yes" : "no"}<br />
+        -  videography: ${artDirection ? "yes" : "no"}<br />
         <br />
         Best,<br /><br />
         stephen dewyer<br />

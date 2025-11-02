@@ -7,14 +7,7 @@
     import WaterfallGalaxy from "$lib/images/services_background/services_background.jpg";
     import ScrollableCaseStudies from "$lib/components/scrollables/ScrollableCaseStudies.svelte";
     import ScrollableServices from "$lib/components/scrollables/ScrollableServices.svelte";
-    import EmailInput from "$lib/components/inputs/EmailInput.svelte";
-    import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
-    import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
-    import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
-    import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
-    import { signIn } from "@auth/sveltekit/client";
     import LoginClient from "$lib/components/logins/LoginClient.svelte";
 
     import { onMount } from "svelte";
@@ -66,11 +59,14 @@
         <div class="saguaro_cactus_container">
             <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
         </div>
-        <div class="banner_text">
-            <h1 class="intro_paragraph" style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}>
+        <div 
+            class="banner_text" 
+            style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
+        >
+            <h1 class="intro_paragraph">
                 artfully crafting software using state-of-the-art technology
             </h1>
-            <a href="/how-to-work-with-us/request-a-consultation">
+            <a href="/how-to-work-with-us/request-a-consultation" class="schedule_consultation_button">
                 <ActionButtonSecondary>
                     schedule a consultation
                 </ActionButtonSecondary>
@@ -196,6 +192,7 @@
         width: 40%;
         padding: 1rem 0;
         gap: 1rem;
+        transition: opacity 0.2s linear;
     }
 
     .saguaro_cactus_container {
@@ -220,7 +217,6 @@
     .intro_paragraph {
         background: #FFCE78;
         width: 100%;
-        transition: opacity 0.2s linear;
         padding: 1rem 2rem;
         text-align: left;
         font-size: 4rem;
@@ -393,6 +389,10 @@
             font-size: 1.5rem;
         }
 
+        .schedule_consultation_button {
+            padding: 0 0 0 1rem;
+        }
+
         .actions {
             flex-direction: column;
             align-items: center;
@@ -411,6 +411,8 @@
         .second_paragraph_section > h2 {
             font-size: 1.25rem;
         }
+
+
 
     }
     

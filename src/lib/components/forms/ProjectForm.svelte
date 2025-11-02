@@ -3,13 +3,8 @@
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import Checkbox from "$lib/components/inputs/Checkbox.svelte";
-    import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
-    import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
-    import DataVisualization from "$lib/images/icons/services/data_visualization_icon.svg?raw";
-    import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
     import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
     import UserExperienceDesign from "$lib/images/icons/services/UX_design.svg?raw";
-    import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
     import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
     import ImageFileInput from "$lib/components/inputs/ImageFileInput.svelte";
     import DocumentFileInput from "$lib/components/inputs/DocumentFileInput.svelte";
@@ -54,14 +49,9 @@
     let documentPublicID: any = (project?.document_public_ID) ? project.document_public_ID : "";
     let document: any = (project?.document_URL) ? project.document_URL : "";
 
-    let artificialIntelligence: boolean = false;
-    let brandIdentityDesign: boolean = false;
-    let dataVisualization: boolean = false;
-    let photography: boolean = false;
-    let softwareDevelopment: boolean = false;
+    let webDevelopment: boolean = false;
     let userExperienceDesign: boolean = false;
-    let videography: boolean = false;
-    let visualDesign: boolean = false;
+    let artDirection: boolean = false;
 
     let projectNameIsValid: boolean = true;
     let aboutProjectIsValid: boolean = true;
@@ -79,27 +69,7 @@
 
     const services: Service[] = [
         {
-            service: "artificial intelligence",
-            image: ArtificialIntelligence,
-            requested: project?.artificial_intelligence === 1 ? true : false
-        },
-        {
-            service: "brand identity design",
-            image: BrandIdentityDesign,
-            requested: project?.brand_identity_design === 1 ? true : false
-        },
-        {
-            service: "data visualization",
-            image: DataVisualization,
-            requested: project?.data_visualization === 1 ? true : false
-        },
-        {
-            service: "photography",
-            image: Photography,
-            requested: project?.photography === 1 ? true : false
-        },
-        {
-            service: "software development",
+            service: "web development",
             image: SoftwareDevelopment,
             requested: project?.software_development === 1 ? true : false
         },
@@ -109,16 +79,11 @@
             requested: project?.user_experience_design === 1 ? true : false
         },
         {
-            service: "videography",
-            image: Videography,
-            requested: project?.videography === 1 ? true : false
-        },
-        {
-            service: "visual design",
+            service: "art direction",
             image: VisualDesign,
-            requested: project?.visual_design === 1 ? true : false
+            requested: project?.art_direction === 1 ? true : false
         }
-    ]
+    ];
 
     let responseItem: ResponseObj = {
         success: "",
@@ -134,24 +99,14 @@
     let deleteImage: boolean = false;
 
     $: services.forEach(requestedService => {
-        if (requestedService.service === "artificial intelligence") {
-            artificialIntelligence = requestedService.requested;
-        } else if (requestedService.service === "brand identity design") {
-            brandIdentityDesign = requestedService.requested;
-        } else if (requestedService.service === "data visualization") {
-            dataVisualization = requestedService.requested;
-        } else if (requestedService.service === "photography") {
-            photography = requestedService.requested;
-        } else if (requestedService.service === "software development") {
-            softwareDevelopment = requestedService.requested;
+        if (requestedService.service === "web development") {
+            webDevelopment = requestedService.requested;
         } else if (requestedService.service === "user experience design") {
             userExperienceDesign = requestedService.requested;
-        } else if (requestedService.service === "videography") {
-            videography = requestedService.requested;
-        } else if (requestedService.service === "visual design") {
-            visualDesign = requestedService.requested;
+        } else if (requestedService.service === "art direction") {
+            artDirection = requestedService.requested;
         };
-    });    
+    });
 
     $: if((responseItem.success) || (responseItem.error)) {
         setTimeout(() => {
@@ -164,14 +119,9 @@
     const updateStartProjectRequest = async (
         projectID: number | null,
         userEmail: string | null | undefined,
-        artificialIntelligence: boolean,
-        brandIdentityDesign: boolean,
-        dataVisualization: boolean,
-        photography: boolean,
-        softwareDevelopment: boolean,
+        webDevelopment: boolean,
         userExperienceDesign: boolean,
-        videography: boolean,
-        visualDesign: boolean,
+        artDirection: boolean,
         projectName: string,
         aboutProject: string,
         projectStartDate: string,
@@ -194,14 +144,9 @@
             body: JSON.stringify({
                 projectID,
                 userEmail,
-                artificialIntelligence,
-                brandIdentityDesign,
-                dataVisualization,
-                photography,
-                softwareDevelopment,
+                webDevelopment,
                 userExperienceDesign,
-                videography,
-                visualDesign,
+                artDirection,
                 projectName,
                 aboutProject,
                 projectStartDate,
@@ -235,14 +180,9 @@
             await updateStartProjectRequest(
                 projectID,
                 userEmail,
-                artificialIntelligence,
-                brandIdentityDesign,
-                dataVisualization,
-                photography,
-                softwareDevelopment,
+                webDevelopment,
                 userExperienceDesign,
-                videography,
-                visualDesign,
+                artDirection,
                 projectName,
                 aboutProject,
                 projectStartDate,

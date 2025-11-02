@@ -1,22 +1,20 @@
 <script lang="ts">
-    import ActionButtonTertiary from "$lib/components/buttons/ActionButtonTertiary.svelte";
-    import { goto } from "$app/navigation";
+    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
 
     export let caseStudyCardData: CaseStudyCard;
     let hovered: boolean = false;
 
 </script>
-<button 
+<div 
     id="case_study_card_container"
     class={hovered ? "case_study_card_container_active" : "case_study_card_container_inactive"}
-    on:click={() => goto(caseStudyCardData.path)}
-    on:keyup={() => goto(caseStudyCardData.path)}
     on:focus={() => hovered = true}
     on:mouseenter={() => hovered = true}
     on:mouseover={() => hovered = true}
     on:mouseleave={() => hovered = false}
     on:mouseout={() => hovered = false}
     on:blur={() => hovered = false}
+    role="region"
 >
     <img 
         class="background_image"
@@ -38,17 +36,14 @@
             <p>
                 {caseStudyCardData.paragraph}
             </p>
-            <div class="button_container">
-                <ActionButtonTertiary 
-                    parentControlled={true} 
-                    bind:hovered
-                >
+            <a class="button_container" href={caseStudyCardData.path}>
+                <ActionButtonSecondary>
                     view case study
-                </ActionButtonTertiary>
-            </div>
+                </ActionButtonSecondary>
+            </a>
         </div>
     </div>
-</button>
+</div>
 <style>
 
     #case_study_card_container {
@@ -60,7 +55,6 @@
         width: 100%;
         min-width: 48rem;
         height: 100vh;
-        cursor: pointer;
         display: flex;
         flex-direction: column;
         text-align: left;

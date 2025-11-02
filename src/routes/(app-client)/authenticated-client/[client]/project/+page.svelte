@@ -13,6 +13,7 @@
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import BackButton from "$lib/components/buttons/BackButton.svelte";
     import DocumentFileButton from "$lib/components/buttons/DocumentFileButton.svelte";
+  import { afterUpdate } from "svelte";
 
     export let data;
 
@@ -27,42 +28,22 @@
 
     const services: Service[] = [
         {
-            service: "artificial intelligence",
-            requested: (project?.artificial_intelligence === 1) ? true : false
+            service: "art direction",
+            requested: (project?.art_direction === 1) ? true : false
         },
         {
-            service: "brand identity design",
-            requested: (project?.brand_identity_design === 1) ? true : false
-        },
-        {
-            service: "data visualization",
-            requested: (project?.data_visualization === 1) ? true : false
-        },
-        {
-            service: "photography",
-            requested: (project?.photography === 1) ? true : false
-        },
-        {
-            service: "software development",
+            service: "web development",
             requested: (project?.software_development === 1) ? true : false
         },
         {
             service: "user experience design",
             requested: (project?.user_experience_design === 1) ? true : false
-        },
-        {
-            service: "videography",
-            requested: (project?.videography === 1) ? true : false
-        },
-        {
-            service: "visual design",
-            requested: (project?.visual_design === 1) ? true : false
         }
     ];
 
     let servicesInProject: string[] = [];
     
-    services.forEach((service) => {
+    $: services.forEach((service) => {
         if (service.requested === true) {
             servicesInProject = [...servicesInProject, service.service]
         };
@@ -183,10 +164,7 @@
 
 <section class="project">
     <div class="back_button_container">
-        <a 
-            href="/authenticated-client/client/projects" 
-            
-        >
+        <a href="/authenticated-client/client/projects">
             <BackButton>
                 projects
             </BackButton>
@@ -278,7 +256,6 @@
                         </td>
                         <td>
                             {#if (project?.document_URL)}
-      
                                 <DocumentFileButton documentURL={project.document_URL} />
                             {/if}
                         </td>

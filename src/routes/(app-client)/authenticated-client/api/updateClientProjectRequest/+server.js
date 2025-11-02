@@ -25,6 +25,8 @@ export async function POST({request}) {
 
     const userEmail = data.userEmail;
 
+    console.log(data)
+
     // get client data
 
     /**
@@ -35,17 +37,23 @@ export async function POST({request}) {
      * @type {string}
      */
     let clientNameLast = "";
-
-    let clientID;
+    /**
+     * @type {number | null}
+     */
+    let clientID = null;
 
     const selectClientQuery = `SELECT user_ID, name_first, name_last
         FROM clients
         WHERE email = "${userEmail}"`;
     
-    let res = await mysqlConnection()
+    let res = await mysqlConnection();
+
+
+    console.log()
 
     await res.query(selectClientQuery)
     .then(([rows]) => {
+        console.log(JSON.parse(JSON.stringify(rows))[0])
         clientID = JSON.parse(JSON.stringify(rows))[0].user_ID;
         clientNameFirst = JSON.parse(JSON.stringify(rows))[0].name_first;
         clientNameLast = JSON.parse(JSON.stringify(rows))[0].name_last;
@@ -55,14 +63,9 @@ export async function POST({request}) {
     })
 
     const projectID = data.projectID;
-    const artificialIntelligence = data.artificialIntelligence ? 1 : 0;
-    const brandIdentityDesign = data.brandIdentityDesign ? 1 : 0;
-    const dataVisualization = data.dataVisualization ? 1 : 0;
-    const photography = data.photography ? 1 : 0;
-    const softwareDevelopment = data.softwareDevelopment ? 1 : 0;
+    const webDevelopment = data.webDevelopment ? 1 : 0;
     const userExperienceDesign = data.userExperienceDesign ? 1 : 0;
-    const videography = data.videography ? 1 : 0;
-    const visualDesign = data.visual_design ? 1 : 0;
+    const artDirection = data.videography ? 1 : 0;
     const projectName = data.projectName;
     const aboutProject = data.aboutProject;
     const projectStartDate = data.projectStartDate;
@@ -364,14 +367,9 @@ export async function POST({request}) {
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",
-                artificial_intelligence = "${artificialIntelligence}",
-                brand_identity_design = "${brandIdentityDesign}",
-                data_visualization = "${dataVisualization}",
-                photography = "${photography}",
-                software_development = "${softwareDevelopment}",
+                software_development = "${webDevelopment}",
                 user_experience_design = "${userExperienceDesign}",
-                videography = "${videography}",
-                visual_design = "${visualDesign}"
+                art_direction = "${artDirection}"
             WHERE
                 project_ID = ${projectID}
         `;
@@ -383,15 +381,10 @@ export async function POST({request}) {
                 project_info = "${htmlEntities(aboutProject)}",
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
-                project_budget = "${projectBudget}",
-                artificial_intelligence = "${artificialIntelligence}",
-                brand_identity_design = "${brandIdentityDesign}",
-                data_visualization = "${dataVisualization}",
-                photography = "${photography}",
-                software_development = "${softwareDevelopment}",
+                project_budget = "${projectBudget}",,
+                software_development = "${webDevelopment}",
                 user_experience_design = "${userExperienceDesign}",
-                videography = "${videography}",
-                visual_design = "${visualDesign}"
+                art_direction = "${artDirection}"
             WHERE
                 project_ID = ${projectID}
         `;
@@ -404,14 +397,9 @@ export async function POST({request}) {
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",
-                artificial_intelligence = "${artificialIntelligence}",
-                brand_identity_design = "${brandIdentityDesign}",
-                data_visualization = "${dataVisualization}",
-                photography = "${photography}",
-                software_development = "${softwareDevelopment}",
+                software_development = "${webDevelopment}",
                 user_experience_design = "${userExperienceDesign}",
-                videography = "${videography}",
-                visual_design = "${visualDesign}"
+                art_direction = "${artDirection}"
             WHERE
                 project_ID = ${projectID}
         `;
@@ -423,14 +411,9 @@ export async function POST({request}) {
                 project_start_date = "${projectStartDate}",
                 project_end_date = "${projectEndDate}",
                 project_budget = "${projectBudget}",
-                artificial_intelligence = "${artificialIntelligence}",
-                brand_identity_design = "${brandIdentityDesign}",
-                data_visualization = "${dataVisualization}",
-                photography = "${photography}",
-                software_development = "${softwareDevelopment}",
+                software_development = "${webDevelopment}",
                 user_experience_design = "${userExperienceDesign}",
-                videography = "${videography}",
-                visual_design = "${visualDesign}"
+                art_direction = "${artDirection}"
             WHERE
                 project_ID = ${projectID}
         `;
@@ -468,14 +451,9 @@ export async function POST({request}) {
             -  project start date: ${projectStartDate}<br />
             -  project end date: ${projectEndDate}<br />
             -  project budget: ${projectBudget}<br />
-            -  artificial intelligence: ${artificialIntelligence ? "yes" : "no"}<br />
-            -  brand identity design: ${brandIdentityDesign ? "yes" : "no"}<br />
-            -  data visualization: ${dataVisualization ? "yes" : "no"}<br />
-            -  photography: ${photography ? "yes" : "no"}<br />
-            -  software development: ${softwareDevelopment ? "yes" : "no"}<br />
+            -  web development: ${webDevelopment ? "yes" : "no"}<br />
             -  user experience design: ${userExperienceDesign ? "yes" : "no"}<br />
-            -  videography: ${videography ? "yes" : "no"}<br />
-            -  visual design: ${visualDesign ? "yes" : "no"}<br />
+            -  art direction: ${artDirection ? "yes" : "no"}<br />
             <br />
             Best,<br /><br />
             stephen dewyer<br />
@@ -500,14 +478,9 @@ export async function POST({request}) {
         -  project start date: ${projectStartDate}<br />
         -  project end date: ${projectEndDate}<br />
         -  project budget: ${projectBudget}<br />
-        -  artificial intelligence: ${artificialIntelligence ? "yes" : "no"}<br />
-        -  brand identity design: ${brandIdentityDesign ? "yes" : "no"}<br />
-        -  data visualization: ${dataVisualization ? "yes" : "no"}<br />
-        -  photography: ${photography ? "yes" : "no"}<br />
-        -  software development: ${softwareDevelopment ? "yes" : "no"}<br />
+        -  web development: ${webDevelopment ? "yes" : "no"}<br />
         -  user experience design: ${userExperienceDesign ? "yes" : "no"}<br />
-        -  videography: ${videography ? "yes" : "no"}<br />
-        -  visual design: ${visualDesign ? "yes" : "no"}<br />
+        -  art direction: ${artDirection ? "yes" : "no"}<br />
         <br />
         Best,<br /><br />
         stephen dewyer<br />

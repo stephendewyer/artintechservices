@@ -7,146 +7,55 @@
     import { v4 as uuidv4 } from 'uuid';
     import { RequestedServicesStore } from "$lib/stores/RequestedServicesStore";
     import ServicePanel from "$lib/components/tabPanelServices/ServicePanel.svelte";
-    import ThreeDAnimation from "$lib/images/icons/services/3D_animation.svg?raw";
     import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
-    import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
-    import DataVisualization from "$lib/images/icons/services/data_visualization_icon.svg?raw";
     import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
     import UserExperienceDesign from "$lib/images/icons/services/UX_design.svg?raw";
-    import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
-    import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
-    import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
-    import DeepNeuralNetwork from "$lib/images/services/example_of_a_deep_neural_network.png";
-    import WindSockWindIndicator from "$lib/images/services/wind_socks_for_wind_indicator.jpg";
-    import TucsonPhotograph from "$lib/images/services/Tucson,_Arizona_19_April_2024.jpg";
     import Code from "$lib/images/services/coding.jpg";
     import DesignThinking from "$lib/images/services/UX_design.jpg";
     import KauaiHawaiiPoster from "$lib/videos/Kauai,_Hawaii.jpg";
     import KauaiHawaiiVideo from "$lib/videos/Kauai,_Hawaii_30_May_2017.mp4"
-    import WaterfallGalaxy from "$lib/images/services/services_background.jpg";
     import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
-    import MoveableFarmLogo from "$lib/images/services/moveable_farm_logo.png";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
     import { afterUpdate, onMount } from "svelte";
-    import ThreeDBasketVideo from "$lib/videos/3D_basket_animation.mp4";
-    import ThreeDBasketPoster from "$lib/videos/3D_animated_basket_still.jpg";
+    import MoveableFarmLogo from "$lib/images/case_studies/moveable_farm_web_app/moveable_farm_logo.png"
 
     const servicesTabPanels: TabPanel[] = [
         {
             id: uuidv4(),
-            index: 0,
-            label: "artificial intelligence",
-            tabImageSrc: ArtificialIntelligence,
-            panel: ServicePanel,
-            data: [
-                {
-                    paragraph: "Our expertise in artificial intelligence includes the following technologies:",
-                    skills: [
-                        "machine learning",
-                        "deep learning including artificial neural networks and convolutional neural networks"
-                    ],
-                    imageSrc: DeepNeuralNetwork,
-                    imageAlt: "example of a deep neural network",
-                    videoSrc: null,
-                    videoPoster: null,
-                    search: "?service=artificial-intelligence"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
             index: 1,
-            label: "brand identity design",
-            tabImageSrc: BrandIdentityDesign,
+            label: "web development",
+            tabImageSrc: SoftwareDevelopment,
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Our expertise in brand identity design includes:",
+                    paragraph: "We offer expertise in the development of the websites and full-stack web applications including:",
                     skills: [
-                        "brand discovery",
-                        "brand definition",
-                        "logo design"
+                        "accessibility, WCAG and Section 503 compliance",
+                        "modern web technologies like SvelteKit and Next.js",
+                        "data visualization",
+                        "search engine optimization best practices",
+                        "web analytics",
+                        "e-commerce",
+                        "database design and management",
+                        "custom content management systems",
+                        "AI and machine learning",
+                        "hosting setup",
+                        "cybersecurity",
+                        "cross-browser compatibility",
+                        "mobile and desktop applications"
                     ],
-                    imageSrc: MoveableFarmLogo,
-                    imageAlt: "Moveable Farm logo",
+                    imageSrc: Code,
+                    imageAlt: "code",
                     videoSrc: null,
                     videoPoster: null,
-                    search: "?service=brand-identity-design"
+                    search: "?service=web-development"
                 }
             ]
         },
         {
             id: uuidv4(),
             index: 2,
-            label: "data visualization",
-            tabImageSrc: DataVisualization,
-            panel: ServicePanel,
-            data: [
-                {
-                    paragraph: "Our expertise in data visualization includes:",
-                    skills: [
-                        "dynamic data interactivity",
-                        "static data visualizations"
-                    ],
-                    imageSrc: WindSockWindIndicator,
-                    imageAlt: "wind sock wind indicator",
-                    videoSrc: null,
-                    videoPoster: null,
-                    search: "?service=data-visualization"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 3,
-            label: "photography",
-            tabImageSrc: Photography,
-            panel: ServicePanel,
-            data: [
-                {
-                    paragraph: "Our expertise in photography includes:",
-                    skills: [
-                        "staging",
-                        "production",
-                        "editing"
-                    ],
-                    imageSrc: TucsonPhotograph,
-                    imageAlt: "photo of painted rock in Tucson, Arizona",
-                    videoSrc: null,
-                    videoPoster: null,
-                    search: "?service=photography"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 4,
-            label: "software development",
-            tabImageSrc: SoftwareDevelopment,
-            panel: ServicePanel,
-            data: [
-                {
-                    paragraph: "We offer software expertise in the development of the following products:",
-                    skills: [
-                        "websites",
-                        "web applications",
-                        "embedded software",
-                        "native software",
-                        "mobile applications",
-                        "custom content management development"
-                    ],
-                    imageSrc: Code,
-                    imageAlt: "code",
-                    videoSrc: null,
-                    videoPoster: null,
-                    search: "?service=software-development"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 5,
             label: "user experience design",
             tabImageSrc: UserExperienceDesign,
             panel: ServicePanel,
@@ -157,7 +66,8 @@
                         "user interface design",
                         "user research",
                         "wire framing",
-                        "prototyping"
+                        "prototyping",
+                        "responsive design"
                     ],
                     imageSrc: DesignThinking,
                     imageAlt: "UX design",
@@ -169,68 +79,28 @@
         },
         {
             id: uuidv4(),
-            index: 6,
-            label: "videography",
-            tabImageSrc: Videography,
-            panel: ServicePanel,
-            data: [
-                {
-                    paragraph: "Our expertise in videography includes:",
-                    skills: [
-                        "pre-production",
-                        "production",
-                        "editing"
-                    ],
-                    imageSrc: null,
-                    imageAlt: null,
-                    videoSrc: KauaiHawaiiVideo,
-                    videoPoster: KauaiHawaiiPoster,
-                    search: "?service=videography"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 7,
-            label: "visual design",
+            index: 3,
+            label: "art direction",
             tabImageSrc: VisualDesign,
             panel: ServicePanel,
             data: [
                 {
-                    paragraph: "Our expertise in visual design includes:",
+                    paragraph: "Our expertise in art direction includes:",
                     skills: [
-                        "art direction"
+                        "brand identity design",
+                        "visual design",
+                        "videography",
+                        "photography",
+                        "2-D and 3-D animation",
                     ],
-                    imageSrc: WaterfallGalaxy,
-                    imageAlt: "waterfall galaxy",
+                    imageSrc: MoveableFarmLogo,
+                    imageAlt: "Moveable Farm logo",
                     videoSrc: null,
                     videoPoster: null,
-                    search: "?service=visual-design"
+                    search: "?service=art-direction"
                 }
             ]
         },
-        {
-            id: uuidv4(),
-            index: 8,
-            label: "3D animation",
-            tabImageSrc: ThreeDAnimation,
-            panel: ServicePanel,
-            data: [
-                {
-                    paragraph: "Our expertise in 3D animation includes:",
-                    skills: [
-                        "custom 3D objects",
-                        "3D data visualization",
-                        "interactive 3D graphics (forthcoming)",
-                    ],
-                    imageSrc: null,
-                    imageAlt: null,
-                    videoSrc: ThreeDBasketVideo,
-                    videoPoster: ThreeDBasketPoster,
-                    search: "?service=3D-animation"
-                }
-            ]
-        }
     ];
 
     let activeTab: number = 0;
@@ -242,6 +112,8 @@
             };
         });
     });
+
+    $: console.log("active tab: ", activeTab)
 
     const cancelServiceClickHandler = (serviceSelected: ServiceSelected) => {
         $RequestedServicesStore.forEach((service, index) => {

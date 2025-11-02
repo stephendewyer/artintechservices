@@ -209,7 +209,7 @@ declare global {
     }
 
 	interface ServiceCardData {
-		skills: string[];
+		capabilities: string;
 		pathname: string;
 	}
 
@@ -262,14 +262,9 @@ declare global {
 		project_start_date: Date;
 		project_end_date: Date;
 		project_budget: number;
-		artificial_intelligence: number;
-		brand_identity_design: number;
-		data_visualization: number;
-		photography: number;
 		software_development: number;
 		user_experience_design: number;
-		videography: number;
-		visual_design: number;
+		art_direction: number;
 		date_created: Date;
 		status: string;
 		image_URL: string;

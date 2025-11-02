@@ -2,23 +2,7 @@ import { writable } from "svelte/store";
 
 export const RequestedServicesStore = writable([
     {
-        service: "artificial intelligence", 
-        requested: false
-    },
-    {
-        service: "brand identity design",
-        requested: false
-    },
-    {
-        service: "data visualization",
-        requested: false
-    },
-    {
-        service: "photography",
-        requested: false
-    },
-    {
-        service: "software development",
+        service: "web development", 
         requested: false
     },
     {
@@ -26,15 +10,7 @@ export const RequestedServicesStore = writable([
         requested: false
     },
     {
-        service: "videography",
+        service: "art direction",
         requested: false
     },
-    {
-        service: "visual design",
-        requested: false
-    },
-    {
-        service: "3D animation",
-        requested: false
-    }
 ]);

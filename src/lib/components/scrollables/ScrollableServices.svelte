@@ -3,161 +3,47 @@
     import ArrowButtonPrevious from "$lib/components/buttons/ArrowButtonPrevious.svelte";
     import { v4 as uuidv4 } from 'uuid';
     import SoftwareDevelopment from "$lib/images/icons/services/software_icon.svg?raw";
-    import ArtificialIntelligence from "$lib/images/icons/services/artificial_intelligence_icon.svg?raw";
-    import DataVisualization from "$lib/images/icons/services/data_visualization_icon.svg?raw";
     import VisualDesign from "$lib/images/icons/services/visual_design_icon.svg?raw";
     import UserExperienceDesign from "$lib/images/icons/services/UX_design.svg?raw";
-    import BrandIdentityDesign from "$lib/images/icons/services/brand_identity_design_Icon.svg?raw";
-    import Videography from "$lib/images/icons/services/videography_icon.svg?raw";
-    import Photography from "$lib/images/icons/services/camera_icon.svg?raw";
     import CardService from "$lib/components/cards/ServiceCard.svelte";
-    import ThreeDAnimationIcon from "$lib/images/icons/services/3D_animation.svg?raw";
 
     const serviceCards: ServiceCard[] = [
         {
             id: uuidv4(),
-            index: 0,
-            label: "artificial intelligence",
-            tabImageSrc: ArtificialIntelligence,
-            data: [
-                {
-                    skills: [
-                        "machine learning",
-                        "deep learning including artificial neural networks and convolutional neural networks"
-                    ],
-                    pathname: "/services?service=artificial-intelligence"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
             index: 1,
-            label: "brand identity design",
-            tabImageSrc: BrandIdentityDesign,
+            label: "website and full-stack web application development",
+            tabImageSrc: SoftwareDevelopment,
             data: [
                 {
-                    skills: [
-                        "brand discovery",
-                        "brand definition",
-                        "logo design"
-                    ],
-                    pathname: "/services?service=brand-identity-design"
+                    capabilities: "We build websites and full-stack web applications that are accessible, secure and high-performing.  We use modern software development libraries, frameworks and databases.  Our web software responds to different devices and works across browsers.  We ensure our web software uses the best search engine optimization practices.  Our developers are experienced in developing web software for e-commerce.  We can handle simple websites to complex, full-stack web applications.  We can help setup web hosting solutions to deploy and maintain the websites and web applications we build.  We can add analytics to the web software we build.",
+                    pathname: "/services?service=web-development"
                 }
             ]
         },
         {
             id: uuidv4(),
             index: 2,
-            label: "data visualization",
-            tabImageSrc: DataVisualization,
-            data: [
-                {
-                    skills: [
-                        "dynamic data interactivity",
-                        "static data visualizations"
-                    ],
-                    pathname: "/services?service=data-visualization"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 3,
-            label: "photography",
-            tabImageSrc: Photography,
-            data: [
-                {
-                    skills: [
-                        "staging",
-                        "production",
-                        "editing"
-                    ],
-                    pathname: "/services?service=photography"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 4,
-            label: "software development",
-            tabImageSrc: SoftwareDevelopment,
-            data: [
-                {
-                    skills: [
-                        "websites",
-                        "web applications",
-                        "embedded software",
-                        "native software",
-                        "mobile applications",
-                        "custom content management development"
-                    ],
-                    pathname: "/services?service=software-development"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 5,
             label: "user experience design",
             tabImageSrc: UserExperienceDesign,
             data: [
                 {
-                    skills: [
-                        "user interface design",
-                        "user research",
-                        "wire framing",
-                        "prototyping"
-                    ],
+                    capabilities: "We design software using some of the best UX design practices to ensure project goals are aligned with the user experience.  We use user research to inform our designs in an iterative process.  We’re able to combine our experience in software development and art direction to design with aesthetics and cutting-edge technology in mind to produce great user experiences.",
                     pathname: "/services?service=user-experience-design"
                 }
             ]
         },
         {
             id: uuidv4(),
-            index: 6,
-            label: "videography",
-            tabImageSrc: Videography,
-            data: [
-                {
-                    skills: [
-                        "pre-production",
-                        "production",
-                        "editing"
-                    ],
-                    pathname: "/services?service=videography"
-                }
-            ]
-        },
-        {
-            id: uuidv4(),
-            index: 7,
-            label: "visual design",
+            index: 3,
+            label: "art direction",
             tabImageSrc: VisualDesign,
             data: [
                 {
-                    skills: [
-                        "art direction"
-                    ],
-                    pathname: "/services?service=visual-design"
+                    capabilities: "We’ll help you communicate your story in a compelling way using our expertise in art.  We can help you with everything from brand identity design to creating original content including interactive data visualizations, 3-D animations, photographs, videos and illustrations.  Our art direction skills help ensure your designs tell your story in an enjoyable way.",
+                    pathname: "/services?service=art-direction"
                 }
             ]
         },
-        {
-            id: uuidv4(),
-            index: 8,
-            label: "3D animation",
-            tabImageSrc: ThreeDAnimationIcon,
-            data: [
-                {
-                    skills: [
-                        "custom 3D objects",
-                        "3D data visualization",
-                        "interactive 3D graphics (forthcoming)",
-                    ],
-                    pathname: "/services?service=3D-animation"
-                }
-            ]
-        }
     ];
 
     let servicesFrameWidth: number = 0;
@@ -257,6 +143,10 @@
         position: relative;
         margin: 0 1rem 1rem 1rem;
         padding: 0 0 1rem 0;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
     }
 
     .services_container {
@@ -267,11 +157,9 @@
     }
 
     .services_inner {
-        position: relative;
-        display: grid;
-        grid-template-columns: auto auto auto auto;
-        column-gap: 1rem;
-        row-gap: 1rem;
+        gap: 1rem;
+        display: flex;
+        flex-direction: row;
         padding: 0 0 1rem 0;
         justify-content: center;
     }
@@ -302,23 +190,10 @@
     }
 
     @media screen and (max-width: 1440px) {
-
         .services_inner {
-            grid-template-columns: auto auto auto;
-        }
-
-    }
-
-    @media screen and (max-width: 1080px) {
-
-        .services_inner {
-            display: flex;
-            flex-direction: row;
-            column-gap: none;
-            row-gap: none;
-            gap: 1rem;
             justify-content: flex-start;
         }
     }
+
 
 </style>
