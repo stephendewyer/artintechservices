@@ -12,8 +12,6 @@
     import UserExperienceDesign from "$lib/images/icons/services/UX_design.svg?raw";
     import Code from "$lib/images/services/coding.jpg";
     import DesignThinking from "$lib/images/services/UX_design.jpg";
-    import KauaiHawaiiPoster from "$lib/videos/Kauai,_Hawaii.jpg";
-    import KauaiHawaiiVideo from "$lib/videos/Kauai,_Hawaii_30_May_2017.mp4"
     import ShoppingCart from "$lib/images/icons/shopping_cart_icon.svg?raw";
     import CallToActionButton from "$lib/components/buttons/CallToActionButton.svelte";
     import CloseIcon from "$lib/images/icons/close_icon.svg?raw";
