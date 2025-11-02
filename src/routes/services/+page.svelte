@@ -21,7 +21,7 @@
     const servicesTabPanels: TabPanel[] = [
         {
             id: uuidv4(),
-            index: 1,
+            index: 0,
             label: "web development",
             tabImageSrc: SoftwareDevelopment,
             panel: ServicePanel,
@@ -53,7 +53,7 @@
         },
         {
             id: uuidv4(),
-            index: 2,
+            index: 1,
             label: "user experience design",
             tabImageSrc: UserExperienceDesign,
             panel: ServicePanel,
@@ -77,7 +77,7 @@
         },
         {
             id: uuidv4(),
-            index: 3,
+            index: 2,
             label: "art direction",
             tabImageSrc: VisualDesign,
             panel: ServicePanel,
@@ -312,7 +312,7 @@
                         {/each}
                     </tbody>
                 </table>
-                <a href="/work-with-us/request-to-start-a-project" >
+                <a href="/how-to-work-with-us/request-to-start-a-project" >
                     <CallToActionButton >
                         start project
                     </CallToActionButton>

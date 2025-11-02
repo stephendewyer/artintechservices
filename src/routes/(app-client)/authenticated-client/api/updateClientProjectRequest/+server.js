@@ -48,9 +48,6 @@ export async function POST({request}) {
     
     let res = await mysqlConnection();
 
-
-    console.log()
-
     await res.query(selectClientQuery)
     .then(([rows]) => {
         console.log(JSON.parse(JSON.stringify(rows))[0])
@@ -65,7 +62,7 @@ export async function POST({request}) {
     const projectID = data.projectID;
     const webDevelopment = data.webDevelopment ? 1 : 0;
     const userExperienceDesign = data.userExperienceDesign ? 1 : 0;
-    const artDirection = data.videography ? 1 : 0;
+    const artDirection = data.artDirection ? 1 : 0;
     const projectName = data.projectName;
     const aboutProject = data.aboutProject;
     const projectStartDate = data.projectStartDate;
@@ -490,11 +487,11 @@ export async function POST({request}) {
         },
     ];
 
-    try {
-        await sgMail.send(msg);
-        return new Response(JSON.stringify({success: `updated project request for ${clientNameFirst} ${clientNameLast}`}), {status: 200});
-    } catch (error) {
-        return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
-    }
+    // try {
+    //     await sgMail.send(msg);
+    //     return new Response(JSON.stringify({success: `updated project request for ${clientNameFirst} ${clientNameLast}`}), {status: 200});
+    // } catch (error) {
+    //     return new Response(JSON.stringify({error: "message not sent due to a problem with the API"}), {status: 422});
+    // }
     
 }
