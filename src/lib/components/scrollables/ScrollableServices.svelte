@@ -173,7 +173,6 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        left: auto;
         pointer-events: none;
     }
 
