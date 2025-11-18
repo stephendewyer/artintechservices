@@ -65,7 +65,7 @@
 
     @media screen and (max-width: 750px) {
         .service_card {
-            width: 100vw;
+            min-width: 100%;
             padding: 0.5rem;
 
         }

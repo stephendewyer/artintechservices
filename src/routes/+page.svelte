@@ -181,7 +181,7 @@
 
     .banner_text {
         position: absolute;
-        top: auto;
+        top: 0;
         bottom: 0;
         left: auto;
         right: 0;
@@ -190,7 +190,7 @@
         justify-content: center;
         align-items: flex-start;
         width: 40%;
-        padding: 1rem 0;
+        padding: 1rem 1rem 1rem 0;
         gap: 1rem;
         transition: opacity 0.2s linear;
     }
@@ -220,6 +220,7 @@
         padding: 1rem 2rem;
         text-align: left;
         font-size: 4rem;
+        border-radius: 2rem;
     }
 
     .heading_02 {
@@ -376,13 +377,15 @@
 
         .saguaro_cactus {
             padding-top: 1rem;
-            margin-left: 50%;
+            margin-left: 60%;
         }
 
         .banner_text {
-            left: 0;
+            left: 1rem;
             right: auto;
-            width: 50%;
+            width: 60%;
+            top: 0;
+            bottom: 0;
         }
 
         .intro_paragraph {
