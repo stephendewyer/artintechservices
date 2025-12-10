@@ -1,7 +1,7 @@
 import { mysqlConnection } from "$lib/server/db/mysql";
 import { redirect } from "@sveltejs/kit";
 
-export const load = async ({params, url}) => {
+export const load = async ({params, locals}) => {
     // check if valid email
     const clientEmail = params.client_profile.split("=")[1];
 
@@ -23,13 +23,16 @@ export const load = async ({params, url}) => {
 
     res.end();
 
+    const user = await locals.user;
+
     if (clientRow.length === 0) {
         throw redirect(303, "/authenticated-administrator/administrator/clients");
     } else {
         // get the profile image if any
         return {
             streamed: {
-                clientEmail
+                clientEmail,
+                user
             }
         };
     };    

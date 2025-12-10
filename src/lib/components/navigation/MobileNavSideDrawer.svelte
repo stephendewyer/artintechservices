@@ -5,12 +5,12 @@
     import NavigationData from "$lib/data/navigation.json";
     import NavigationDataClient from "$lib/data/navigationClient.json";
     import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
-    import type { User } from "@auth/sveltekit";
     import LogoutButtonMobile from "../buttons/LogoutButtonMobile.svelte";
+    import { afterNavigate } from "$app/navigation";
 
     export let openMobileNav: boolean = false;
 
-    let sessionClient: User | undefined;
+    let sessionClient: UserCredentials;
     
     $: sessionClient = $page.data.streamed.user;
 
@@ -19,19 +19,21 @@
     let callbackURL: string = "";
     let logoURL: string = "";
 
-    $: if (sessionClient?.name === "client") {
-        nav_data = [...NavigationDataClient];
-        callbackURL = "/logins/login-client";
-        logoURL = "/authenticated-client/client";
-    } else if (sessionClient?.name === "administrator") {
-        nav_data = [...NavigationDataAdministrator];
-        callbackURL = "/logins/login-administrator";
-        logoURL = "/authenticated-administrator/administrator";
-    } else if (!sessionClient) {
-        nav_data = [...NavigationData];
-        callbackURL = "/";
-        logoURL = "/";
-    };
+    afterNavigate(() => {
+        if (sessionClient?.role === "client") {
+            nav_data = [...NavigationDataClient];
+            callbackURL = "/login";
+            logoURL = "/authenticated-client/client";
+        } else if (sessionClient?.role === "administrator") {
+            nav_data = [...NavigationDataAdministrator];
+            callbackURL = "/login";
+            logoURL = "/authenticated-administrator/administrator";
+        } else if (!sessionClient) {
+            nav_data = [...NavigationData];
+            callbackURL = "/";
+            logoURL = "/";
+        };
+    });
 
 </script>
 
@@ -55,8 +57,9 @@
             <div class="logout_button_container">
                 <LogoutButtonMobile 
                     email={sessionClient?.email}
-                    userGroup={sessionClient?.name}
+                    userGroup={sessionClient?.role}
                     callbackUrl={callbackURL}
+                    bind:openState={openMobileNav}
                 >
                     logout
                 </LogoutButtonMobile>

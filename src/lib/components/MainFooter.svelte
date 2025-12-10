@@ -6,42 +6,59 @@
     import NavigationData from "$lib/data/navigation.json";
     import NavigationDataClient from "$lib/data/navigationClient.json";
     import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
-    import type { User } from "@auth/sveltekit";
     import LogoutButtonFooter from "./buttons/LogoutButtonFooter.svelte";
-    import LocalFirstArizonaProudMember from "$lib/images/Local_First_Arizona/LFA+Proud+Member+Digital+Graphic+Light.png";
 
     export let footerHeight;
 
-    let sessionClient: User | undefined;
-    
-    $: sessionClient = $page.data.streamed.user;
+    let sessionClient: UserCredentials;
 
     let nav_data: NavTab[] = [];
 
     let callbackURL: string = "";
     let logoURL: string = "";
 
-    $: if (sessionClient?.name === "client") {
-        nav_data = [...NavigationDataClient];
-        callbackURL = "/login/login-client";
-        logoURL = "/authenticated-client/client";
-    } else if (sessionClient?.name === "administrator") {
-        nav_data = [...NavigationDataAdministrator];
-        callbackURL = "/login/login-administrator";
-        logoURL = "/authenticated-administrator/administrator";
-    } else if (!sessionClient) {
-        nav_data = [...NavigationData];
-        callbackURL = "/";
-        logoURL = "/";
-    };
-
     let footerNavTabsLeft: NavTab[] = [];
-    
-    $: footerNavTabsLeft = nav_data.slice(0, (nav_data.length/2));
 
     let footerNavTabsRight: NavTab[] = [];
-    
-    $: footerNavTabsRight = nav_data.slice((nav_data.length/2), nav_data.length);
+
+    afterNavigate(() => {
+
+        sessionClient = $page.data.streamed.user;
+
+        console.log($page.data.streamed.user?.role)
+
+        if (sessionClient?.role === "client") {
+            nav_data = [...NavigationDataClient];
+            callbackURL = "/login";
+            logoURL = "/authenticated-client/client";
+        } else if (sessionClient?.role === "administrator") {
+            console.log("admnistrator role");
+            nav_data = [...NavigationDataAdministrator];
+            callbackURL = "/login";
+            logoURL = "/authenticated-administrator/administrator";
+        } else if (!sessionClient) {
+            nav_data = [...NavigationData];
+            callbackURL = "/";
+            logoURL = "/";
+        };
+
+        footerNavTabsLeft = nav_data.slice(0, (nav_data.length/2));
+
+        footerNavTabsRight = nav_data.slice((nav_data.length/2), nav_data.length);
+
+        footerNavTabsLeft.forEach((mainNavTab) =>  {
+            if (currentPageHandler(mainNavTab)) {
+                tabIsActive = mainNavTab;
+            };
+        });
+
+        footerNavTabsRight.forEach((mainNavTab) =>  {
+            if (currentPageHandler(mainNavTab)) {
+                tabIsActive = mainNavTab;
+            };
+        });
+        
+    });
 
     const currentPageHandler = (navTab: NavTab) => {
         if (navTab.content === null) {
@@ -80,19 +97,6 @@
 
     let tabIsActive: NavTab;
 
-    afterNavigate(() => {
-        footerNavTabsLeft.forEach((mainNavTab) =>  {
-            if (currentPageHandler(mainNavTab)) {
-                tabIsActive = mainNavTab;
-            };
-        });
-        footerNavTabsRight.forEach((mainNavTab) =>  {
-            if (currentPageHandler(mainNavTab)) {
-                tabIsActive = mainNavTab;
-            };
-        });
-    });
-
     const today = new Date();
     const year = today.getFullYear();
 
@@ -122,8 +126,8 @@
     <ul class="footer_nav_top_mobile">
         <li aria-current={(
             $page.url.pathname === "/" || 
-            $page.url.pathname === "/authenticated-administrator/administrator" || 
-            $page.url.pathname === "/authenticated-client/client"
+            $page.url.pathname.startsWith("/authenticated-administrator") || 
+            $page.url.pathname.startsWith("/authenticated-client")
         ) ? "page" : undefined}>
             <a href={logoURL} class="logo">
                 {@html Logo}
@@ -289,8 +293,8 @@
         
         <li aria-current={(
             $page.url.pathname === "/" || 
-            $page.url.pathname === "/authenticated-administrator/administrator" || 
-            $page.url.pathname === "/authenticated-client/client"
+            $page.url.pathname.startsWith("/authenticated-administrator") || 
+            $page.url.pathname.startsWith("/authenticated-client")
         ) ? "page" : undefined}>
             <a href="/" class="logo">
                 {@html Logo}
@@ -351,7 +355,7 @@
         <LogoutButtonFooter 
             callbackUrl={callbackURL}
             email={sessionClient?.email}
-            userGroup={sessionClient?.name}
+            userGroup={sessionClient?.role}
         >
             logout
         </LogoutButtonFooter>

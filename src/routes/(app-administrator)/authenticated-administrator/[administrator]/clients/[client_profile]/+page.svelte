@@ -61,7 +61,8 @@
                     state: clientProfile.state,
                     street_address: clientProfile.street_address,
                     street_address_02: clientProfile.street_address_02,
-                    zip_code: clientProfile.zip_code
+                    zip_code: clientProfile.zip_code,
+                    URL: clientProfile.URL
                 };
   
             } else if (!response.ok) {

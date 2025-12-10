@@ -1,45 +1,58 @@
+// runs on every request -- attaches user to event.locals
+
+import { verifyAccessToken } from "$lib/server/authentication/auth";
 import { redirect } from '@sveltejs/kit';
-import { handle as authenticationHandle } from './auth';
-import { sequence } from "@sveltejs/kit/hooks";
 
-/** @type {import('@sveltejs/kit').Handle} */
-const authorizationHandle = async ({event, resolve}) => {
-    const session = await event.locals.auth();
-    // redirect users to "/authenticated-client/client" if startsWith("/authenticated-client") is false
 
-    if (
-        !event.url.pathname.startsWith("/authenticated-client") &&
-        session?.user?.name === "client"
-    ) {
-        throw redirect(303, "/authenticated-client/client");
-    };
+export async function handle({ event, resolve }) {
 
-    // protect any routes under /authenticated-client
+    const token = event.cookies.get("session");
 
-    if (event.url.pathname.startsWith("/authenticated-client")) {
-        if (session?.user?.name !== "client") {
-            throw redirect(303, "/logins/login-client");
+    if (token) {
+
+        try {
+
+            event.locals.user = verifyAccessToken(token);            
+
+        } catch {
+            event.locals.user = null;
         };
+    } else {
+        event.locals.user = null;
     };
 
-    if (
-        !event.url.pathname.startsWith("/authenticated-administrator") &&
-        session?.user?.name === "administrator"
-    ) {
-        throw redirect(303, "/authenticated-administrator/administrator");
-    };
+    const user = event.locals.user;
 
-    if (event.url.pathname.startsWith("/authenticated-administrator")) {
-        if (session?.user?.name !== "administrator") {
-            throw redirect(303, "/logins/login-administrator");
-        };
-    };
-    // if still request, proceed as normal
-    return await resolve(event);
-}
+    // protect routes for authenticated client
+    
+    // if (
+    //     !event.url.pathname.startsWith("/authenticated-client") &&
+    //     user?.role === "client"
+    // ) {
+    //     throw redirect(303, "/authenticated-client/client");
+    // };
 
-export const handle = sequence(
-    authenticationHandle,
-    authorizationHandle
-)
+    // if (event.url.pathname.startsWith("/authenticated-client")) {
+    //     if (user?.role !== "client") {
+    //         throw redirect(303, "/logins/login-client");
+    //     };
+    // };
 
+    //protect routes for authenticated administrators
+
+    // if (
+    //     !event.url.pathname.startsWith("/authenticated-administrator") &&
+    //     user?.role === "administrator"
+    // ) {
+    //     throw redirect(303, "/authenticated-administrator/administrator");
+    // };
+
+    // if (event.url.pathname.startsWith("/authenticated-administrator")) {
+    //     if (user?.role !== "administrator") {
+    //         throw redirect(303, "/logins/login-administrator");
+    //     };
+    // };
+
+    return resolve(event);
+
+};

@@ -6,8 +6,8 @@
     import NavigationData from "$lib/data/navigation.json";
     import NavigationDataClient from "$lib/data/navigationClient.json";
     import NavigationDataAdministrator from "$lib/data/navigationAdministrator.json";
-    import type { User } from "@auth/sveltekit";
     import LogoutButton from "$lib/components/buttons/LogoutButton.svelte";
+    import { afterNavigate } from "$app/navigation";
 
     export let sideDrawer: boolean = false;
 
@@ -15,7 +15,7 @@
 
     let showNav: boolean = true; // boolean to show or hid nav bar
 
-    let sessionClient: User | undefined;
+    let sessionClient: UserCredentials;
     
     $: sessionClient = $page.data.streamed.user;
 
@@ -24,19 +24,21 @@
     let callbackURL: string = "";
     let logoURL: string = "";
 
-    $: if (sessionClient?.name === "client") {
-        nav_data = [...NavigationDataClient];
-        callbackURL = "/login/login-client";
-        logoURL = "/authenticated-client/client";
-    } else if (sessionClient?.name === "administrator") {
-        nav_data = [...NavigationDataAdministrator];
-        callbackURL = "/login/login-administrator";
-        logoURL = "/authenticated-administrator/administrator";
-    } else if (!sessionClient) {
-        nav_data = [...NavigationData];
-        callbackURL = "/";
-        logoURL = "/";
-    };
+    afterNavigate(() => {
+        if (sessionClient?.role === "client") {
+            nav_data = [...NavigationDataClient];
+            callbackURL = "/login";
+            logoURL = "/authenticated-client/client";
+        } else if (sessionClient?.role === "administrator") {
+            nav_data = [...NavigationDataAdministrator];
+            callbackURL = "/login";
+            logoURL = "/authenticated-administrator/administrator";
+        } else if (!sessionClient) {
+            nav_data = [...NavigationData];
+            callbackURL = "/";
+            logoURL = "/";
+        };
+    });
 
 </script>
 
@@ -60,8 +62,8 @@
     <ul class="main_nav_tabs" >
         <li aria-current={(
                 $page.url.pathname === "/" || 
-                $page.url.pathname === "/authenticated-administrator/administrator" || 
-                $page.url.pathname === "/authenticated-client/client"
+                $page.url.pathname.startsWith("/authenticated-administrator") || 
+                $page.url.pathname.startsWith("/authenticated-client")
             ) ? "page" : undefined} >
             <a href={logoURL}>
                 <Logo />
@@ -92,7 +94,7 @@
             <LogoutButton 
                 callbackUrl={callbackURL}
                 email={sessionClient?.email}
-                userGroup={sessionClient?.name}
+                userGroup={sessionClient?.role}
             >
                 logout
             </LogoutButton>

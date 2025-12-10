@@ -2,9 +2,9 @@ import { mysqlConnection } from "$lib/server/db/mysql";
 
 export const load = async (event) => {
 
-  const session = await event.locals.auth();
+  const user = await event.locals.user;
 
-  const administratorEmail = session?.user?.email;
+  const administratorEmail = user.email;
 
   const selectAdministratorProfileImageQuery = `SELECT 
             image_collection.image_URL,
@@ -35,7 +35,7 @@ export const load = async (event) => {
   // get the profile image if any
   return {
     streamed: {
-      user: session?.user,
+      user: user,
       administrator_profile_image_ID: administratorProfileImageID,
       administrator_profile_image_URL: administratorProfileImageURL
     }

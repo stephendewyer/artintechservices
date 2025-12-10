@@ -34,7 +34,7 @@
     let userNameInputValue: string = "";
     let nameFirstInputValue: string = "";
     let nameLastInputValue: string = "";
-    let phoneInputValue: E164Number | null = null;
+    let phoneInputValue: E164Number | string | number | null = null;
     let companyInputValue: string = "";
     let streetAddressInputValue: string = "";
     let streetAddress02InputValue: string = "";

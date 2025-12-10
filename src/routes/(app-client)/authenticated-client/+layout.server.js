@@ -2,9 +2,9 @@ import { mysqlConnection } from "$lib/server/db/mysql";
 
 export const load = async (event) => {
 
-  const session = await event.locals.auth();
+  const user = event.locals.user;
 
-  const clientEmail = session?.user?.email;
+  const clientEmail = user.email;
 
   const selectClientProfileImageQuery = `SELECT 
             image_collection.image_URL,
@@ -43,7 +43,7 @@ export const load = async (event) => {
   // get the profile image if any
   return {
     streamed: {
-      user: session?.user,
+      user: user,
       name_first: nameFirst,
       name_last: nameLast,
       client_profile_image_ID: clientProfileImageID,

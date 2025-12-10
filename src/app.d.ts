@@ -6,7 +6,14 @@ import type { E164Number } from 'svelte-tel-input/types';
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			// Define your custom locals properties here
+			user: {
+				id: string;
+				email: string;
+				role: string;
+			} | null | string | JwtPayload;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
@@ -17,6 +24,11 @@ declare global {
         error: string | undefined;
         status: number | null;
     };
+
+	interface LoginCredentials { 
+		email: string; 
+		password: string;
+	};
 
 	interface ClientProfile {
         user_ID: number;
@@ -238,13 +250,10 @@ declare global {
         requested: boolean;
     };
 
-	interface Credentials {
-		providerId: string;
+	interface UserCredentials {
+		id: string;
 		email: string;
-		password: string;
-		redirect: string;
-		csrfToken: string;
-		callbackUrl: string;
+		role: string;
 	};
 
 	interface PaymentMethodDeleteItem {

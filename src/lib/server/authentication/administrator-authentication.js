@@ -1,7 +1,7 @@
 import { verifyPassword } from '$lib/authentication/PasswordAuth';
 import { mysqlConnection } from "$lib/server/db/mysql";
 
-export const administratorAuthentication = async (/** @type {Credentials} */ credentials) => {
+export const administratorAuthentication = async (/** @type {LoginCredentials} */ credentials) => {
     
     if (credentials.email === "") {
         return null;

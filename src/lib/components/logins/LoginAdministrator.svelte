@@ -5,7 +5,6 @@
     import EmailInput from "$lib/components/inputs/EmailInput.svelte";
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
-    import { signIn } from "@auth/sveltekit/client";
     import { goto } from '$app/navigation';
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
 
@@ -33,7 +32,7 @@
         email: string,
         password: string
     ) => {
-        const response = await fetch("/api/authentication/signInAdministrator", {
+        const response = await fetch("/api/authentication/loginAdministrator", {
             method: "POST",
             body: JSON.stringify({
                 email,
@@ -52,17 +51,7 @@
         try {
             await loginAdministrator(emailInputValue, passwordInputValue);
             if (responseItem.success) {
-                try {
-                    await signIn("credentials", {
-                        providerId: "administrator-login",
-                        email: emailInputValue,
-                        password: passwordInputValue,
-                        redirect: true,
-                        callbackUrl: "/authenticated-administrator/administrator"
-                    });
-                } catch (error) {
-                    console.log(error);
-                };
+                goto("authenticated-administrator/administrator");
             } else if (responseItem.error) {
                 if ((emailInputValue === "") || (!emailInputValue.includes('@'))) {
                     emailIsValid = false;

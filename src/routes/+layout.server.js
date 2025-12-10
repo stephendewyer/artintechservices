@@ -1,8 +1,9 @@
-export const load = async (event) => {
-  const session = await event.locals.auth();
-  return {
+// expose user to frontend pages
+export function load({ locals }) {
+  // @ts-ignore
+  return { 
     streamed: {
-      user: session?.user
+      user: locals.user
     }
   };
 };

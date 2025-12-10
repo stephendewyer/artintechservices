@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { signOut } from "@auth/sveltekit/client";
     import LogoutIconMobile from "$lib/images/icons/logout.svg?raw";
     export let callbackUrl: string;
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
+    import { goto } from "$app/navigation";
+    
     export let email: string | null | undefined = null;
     export let userGroup: string | null | undefined = null;
+    export let openState: boolean = false;
 
     let responseItem: ResponseObj = {
         success: "",
@@ -62,12 +64,13 @@
             } else if (userGroup === "administrator") {
                 await updatePreviousLoginAdministrator(email, userGroup);
             };
-                if (responseItem.success) {
-                signOut({
-                    redirect: true,
-                    callbackUrl: `${callbackUrl}`
+            if (responseItem.success) {
+                await fetch("/api/authentication/logout", {
+                    method: "POST"
                 });
-            }
+                openState = false;
+                goto(callbackUrl);
+            };
         } catch(err) {
             console.log(err);
         };        

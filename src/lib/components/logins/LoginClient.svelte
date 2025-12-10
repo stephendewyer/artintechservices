@@ -6,7 +6,7 @@
     import PasswordInput from "$lib/components/inputs/PasswordInput.svelte";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
-    import { signIn } from "@auth/sveltekit/client";
+    import { goto } from "$app/navigation";
 
         // receive form data from server
 
@@ -34,7 +34,7 @@
         email: string,
         password: string
     ) => {
-        const response = await fetch("/api/authentication/signInClient", {
+        const response = await fetch("/api/authentication/loginClient", {
             method: "POST",
             body: JSON.stringify({
                 email,
@@ -53,17 +53,7 @@
         try {
             await loginClient(emailInputValue, passwordInputValue);
             if (responseItem.success) {
-                try {
-                    await signIn("credentials", {
-                        providerId: "client-login",
-                        email: emailInputValue,
-                        password: passwordInputValue,
-                        redirect: true,
-                        callbackUrl: "/authenticated-client/client"
-                    });
-                } catch (error) {
-                    console.log(error);
-                };
+                goto("/authenticated-client/client");
             } else if (responseItem.error) {
                 if ((emailInputValue === "") || (!emailInputValue.includes('@'))) {
                     emailIsValid = false;
