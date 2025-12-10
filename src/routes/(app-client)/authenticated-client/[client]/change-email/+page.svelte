@@ -1,10 +1,10 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
     import { page } from "$app/stores";
     import SubmitButton from "$lib/components/buttons/SubmitButton.svelte";
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import PendingFlashMessage from "$lib/components/flashMessages/PendingFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
-    import { signOut } from "@auth/sveltekit/client";
 
     export let data;
 
@@ -48,6 +48,55 @@
 
     let pendingEmailChange: boolean = false;
 
+    let responseItem: ResponseObj = {
+        success: "",
+        error: "",
+        status: null
+    };
+
+    $: if((responseItem.success) || (responseItem.error)) {
+        setTimeout(() => {
+            responseItem.success = "";
+            responseItem.error = "";
+            status: null;
+        }, 4000);
+    };
+
+    let pendingUpdatePreviousLogin: boolean = false;
+
+    const updatePreviousLoginClient = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+        pendingUpdatePreviousLogin = true;
+        const response = await fetch("/authenticated-client/api/updateClientPreviousLogin", {
+            method: "PATCH",
+            body: JSON.stringify({
+                email,
+                userGroup
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        responseItem = await response.json();
+        return responseItem;
+    };
+
+    const updatePreviousLoginAdministrator = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+        pendingUpdatePreviousLogin = true;
+        const response = await fetch("/authenticated-administrator/api/updateAdministratorPreviousLogin", {
+            method: "PATCH",
+            body: JSON.stringify({
+                email,
+                userGroup
+            }),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+        responseItem = await response.json();
+        return responseItem;
+    };
+
     const confirmEmailChangeHandler = async () => {
         pendingEmailChange = true;
         try {
@@ -56,13 +105,33 @@
                 newEmail
             );
             if (responseConfirmChangeEmail.success) {
-                signOut({
-                    redirect: true,
-                    callbackUrl: "/logins/login-client"
-                });
+
+                try {
+                    await updatePreviousLoginClient(sessionEmail, "client");
+                } catch (error) {
+                    console.log(error);
+                };
+
+                try {
+
+                    await fetch("/api/authentication/logout", {
+                        method: "POST"
+                    });
+
+                    goto("/login");
+
+                } catch (error) {
+
+                    console.log(error);
+
+                };
+                
             };
+
         } catch (error) {
+
             console.log(error);
+
         };
     };
 

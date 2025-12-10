@@ -4,7 +4,6 @@
     import ErrorFlashMessage from "$lib/components/flashMessages/ErrorFlashMessage.svelte";
     import SuccessFlashMessage from "$lib/components/flashMessages/SuccessFlashMessage.svelte";
     import { page } from "$app/stores";
-    import { signOut } from "@auth/sveltekit/client";
     
     const sessionEmail = $page.data.streamed.user?.email;
 
@@ -50,9 +49,8 @@
                 sessionEmail
             );
             if (responseItem.success) {
-                signOut({
-                    redirect: true,
-                    callbackUrl: "/create-a-client-account"
+                await fetch("/api/authentication/logout", {
+                    method: "POST"
                 });
             };
 
