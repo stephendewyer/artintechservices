@@ -10,9 +10,7 @@
 
     export let openMobileNav: boolean = false;
 
-    let sessionClient: UserCredentials;
-    
-    $: sessionClient = $page.data.streamed.user;
+    let sessionClient: UserCredentials = $page.data.streamed.user ? $page.data.streamed.user : null;
 
     let nav_data: NavTab[] = [];
 
@@ -20,6 +18,7 @@
     let logoURL: string = "";
 
     afterNavigate(() => {
+        sessionClient = $page.data.streamed.user ? $page.data.streamed.user : null;
         if (sessionClient?.role === "client") {
             nav_data = [...NavigationDataClient];
             callbackURL = "/login";

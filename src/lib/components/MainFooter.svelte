@@ -10,7 +10,7 @@
 
     export let footerHeight;
 
-    let sessionClient: UserCredentials;
+    let sessionClient: UserCredentials = $page.data.streamed.user ? $page.data.streamed.user : null;
 
     let nav_data: NavTab[] = [];
 
@@ -23,16 +23,13 @@
 
     afterNavigate(() => {
 
-        sessionClient = $page.data.streamed.user;
-
-        console.log($page.data.streamed.user?.role)
+        sessionClient = $page.data.streamed.user ? $page.data.streamed.user : null;
 
         if (sessionClient?.role === "client") {
             nav_data = [...NavigationDataClient];
             callbackURL = "/login";
             logoURL = "/authenticated-client/client";
         } else if (sessionClient?.role === "administrator") {
-            console.log("admnistrator role");
             nav_data = [...NavigationDataAdministrator];
             callbackURL = "/login";
             logoURL = "/authenticated-administrator/administrator";

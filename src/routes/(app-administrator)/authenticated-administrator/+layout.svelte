@@ -1,12 +1,12 @@
 <script lang="ts">
     import NavPanelAdministrator from "$lib/components/navigation/NavPanelAdministrator.svelte";
     import { afterUpdate, onMount } from "svelte";
-    import { page } from "$app/stores";
+    import { page } from "$app/state";
     import { AdministratorPageWidthStore } from "$lib/stores/AdministratorPageWidthStore";
 
-    let administratorProfileImageID = $page.data.streamed.administrator_profile_image_ID;
-    let administratorProfileImageURL = $page.data.streamed.administrator_profile_image_URL;
-    let administratorEmail = $page.data.streamed.user?.email;
+    let administratorProfileImageID = page.data.streamed.administrator_profile_image_ID;
+    let administratorProfileImageURL = page.data.streamed.administrator_profile_image_URL;
+    let administratorEmail = page.data.streamed.user?.email;
     let administratorPageElement: HTMLElement;
     let administratorPageTopYPosition: number = 0;
     let navPanelWidth: number = 0;

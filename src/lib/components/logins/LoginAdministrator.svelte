@@ -51,7 +51,7 @@
         try {
             await loginAdministrator(emailInputValue, passwordInputValue);
             if (responseItem.success) {
-                goto("authenticated-administrator/administrator");
+                goto("/authenticated-administrator/administrator");
             } else if (responseItem.error) {
                 if ((emailInputValue === "") || (!emailInputValue.includes('@'))) {
                     emailIsValid = false;
