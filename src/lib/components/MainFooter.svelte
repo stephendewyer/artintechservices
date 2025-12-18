@@ -16,10 +16,13 @@
 
     let callbackURL: string = "";
     let logoURL: string = "";
+    let logoutAPIroute: string = "";
 
     let footerNavTabsLeft: NavTab[] = [];
 
     let footerNavTabsRight: NavTab[] = [];
+
+    let updatePreviousLoginDateAPIroute: string = "";
 
     afterNavigate(() => {
 
@@ -27,14 +30,19 @@
 
         if (sessionClient?.role === "client") {
             nav_data = [...NavigationDataClient];
+            updatePreviousLoginDateAPIroute = "/authenticated-client/api/updateClientPreviousLogin";
             callbackURL = "/login";
             logoURL = "/authenticated-client/client";
+            logoutAPIroute = "/authenticated-client/api/logout"
         } else if (sessionClient?.role === "administrator") {
             nav_data = [...NavigationDataAdministrator];
+            updatePreviousLoginDateAPIroute = "/authenticated-administrator/api/updateAdministratorPreviousLogin";
             callbackURL = "/login";
             logoURL = "/authenticated-administrator/administrator";
+            logoutAPIroute = "/authenticated-administrator/api/logout"
         } else if (!sessionClient) {
             nav_data = [...NavigationData];
+            updatePreviousLoginDateAPIroute = "";
             callbackURL = "/";
             logoURL = "/";
         };
@@ -353,6 +361,8 @@
             callbackUrl={callbackURL}
             email={sessionClient?.email}
             userGroup={sessionClient?.role}
+            updatePreviousLoginDateAPIroute={updatePreviousLoginDateAPIroute}
+            logoutAPIroute={logoutAPIroute}
         >
             logout
         </LogoutButtonFooter>

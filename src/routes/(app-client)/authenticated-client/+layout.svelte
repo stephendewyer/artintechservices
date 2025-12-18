@@ -1,12 +1,13 @@
 <script lang="ts">
     import NavPanelClient from "$lib/components/navigation/NavPanelClient.svelte";
     import { afterUpdate, onMount } from "svelte";
-    import { page } from "$app/stores";
     import { ClientPageWidthStore } from "$lib/stores/ClientPageWidthStore";
 
-    let clientProfileImageID = $page.data.streamed.client_profile_image_ID;
-    let clientProfileImageURL = $page.data.streamed.client_profile_image_URL;
-    let clientEmail = $page.data.streamed.user?.email;
+    export let data;
+
+    let clientProfileImageID = data.streamed.client_profile_image_ID;
+    let clientProfileImageURL = data.streamed.client_profile_image_URL;
+    let clientEmail = data.streamed.user?.email;
     let clientPageElement: HTMLElement;
     let clientPageTopYPosition: number = 0;
     let navPanelContainerHeight: number = 0;

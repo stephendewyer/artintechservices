@@ -3,9 +3,11 @@
     import LoadingSpinner from "$lib/components/loadingSpinners/LoadingSpinner.svelte";
     import { goto } from "$app/navigation";
 
+    export let logoutAPIroute: string = "";
     export let email: string | null | undefined = null;
     export let callbackUrl: string;
     export let userGroup: string | null | undefined = null;
+    export let updatePreviousLoginDateAPIroute: string = "";
 
     let responseItem: ResponseObj = {
         success: "",
@@ -22,27 +24,10 @@
     };
 
     let pendingUpdatePreviousLogin: boolean = false;
-
-    const updatePreviousLoginClient = async (email: string | null | undefined, userGroup: string | null | undefined) => {
-        pendingUpdatePreviousLogin = true;
-        const response = await fetch("/authenticated-client/api/updateClientPreviousLogin", {
-            method: "PATCH",
-            body: JSON.stringify({
-                email,
-                userGroup
-            }),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
-
-        responseItem = await response.json();
-        return responseItem;
-    };
     
-    const updatePreviousLoginAdministrator = async (email: string | null | undefined, userGroup: string | null | undefined) => {
+    const updatePreviousLoginHandler = async (email: string | null | undefined, userGroup: string | null | undefined) => {
         pendingUpdatePreviousLogin = true;
-        const response = await fetch("/authenticated-administrator/api/updateAdministratorPreviousLogin", {
+        const response = await fetch(updatePreviousLoginDateAPIroute, {
             method: "PATCH",
             body: JSON.stringify({
                 email,
@@ -52,19 +37,16 @@
                 "Content-Type": "application/json"
             }
         });
+
         responseItem = await response.json();
         return responseItem;
     };
 
     const handleLogout = async () => {
         try {
-            if (userGroup === "client") {
-                await updatePreviousLoginClient(email, userGroup);
-            } else if (userGroup === "administrator") {
-                await updatePreviousLoginAdministrator(email, userGroup);
-            };
+            await updatePreviousLoginHandler(email, userGroup);
             if (responseItem.success) {
-                await fetch("/api/authentication/logout", {
+                await fetch(logoutAPIroute, {
                     method: "POST"
                 });
                 goto(callbackUrl);
