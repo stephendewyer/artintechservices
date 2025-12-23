@@ -34,7 +34,7 @@
                 a web platform to develop stronger and more sustainable agriculture for better cooking, eating and drinking
             </p>
             <p class="dates">
-                2025 (expected launch date)
+                2026 (expected launch date)
             </p>
             <p>
                 The web platform includes:

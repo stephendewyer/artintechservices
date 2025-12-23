@@ -14,12 +14,12 @@
         {
             id: uuidv4(),
             index: 0,
-            label: "moveable farm web app",
+            label: "Moveable Farm web app",
             paragraph: "A web platform to develop stronger and more sustainable agriculture for better cooking, eating and drinking.",
             imageBackgroundSrc: TucsonFarmersMarket,
-            imageBackgroundAlt: "moveable farm banner",
+            imageBackgroundAlt: "Moveable Farm banner",
             imageForegroundSrc: MoveableFarmDesktopAndMobilePrototypes,
-            imageForegroundAlt: "moveable farm desktop and mobile prototypes",
+            imageForegroundAlt: "Moveable Farm desktop and mobile prototypes",
             path: "/case-studies/moveable-farm-web-app"
         },
         {
