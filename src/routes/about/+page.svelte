@@ -12,6 +12,7 @@
     import CareersBackground from "$lib/images/about/about-careers.jpg";
     import AboutPanel from "$lib/components/tabPanelAbout/AboutPanel.svelte";
     import USMap from "$lib/images/maps/Tucson,_AZ.svg";
+    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
 
     const values: string[] = [
         "source locally",
@@ -256,6 +257,11 @@
             <p>
                 Our prices vary depending on the project, with a simple, single-page website sometimes costing as low as $500 and more complex software like a full-stack web application costing over $60,000.  We work with clients in the beginning of projects to determine the project scope and timeline.  Clients will typically pay an upfront fee to start work and subsequent payments based on milestone achievements.
             </p>
+            <a href="/about/pricing">
+                <ActionButtonSecondary>
+                    pricing guidance
+                </ActionButtonSecondary>
+            </a>
         </div>
         <div class="about_section">
             <h2>

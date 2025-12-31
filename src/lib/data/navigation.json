@@ -115,13 +115,20 @@
             },
             {
                 "id": 4.4,
+                "label": "pricing",
+                "expandable": false,
+                "slug": "/about/pricing",
+                "content": null
+            },
+            {
+                "id": 4.5,
                 "label": "team",
                 "expandable": false,
                 "slug": "/about/team",
                 "content": null
             },
             {
-                "id": 4.3,
+                "id": 4.6,
                 "label": "careers",
                 "expandable": false,
                 "slug": "/about/careers",

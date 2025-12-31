@@ -64,7 +64,7 @@
     bind:innerWidth
 />
 <svelte:head>
-    <title>Art in Tech Services - artfully crafting software using state-of-the-art technology</title>
+    <title>Art in Tech Services - artfully crafting software that helps businesses better serve communities</title>
     <meta name="description" content="Art in Tech Services develops imaginative software solutions to human problems using state-of-the-art technology" />
     <meta property="og:image" content={ArtInTechServicesBanner} />
     <meta property="og:url" content={PUBLIC_DOMAIN}/>
@@ -97,7 +97,7 @@
             style={introVisible ? "opacity: 100%;" : "opacity: 0%;"}
         >
             <h1 class="intro_paragraph">
-                artfully crafting software using state-of-the-art technology
+                artfully crafting software that helps businesses better serve communities
             </h1>
             <a href="/how-to-work-with-us/request-a-consultation" class="schedule_consultation_button">
                 <ActionButtonSecondary>
@@ -109,8 +109,11 @@
     </section>
     <section class="second_paragraph_section">
         <h2>
-            we help organizations use technology to better serve communities by creating software that humans enjoy
+            state-of-the-art technology, designed for humans
         </h2>
+        <p>
+            We help organizations better serve their communities through custom software that blends art, design, and modern technology.
+        </p>
     </section>
     <section id="login_client_section" >
         <h2 class="login_heading">
@@ -135,6 +138,9 @@
         <h2 class="heading_02">
             why choose us?
         </h2>
+        <p class="why_choose_us">
+            Art in Tech Services exists to bridge the gap between creativity and technology. With a background in UX design, software engineering, and the arts, we bring a unique perspective to every project—one that values people as much as code.
+        </p>
         <ol class="why_choose_us_paragraphs">
             <li class="why_choose_us_reason">
                 <h4>Envisioning solutions to real-world problems</h4>
@@ -345,16 +351,12 @@
 
     .second_paragraph_section {
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-
-    .second_paragraph_section > h2 {
-        width: 100%;
         max-width: 40rem;
-        font-size: 2rem;
-        padding: 5rem 1rem;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 1rem;
     }
 
     .how_to_work_with_us {
@@ -365,11 +367,14 @@
         padding: 0 0 2rem 0;
     }
 
-    @media screen and (max-width: 1440px) {
+    .why_choose_us {
+        width: 100%;
+        max-width: 40rem;
+        margin: 0 auto;
+        padding: 1rem;
+    }
 
-        .saguaro_cactus {
-            /* padding-top: 4rem; */
-        }
+    @media screen and (max-width: 1440px) {
 
         .banner_text {
             width: 40%;
@@ -385,11 +390,6 @@
 
         .why_choose_us_paragraphs {
             grid-template-columns: auto auto auto;
-        }
-
-        .second_paragraph_section > h2 {
-            font-size: 1.75rem;
-            padding: 3.5rem 1rem;
         }
 
         .login_heading {
@@ -409,18 +409,10 @@
             padding: 0.5rem 1rem;
         }
 
-        .saguaro_cactus {
-            /* padding-top: 8rem; */
-        }
-
         .why_choose_us_paragraphs {
             grid-template-columns: auto auto;
         }
 
-        .second_paragraph_section > h2 {
-            font-size: 1.5rem;
-            padding: 2rem 1rem;
-        }
     }
 
     @media screen and (max-width: 720px) {
@@ -460,12 +452,6 @@
         .why_choose_us_reason {
             padding: 0;
         }
-
-        .second_paragraph_section > h2 {
-            font-size: 1.25rem;
-        }
-
-
 
     }
     

@@ -377,6 +377,13 @@ declare global {
 		opened: number | null;
 		contact: Contact;
 	}
+
+	interface Price {
+        title: string;
+        range: string;
+        header: string;
+        details: string[];
+    };
 }
 
 export {};

@@ -54,7 +54,7 @@
         border: none;
         width: 100%;
         min-width: 48rem;
-        height: 100vh;
+        height: 48rem;
         display: flex;
         flex-direction: column;
         text-align: left;
@@ -119,6 +119,7 @@
 
         #case_study_card_container {
             min-width: 42rem;
+            height: 42rem;
         }
 
     }
@@ -127,6 +128,7 @@
 
         #case_study_card_container {
             min-width: 38rem;
+            height: 38rem;
         }
 
     }
