@@ -1,4 +1,6 @@
 <script lang="ts">
+  import ActionButtonSecondary from "../buttons/ActionButtonSecondary.svelte";
+
 
     export let price: Price;
 
@@ -22,7 +24,6 @@
             {/each}
         </ul>
     </div>
-    
 </div>
 <style>
     .pricing_card {

@@ -3,7 +3,7 @@
     import { PUBLIC_DOMAIN } from "$env/static/public";
     import BannerImage from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import PricingCard from "$lib/components/cards/PricingCard.svelte";
-
+    import ActionButtonSecondary from "$lib/components/buttons/ActionButtonSecondary.svelte";
     const prices: Price[] = [
         {
             title: "websites",
@@ -77,6 +77,16 @@
             <PricingCard price={price} />
         {/each}
     </div>
+    <div class="start_a_project">
+        <h3>
+            Want to start a project?
+        </h3>
+        <a href="/how-to-work-with-us/request-to-start-a-project">
+            <ActionButtonSecondary>
+                request to start a project
+            </ActionButtonSecondary>
+        </a>
+    </div>
 </div>
 <style>
 
@@ -97,6 +107,14 @@
         width: 100%;
         max-width: 1920px;
         margin: 0 auto;
+    }
+
+    .start_a_project {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        align-items: center;
     }
 
     @media screen and (max-width: 720) {
