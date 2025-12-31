@@ -1,5 +1,7 @@
 <script lang="ts">
     import MoonShot from "$lib/images/Art_in_Tech_Services_banner.png";
+    import Supermoon from "$lib/images/banner/supermoon.png";
+    import Stripes from "$lib/images/banner/Art_in_Tech_Services_banner_stripes_02.png"
     import ArtInTechServicesBanner from "$lib/images/Art_in_Tech_Services_banner_with_logo.jpg";
     import SliderTestimonials from "$lib/components/sliders/SliderTestimonials.svelte";
     import { PUBLIC_DOMAIN } from "$env/static/public";
@@ -20,6 +22,24 @@
 
     let innerWidth: number = 0;
 
+    let scaleY: number = 1 - (scrolledY * 0.001);
+
+    let saguaroMarginLeftPercentage: number | string = 12.5;
+
+    let saguaroHeightPercentage: number = 90;
+
+    $: if (scaleY >= 0) {
+        if (innerWidth > 720) {
+            saguaroMarginLeftPercentage = 12.5 * scaleY;
+        } else {
+            saguaroMarginLeftPercentage = "auto";
+        };
+    } else  {
+        saguaroMarginLeftPercentage = 0;
+    };
+
+    $: saguaroHeightPercentage = 90 + (scrolledY/10);
+
     onMount(() => {
         setTimeout(() => introVisible = true, 300);
     });
@@ -32,7 +52,8 @@
     };
     
     const handleScroll = () => {
-        debounce(window.scrollY);
+        scaleY = 1 - (scrolledY * 0.001);
+        debounce(scrolledY);
     };
     
 </script>
@@ -50,14 +71,26 @@
 </svelte:head>
 <div>
     <section class="intro_banner">
+        <div class="banner_image">
+            <img 
+                style={`transform: translate(0, ${debouncedY}px)`} 
+                class="supermoon" 
+                src={Supermoon} 
+                alt="moonshot"
+            />
+        </div>
         <img 
-            style={`transform: translate(0, ${debouncedY}px)`} 
-            class="banner_image" 
-            src={MoonShot} 
-            alt="moonshot"
+            src={Stripes}
+            class="stripes"
+            alt="alternating stripes"
         />
         <div class="saguaro_cactus_container">
-            <img class="saguaro_cactus" src={SaguaroCactus} alt="saguaro cactus" />
+            <img 
+                style={`margin-left: ${saguaroMarginLeftPercentage}%; height: ${saguaroHeightPercentage}%;`}
+                class="saguaro_cactus" 
+                src={SaguaroCactus} 
+                alt="saguaro cactus" 
+            />
         </div>
         <div 
             class="banner_text" 
@@ -165,7 +198,7 @@
         width: 100%;
         height: 100vh;
         overflow: hidden;
-        background-color: #443F3B;
+        background-color: #7da9bc;
     }
 
     .banner_image {
@@ -173,10 +206,29 @@
         width: 100%;
         height: 100%;
         top: 0;
+        left: 0;
+        right: 0;
+        will-change: transform;
+    }
+
+    .supermoon {
+        width: 100%;
+        height: 100%;
+        max-width: 1920px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         object-fit: cover;
         object-position: top;
-        display: flex;
-        will-change: transform;
+        margin: 0 auto;
+    }
+
+    .stripes {
+        position: absolute;
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
     }
 
     .banner_text {
@@ -209,9 +261,7 @@
 
     .saguaro_cactus {
         height: 100%;
-        padding-top: 4rem;
         width: auto;
-        margin-left: 12.5%;
     }
 
     .intro_paragraph {
@@ -318,7 +368,7 @@
     @media screen and (max-width: 1440px) {
 
         .saguaro_cactus {
-            padding-top: 4rem;
+            /* padding-top: 4rem; */
         }
 
         .banner_text {
@@ -360,7 +410,7 @@
         }
 
         .saguaro_cactus {
-            padding-top: 8rem;
+            /* padding-top: 8rem; */
         }
 
         .why_choose_us_paragraphs {
@@ -376,7 +426,7 @@
     @media screen and (max-width: 720px) {
 
         .saguaro_cactus {
-            padding-top: 1rem;
+            /* padding-top: 1rem; */
             margin-left: 60%;
         }
 
