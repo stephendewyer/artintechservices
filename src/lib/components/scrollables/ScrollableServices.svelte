@@ -194,5 +194,19 @@
         }
     }
 
+    @media screen and (max-width: 720px) {
+        .arrow_button_previous_services {
+            justify-content: flex-end;
+        }
+
+        .arrow_button_next_services {
+            justify-content: flex-end;
+        }
+
+        .services_scrollable {
+            padding: 0 0 1.5rem 0;
+        }
+    }
+
 
 </style>

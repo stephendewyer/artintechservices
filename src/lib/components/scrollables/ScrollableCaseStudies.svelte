@@ -184,5 +184,18 @@
         left: auto;
     }
 
+    @media screen and (max-width: 720px) {
+        .arrow_button_previous_case_studies {
+            justify-content: flex-end;
+        }
+
+        .arrow_button_next_case_studies {
+            justify-content: flex-end;
+        }
+
+        .case_studies_section {
+            padding: 0 0 1.5rem 0;
+        }
+    }
 
 </style>
