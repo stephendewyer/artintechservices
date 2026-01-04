@@ -136,6 +136,19 @@
     @media screen and (max-width: 720px) {
         #case_study_card_container {
             min-width: 100%;
+            justify-content: flex-end;
+        }
+
+        .case_study_info_container {
+            position: relative;
+            background-color: rgb(244,254,242, 0.75);
+            width: 100%;
+            height: auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.5rem;
         }
     }
 
